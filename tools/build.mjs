@@ -8,7 +8,7 @@ import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 import {
   site, pages, ui, researchAreas, publications,
-  members, positions, contactInfo,
+  members, positions, courses, contactInfo,
 } from "./content.mjs";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -29,6 +29,10 @@ const I = {
   building: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16M16 9h2a2 2 0 0 1 2 2v10M8 7h4M8 11h4M8 15h4"/></svg>`,
   pin: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>`,
   link: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1.5 1.5M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1.5-1.5"/></svg>`,
+  x: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z"/></svg>`,
+  discord: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.369A19.79 19.79 0 0 0 15.432 3c-.21.375-.455.88-.623 1.28a18.27 18.27 0 0 0-5.618 0A12.6 12.6 0 0 0 8.568 3 19.74 19.74 0 0 0 3.68 4.37C.533 9.046-.32 13.58.099 18.057A19.9 19.9 0 0 0 6.11 21c.418-.57.79-1.176 1.11-1.814a12.9 12.9 0 0 1-1.748-.834c.147-.108.29-.22.428-.335a14.2 14.2 0 0 0 12.2 0c.14.116.282.227.428.335-.558.33-1.143.61-1.75.834.32.638.692 1.244 1.11 1.814a19.85 19.85 0 0 0 6.011-2.943c.492-5.19-.838-9.68-3.51-13.688ZM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.42 0-1.334.955-2.42 2.157-2.42 1.21 0 2.176 1.096 2.157 2.42 0 1.335-.955 2.42-2.157 2.42Zm7.975 0c-1.183 0-2.157-1.085-2.157-2.42 0-1.334.955-2.42 2.157-2.42 1.21 0 2.176 1.096 2.157 2.42 0 1.335-.946 2.42-2.157 2.42Z"/></svg>`,
+  github: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.56 9.56 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.523 2 12 2Z"/></svg>`,
+  youtube: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.507a2.79 2.79 0 0 0-1.96-1.98C19.8 4.06 12 4.06 12 4.06s-7.8 0-9.54.467A2.79 2.79 0 0 0 .5 6.507 29.1 29.1 0 0 0 .03 12a29.1 29.1 0 0 0 .47 5.493 2.79 2.79 0 0 0 1.96 1.98C4.2 19.94 12 19.94 12 19.94s7.8 0 9.54-.467a2.79 2.79 0 0 0 1.96-1.98A29.1 29.1 0 0 0 23.97 12a29.1 29.1 0 0 0-.47-5.493ZM9.6 15.3V8.7l6.3 3.3-6.3 3.3Z"/></svg>`,
   // research icons
   synthesis: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6l-5 8a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-8V3"/><path d="M7 15h10"/></svg>`,
   storage: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg>`,
@@ -69,7 +73,7 @@ function head(lang, pageKey, titleText, desc) {
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Jost:wght@300;400&display=swap" rel="stylesheet">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='11' fill='%230e7c86'/%3E%3Cpath d='M13 10c0 6 14 8 14 14M27 10c0 6-14 8-14 14' stroke='white' stroke-width='2.4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="${AP}/css/style.css">
 <noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
@@ -88,7 +92,7 @@ function header(lang, pageKey) {
   const langSwitchM = `<div class="lang-switch lang-switch-m" style="display:none"><a href="./${fileFor(pageKey)}" class="is-active">${ui[lang].langName}</a><a href="${otherHref}">${ui[other].langName}</a></div>`;
   return `<header class="site-header">
 <div class="container nav">
-  <a class="brand" href="./index.html" aria-label="AMSL home">
+  <a class="brand" href="./index.html" aria-label="${site.nameShort} home">
     ${I.logo}
     <span class="brand__text"><span class="brand__name">${site.nameShort}</span><span class="brand__sub">${site.nameFull[lang]}</span></span>
   </a>
@@ -102,11 +106,33 @@ function header(lang, pageKey) {
 </header>`;
 }
 
+function wordmark() {
+  return `<div class="wordmark"><span class="wm-blue">BIO</span>ELECTRONICS <span class="wm-amp">&amp;</span> <span class="wm-red">BIO</span>OPTICS <span class="wm-lab">LAB.</span></div>`;
+}
+
+function socialRow() {
+  const s = site.social;
+  const items = [
+    s.email ? { href: "mailto:" + s.email, icon: "mail", label: "Email" } : null,
+    s.scholar ? { href: s.scholar, icon: "scholar", label: "Google Scholar", ext: true } : null,
+    s.linkedin ? { href: s.linkedin, icon: "linkedin", label: "LinkedIn", ext: true } : null,
+    s.x ? { href: s.x, icon: "x", label: "X", ext: true } : null,
+    s.github ? { href: s.github, icon: "github", label: "GitHub", ext: true } : null,
+    s.youtube ? { href: s.youtube, icon: "youtube", label: "YouTube", ext: true } : null,
+    s.discord ? { href: s.discord, icon: "discord", label: "Discord (internal)", ext: true } : null,
+  ].filter(Boolean);
+  return items.map((i) => `<a class="social" href="${i.href}" aria-label="${i.label}"${i.ext ? ' target="_blank" rel="noopener"' : ""}>${I[i.icon]}</a>`).join("");
+}
+
 function footer(lang) {
   const u = ui[lang];
   const explore = pages.filter((p) => p.key !== "index")
     .map((p) => `<li><a href="./${p.file}">${u.nav[p.key]}</a></li>`).join("");
   return `<footer class="site-footer">
+<div class="brand-banner"><div class="container">
+  ${wordmark()}
+  <div class="social-row">${socialRow()}</div>
+</div></div>
 <div class="container">
   <div class="footer-grid">
     <div class="footer-brand">
@@ -118,12 +144,11 @@ function footer(lang) {
       <li><a href="${site.scholar}" target="_blank" rel="noopener">Google Scholar</a></li>
       <li><a href="${site.linkedin}" target="_blank" rel="noopener">LinkedIn</a></li>
       <li><a href="${site.spinoff}" target="_blank" rel="noopener">STD BioElec ${I.external}</a></li>
-      <li><a href="mailto:${site.labEmail}">Email</a></li>
     </ul></div>
   </div>
   <div class="footer-bottom">
-    <span>© 2026 ${site.copyright}</span>
-    <span>${site.dept[lang]}</span>
+    <span>© 2026 ${site.copyright} · ${site.dept[lang]}</span>
+    <a class="footer-email" href="mailto:${site.labEmail}">${site.labEmail}</a>
   </div>
 </div>
 </footer>`;
@@ -222,7 +247,7 @@ function renderHome(lang) {
       </div>
       <div class="feature__panel reveal">
         <span class="eyebrow">EPCR · STD BioElec</span>
-        <h3>${lang === "en" ? "Write. Reuse. Repeat." : "쓰고. 재사용하고. 반복한다."}</h3>
+        <h3>${lang === "en" ? "Write once, reuse ×10⁵." : "한 번 합성, 10⁵회 재사용."}</h3>
         <ul class="feature__list">${foundryList}</ul>
         <p class="seq" style="margin-top:22px">5′—ATCG GATE ACGT CODE TCGA—3′</p>
       </div>
@@ -327,12 +352,20 @@ function renderMembers(lang) {
   </div>
 </div>`;
 
+  const ext = (href) => (href && href.startsWith("http")) ? ' target="_blank" rel="noopener"' : "";
   const card = (m) => {
     const name = lang === "ko" ? m.nameKo : m.name;
     const sub = lang === "ko" ? m.name : m.nameKo;
     const role = lang === "ko" ? m.roleKo : m.roleEn;
-    const links = m.scholar ? `<div class="member__links"><a href="${m.scholar}" target="_blank" rel="noopener" aria-label="Scholar">${I.scholar}</a></div>` : "";
-    return `<article class="member reveal"><div class="member__avatar">${m.initials}</div><h4>${name}</h4><div class="member__role">${role}</div><div class="member__note">${sub}</div>${links}</article>`;
+    const focus = lang === "ko" ? m.focusKo : m.focusEn;
+    const focusTag = focus ? `<div class="member__focus"><span class="tag tag--atcg">${focus}</span></div>` : "";
+    const soc = [
+      m.scholar ? `<a href="${m.scholar}"${ext(m.scholar)} aria-label="Scholar">${I.scholar}</a>` : "",
+      m.linkedin ? `<a href="${m.linkedin}"${ext(m.linkedin)} aria-label="LinkedIn">${I.linkedin}</a>` : "",
+      m.x ? `<a href="${m.x}"${ext(m.x)} aria-label="X">${I.x}</a>` : "",
+    ].join("");
+    const links = soc ? `<div class="member__links">${soc}</div>` : "";
+    return `<article class="member reveal"><div class="member__avatar">${m.initials}</div><h4>${name}</h4><div class="member__role">${role}</div><div class="member__note">${sub}</div>${focusTag}${links}</article>`;
   };
   const postdocs = members.postdocs.map(card).join("");
   const students = members.students.map(card).join("");
@@ -361,8 +394,8 @@ function renderJoin(lang) {
   const u = ui[lang];
   const pos = positions[lang].map((p) => `<article class="rcard reveal" style="grid-column:span 2"><h3 style="font-size:1.15rem">${p.role}</h3><p style="margin-top:8px">${p.detail}</p></article>`).join("");
   const why = lang === "en"
-    ? { h1: "Why AMSL", p1: "We sit at an unusual intersection — DNA nanotechnology, semiconductor devices, AI, and computer science under one roof. Projects here routinely cross those lines: a DNA data drive needs error-correcting codes and a custom chip; a diagnostic assay needs both wet-lab chemistry and a deep-learning model.", h2: "Who we look for", p2: "Curiosity over credentials. Whether your background is biology, electronics, coding, or AI, what matters is that you like building things that don't exist yet.", h3: "How to apply", p3: "Email the PI with a short note about your interests and a CV. Prospective graduate students, undergraduate interns, and postdocs are all welcome to reach out at any time." }
-    : { h1: "왜 AMSL인가", p1: "우리는 DNA 나노기술, 반도체 소자, AI, 전산학이 한 지붕 아래 모인 드문 교차점에 있습니다. 이곳의 프로젝트는 그 경계를 넘나듭니다 — DNA 데이터 드라이브에는 오류정정 코드와 커스텀 칩이 필요하고, 진단 어세이에는 습식 화학과 딥러닝 모델이 함께 필요합니다.", h2: "찾는 사람", p2: "스펙보다 호기심. 생물·전자·코딩·AI 어느 배경이든, 아직 세상에 없는 것을 만드는 걸 좋아하는 사람을 찾습니다.", h3: "지원 방법", p3: "관심사에 대한 짧은 소개와 이력서를 책임교수에게 이메일로 보내주세요. 대학원 진학 희망자, 학부 인턴, 박사후연구원 모두 언제든 환영합니다." };
+    ? { h1: "Why BBL", p1: "An unusual intersection — DNA nanotechnology, semiconductor devices, AI, and computer science under one roof. Projects that routinely cross those lines: a DNA data drive needing error-correcting codes and a custom chip; a diagnostic assay needing both wet-lab chemistry and a deep-learning model.", h2: "Who we look for", p2: "Curiosity over credentials. Any background — biology, electronics, coding, AI — united by a taste for building tools that don't exist yet.", h3: "How to apply", p3: "A short note on your interests plus a CV, by email to the PI. Prospective graduate students, undergraduate interns, and postdocs — welcome any time." }
+    : { h1: "왜 BBL인가", p1: "DNA 나노기술·반도체 소자·AI·전산학이 한 지붕 아래 모인 드문 교차점. 경계를 넘나드는 프로젝트 — DNA 데이터 드라이브엔 오류정정 코드와 커스텀 칩, 진단 어세이엔 습식 화학과 딥러닝 모델.", h2: "찾는 사람", p2: "스펙보다 호기심. 생물·전자·코딩·AI 어느 배경이든, 아직 세상에 없는 것을 만들기 좋아하는 사람.", h3: "지원 방법", p3: "관심사에 대한 짧은 소개와 이력서, 책임교수 이메일로. 대학원 진학 희망자·학부 인턴·박사후연구원 모두 언제든 환영." };
 
   const body = `${pageHero(lang, u.joinPage.title, u.joinPage.sub)}
 <section class="section">
@@ -410,42 +443,45 @@ function renderContact(lang) {
   return layout(lang, "contact", `${u.contactPage.title} — ${site.nameShort}`, u.contactPage.sub, body);
 }
 
-/* ---------------- Root language landing ---------------- */
+function renderTeaching(lang) {
+  const u = ui[lang];
+  const rows = courses.map((c) => `
+  <li class="pub">
+    <span class="pub__year">${lang === "ko" ? c.levelKo : c.levelEn}</span>
+    <div class="pub__body"><h4>${lang === "ko" ? c.ko : c.en}</h4><div class="pub__authors">${lang === "ko" ? c.descKo : c.descEn}</div></div>
+    <span></span>
+  </li>`).join("");
+  const body = `${pageHero(lang, u.teachingPage.title, u.teachingPage.sub)}
+<section class="section">
+  <div class="container">
+    <ul class="pub-list reveal">${rows}</ul>
+    <div class="callout reveal" style="margin-top:44px">
+      <h3 style="font-size:1.25rem">${u.teachingPage.books}</h3>
+      <p style="color:var(--ink-2);margin-top:10px">${u.teachingPage.booksBody}</p>
+    </div>
+  </div>
+</section>`;
+  return layout(lang, "teaching", `${u.teachingPage.title} — ${site.nameShort}`, u.teachingPage.sub, body);
+}
+
+/* ---------------- Root: redirect to preferred language ---------------- */
 function renderRoot() {
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${site.nameShort} — ${site.nameFull.en}</title>
-<meta name="description" content="${site.tagline.en} · ${site.dept.en}">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="canonical" href="en/index.html">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='11' fill='%230e7c86'/%3E%3Cpath d='M13 10c0 6 14 8 14 14M27 10c0 6-14 8-14 14' stroke='white' stroke-width='2.4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="assets/css/style.css">
-<noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
+<meta http-equiv="refresh" content="0; url=en/index.html">
 <script>
   (function(){try{var s=localStorage.getItem('amsl-theme');if(s)document.documentElement.setAttribute('data-theme',s);}catch(e){}
-  var l=(navigator.language||'en').toLowerCase();if(l.indexOf('ko')===0){/* stay to let user choose, or auto: */}})();
+  var l=(navigator.language||navigator.userLanguage||'en').toLowerCase();
+  location.replace(l.indexOf('ko')===0?'ko/index.html':'en/index.html');})();
 </script>
 </head>
-<body>
-<main class="hero" style="min-height:100vh;display:grid;place-items:center;text-align:center">
-  <div class="hero__bg"><div class="hero__grid"></div><div class="hero__glow"></div></div>
-  <div class="container" style="position:relative;z-index:1;max-width:620px">
-    ${I.logo.replace('class="brand__mark"', 'style="width:60px;height:60px;margin:0 auto 26px"')}
-    <span class="hero__tag"><span class="dot"></span>Incheon National University</span>
-    <h1 style="font-size:clamp(2.2rem,6vw,3.4rem);margin-top:20px">${site.nameShort}</h1>
-    <p class="lede" style="margin-top:14px">${site.nameFull.en} · ${site.nameFull.ko}</p>
-    <p style="color:var(--ink-3);margin-top:8px">${site.tagline.en}</p>
-    <div class="hero__cta" style="justify-content:center;margin-top:34px">
-      <a class="btn btn--primary" href="en/index.html">English ${I.arrow}</a>
-      <a class="btn btn--ghost" href="ko/index.html">한국어 ${I.arrow}</a>
-    </div>
-  </div>
-</main>
-<script src="assets/js/main.js" defer></script>
+<body style="font-family:system-ui,sans-serif;padding:2rem;color:#14171c">
+<p><a href="en/index.html">Enter — English</a> &nbsp;·&nbsp; <a href="ko/index.html">한국어로 입장</a></p>
 </body>
 </html>`;
 }
@@ -455,6 +491,7 @@ const renderers = {
   index: renderHome,
   research: renderResearch,
   publications: renderPublications,
+  teaching: renderTeaching,
   members: renderMembers,
   join: renderJoin,
   contact: renderContact,

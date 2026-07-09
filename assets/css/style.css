@@ -338,8 +338,30 @@ h1, h2, h3, h4 { font-family: var(--font-disp); font-weight: 600; line-height: 1
 .footer-grid ul { list-style: none; padding: 0; display: grid; gap: 8px; }
 .footer-grid a { color: var(--ink-2); font-size: .92rem; }
 .footer-grid a:hover { color: var(--accent); }
+.footer-grid a svg { width: 13px; height: 13px; display: inline-block; vertical-align: -1px; margin-left: 4px; }
 .footer-brand p { color: var(--ink-3); font-size: .9rem; margin-top: 14px; max-width: 320px; }
-.footer-bottom { margin-top: 40px; padding-top: 22px; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; color: var(--ink-3); font-size: .84rem; }
+.footer-bottom { margin-top: 40px; padding-top: 22px; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; color: var(--ink-3); font-size: .84rem; }
+.footer-email { font-size: .72rem; color: var(--ink-3); font-family: var(--font-mono); }
+.footer-email:hover { color: var(--accent); }
+
+/* ----- Brand banner (wordmark + social) ----- */
+.brand-banner { text-align: center; padding-block: 48px; border-bottom: 1px solid var(--line); }
+.wordmark { font-family: "Jost", var(--font-sans); font-weight: 300; text-transform: uppercase; letter-spacing: .16em; font-size: clamp(1.05rem, 3.4vw, 2rem); line-height: 1.35; color: var(--ink); }
+.wordmark .wm-blue { color: #2c4bd6; }
+.wordmark .wm-red { color: #e0242b; }
+.wordmark .wm-amp { color: var(--ink-3); font-weight: 400; }
+.wordmark .wm-lab { font-size: .74em; letter-spacing: .1em; }
+:root[data-theme="dark"] .wordmark .wm-blue { color: #7d97ff; }
+:root[data-theme="dark"] .wordmark .wm-red { color: #ff6f75; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .wordmark .wm-blue { color: #7d97ff; }
+  :root:not([data-theme="light"]) .wordmark .wm-red { color: #ff6f75; }
+}
+.social-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+.social { width: 42px; height: 42px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 50%; color: var(--ink-2); background: var(--paper); transition: color .2s, background .2s, border-color .2s, transform .12s var(--ease); }
+.social:hover { color: #fff; background: var(--accent); border-color: var(--accent); transform: translateY(-2px); }
+.social svg { width: 18px; height: 18px; }
+.member__focus { margin-top: 12px; }
 
 /* ----- Reveal animation ----- */
 .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
