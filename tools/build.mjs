@@ -72,6 +72,7 @@ function head(lang, pageKey, titleText, desc) {
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='11' fill='%230e7c86'/%3E%3Cpath d='M13 10c0 6 14 8 14 14M27 10c0 6-14 8-14 14' stroke='white' stroke-width='2.4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="${AP}/css/style.css">
+<noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
 </head>`;
 }
 
@@ -159,7 +160,7 @@ function renderHome(lang) {
   const stats = u.stats.map((s) => `<div class="stat"><div class="stat__num">${s.num}</div><div class="stat__label">${s.label}</div></div>`).join("");
   const cards = researchAreas.map((a, i) => {
     const c = a[lang];
-    const wide = i === 4 ? " rcard--wide" : "";
+    const wide = i >= 3 ? " rcard--wide" : "";
     const tags = a.tags.map((t) => `<span class="tag tag--atcg">${t}</span>`).join("");
     return `<article class="rcard${wide} reveal">
   <div class="rcard__icon">${I[a.icon]}</div>
@@ -423,6 +424,7 @@ function renderRoot() {
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='11' fill='%230e7c86'/%3E%3Cpath d='M13 10c0 6 14 8 14 14M27 10c0 6-14 8-14 14' stroke='white' stroke-width='2.4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="assets/css/style.css">
+<noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
 <script>
   (function(){try{var s=localStorage.getItem('amsl-theme');if(s)document.documentElement.setAttribute('data-theme',s);}catch(e){}
   var l=(navigator.language||'en').toLowerCase();if(l.indexOf('ko')===0){/* stay to let user choose, or auto: */}})();
