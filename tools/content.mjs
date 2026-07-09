@@ -299,7 +299,7 @@ export const researchAreas = [
 /* Publications — from the PI's Google Scholar; topics drive the filter.
    author: string with the PI wrapped in <b>…</b>. featured: shows a badge. */
 export const publications = [
-  { year: "2026", title: "Electric field–guided random-access DNA data storage", authors: "D. Lim, T. Kang, W. Lee, <b>Y. Song</b>", venue: "Science Advances", topics: ["storage", "synthesis"], featured: "Featured" },
+  { year: "2026", title: "Electric field–guided random-access DNA data storage", authors: "D. Lim, T. Kang, W. Lee, <b>Y. Song</b>", venue: "Science Advances", topics: ["storage", "synthesis"], featured: "Featured", link: "https://stdbioelec.com/papers/electric-field-guided-dna-storage.html" },
   { year: "2026", title: "High-Data-Density, High-Decoding-Speed, and High-Decoding-Accuracy DNA Data Ink for Digital Preservation", authors: "T. Kang, D. Lim, W. Lee, J. Kim, X. Huang, J. Kim, <b>Y. Song</b>", venue: "ACS Nano", topics: ["storage"], featured: "Featured" },
   { year: "2025", title: "Enzyme-free chemical DNA ligation via amine-crosslinker-mediated DNA assembly for miRNA detection", authors: "D. Lim, Z. Haider, H. Lim, W. Lee, T. Kang, H.S. Eun, J. Kim, <b>Y. Song</b>", venue: "Cell Reports Physical Science", topics: ["diagnosis"], featured: "Featured" },
   { year: "2025", title: "Polymerase elongation onto patterned DNA for random-accessed DNA data storage", authors: "T. Kang, D. Lim, W. Lee, <b>Y. Song</b>", venue: "BioChip Journal 19(3), 636–648", topics: ["storage", "synthesis"] },

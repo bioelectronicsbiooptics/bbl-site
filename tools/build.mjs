@@ -199,11 +199,12 @@ function renderHome(lang) {
 
   const foundryList = u.foundry.list.map((x) => `<li>${I.check}<span>${x}</span></li>`).join("");
 
-  const more = (p) => `<a class="pub__more" href="${p.link || site.spinoff}" target="_blank" rel="noopener">${u.cta.readMore} ↗</a>`;
+  const titleEl = (p) => p.link ? `<a class="pub__link" href="${p.link}" target="_blank" rel="noopener">${p.title}</a>` : p.title;
+  const more = (p) => p.link ? `<a class="pub__more" href="${p.link}" target="_blank" rel="noopener">${u.cta.readMore} ↗</a>` : "";
   const featured = publications.filter((p) => p.featured).slice(0, 4).map((p) => `
   <li class="pub">
     <span class="pub__year">${p.year}</span>
-    <div class="pub__body"><h4><a class="pub__link" href="${p.link || site.spinoff}" target="_blank" rel="noopener">${p.title}</a></h4><div class="pub__authors">${p.authors}</div><span class="pub__venue">${p.venue}</span> ${more(p)}</div>
+    <div class="pub__body"><h4>${titleEl(p)}</h4><div class="pub__authors">${p.authors}</div><span class="pub__venue">${p.venue}</span> ${more(p)}</div>
     <span class="pub__badge">${p.featured}</span>
   </li>`).join("");
 
@@ -311,10 +312,11 @@ function renderPublications(lang) {
     `<button class="chip${i === 0 ? " is-active" : ""}" data-filter="${f.key}">${f.label}</button>`).join("");
   const items = publications.map((p) => {
     const badge = p.featured ? `<span class="pub__badge">${p.featured}</span>` : `<span></span>`;
-    const more = `<a class="pub__more" href="${p.link || site.spinoff}" target="_blank" rel="noopener">${u.cta.readMore} ↗</a>`;
+    const titleEl = p.link ? `<a class="pub__link" href="${p.link}" target="_blank" rel="noopener">${p.title}</a>` : p.title;
+    const more = p.link ? `<a class="pub__more" href="${p.link}" target="_blank" rel="noopener">${u.cta.readMore} ↗</a>` : "";
     return `<li class="pub" data-topics="${p.topics.join(" ")}">
     <span class="pub__year">${p.year}</span>
-    <div class="pub__body"><h4><a class="pub__link" href="${p.link || site.spinoff}" target="_blank" rel="noopener">${p.title}</a></h4><div class="pub__authors">${p.authors}</div><span class="pub__venue">${p.venue}</span> ${more}</div>
+    <div class="pub__body"><h4>${titleEl}</h4><div class="pub__authors">${p.authors}</div><span class="pub__venue">${p.venue}</span> ${more}</div>
     ${badge}
   </li>`;
   }).join("");
