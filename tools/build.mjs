@@ -174,7 +174,7 @@ function pageHero(lang, title, sub) {
 <div class="container">
   <div class="breadcrumb"><a href="./index.html">${u.backHome}</a> / ${title}</div>
   <h1 class="reveal">${title}</h1>
-  <p class="reveal">${sub}</p>
+  ${sub ? `<p class="reveal">${sub}</p>` : ""}
 </div>
 </section>`;
 }
@@ -199,10 +199,11 @@ function renderHome(lang) {
 
   const foundryList = u.foundry.list.map((x) => `<li>${I.check}<span>${x}</span></li>`).join("");
 
+  const more = (p) => `<a class="pub__more" href="${p.link || site.spinoff}" target="_blank" rel="noopener">${u.cta.readMore} ↗</a>`;
   const featured = publications.filter((p) => p.featured).slice(0, 4).map((p) => `
   <li class="pub">
     <span class="pub__year">${p.year}</span>
-    <div class="pub__body"><h4>${p.title}</h4><div class="pub__authors">${p.authors}</div><span class="pub__venue">${p.venue}</span></div>
+    <div class="pub__body"><h4><a class="pub__link" href="${p.link || site.spinoff}" target="_blank" rel="noopener">${p.title}</a></h4><div class="pub__authors">${p.authors}</div><span class="pub__venue">${p.venue}</span> ${more(p)}</div>
     <span class="pub__badge">${p.featured}</span>
   </li>`).join("");
 
@@ -215,7 +216,7 @@ function renderHome(lang) {
   <p class="hero__meta">${u.hero.meta}</p>
   <div class="hero__cta">
     <a class="btn btn--primary" href="./research.html">${u.cta.research} ${I.arrow}</a>
-    <a class="btn btn--ghost" href="./join.html">${u.cta.join}</a>
+    <a class="btn btn--ghost" href="./contact.html#openings">${u.cta.join}</a>
   </div>
 </div></div>
 </section>`;
@@ -267,7 +268,7 @@ function renderHome(lang) {
   <div class="container">
     <div class="callout reveal" style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px">
       <div style="max-width:560px"><h3 style="font-size:1.5rem">${u.closing.head}</h3><p style="color:var(--ink-2);margin-top:10px">${u.closing.body}</p></div>
-      <a class="btn btn--primary" href="./join.html">${u.closing.cta} ${I.arrow}</a>
+      <a class="btn btn--primary" href="./contact.html#openings">${u.closing.cta} ${I.arrow}</a>
     </div>
   </div>
 </section>`;
@@ -310,9 +311,10 @@ function renderPublications(lang) {
     `<button class="chip${i === 0 ? " is-active" : ""}" data-filter="${f.key}">${f.label}</button>`).join("");
   const items = publications.map((p) => {
     const badge = p.featured ? `<span class="pub__badge">${p.featured}</span>` : `<span></span>`;
+    const more = `<a class="pub__more" href="${p.link || site.spinoff}" target="_blank" rel="noopener">${u.cta.readMore} ↗</a>`;
     return `<li class="pub" data-topics="${p.topics.join(" ")}">
     <span class="pub__year">${p.year}</span>
-    <div class="pub__body"><h4>${p.title}</h4><div class="pub__authors">${p.authors}</div><span class="pub__venue">${p.venue}</span></div>
+    <div class="pub__body"><h4><a class="pub__link" href="${p.link || site.spinoff}" target="_blank" rel="noopener">${p.title}</a></h4><div class="pub__authors">${p.authors}</div><span class="pub__venue">${p.venue}</span> ${more}</div>
     ${badge}
   </li>`;
   }).join("");
@@ -324,7 +326,7 @@ function renderPublications(lang) {
     <p style="margin-top:30px;color:var(--ink-3);font-size:.9rem">${lang === "en" ? "Full list on" : "전체 목록은"} <a href="${site.scholar}" target="_blank" rel="noopener">Google Scholar</a>.</p>
   </div>
 </section>`;
-  return layout(lang, "publications", `${u.pubPage.title} — ${site.nameShort}`, u.pubPage.sub, body);
+  return layout(lang, "publications", `${u.pubPage.title} — ${site.nameShort}`, u.pubPage.desc || site.tagline[lang], body);
 }
 
 function renderMembers(lang) {
@@ -387,7 +389,7 @@ function renderMembers(lang) {
     <ul class="prose reveal" style="list-style:none;padding:0;max-width:720px">${alumni}</ul>
   </div>
 </section>`;
-  return layout(lang, "members", `${u.membersPage.title} — ${site.nameShort}`, u.membersPage.sub, body);
+  return layout(lang, "members", `${u.membersPage.title} — ${site.nameShort}`, u.membersPage.desc || site.tagline[lang], body);
 }
 
 function renderJoin(lang) {
@@ -424,6 +426,11 @@ function renderContact(lang) {
     { icon: "link", k: lang === "en" ? "Spin-off" : "스핀오프", v: `<a href="${site.spinoff}" target="_blank" rel="noopener">STD BioElec — stdbioelec.com</a>` },
   ].map((r) => `<div class="info-row">${I[r.icon]}<div><div class="k">${r.k}</div><div class="v">${r.v}</div></div></div>`).join("");
 
+  const pos = positions[lang].map((p) => `<article class="rcard reveal rcard--wide"><h3 style="font-size:1.15rem">${p.role}</h3><p style="margin-top:8px">${p.detail}</p></article>`).join("");
+  const why = lang === "en"
+    ? { h1: "Why BBL", p1: "An unusual intersection — DNA nanotechnology, semiconductor devices, AI, and computer science under one roof. Projects that routinely cross those lines: a DNA data drive needing error-correcting codes and a custom chip; a diagnostic assay needing both wet-lab chemistry and a deep-learning model.", h2: "Who we look for", p2: "Curiosity over credentials. Any background — biology, electronics, coding, AI — united by a taste for building tools that don't exist yet.", h3: "How to apply", p3: "A short note on your interests plus a CV, by email to the PI. Prospective graduate students, undergraduate interns, and postdocs — welcome any time." }
+    : { h1: "왜 BBL인가", p1: "DNA 나노기술·반도체 소자·AI·전산학이 한 지붕 아래 모인 드문 교차점. 경계를 넘나드는 프로젝트 — DNA 데이터 드라이브엔 오류정정 코드와 커스텀 칩, 진단 어세이엔 습식 화학과 딥러닝 모델.", h2: "찾는 사람", p2: "스펙보다 호기심. 생물·전자·코딩·AI 어느 배경이든, 아직 세상에 없는 것을 만들기 좋아하는 사람.", h3: "지원 방법", p3: "관심사에 대한 짧은 소개와 이력서, 책임교수 이메일로. 대학원 진학 희망자·학부 인턴·박사후연구원 모두 언제든 환영." };
+
   const body = `${pageHero(lang, u.contactPage.title, u.contactPage.sub)}
 <section class="section">
   <div class="container">
@@ -433,14 +440,29 @@ function renderContact(lang) {
         <h3 style="font-size:1.3rem">${u.closing.head}</h3>
         <p style="color:var(--ink-2);margin-top:10px">${u.closing.body}</p>
         <div style="margin-top:20px;display:flex;flex-wrap:wrap;gap:10px">
-          <a class="btn btn--primary" href="./join.html">${u.cta.join} ${I.arrow}</a>
+          <a class="btn btn--primary" href="mailto:${site.labEmail}">${I.mail} ${u.cta.contact}</a>
           <a class="btn btn--ghost" href="${site.scholar}" target="_blank" rel="noopener">${I.scholar} ${u.cta.scholar}</a>
         </div>
       </div>
     </div>
   </div>
+</section>
+
+<section class="section section--alt" id="openings">
+  <div class="container">
+    <div class="prose reveal">
+      <h3>${why.h1}</h3><p>${why.p1}</p>
+      <h3>${why.h2}</h3><p>${why.p2}</p>
+    </div>
+    <div class="section-head reveal" style="margin-top:48px;margin-bottom:24px"><span class="eyebrow">${lang === "en" ? "Open Positions" : "모집 분야"}</span></div>
+    <div class="grid grid--research">${pos}</div>
+    <div class="callout reveal" style="margin-top:48px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px">
+      <div style="max-width:560px"><h3 style="font-size:1.35rem">${why.h3}</h3><p style="color:var(--ink-2);margin-top:10px">${why.p3}</p></div>
+      <a class="btn btn--primary" href="mailto:${site.labEmail}">${I.mail} ${u.cta.contact}</a>
+    </div>
+  </div>
 </section>`;
-  return layout(lang, "contact", `${u.contactPage.title} — ${site.nameShort}`, u.contactPage.sub, body);
+  return layout(lang, "contact", `${u.contactPage.title} — ${site.nameShort}`, u.contactPage.desc || site.tagline[lang], body);
 }
 
 function renderTeaching(lang) {
@@ -461,7 +483,7 @@ function renderTeaching(lang) {
     </div>
   </div>
 </section>`;
-  return layout(lang, "teaching", `${u.teachingPage.title} — ${site.nameShort}`, u.teachingPage.sub, body);
+  return layout(lang, "teaching", `${u.teachingPage.title} — ${site.nameShort}`, u.teachingPage.desc || site.tagline[lang], body);
 }
 
 /* ---------------- Root: redirect to preferred language ---------------- */
@@ -493,7 +515,6 @@ const renderers = {
   publications: renderPublications,
   teaching: renderTeaching,
   members: renderMembers,
-  join: renderJoin,
   contact: renderContact,
 };
 

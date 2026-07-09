@@ -41,15 +41,14 @@ export const pages = [
   { key: "publications", file: "publications.html" },
   { key: "teaching",     file: "teaching.html" },
   { key: "members",      file: "members.html" },
-  { key: "join",         file: "join.html" },
   { key: "contact",      file: "contact.html" },
 ];
 
 export const ui = {
   en: {
     langName: "EN",
-    nav: { index: "Home", research: "Research", publications: "Publications", teaching: "Teaching", members: "People", join: "Join Us", contact: "Contact" },
-    cta: { research: "Explore Research", join: "Join the Lab", contact: "Get in Touch", allPubs: "View all publications", scholar: "Google Scholar" },
+    nav: { index: "Home", research: "Research", publications: "Publications", teaching: "Teaching", members: "People", join: "Join Us", contact: "Join & Contact" },
+    cta: { research: "Explore Research", join: "Join the Lab", contact: "Get in Touch", allPubs: "View all publications", scholar: "Google Scholar", readMore: "Read more" },
     hero: {
       tag: "DNA · Bioelectronics · Biooptics",
       titleA: "Molecular systems that ",
@@ -84,7 +83,8 @@ export const ui = {
     closing: { head: "Now recruiting", body: "Openings for graduate students, undergraduate interns, and postdocs across bio, semiconductor, CS, and AI.", cta: "See open positions" },
     pubPage: {
       title: "Publications",
-      sub: "Peer-reviewed papers and patents — filterable by research topic.",
+      sub: "",
+      desc: "Peer-reviewed papers and patents from the Bioelectronics & Biooptics Lab.",
       filters: [
         { key: "all", label: "All" },
         { key: "storage", label: "DNA Storage" },
@@ -98,13 +98,15 @@ export const ui = {
     researchPage: { title: "Research", sub: "Five directions under one molecular view of information — writing, storage, computing, sensing, and the enabling platforms." },
     teachingPage: {
       title: "Teaching",
-      sub: "Undergraduate and graduate courses across semiconductors, bio-nano, and informatics — by Prof. Youngjun Song.",
+      sub: "",
+      desc: "Undergraduate and graduate courses by Prof. Youngjun Song.",
       books: "Course books & writing",
       booksBody: "In-progress texts: a NAND Flash textbook + problem set, a BioPython book, molecular-biology / molecular-diagnostics chapters, and a synthetic-biology course text.",
     },
     membersPage: {
       title: "People",
-      sub: "A team across nano-bioengineering, semiconductor devices, and AI.",
+      sub: "",
+      desc: "The people of the Bioelectronics & Biooptics Lab.",
       pi: "Principal Investigator", postdocs: "Postdoctoral Researchers", students: "Graduate Researchers", alumni: "Alumni",
       education: "Education", experience: "Experience",
     },
@@ -112,14 +114,14 @@ export const ui = {
       title: "Join Us",
       sub: "Tools that don't exist yet — from DNA data drives to self-made semiconductor cleanrooms.",
     },
-    contactPage: { title: "Contact", sub: "The lab, the PI, and our spin-off." },
+    contactPage: { title: "Join & Contact", sub: "", desc: "Openings and contact for the Bioelectronics & Biooptics Lab." },
     footer: { explore: "Explore", connect: "Connect", tagline: "Molecular information systems for memory, computing, and health." },
     backHome: "Home",
   },
   ko: {
     langName: "KO",
-    nav: { index: "홈", research: "연구", publications: "논문", teaching: "강의", members: "구성원", join: "합류", contact: "연락처" },
-    cta: { research: "연구 살펴보기", join: "연구실 합류", contact: "문의하기", allPubs: "전체 논문 보기", scholar: "Google Scholar" },
+    nav: { index: "홈", research: "연구", publications: "논문", teaching: "강의", members: "구성원", join: "합류", contact: "합류 · 연락처" },
+    cta: { research: "연구 살펴보기", join: "연구실 합류", contact: "문의하기", allPubs: "전체 논문 보기", scholar: "Google Scholar", readMore: "상세읽기" },
     hero: {
       tag: "DNA · 바이오전자 · 바이오광학",
       titleA: "정보를 ",
@@ -154,7 +156,8 @@ export const ui = {
     closing: { head: "함께할 연구자 모집", body: "생명·반도체·전산·AI 배경의 대학원생·학부 인턴·박사후연구원 환영.", cta: "모집 공고 보기" },
     pubPage: {
       title: "논문",
-      sub: "동료심사 논문과 특허 — 연구 주제별 필터.",
+      sub: "",
+      desc: "유전자 진단 및 치료 연구실의 동료심사 논문과 특허.",
       filters: [
         { key: "all", label: "전체" },
         { key: "storage", label: "DNA 스토리지" },
@@ -168,13 +171,15 @@ export const ui = {
     researchPage: { title: "연구", sub: "정보를 분자의 관점으로 본 다섯 갈래 — 합성, 저장, 연산, 감지, 그리고 이를 가능케 하는 플랫폼." },
     teachingPage: {
       title: "강의",
-      sub: "반도체·바이오나노·정보학을 아우르는 학부·대학원 강의 — 송영준 교수.",
+      sub: "",
+      desc: "송영준 교수의 학부·대학원 강의.",
       books: "교재 · 저술",
       booksBody: "집필 중인 교재: NAND Flash 교재+문제집, 바이오파이썬 책, 분자생물학·분자진단 챕터, 합성생물학 교재.",
     },
     membersPage: {
       title: "구성원",
-      sub: "나노바이오공학, 반도체 소자, AI를 아우르는 팀.",
+      sub: "",
+      desc: "유전자 진단 및 치료 연구실 구성원.",
       pi: "책임교수", postdocs: "박사후 연구원", students: "대학원 연구원", alumni: "졸업생",
       education: "학력", experience: "경력",
     },
@@ -182,7 +187,7 @@ export const ui = {
       title: "합류하기",
       sub: "아직 세상에 없는 도구 — DNA 데이터 드라이브부터 자작 반도체 클린룸까지.",
     },
-    contactPage: { title: "연락처", sub: "연구실 · 책임교수 · 스핀오프 연락처." },
+    contactPage: { title: "합류 · 연락처", sub: "", desc: "유전자 진단 및 치료 연구실 모집 · 연락." },
     footer: { explore: "둘러보기", connect: "연결", tagline: "메모리·컴퓨팅·헬스케어를 위한 분자 정보 시스템." },
     backHome: "홈",
   },
