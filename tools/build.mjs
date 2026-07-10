@@ -303,7 +303,7 @@ function renderResearch(lang) {
 <section class="section">
   <div class="container">${blocks}</div>
 </section>`;
-  return layout(lang, "research", `${u.researchPage.title} — ${site.nameShort}`, u.researchPage.sub, body);
+  return layout(lang, "research", `${u.researchPage.title} — ${site.nameShort}`, u.researchPage.desc || site.tagline[lang], body);
 }
 
 function renderPublications(lang) {

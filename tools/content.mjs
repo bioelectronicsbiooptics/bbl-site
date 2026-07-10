@@ -95,7 +95,7 @@ export const ui = {
         { key: "patent", label: "Patents" },
       ],
     },
-    researchPage: { title: "Research", sub: "Five directions under one molecular view of information — writing, storage, computing, sensing, and the enabling platforms." },
+    researchPage: { title: "Research", sub: "", desc: "Research directions at the Bioelectronics & Biooptics Lab." },
     teachingPage: {
       title: "Teaching",
       sub: "",
@@ -168,7 +168,7 @@ export const ui = {
         { key: "patent", label: "특허" },
       ],
     },
-    researchPage: { title: "연구", sub: "정보를 분자의 관점으로 본 다섯 갈래 — 합성, 저장, 연산, 감지, 그리고 이를 가능케 하는 플랫폼." },
+    researchPage: { title: "연구", sub: "", desc: "유전자 진단 및 치료 연구실의 연구 방향." },
     teachingPage: {
       title: "강의",
       sub: "",
