@@ -202,6 +202,24 @@ curl -sI https://bbl.stdbioelec.com/ | head -3
 
 → `https://bbl.stdbioelec.com` 접속 완료.
 
+### ⚠️ 인증서가 `none`에서 안 넘어갈 때 (실제 겪음)
+
+DNS·CAA·DNSSEC 다 정상인데 `https_certificate.state`가 계속 `none`이고 `https://`가
+`*.github.io` 기본 인증서만 주면 = 발급 상태가 꼬인 것. **Pages를 삭제 후 재생성**하면
+CNAME 파일 기준으로 도메인이 자동 복구되고 인증서 발급이 새로 시작된다 (즉시 `issued`로 넘어갔음):
+
+```bash
+R=/repos/bioelectronicsbiooptics/bbl-site/pages
+gh api --method DELETE "$R"                                   # 삭제
+sleep 6
+gh api --method POST "$R" -f "source[branch]=main" -f "source[path]=/"   # 재생성 (CNAME 파일로 도메인 자동 인식)
+# 몇 초~분 뒤 state가 new → issued → approved
+gh api "$R" --jq '.https_certificate.state'
+```
+
+- `https_enforced`는 **인증서가 생긴 뒤에만** `true`로 설정 가능 (없으면 404 "certificate does not exist yet").
+- 커스텀 도메인을 `-f cname=` 로 비우면 CNAME 파일까지 지워지니 주의 — 재생성 방식이 안전.
+
 ---
 
 ## 9. 유지보수 루프 (내용 수정 → 자동 재배포)
