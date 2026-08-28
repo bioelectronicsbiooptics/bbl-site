@@ -472,17 +472,13 @@ function renderTeaching(lang) {
   const rows = courses.map((c) => `
   <li class="pub">
     <span class="pub__year">${lang === "ko" ? c.levelKo : c.levelEn}</span>
-    <div class="pub__body"><h4>${lang === "ko" ? c.ko : c.en}</h4><div class="pub__authors">${lang === "ko" ? c.descKo : c.descEn}</div></div>
+    <div class="pub__body"><h4>${lang === "ko" ? c.ko : c.en}</h4>${(lang === "ko" ? c.descKo : c.descEn) ? `<div class="pub__authors">${lang === "ko" ? c.descKo : c.descEn}</div>` : ""}</div>
     <span></span>
   </li>`).join("");
   const body = `${pageHero(lang, u.teachingPage.title, u.teachingPage.sub)}
 <section class="section">
   <div class="container">
     <ul class="pub-list reveal">${rows}</ul>
-    <div class="callout reveal" style="margin-top:44px">
-      <h3 style="font-size:1.25rem">${u.teachingPage.books}</h3>
-      <p style="color:var(--ink-2);margin-top:10px">${u.teachingPage.booksBody}</p>
-    </div>
   </div>
 </section>`;
   return layout(lang, "teaching", `${u.teachingPage.title} — ${site.nameShort}`, u.teachingPage.desc || site.tagline[lang], body);

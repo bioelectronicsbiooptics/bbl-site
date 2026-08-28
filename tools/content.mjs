@@ -100,8 +100,6 @@ export const ui = {
       title: "Teaching",
       sub: "",
       desc: "Undergraduate and graduate courses by Prof. Youngjun Song.",
-      books: "Course books & writing",
-      booksBody: "In-progress texts: a NAND Flash textbook + problem set, a BioPython book, molecular-biology / molecular-diagnostics chapters, and a synthetic-biology course text.",
     },
     membersPage: {
       title: "People",
@@ -173,8 +171,6 @@ export const ui = {
       title: "강의",
       sub: "",
       desc: "송영준 교수의 학부·대학원 강의.",
-      books: "교재 · 저술",
-      booksBody: "집필 중인 교재: NAND Flash 교재+문제집, 바이오파이썬 책, 분자생물학·분자진단 챕터, 합성생물학 교재.",
     },
     membersPage: {
       title: "구성원",
@@ -299,26 +295,26 @@ export const researchAreas = [
 /* Publications — from the PI's Google Scholar; topics drive the filter.
    author: string with the PI wrapped in <b>…</b>. featured: shows a badge. */
 export const publications = [
-  { year: "2026", title: "Electric field–guided random-access DNA data storage", authors: "D. Lim, T. Kang, W. Lee, <b>Y. Song</b>", venue: "Science Advances", topics: ["storage", "synthesis"], featured: "Featured", link: "https://stdbioelec.com/papers/electric-field-guided-dna-storage.html" },
-  { year: "2026", title: "High-Data-Density, High-Decoding-Speed, and High-Decoding-Accuracy DNA Data Ink for Digital Preservation", authors: "T. Kang, D. Lim, W. Lee, J. Kim, X. Huang, J. Kim, <b>Y. Song</b>", venue: "ACS Nano", topics: ["storage"], featured: "Featured", link: "https://stdbioelec.com/papers/dna-data-ink-digital-preservation.html" },
-  { year: "2025", title: "Enzyme-free chemical DNA ligation via amine-crosslinker-mediated DNA assembly for miRNA detection", authors: "D. Lim, Z. Haider, H. Lim, W. Lee, T. Kang, H.S. Eun, J. Kim, <b>Y. Song</b>", venue: "Cell Reports Physical Science", topics: ["diagnosis"], featured: "Featured", link: "https://stdbioelec.com/papers/enzyme-free-dna-ligation-mirna.html" },
-  { year: "2025", title: "Polymerase elongation onto patterned DNA for random-accessed DNA data storage", authors: "T. Kang, D. Lim, W. Lee, <b>Y. Song</b>", venue: "BioChip Journal 19(3), 636–648", topics: ["storage", "synthesis"] },
-  { year: "2025", title: "Amine-to-amine DNA conjugation on gold surfaces for electric field-assisted hybridization", authors: "D. Lim, S. Noh, T. Kang, N. Nergui, H.S. Eun, <b>Y. Song</b>", venue: "Langmuir 41(10), 7008–7015", topics: ["synthesis"] },
-  { year: "2025", title: "High-ratio carbon nanotube–carboxymethyl cellulose composite grid for Joule heating device", authors: "W. Lee, D. Lim, T. Kang, C. Lee, S. Noh, H.S. Eun, J.W. Lee, <b>Y. Song</b>", venue: "Advanced Composite Materials", topics: ["materials"] },
-  { year: "2025", title: "Elastic conductive CNT/Ecoflex nanocomposites for tactile sensing", authors: "W. Lee, C.H. Lee, T. Kang, <b>Y. Song</b>", venue: "Soft Materials 23(1–2), 45–54", topics: ["materials"] },
-  { year: "2024", title: "The multiple fluorescent multi-bit DNA memory encoding system", authors: "N. Nergui, J. Kim, D. Lim, W. Lee, T. Kang, S. Kim, M.S. Shim, <b>Y. Song</b>", venue: "Nano Communication Networks 39, 100497", topics: ["computing", "storage"] },
-  { year: "2024", title: "Fabrication of directional carbon nanotube networks by dielectrophoresis with layer-by-layer deposition", authors: "J. Kim, C.H. Lee, C. Lee, N. Nergui, S. Noh, D. Lim, K.H. Song, S. Kim, <b>Y. Song</b>", venue: "IEEE Access 12, 26410–26418", topics: ["materials"] },
-  { year: "2024", title: "Eutectic gallium–indium transparent conductive electrodes on flexible substrates for touch sensors", authors: "H. Kim, <b>Y. Song</b>, S. Chang", venue: "Microelectronics Reliability 157, 115402", topics: ["materials"] },
-  { year: "2023", title: "Liquid metal electrodynamic accumulation microfluidics system for DNA memory and liquid biopsy", authors: "Y. Jeong, S. Noh, M. Yu, S. Chang, H. Eun, J. Kim, <b>Y. Song</b>", venue: "Advanced Functional Materials 33(51) — Cover", topics: ["storage", "diagnosis", "materials"], featured: "Cover" },
-  { year: "2023", title: "Processing DNA storage through programmable assembly in a droplet-based fluidics system", authors: "M. Yu, D. Lim, J. Kim, <b>Y. Song</b>", venue: "Advanced Science 10(32), 2303197", topics: ["storage", "computing"] },
-  { year: "2023", title: "Structural conductive carbon nanotube nanocomposites for stretchable electronics", authors: "J. Ahn, S. Noh, D. Kim, B.S. Kim, S. Kim, <b>Y. Song</b>", venue: "Materials Research Express 10(3), 036304", topics: ["materials"] },
-  { year: "2021", title: "Programmable DNA-based Boolean logic microfluidic processing unit", authors: "W. Lee, M. Yu, D. Lim, T. Kang, <b>Y. Song</b>", venue: "ACS Nano 15(7), 11644–11654", topics: ["computing"], featured: "Featured" },
-  { year: "2021", title: "Dielectrophoretic trapping for nanoparticles, high-molecular-weight DNA, and SYBR Gold using a PCB", authors: "S. Noh, <b>Y. Song</b>", venue: "IEEE Sensors Journal 21(17), 18451–18458", topics: ["materials", "diagnosis"] },
-  { year: "2021", title: "Vacuum-filtration fabrication for diverse conductive transparent cellulose electronic devices", authors: "S. Noh, H. An, <b>Y. Song</b>", venue: "Cellulose 28(5), 3081–3096", topics: ["materials"] },
-  { year: "2020", title: "DNA double-write / double-binding identity", authors: "M.J. Heller, E. Skowronski, <b>Y. Song</b>, J. Warner, S. Chen", venue: "US Patent 10,754,250", topics: ["patent", "storage"] },
-  { year: "2020", title: "Poly-thymine-based DNA photolithography onto electrostatic coupling substrates", authors: "<b>Y. Song</b>", venue: "Materials Science & Engineering: C 111, 110795", topics: ["storage", "synthesis"] },
-  { year: "2018", title: "DNA multi-bit non-volatile memory and bit-shifting operations using addressable electrode arrays and electric-field-induced hybridization", authors: "<b>Y. Song</b>, S. Kim, M.J. Heller, X. Huang", venue: "Nature Communications 9(1), 281", topics: ["storage", "computing"], featured: "Featured" },
-  { year: "2016", title: "Thin-film deposition apparatus and method using electric field", authors: "J.S. Heo, K. Choi, S.J. Kim, M.J. Heller, <b>Y.J. Song</b>", venue: "US Patent 9,399,826", topics: ["patent", "materials"] },
+  { year: "2026", title: "Electric field–guided random-access DNA data storage", authors: "Doyeon Lim, Taeseok Kang, Wonjin Lee, Zeeshan Haider, Seunghwan Noh, Minsang Yu, Xiaohua Huang, Hyuk Soo Eun, <b>Youngjun Song</b>", venue: "Science Advances", topics: ["storage", "synthesis"], featured: "Featured", link: "https://stdbioelec.com/papers/electric-field-guided-dna-storage.html" },
+  { year: "2026", title: "High-Data-Density, High-Decoding-Speed, and High-Decoding-Accuracy DNA Data Ink for Digital Preservation", authors: "Taeseok Kang, Doyeon Lim, Wonjin Lee, Jungwoo Kim, Xiaohua Huang, Jinchul Kim, <b>Youngjun Song</b>", venue: "ACS Nano", topics: ["storage"], featured: "Featured", link: "https://stdbioelec.com/papers/dna-data-ink-digital-preservation.html" },
+  { year: "2025", title: "Enzyme-free chemical DNA ligation via amine-crosslinker-mediated DNA assembly for miRNA detection", authors: "Doyeon Lim, Zeeshan Haider, Hyojin Lim, Wonjin Lee, Taeseok Kang, Hyuk Soo Eun, Jinchul Kim, <b>Youngjun Song</b>", venue: "Cell Reports Physical Science", topics: ["diagnosis"], featured: "Featured", link: "https://stdbioelec.com/papers/enzyme-free-dna-ligation-mirna.html" },
+  { year: "2025", title: "Polymerase elongation onto patterned DNA for random-accessed DNA data storage", authors: "Taeseok Kang, Doyeon Lim, Wonjin Lee, <b>Youngjun Song</b>", venue: "BioChip Journal 19(3), 636–648", topics: ["storage", "synthesis"] },
+  { year: "2025", title: "Amine-to-amine DNA conjugation on gold surfaces for electric field-assisted hybridization", authors: "Doyeon Lim, Seunghwan Noh, Taeseok Kang, Navchtsetseg Nergui, Hyuk Soo Eun, <b>Youngjun Song</b>", venue: "Langmuir 41(10), 7008–7015", topics: ["synthesis"] },
+  { year: "2025", title: "High-ratio carbon nanotube–carboxymethyl cellulose composite grid for Joule heating device", authors: "Wonjin Lee, Doyeon Lim, Taeseok Kang, Changjae Lee, Seunghwan Noh, Hyuk Soo Eun, Jin Woo Lee, <b>Youngjun Song</b>", venue: "Advanced Composite Materials", topics: ["materials"] },
+  { year: "2025", title: "Elastic conductive CNT/Ecoflex nanocomposites for tactile sensing", authors: "Wonjin Lee, Chan-Hyeok Lee, Taeseok Kang, <b>Youngjun Song</b>", venue: "Soft Materials 23(1–2), 45–54", topics: ["materials"] },
+  { year: "2024", title: "The multiple fluorescent multi-bit DNA memory encoding system", authors: "Navchtsetseg Nergui, Jongdo Kim, Doyeon Lim, Wonjin Lee, Taeseok Kang, Sejung Kim, Min Suk Shim, <b>Youngjun Song</b>", venue: "Nano Communication Networks 39, 100497", topics: ["computing", "storage"] },
+  { year: "2024", title: "Fabrication of directional carbon nanotube networks by dielectrophoresis with layer-by-layer deposition", authors: "Jongdo Kim, Chan-Hyeok Lee, Changjae Lee, Navchtsetseg Nergui, Seunghwan Noh, Doyeon Lim, Kwang Hoon Song, Sejung Kim, <b>Youngjun Song</b>", venue: "IEEE Access 12, 26410–26418", topics: ["materials"] },
+  { year: "2024", title: "Eutectic gallium–indium transparent conductive electrodes on flexible substrates for touch sensors", authors: "Hongseok Kim, <b>Youngjun Song</b>, Sung-pil Chang", venue: "Microelectronics Reliability 157, 115402", topics: ["materials"] },
+  { year: "2023", title: "Liquid metal electrodynamic accumulation microfluidics system for DNA memory and liquid biopsy", authors: "Yujin Jeong, Seunghwan Noh, Minsang Yu, Sung-pil Chang, Hyuksoo Eun, Jinchul Kim, <b>Youngjun Song</b>", venue: "Advanced Functional Materials 33(51) — Cover", topics: ["storage", "diagnosis", "materials"], featured: "Cover" },
+  { year: "2023", title: "Processing DNA storage through programmable assembly in a droplet-based fluidics system", authors: "Minsang Yu, Doyeon Lim, Jungwoo Kim, <b>Youngjun Song</b>", venue: "Advanced Science 10(32), 2303197", topics: ["storage", "computing"] },
+  { year: "2023", title: "Structural conductive carbon nanotube nanocomposites for stretchable electronics", authors: "Jaekyeong Ahn, Seunghwan Noh, Danbi Kim, Bo-Seok Kim, Sejung Kim, <b>Youngjun Song</b>", venue: "Materials Research Express 10(3), 036304", topics: ["materials"] },
+  { year: "2021", title: "Programmable DNA-based Boolean logic microfluidic processing unit", authors: "Wonjin Lee, Minsang Yu, Doyeon Lim, Taeseok Kang, <b>Youngjun Song</b>", venue: "ACS Nano 15(7), 11644–11654", topics: ["computing"], featured: "Featured" },
+  { year: "2021", title: "Dielectrophoretic trapping for nanoparticles, high-molecular-weight DNA, and SYBR Gold using a PCB", authors: "Seunghwan Noh, <b>Youngjun Song</b>", venue: "IEEE Sensors Journal 21(17), 18451–18458", topics: ["materials", "diagnosis"] },
+  { year: "2021", title: "Vacuum-filtration fabrication for diverse conductive transparent cellulose electronic devices", authors: "Seunghwan Noh, Huijin An, <b>Youngjun Song</b>", venue: "Cellulose 28(5), 3081–3096", topics: ["materials"] },
+  { year: "2020", title: "DNA double-write / double-binding identity", authors: "Michael J. Heller, Elaine Skowronski, <b>Youngjun Song</b>, John Warner, Shaochen Chen", venue: "US Patent 10,754,250", topics: ["patent", "storage"] },
+  { year: "2020", title: "Poly-thymine-based DNA photolithography onto electrostatic coupling substrates", authors: "<b>Youngjun Song</b>", venue: "Materials Science & Engineering: C 111, 110795", topics: ["storage", "synthesis"] },
+  { year: "2018", title: "DNA multi-bit non-volatile memory and bit-shifting operations using addressable electrode arrays and electric-field-induced hybridization", authors: "<b>Youngjun Song</b>, Sejung Kim, Michael J. Heller, Xiaohua Huang", venue: "Nature Communications 9(1), 281", topics: ["storage", "computing"], featured: "Featured" },
+  { year: "2016", title: "Thin-film deposition apparatus and method using electric field", authors: "Jin S. Heo, Hwi-yeol Park, Kyung-hoon Cho, Kyoung-hwan Choi, Se-Jung Kim, Michael J. Heller, <b>Young-Jun Song</b>", venue: "US Patent 9,399,826", topics: ["patent", "materials"] },
 ];
 
 export const members = {
@@ -374,14 +370,19 @@ export const positions = {
 
 /* Teaching — Prof. Youngjun Song's courses. levelKey groups the list. */
 export const courses = [
-  { levelEn: "Undergraduate", levelKo: "학부", en: "Electronic & Electrical Properties (Semiconductor Devices)", ko: "전자전기물성 (반도체 소자)", descEn: "Bands, carriers, MOSFETs", descKo: "밴드·캐리어·MOSFET" },
-  { levelEn: "Undergraduate", levelKo: "학부", en: "Bioelectronics", ko: "바이오전자공학", descEn: "Semiconductor processes → DEP, liquid biopsy, DNA storage / logic", descKo: "반도체 8대 공정 → DEP·액상생검·DNA 저장/로직" },
-  { levelEn: "Undergraduate", levelKo: "학부", en: "Nanodevice Engineering (DNA Nanotech)", ko: "나노소자공학 (DNA 나노텍)", descEn: "Synthesis → PCR → Sanger → NGS", descKo: "합성 → PCR → Sanger → NGS" },
-  { levelEn: "Undergraduate", levelKo: "학부", en: "Nano Thin-Film Engineering (Bio-Computing)", ko: "나노박막공학 (바이오컴퓨터공학)", descEn: "DNA computing / storage, MATLAB, RS codes", descKo: "DNA 컴퓨팅/스토리지, MATLAB, RS 코드" },
-  { levelEn: "Undergraduate", levelKo: "학부", en: "Bio-Nano Analytical Engineering", ko: "바이오나노 분석공학", descEn: "SEM / TEM / AFM, HPLC, ITC, NMR, XPS", descKo: "SEM·TEM·AFM, HPLC, ITC, NMR, XPS" },
-  { levelEn: "Undergraduate", levelKo: "학부", en: "Encoding Theory (ECC / RS)", ko: "인코딩 이론 (ECC / RS)", descEn: "Hamming, Reed–Solomon, erasure coding", descKo: "Hamming, Reed–Solomon, 소거정정 코딩" },
-  { levelEn: "UG / Graduate", levelKo: "학부·대학원", en: "Bioinformatics", ko: "바이오인포매틱스", descEn: "NGS pipeline — QC → alignment → quantification → visualization", descKo: "NGS 파이프라인 — QC → 정렬 → 정량 → 시각화" },
-  { levelEn: "Graduate", levelKo: "대학원", en: "Molecular Biology Review & Paper Reading", ko: "분자생물학 리뷰 · 논문지도", descEn: "Molecular-diagnostics review + recent literature", descKo: "분자진단 리뷰 + 최신 논문 읽기" },
+  { levelEn: "Undergraduate", levelKo: "학부", en: "Molecular Information Engineering", ko: "분자정보공학" },
+  { levelEn: "Undergraduate", levelKo: "학부", en: "Molecular Diagnostics and Bioanalytical Engineering", ko: "분자진단 및 바이오 분석공학" },
+  { levelEn: "Undergraduate", levelKo: "학부", en: "Molecular Biology Analysis Technology", ko: "분자생물학 분석기술" },
+  { levelEn: "Undergraduate", levelKo: "학부", en: "BioMEMS", ko: "BioMEMS" },
+  { levelEn: "Graduate", levelKo: "대학원", en: "Large Language Models and Agent Models", ko: "Large Language Model 및 에이전트 모델" },
+  { levelEn: "Graduate", levelKo: "대학원", en: "Bio-AI", ko: "Bio-AI" },
+  { levelEn: "Graduate", levelKo: "대학원", en: "Bio-Semiconductor Devices and NAND Flash", ko: "바이오 반도체 소자 및 NAND Flash" },
+  { levelEn: "Graduate", levelKo: "대학원", en: "Gene Analysis Technology", ko: "유전자 분석 기술" },
+  { levelEn: "Graduate", levelKo: "대학원", en: "AI-Agents", ko: "AI-Agents" },
+  { levelEn: "Graduate", levelKo: "대학원", en: "Molecular Biology Technology", ko: "분자생물학기술" },
+  { levelEn: "Graduate", levelKo: "대학원", en: "Information Algorithms", ko: "정보 알고리즘" },
+  { levelEn: "Graduate", levelKo: "대학원", en: "Medicinal Chemistry", ko: "의학화학" },
+  { levelEn: "Graduate", levelKo: "대학원", en: "Quantum Computing", ko: "양자컴퓨팅" },
 ];
 
 export const contactInfo = {
