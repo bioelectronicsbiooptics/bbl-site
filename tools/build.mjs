@@ -8,7 +8,7 @@ import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 import {
   site, pages, ui, researchAreas, publications,
-  members, positions, courses, contactInfo,
+  members, positions, courses, courseMIE, contactInfo,
 } from "./content.mjs";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -80,16 +80,17 @@ function head(lang, pageKey, titleText, desc) {
 </head>`;
 }
 
-function header(lang, pageKey) {
+function header(lang, pageKey, fileOverride) {
   const u = ui[lang];
   const other = lang === "en" ? "ko" : "en";
-  const otherHref = `../${other}/${fileFor(pageKey)}`;
+  const selfFile = fileOverride || fileFor(pageKey);
+  const otherHref = `../${other}/${selfFile}`;
   const links = pages.map((p) => {
     const active = p.key === pageKey ? " class=\"is-active\"" : "";
     return `<li><a href="./${p.file}"${active}>${u.nav[p.key]}</a></li>`;
   }).join("");
-  const langSwitch = `<div class="lang-switch"><a href="./${fileFor(pageKey)}" class="is-active">${ui[lang].langName}</a><a href="${otherHref}">${ui[other].langName}</a></div>`;
-  const langSwitchM = `<div class="lang-switch lang-switch-m" style="display:none"><a href="./${fileFor(pageKey)}" class="is-active">${ui[lang].langName}</a><a href="${otherHref}">${ui[other].langName}</a></div>`;
+  const langSwitch = `<div class="lang-switch"><a href="./${selfFile}" class="is-active">${ui[lang].langName}</a><a href="${otherHref}">${ui[other].langName}</a></div>`;
+  const langSwitchM = `<div class="lang-switch lang-switch-m" style="display:none"><a href="./${selfFile}" class="is-active">${ui[lang].langName}</a><a href="${otherHref}">${ui[other].langName}</a></div>`;
   return `<header class="site-header">
 <div class="container nav">
   <a class="brand" href="./index.html" aria-label="${site.nameShort} home">
@@ -154,10 +155,10 @@ function footer(lang) {
 </footer>`;
 }
 
-function layout(lang, pageKey, titleText, desc, body) {
+function layout(lang, pageKey, titleText, desc, body, fileOverride) {
   return `${head(lang, pageKey, titleText, desc)}
 <body>
-${header(lang, pageKey)}
+${header(lang, pageKey, fileOverride)}
 <main>
 ${body}
 </main>
@@ -472,7 +473,7 @@ function renderTeaching(lang) {
   const rows = courses.map((c) => `
   <li class="pub">
     <span class="pub__year">${lang === "ko" ? c.levelKo : c.levelEn}</span>
-    <div class="pub__body"><h4>${lang === "ko" ? c.ko : c.en}</h4>${(lang === "ko" ? c.descKo : c.descEn) ? `<div class="pub__authors">${lang === "ko" ? c.descKo : c.descEn}</div>` : ""}</div>
+    <div class="pub__body"><h4>${c.href ? `<a class="pub__link" href="${c.href}">${lang === "ko" ? c.ko : c.en}</a>` : (lang === "ko" ? c.ko : c.en)}</h4>${(lang === "ko" ? c.descKo : c.descEn) ? `<div class="pub__authors">${lang === "ko" ? c.descKo : c.descEn}</div>` : ""}${c.href ? `<a class="pub__more" href="${c.href}">${lang === "ko" ? "주차별 강의" : "Weekly lectures"} →</a>` : ""}</div>
     <span></span>
   </li>`).join("");
   const body = `${pageHero(lang, u.teachingPage.title, u.teachingPage.sub)}
@@ -482,6 +483,34 @@ function renderTeaching(lang) {
   </div>
 </section>`;
   return layout(lang, "teaching", `${u.teachingPage.title} — ${site.nameShort}`, u.teachingPage.desc || site.tagline[lang], body);
+}
+
+/* ---------------- Course detail: Molecular Information Engineering ---------------- */
+function renderCourseMIE(lang) {
+  const u = ui[lang];
+  const c = courseMIE[lang];
+  const rows = courseMIE.weeks.map((w) => {
+    const mats = w.materials.map((m) => {
+      const ext = m.href.startsWith("http");
+      return `<a class="pub__more" href="${m.href}" target="_blank" rel="noopener">${lang === "ko" ? m.ko : m.en} ${ext ? "↗" : "→"}</a>`;
+    }).join("");
+    const badge = w.materials.length ? `<span class="pub__badge">${lang === "ko" ? "자료" : "Materials"}</span>` : `<span></span>`;
+    return `
+  <li class="pub">
+    <span class="pub__year">${lang === "ko" ? `${w.no}주차` : `Week ${String(w.no).padStart(2, "0")}`}</span>
+    <div class="pub__body"><h4>${lang === "ko" ? w.ko : w.en}</h4><div class="pub__authors">${lang === "ko" ? w.topicsKo : w.topicsEn}</div>${mats ? `<div>${mats}</div>` : ""}</div>
+    ${badge}
+  </li>`;
+  }).join("");
+  const body = `${pageHero(lang, c.title, c.sub)}
+<section class="section">
+  <div class="container">
+    <p class="reveal" style="color:var(--ink-2);margin-bottom:6px">${c.level} · <a href="./${fileFor("teaching")}">${u.nav.teaching}</a></p>
+    <p class="reveal" style="color:var(--ink-3);font-size:.9rem;margin-bottom:24px">${c.note}</p>
+    <ul class="pub-list reveal">${rows}</ul>
+  </div>
+</section>`;
+  return layout(lang, "teaching", `${c.title} — ${site.nameShort}`, c.desc, body, courseMIE.file);
 }
 
 /* ---------------- Root: redirect to preferred language ---------------- */
@@ -524,6 +553,8 @@ for (const lang of ["en", "ko"]) {
     writeFileSync(resolve(ROOT, lang, p.file), html, "utf8");
     count++;
   }
+  writeFileSync(resolve(ROOT, lang, courseMIE.file), renderCourseMIE(lang), "utf8");
+  count++;
 }
 writeFileSync(resolve(ROOT, "index.html"), renderRoot(), "utf8");
 count++;

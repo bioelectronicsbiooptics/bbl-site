@@ -370,7 +370,7 @@ export const positions = {
 
 /* Teaching — Prof. Youngjun Song's courses. levelKey groups the list. */
 export const courses = [
-  { levelEn: "Undergraduate", levelKo: "학부", en: "Molecular Information Engineering", ko: "분자정보공학" },
+  { levelEn: "Undergraduate", levelKo: "학부", en: "Molecular Information Engineering", ko: "분자정보공학", href: "molecular-information-engineering.html", descEn: "DNA data storage · weekly lectures", descKo: "DNA 데이터 저장 · 주차별 강의" },
   { levelEn: "Undergraduate", levelKo: "학부", en: "Molecular Diagnostics and Bioanalytical Engineering", ko: "분자진단 및 바이오 분석공학" },
   { levelEn: "Undergraduate", levelKo: "학부", en: "Molecular Biology Analysis Technology", ko: "분자생물학 분석기술" },
   { levelEn: "Undergraduate", levelKo: "학부", en: "BioMEMS", ko: "BioMEMS" },
@@ -384,6 +384,31 @@ export const courses = [
   { levelEn: "Graduate", levelKo: "대학원", en: "Medicinal Chemistry", ko: "의학화학" },
   { levelEn: "Graduate", levelKo: "대학원", en: "Quantum Computing", ko: "양자컴퓨팅" },
 ];
+
+/* Course detail — Molecular Information Engineering (분자정보공학), weekly plan.
+   materials: lab-authored files only (slides, code). */
+export const courseMIE = {
+  file: "molecular-information-engineering.html",
+  en: { title: "Molecular Information Engineering", sub: "DNA data storage — from bits to bases and back", desc: "Weekly lectures of Molecular Information Engineering (undergraduate).", level: "Undergraduate · 15 weeks", note: "Materials: lab-authored slides and code. Handouts with textbook figures are provided in class." },
+  ko: { title: "분자정보공학", sub: "DNA 데이터 저장 — bit에서 염기로, 다시 bit로", desc: "분자정보공학(학부) 주차별 강의.", level: "학부 · 15주", note: "공개 자료: 연구실 제작 슬라이드 · 코드. 교재 그림이 포함된 자료는 수업 중 배포." },
+  weeks: [
+    { no: 1, en: "History of Information Storage and the Memory Hierarchy", ko: "정보 저장의 역사와 새로운 메모리 계층", topicsEn: "Recording media · memory hierarchy · cold storage and DNA", topicsKo: "기록 매체의 역사 · 메모리 계층 · 콜드 스토리지와 DNA", materials: [] },
+    { no: 2, en: "DNA Data Storage: Concepts, History and Workflow", ko: "DNA 데이터 저장의 개념, 역사와 전체 워크플로", topicsEn: "DNA structure · encoding → synthesis → storage → random access → sequencing → decoding", topicsKo: "DNA 구조와 정보 표현 · 인코딩 → 합성 → 보존 → Random Access → 시퀀싱 → 디코딩", materials: [] },
+    { no: 3, en: "Digital Data and DNA Encoding", ko: "디지털 데이터와 DNA 인코딩", topicsEn: "Bits · ASCII · UTF-8 · 2 bits/nt mapping · GC content · homopolymers", topicsKo: "bit · ASCII · UTF-8 · 2 bits/nt 매핑 · GC 함량 · 호모폴리머", materials: [] },
+    { no: 4, en: "DNA Channel Errors and Error-Correcting Codes", ko: "DNA 채널 오류와 오류정정 코드", topicsEn: "Substitution · insertion · deletion · dropout · Hamming · RS · BCH · LDPC · fountain · VT", topicsKo: "치환 · 삽입 · 삭제 · dropout · Hamming · RS · BCH · LDPC · fountain · VT", materials: [{ en: "Lecture 4-1 · Algebraic Error Correction (HTML slides)", ko: "4-1강 · Algebraic Error Correction (HTML 슬라이드)", href: "../courses/molecular-information-engineering/week04/lecture4-1.html" }, { en: "Lecture 4-2 · Probabilistic Error Correction (HTML slides)", ko: "4-2강 · Probabilistic Error Correction (HTML 슬라이드)", href: "../courses/molecular-information-engineering/week04/lecture4-2.html" }, { en: "MATLAB labs 1–14", ko: "MATLAB 실습 코드 (Lab 1–14)", href: "https://github.com/bioelectronicsbiooptics/bbl-site/tree/main/courses/molecular-information-engineering/week04/matlab" }] },
+    { no: 5, en: "Hashing and High-Efficiency DNA Coding", ko: "해시와 고효율 DNA 코딩 전략", topicsEn: "SHA-256 · DNA Fountain · Yin–Yang · HEDGES · k-mer · mCGR", topicsKo: "SHA-256 · DNA Fountain · Yin–Yang · HEDGES · k-mer · mCGR", materials: [] },
+    { no: 6, en: "Chemical DNA Synthesis at Scale", ko: "DNA의 화학적 합성과 대량 생산", topicsEn: "Phosphoramidite cycle · yield · oligo pools · microarrays", topicsKo: "포스포라미다이트 합성 사이클 · 수율 · oligo pool · microarray", materials: [] },
+    { no: 7, en: "Enzymatic Synthesis, Synthetic Biology and Xeno Nucleic Acids", ko: "효소적 합성, 합성생물학과 확장 핵산", topicsEn: "TdT · template-free synthesis · assembly · XNA", topicsKo: "TdT · template-free 합성 · 조립 · XNA", materials: [] },
+    { no: 8, en: "Midterm Integration (Chapters 1–7)", ko: "중간 정리와 통합 평가 (1–7장)", topicsEn: "DNA writing mini-design presentations", topicsKo: "DNA writing 미니 설계 발표", materials: [] },
+    { no: 9, en: "Storage Media and Long-Term Preservation", ko: "DNA 저장 매체와 장기 보존", topicsEn: "Silica encapsulation · DNA ink · accelerated aging", topicsKo: "실리카 캡슐 · DNA 잉크 · 가속 열화", materials: [] },
+    { no: 10, en: "Random Access and Molecular File Systems", ko: "Random Access와 분자 파일 시스템", topicsEn: "Primers · barcodes · indices · selective PCR · electrode chips", topicsKo: "primer · barcode · index · 선택적 PCR · 전극 칩", materials: [] },
+    { no: 11, en: "Sequencing Technologies for Reading DNA", ko: "DNA를 읽는 시퀀싱 기술", topicsEn: "Sanger · Illumina · Nanopore · PacBio · FASTQ quality", topicsKo: "Sanger · Illumina · Nanopore · PacBio · FASTQ 품질", materials: [] },
+    { no: 12, en: "Decoding and File Recovery", ko: "디코딩과 원본 파일 복원", topicsEn: "Clustering · consensus · inner/outer ECC · hash verification", topicsKo: "clustering · consensus · inner/outer ECC · hash 검증", materials: [] },
+    { no: 13, en: "k-mers and Fast NGS-Based Decoding", ko: "k-mer와 고속 NGS 기반 디코딩", topicsEn: "k-mer index · sketches · fast index scanning", topicsKo: "k-mer index · sketch · 고속 index scanning", materials: [] },
+    { no: 14, en: "AI for Fast DNA Data Recovery", ko: "인공지능과 초고속 DNA 데이터 복원", topicsEn: "ML decoding · deep-learning basecalling · iSCAN", topicsKo: "ML 디코딩 · 딥러닝 basecalling · iSCAN", materials: [] },
+    { no: 15, en: "Applications, System Integration and Outlook", ko: "응용, 시스템 통합과 미래 전망", topicsEn: "Cultural heritage · medical data · DNA-of-Things · final project", topicsKo: "문화유산 · 의료 데이터 · DNA-of-Things · 최종 프로젝트", materials: [] },
+  ],
+};
 
 export const contactInfo = {
   addressEn: "Dept. of Nano-Bioengineering, Incheon National University, 119 Academy-ro, Yeonsu-gu, Incheon 22012, Republic of Korea",
