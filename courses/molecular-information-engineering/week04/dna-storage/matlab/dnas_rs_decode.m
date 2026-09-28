@@ -1,5 +1,5 @@
 function [message, corrected, ok] = dnas_rs_decode(codeword, nsym)
-% ACS Nano RSdecoding: BM -> Chien -> Forney로 byte 오류를 정정한다.
+% 원본 RSdecoding: BM -> Chien -> Forney로 byte 오류를 정정한다.
 if nargin < 2
     nsym = 8;
 end
@@ -73,7 +73,7 @@ ok = true;
 end
 
 function syndrome = syndromes(word, nsym, powers, logs)
-% ACS Nano RSdecoding: 최고 차수부터 신드롬 S1..Snsym 계산.
+% 원본 RSdecoding: 최고 차수부터 신드롬 S1..Snsym 계산.
 syndrome = zeros(1, nsym);
 for root = 1:nsym
     syndrome(root) = evaluate(word, powers(root + 1), powers, logs);
@@ -81,7 +81,7 @@ end
 end
 
 function [locator, degree] = berlekamp(syndrome, powers, logs)
-% ACS Nano RSdecoding: Berlekamp-Massey 오류 위치 다항식.
+% 원본 RSdecoding: Berlekamp-Massey 오류 위치 다항식.
 count = numel(syndrome);
 locator = [1 zeros(1, count)];
 previous = locator;
@@ -119,7 +119,7 @@ locator = locator(1:degree + 1);
 end
 
 function value = evaluate(polynomial, point, powers, logs)
-% ACS Nano RSdecoding: 최고 차수부터 Horner 다항식 계산.
+% 원본 RSdecoding: 최고 차수부터 Horner 다항식 계산.
 value = 0;
 for coefficient = polynomial
     value = bitxor(multiply(value, point, powers, logs), coefficient);
@@ -127,7 +127,7 @@ end
 end
 
 function product = multiply(left, right, powers, logs)
-% ACS Nano gf 곱셈: byte 심볼의 체 연산.
+% 원본 gf 곱셈: byte 심볼의 체 연산.
 if left == 0 || right == 0
     product = 0;
 else
@@ -136,7 +136,7 @@ end
 end
 
 function quotient = divide(numerator, denominator, powers, logs)
-% ACS Nano gf 나눗셈: 로그 차를 255로 나눈 나머지 사용.
+% 원본 gf 나눗셈: 로그 차를 255로 나눈 나머지 사용.
 if numerator == 0
     quotient = 0;
 else

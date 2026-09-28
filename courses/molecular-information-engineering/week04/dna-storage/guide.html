@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>DNA 저장 실습 설명서</title>
-<meta name="description" content="이름 · 사진 · 파일을 DNA 가닥 풀로 부호화하고 XOR · Reed–Solomon 오류정정을 거쳐 시퀀싱 read에서 복원하는 실습 설명서 (ACS Nano 2026 방식 · DNAS-1 포맷)">
+<meta name="description" content="이름 · 사진 · 파일을 DNA 가닥 풀로 부호화하고 XOR · Reed–Solomon 오류정정을 거쳐 시퀀싱 read에서 복원하는 실습 설명서 (DNAS-1 포맷)">
 <style>
 :root{
   --navy:#16324F; --teal:#529FD9; --amber:#224EBD; --crim:#C03B3B; --ink:#1A1A1A; --gray:#5B6670;
@@ -222,7 +222,7 @@ footer.end{margin-top:56px;padding-top:14px;border-top:1px solid var(--border);f
       <li><a href="#ref"><span class="no">R</span>참고</a></li>
     </ul>
   </div>
-  <div class="toc-foot">Kang et al., ACS Nano 2026, 20, 3444–3460 방식의 교육용 실습</div>
+  <div class="toc-foot">분자정보공학 · DNA 저장 실습</div>
 </nav>
 
 <main id="main">
@@ -252,16 +252,6 @@ footer.end{margin-top:56px;padding-top:14px;border-top:1px solid var(--border);f
 </ul>
 <figure class="fig"><a class="fig-a" href="fig/fig_pipeline.svg" target="_blank" rel="noopener"><img src="fig/fig_pipeline.svg" alt="부호화–채널–복호 흐름도: 입력 → 행 나누기 → XOR 행 → RS(27,19) → DNA → 148 nt 가닥 → 합성 · 보관 · 시퀀싱 → read → 방향 · PrimerSort · iSCAN · consensus · Global RS · Local RS · XOR 복원 · 파일" width="880" height="629"></a><figcaption>그림 1. 부호화–채널–복호 모형 · 입력 byte → 행 → XOR → RS → DNA → 채널 → read → 복호 → 파일</figcaption></figure>
 
-<h3>ACS Nano 2026 “DNA Data Ink” 방식 요약</h3>
-<ul>
-  <li>3D DTL: STL 3D 모델 → 꼭짓점 좌표 · 연결 행렬로 분리 후 이진화 (Jikji6 = 98,844 bit)</li>
-  <li>바깥 부호: 비트열 앞 절반 ⊕ 뒤 절반 → 별도 XOR 가닥, 풀의 약 33 %</li>
-  <li>가변 index: 데이터 + index = 156 bit 고정, index 폭은 가닥 수로 결정 (Jikji6: 데이터 146 bit + index 10 bit)</li>
-  <li>안쪽 부호: 가닥마다 RS 패리티 32 nt</li>
-  <li>가닥 구조: 프라이머 20 + 데이터 73 + index 5 + 패리티 32 + 프라이머 20 = 150 nt (Jikji6 1,018가닥)</li>
-  <li>복호: 프라이머 위치 고정 비교로 삽입 · 결실 read 제거 → index 자리만 읽어 묶기(iSCAN) → consensus → Global RS → XOR → depth-cut → Local RS → XOR</li>
-</ul>
-<p class="src">Kang et al., ACS Nano 2026, 20, 3444–3460 · p.3446–3453 · Original Sequence/Jikji6.txt</p>
 </div>
 
 <div class="code"><p class="tag">코드</p>
@@ -525,7 +515,7 @@ fprintf('%02x ', rows(1,:)); fprintf('\n');</code></pre></div>
   <li>그 정보(가닥 없음 · RS 복호 실패)를 <strong>안쪽 RS가 제공</strong> → 이중 구조 (바깥 XOR + 안쪽 RS)</li>
   <li>대가: 합성할 가닥 1.5배</li>
 </ul>
-<p class="src">3-2강 강의록 (XOR 패리티 · DNA 저장에서의 XOR) · Kang et al. p.3447 · STL_Encode.m 33–36행 · XORrun2.m</p>
+<p class="src">3-2강 강의록 (XOR 패리티 · DNA 저장에서의 XOR) · STL_Encode.m 33–36행 · XORrun2.m</p>
 </div>
 
 <div class="code"><p class="tag">코드</p>
@@ -579,7 +569,7 @@ isequal(back, rows(1+H, :))                   <span class="cm">% 1 (true)</span>
   <li>보장 범위 = RS 부호어 1개 복호 · 전체 복호는 RS 전에 index 자리(89–96 nt)로 묶음 → index 자리 치환 read는 엉뚱한 묶음 → index 검사로 버려짐 → coverage 1이면 index 1 nt 치환만으로 가닥 소실 (XOR로만 복구)</li>
 </ul>
 <figure class="fig"><a class="fig-a" href="fig/fig_rs_symbol.svg" target="_blank" rel="noopener"><img src="fig/fig_rs_symbol.svg" alt="RS(27,19)의 byte 심볼: 4 nt가 심볼 1개, 1 nt 치환과 같은 byte 안 2 nt 치환이 모두 심볼 1개 오류" width="880" height="314"></a><figcaption>그림 4. RS 심볼 경계 · 1 byte = 4 nt = 심볼 1개 → 1 nt 치환 = 심볼 1개 · 같은 byte 안 치환 2 nt도 심볼 1개</figcaption></figure>
-<p class="src">DNAS-1 설계서 §6 · Kang et al. p.3448 · MATLAB rsenc · rsgenpoly</p>
+<p class="src">DNAS-1 설계서 §6 · MATLAB rsenc · rsgenpoly</p>
 </div>
 
 <div class="code"><p class="tag">코드</p>
@@ -630,7 +620,7 @@ g = rsgenpoly(255, 247)                     <span class="cm">% 1 227 44 178 71 1
 
 <div class="concept"><p class="tag">개념</p>
 <h3>2 bit/nt 매핑</h3>
-<p class="tcap">표 8. bit → 염기 (ACS Nano 2026 방식의 ATGC 순서)</p>
+<p class="tcap">표 8. bit → 염기 (ATGC 순서)</p>
 <div class="tbl"><table style="max-width:420px">
 <thead><tr><th>bit</th><th class="c">00</th><th class="c">01</th><th class="c">10</th><th class="c">11</th></tr></thead>
 <tbody><tr><td>염기</td><td class="c">A</td><td class="c">T</td><td class="c">G</td><td class="c">C</td></tr></tbody>
@@ -638,7 +628,7 @@ g = rsgenpoly(255, 247)                     <span class="cm">% 1 227 44 178 71 1
 <ul>
   <li>1 byte = 4 nt, <strong>윗 bit(MSB)부터</strong>: 'S' 0x53 = 01 01 00 11 → <span class="seq">TTAC</span> · 3주차 <code>format(…, "08b")</code> · <code>dec2bin</code>과 같은 순서</li>
   <li>PAD 0x1B = 00 01 10 11 → <span class="seq">ATGC</span> · index 1 = 0x00 0x01 → <span class="seq">AAAAAAAT</span></li>
-  <li>3-2강 실습: 00 A · 01 C · 10 G · 11 T (ACGT 순서) → 'S' = <span class="seq">CCAT</span> · 이번 실습은 ACS Nano 2026 방식 매핑(ATGC) → 같은 byte도 서열이 다름</li>
+  <li>3-2강 실습: 00 A · 01 C · 10 G · 11 T (ACGT 순서) → 'S' = <span class="seq">CCAT</span> · 이번 실습은 ATGC 매핑 → 같은 byte도 서열이 다름</li>
 </ul>
 
 <h3>148 nt 가닥 구조</h3>
@@ -676,7 +666,7 @@ AGCCTTGTGTCCATCAATCCTTAGTACGTACGTATCATGCATCCATCGTGACATGAAACGATGCATGTATGCTGCCTGAC
 
 <h3>GC % · 최대 호모폴리머</h3>
 <ul>
-  <li>GC % = (G + C 개수) / 전체 · Kang et al. 가닥 풀: GC 46.9–48.7 %, 호모폴리머 2–11 nt</li>
+  <li>GC % = (G + C 개수) / 전체</li>
   <li>호모폴리머 = 같은 염기 연속 · 길수록 합성 · 시퀀싱 오류 증가 요인</li>
   <li>index 윗 byte 0x00 → <span class="seq">AAAA</span> · 가닥 256개 미만이면 모든 가닥의 index 자리가 A 4개 이상으로 시작</li>
   <li>헤더 가닥: 길이 칸의 0 byte → 작은 파일일수록 긴 poly-A (표 10)</li>
@@ -700,7 +690,7 @@ AGCCTTGTGTCCATCAATCCTTAGTACGTACGTATCATGCATCCATCGTGACATGAAACGATGCATGTATGCTGCCTGAC
   <li>예: helix 그림 64 px · 품질 60 (Pillow) → 최대 호모폴리머 35 nt(끔) → 10 nt(켬, 남은 최댓값은 헤더 가닥) · 전체 GC 45.3 % → 47.2 %</li>
 </ul>
 <figure class="fig"><a class="fig-a" href="fig/fig_homopolymer.svg" target="_blank" rel="noopener"><img src="fig/fig_homopolymer.svg" alt="JPEG 머리 17 byte의 DNA 서열과 최장 A 연속, 행 2 마스크 XOR 뒤 서열과 최장 C 연속" width="880" height="476"></a><figcaption>그림 6. JPEG 머리 17 byte의 DNA와 호모폴리머 · whitening 전(A × 11, GC 25.0 %) · 후(행 2 마스크 XOR, C × 4, GC 54.4 %)</figcaption></figure>
-<p class="src">DNAS-1 설계서 §1–2 · §5 · primerSelect.m · PrimerSort.m · Kang et al. p.3448 · 3-2강 week3_dna.py · 4-3 week4_oligo_lab.m</p>
+<p class="src">DNAS-1 설계서 §1–2 · §5 · primerSelect.m · PrimerSort.m · 3-2강 week3_dna.py · 4-3 week4_oligo_lab.m</p>
 </div>
 
 <div class="code"><p class="tag">코드</p>
@@ -762,9 +752,9 @@ fprintf('%s\nGC %.1f %%\n', oligo, 100*mean(oligo == 'G' | oligo == 'C'));</code
 <tr><td>역방향 read</td><td>상보 가닥을 읽은 read (역상보 서열)</td><td>방향 검사 후 뒤집기</td></tr>
 </tbody></table></div>
 <ul>
-  <li><strong>coverage</strong>: 가닥당 read 수 평균 (Kang et al. Jikji6 평균 depth ×2,593.5)</li>
+  <li><strong>coverage</strong>: 가닥당 read 수 평균</li>
   <li>삽입 · 결실 확률 합 0.004/nt → read 하나가 삽입 · 결실 없이 남을 확률 <span class="m">0.996¹⁴⁸ ≈ 0.55</span> → 삽입 · 결실 read 대부분 탈락 (그중 약 8 %는 프라이머 검사 통과) → coverage 1이면 가닥 약 40 % 이상 소실</li>
-  <li>복호 전략: 삽입 · 결실 read는 버리고 치환만 정정 (ACS Nano 2026 방식, p.3451)</li>
+  <li>복호 전략: 삽입 · 결실 read는 버리고 치환만 정정</li>
 </ul>
 
 <h3>시뮬레이터 매개변수</h3>
@@ -791,7 +781,7 @@ fprintf('%s\nGC %.1f %%\n', oligo, 100*mean(oligo == 'G' | oligo == 'C'));</code
   <li>매개변수 비교 실험: seed 고정 → 차이 = 매개변수 효과 · seed 여러 개 → 결과의 변동 범위</li>
   <li>실제 시퀀서와의 차이: 이 모형은 오류 위치 독립 · 균일, 품질 점수 고정 · 실제 오류는 위치 · 서열 의존</li>
 </ul>
-<p class="src">DNAS-1 설계서 §8 · Kang et al. p.3451 · 3-2강 강의록</p>
+<p class="src">DNAS-1 설계서 §8 · 3-2강 강의록</p>
 </div>
 
 <div class="code"><p class="tag">코드</p>
@@ -837,7 +827,7 @@ disp(u)                                     <span class="cm">% 0.2388 0.9135 0.6
 <h3>FASTQ</h3>
 <ul>
   <li>read 1개 = 4줄: <code>@이름</code> / 서열 / <code>+</code> / 품질(염기당 1글자, Phred + 33)</li>
-  <li>시뮬레이터 품질 = 'I' (Phred 40) 고정 · 복호기는 품질 점수 미사용 (ACS Nano 2026 방식, “without quality filtering”, p.3451)</li>
+  <li>시뮬레이터 품질 = 'I' (Phred 40) 고정 · 복호기는 품질 점수 미사용</li>
   <li>아래 예: 역방향 read → 앞 20 nt = R의 역상보 <span class="seq">ATTAGCCAAACCATAGCGCA</span></li>
 </ul>
 <div class="snip"><div class="snip-h"><span>FASTQ · read 1개 ("SONG" 2번 가닥의 역방향 read)</span></div><pre><code class="lang-text">@read_2
@@ -871,7 +861,7 @@ IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
   <li>묶음 수 · 기대 가닥 수 N · 복원 경로별 수 (<code>global</code> · <code>local</code> · <code>xor</code>)</li>
   <li>끝내 없는 가닥 번호 · CRC 일치 여부 · type · ext · L · SHA-256</li>
 </ul>
-<p class="src">STL_Decode_231213.m · Fastq Function3/ · Kang et al. p.3451–3453 · DNAS-1 설계서 §9</p>
+<p class="src">STL_Decode_231213.m · Fastq Function3/ · DNAS-1 설계서 §9</p>
 </div>
 
 <div class="code"><p class="tag">코드</p>
@@ -912,7 +902,7 @@ print(len(reads), "→", len(trimmed))      <span class="cm"># 7 → 6</span></c
 <ul>
   <li>3단계를 통과한 read = 148 nt · 프라이머 제자리 → index는 항상 89–96번 nt</li>
   <li>8 nt → 2 byte → uint16 → 묶음 번호 (0이면 버림)</li>
-  <li>서열 정렬(alignment) 없음 → read 수에 비례하는 분류 · Kang et al. 전체 복호 시간: 4.57 M reads 47.44 s (M2 8 GB, p.3452)</li>
+  <li>서열 정렬(alignment) 없음 → read 수에 비례하는 분류</li>
   <li>한계: index 자리 치환 → 엉뚱한 묶음으로 분류 → 그 묶음의 소수 read → consensus에서 희석, Local RS의 index 검사에서 제외 · coverage 1–2에서는 그 가닥 자체가 소실될 수 있음</li>
 </ul>
 <h3>consensus</h3>
@@ -932,7 +922,7 @@ print(len(reads), "→", len(trimmed))      <span class="cm"># 7 → 6</span></c
 <ul>
   <li>Global RS 실패 묶음의 read를 <strong>하나씩</strong> RS 복호 (<code>STL_Decode_231213.m</code> LRS 섹션 282–292행)</li>
   <li>통과 + index 일치 read들의 17 byte → byte 자리별 최빈값 (동률이면 작은 값) → 행 확보 (<code>local</code>)</li>
-  <li>consensus가 실패해도 오류 4 byte 이하 read가 있으면 복원 (예: Kang et al. Venus 데이터 index 12,643 · read 14개 중 1개 통과)</li>
+  <li>consensus가 실패해도 오류 4 byte 이하 read가 있으면 복원</li>
 </ul>
 <h3>오정정과 index 검사</h3>
 <ul>
@@ -940,7 +930,7 @@ print(len(reads), "→", len(trimmed))      <span class="cm"># 7 → 6</span></c
   <li>방어 1: 복호된 index ≠ 묶음 index → 버림</li>
   <li>방어 2: 파일 전체 CRC-32 비교 (9절)</li>
 </ul>
-<p class="src">Consensus2.m · Binarization.m · RSdecoding.m · STL_Decode_231213.m 282–292행 · Kang et al. p.3451–3453</p>
+<p class="src">Consensus2.m · Binarization.m · RSdecoding.m · STL_Decode_231213.m 282–292행</p>
 </div>
 
 <div class="code"><p class="tag">코드</p>
@@ -1361,7 +1351,7 @@ def rs_decode(cw, nsym=NSYM):
         return None
     return bytes(codeword[:-nsym]), degree</code></pre></div>
 <div class="snip"><div class="snip-h"><span>MATLAB · dnas_gf.m · dnas_rs_encode.m</span><a class="src-link" href="https://github.com/bioelectronicsbiooptics/bbl-site/blob/main/courses/molecular-information-engineering/week04/dna-storage/matlab/dnas_rs_encode.m">전체 파일 ↗</a></div><pre><code class="lang-matlab">function [expTable, logTable] = dnas_gf()
-<span class="cm">% ACS Nano rsenc/gf 부분: GF(256) 표를 직접 만든다.</span>
+<span class="cm">% 원본 rsenc/gf 부분: GF(256) 표를 직접 만든다.</span>
 <span class="cm">% alpha=2, primitive=0x11D. 지수/로그의 값에 1을 더해 첨자 사용.</span>
 persistent powers logs
 if isempty(powers)
@@ -1385,7 +1375,7 @@ logTable = logs;
 end
 
 function codeword = dnas_rs_encode(message, nsym)
-<span class="cm">% ACS Nano nrsin/rsenc 단계: byte를 GF(256) 심볼로 넣는다.</span>
+<span class="cm">% 원본 nrsin/rsenc 단계: byte를 GF(256) 심볼로 넣는다.</span>
 if nargin &lt; 2
     nsym = 8;
 end
@@ -1416,7 +1406,7 @@ codeword = uint8([message work(numel(message) + 1:end)]);
 end
 
 function product = multiply(values, value, powers, logs)
-<span class="cm">% ACS Nano gf 곱셈: log/antilog로 툴박스 없이 계산한다.</span>
+<span class="cm">% 원본 gf 곱셈: log/antilog로 툴박스 없이 계산한다.</span>
 product = zeros(size(values));
 nonzero = values ~= 0 &amp; value ~= 0;
 if any(nonzero)
@@ -1909,11 +1899,7 @@ python3 dnastore.py decode reads.fastq -o out.bin</code></pre></div>
 <!-- ============================================================ -->
 <section id="ref">
 <h2>참고</h2>
-<h3>논문</h3>
-<ul class="refs">
-  <li>Kang, Lim, Lee, Kim, Huang, Kim, Song, “High-Data-Density, High-Decoding-Speed, and High-Decoding-Accuracy DNA Data Ink for Digital Preservation”, <i>ACS Nano</i> 2026, 20, 3444–3460. <a href="https://doi.org/10.1021/acsnano.5c13665">DOI 10.1021/acsnano.5c13665</a></li>
-</ul>
-<h3>연구실 MATLAB 코드 (ACS Nano 2026)</h3>
+<h3>연구실 MATLAB 코드</h3>
 <ul class="refs">
   <li>부호화 (Encoding 통합): <code>STL_Encode.m</code> · <code>cCal.m</code> · <code>genkey.m</code> · <code>primerSelect.m</code></li>
   <li>복호 (Decoding 통합 2): <code>STL_Decode_231213.m</code></li>
@@ -1930,7 +1916,7 @@ python3 dnastore.py decode reads.fastq -o out.bin</code></pre></div>
   <!-- 4-3 올리고 설계 실습: 별도 HTML 없음 → 강의 사이트와 같은 방식으로 저장소의 MATLAB 파일 보기 링크 -->
   <li><a href="https://github.com/bioelectronicsbiooptics/bbl-site/blob/main/courses/molecular-information-engineering/week04/matlab/week4_oligo_lab.m">4-3 올리고 설계 실습 (week4_oligo_lab.m)</a></li>
 </ul>
-<footer class="end">DNA 저장 실습 설명서 · DNAS-1 포맷 (ACS Nano 2026 방식) · 분자정보공학</footer>
+<footer class="end">DNA 저장 실습 설명서 · DNAS-1 포맷 · 분자정보공학</footer>
 </section>
 
 </div>

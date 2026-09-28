@@ -1,7 +1,7 @@
 """DNAS-1: byte → XOR → RS → DNA와 실험 read 복호 실습.
 
 RS·채널·복호는 표준 라이브러리만 사용한다. 사진 축소만 Pillow가 필요하다.
-원본: ACS Nano DNA Data Ink의 STL_Encode.m / STL_Decode_231213.m.
+원본: 연구실 MATLAB STL_Encode.m / STL_Decode_231213.m.
 """
 
 import argparse

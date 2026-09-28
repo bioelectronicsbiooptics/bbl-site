@@ -1,4 +1,4 @@
-/* DNAS-1: ACS Nano DNA Data Ink의 byte 기반 교육용 구현. */
+/* DNAS-1: DNA 저장 실습용 byte 기반 구현. */
 (function (root, factory) {
   if (typeof module === 'object' && module.exports) module.exports = factory();
   else root.DNAS = root.DNAStore = factory();

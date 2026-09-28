@@ -1,5 +1,5 @@
 function [expTable, logTable] = dnas_gf()
-% ACS Nano rsenc/gf 부분: GF(256) 표를 직접 만든다.
+% 원본 rsenc/gf 부분: GF(256) 표를 직접 만든다.
 % alpha=2, primitive=0x11D. 지수/로그의 값에 1을 더해 첨자 사용.
 persistent powers logs
 if isempty(powers)

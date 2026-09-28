@@ -1,5 +1,5 @@
 function codeword = dnas_rs_encode(message, nsym)
-% ACS Nano nrsin/rsenc 단계: byte를 GF(256) 심볼로 넣는다.
+% 원본 nrsin/rsenc 단계: byte를 GF(256) 심볼로 넣는다.
 if nargin < 2
     nsym = 8;
 end
@@ -30,7 +30,7 @@ codeword = uint8([message work(numel(message) + 1:end)]);
 end
 
 function product = multiply(values, value, powers, logs)
-% ACS Nano gf 곱셈: log/antilog로 툴박스 없이 계산한다.
+% 원본 gf 곱셈: log/antilog로 툴박스 없이 계산한다.
 product = zeros(size(values));
 nonzero = values ~= 0 & value ~= 0;
 if any(nonzero)
