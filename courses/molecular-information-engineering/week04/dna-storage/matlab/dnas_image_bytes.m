@@ -1,5 +1,5 @@
 function [bytes, image] = dnas_image_bytes(file, maxSide, quality, gray)
-% 원본 column_data 입력 대체: 정수 간격 축소 후 JPEG byte로 읽는다.
+% 원본 column_data 입력 단계: 정수 간격 축소 후 JPEG byte로 읽는다.
 if nargin < 2, maxSide = 64; end
 if nargin < 3, quality = 60; end
 if nargin < 4, gray = false; end

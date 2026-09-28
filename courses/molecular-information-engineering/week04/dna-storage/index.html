@@ -874,7 +874,7 @@
       <div class="wrap">
         <div class="brand">DNAS<span style="color: var(--teal)">–1</span></div>
         <div class="course">
-          분자정보공학 · DNA 저장 실습<br />ACS Nano 방식 교육용 수정판
+          분자정보공학 · DNA 저장 실습<br />ACS Nano 2026 방식
         </div>
       </div>
     </header>
@@ -1362,7 +1362,7 @@
       <footer class="footer">
         <span
           >DNAS-1 · RS(27,19) / GF(256) / fcr = 1<br />ACS Nano 2026, 20,
-          3444–3460 기반 교육용 수정판</span
+          3444–3460 기반</span
         ><span
           >오프라인 실행 · 외부 전송 없음<br />00 A · 01 T · 10 G · 11 C</span
         >
@@ -1389,14 +1389,14 @@
   const PRIMER_MIN = F_PRIMER.length - 2; // 기본 20 nt 프라이머의 일치 수.
   const TYPES = {file: 0, text: 1, image: 2};
 
-  // 원본 대응: STL_Encode의 입력을 범용 byte 배열로 통일한다.
+  // 입력 단계: 모든 입력을 byte 배열로 통일한다.
   function bytes(value) {
     if (value instanceof Uint8Array) return value;
     if (value instanceof ArrayBuffer) return new Uint8Array(value);
     return Uint8Array.from(value || []);
   }
 
-  // 원본 대응: STL 분할 대신 이름 문자열을 UTF-8 byte로 읽는다.
+  // 입력 단계: 이름 문자열 → UTF-8 byte.
   function textBytes(s) { return new TextEncoder().encode(String(s)); }
 
   // 원본 대응: 입력 문자와 bin_payload 사이의 관계를 확인한다.
@@ -1406,7 +1406,7 @@
       bytes: Array.from(textBytes(ch)), ascii: ch.codePointAt(0) < 128}));
   }
 
-  // 원본 대응: STL 입력 부분을 사진 축소·JPEG 입력으로 바꾼다.
+  // 입력 단계: 사진 축소 → JPEG byte.
   async function imageBytes(file, opts = {}) {
     if (typeof document === 'undefined') {
       throw new Error('imageBytes는 canvas가 있는 브라우저에서 실행합니다.');
@@ -1607,7 +1607,7 @@
     return {message: cw.slice(0, -nsym), corrected: positions.length};
   }
 
-  // 원본 대응: 원본에 없던 무결성 검산, IEEE CRC-32.
+  // 무결성 검산: IEEE CRC-32.
   function crc32(value) {
     let crc = 0xFFFFFFFF;
     for (const b of bytes(value)) {
@@ -1635,7 +1635,7 @@
   // 원본 대응: xor(xor_A, xor_B), 행 byte별 XOR.
   function xorRows(a, b) { return Uint8Array.from(a, (value, i) => value ^ b[i]); }
 
-  // 원본 대응: KIS를 유효한 RS·XOR 보호를 받는 헤더로 바꾼다.
+  // 원본 대응: KIS 역할의 헤더 행(1번 행)을 만든다.
   function makeHeader(data, dtype, ext, D, whiten) {
     const header = new Uint8Array(ROW_BYTES), view = new DataView(header.buffer);
     header[0] = 1; header[1] = dtype;
@@ -1798,7 +1798,7 @@
     return row;
   }
 
-  // 원본 대응: KeyFind/KIS 메타데이터 대신 헤더 행을 읽는다.
+  // 원본 대응: KIS 역할의 헤더 행을 읽는다.
   function parseHeader(row) {
     if (!row || row.length !== ROW_BYTES ||
         row.slice(13, 17).some(b => b > 127)) return null;
@@ -1828,7 +1828,7 @@
     return recovered;
   }
 
-  // 원본 대응: 원본에 없던 복원 파일 SHA-256 검산(브라우저 오프라인).
+  // 복원 파일 SHA-256 검산(브라우저 오프라인).
   function sha256(value) {
     const data = bytes(value);
     const constants = [

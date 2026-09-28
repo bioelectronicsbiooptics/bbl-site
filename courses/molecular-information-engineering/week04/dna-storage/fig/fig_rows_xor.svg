@@ -142,7 +142,7 @@
 <text x="16" y="364" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="15" fill="#16324F" text-anchor="start" font-weight="700">D = 6 → H = 3 → N = 9 가닥 (1.5배)</text>
 <text x="350" y="26" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="16" fill="#16324F" text-anchor="start" font-weight="700">XOR 행 (바깥 부호)</text>
 <text x="372" y="116" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="14" fill="#1A1A1A" text-anchor="start">앞 절반(1–3) ⊕ 뒤 절반(4–6)</text>
-<text x="372" y="138" font-family="Menlo,Consolas,monospace" font-size="13" fill="#5B6670" text-anchor="start">원본 xor(xor_A, xor_B)</text>
+<text x="372" y="138" font-family="Menlo,Consolas,monospace" font-size="13" fill="#5B6670" text-anchor="start">bitxor(xor_A, xor_B)</text>
 <circle cx="276" cy="122.0" r="3" fill="#224EBD"/>
 <line x1="276" y1="122.0" x2="292" y2="122.0" stroke="#224EBD" stroke-width="2"/>
 <circle cx="276" cy="224.0" r="3" fill="#224EBD"/>

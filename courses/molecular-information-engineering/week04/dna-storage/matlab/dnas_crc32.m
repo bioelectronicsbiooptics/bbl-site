@@ -1,5 +1,5 @@
 function value = dnas_crc32(bytes)
-% 원본에는 없던 파일 무결성 검사: IEEE CRC-32를 사용한다.
+% 파일 무결성 검사: IEEE CRC-32를 사용한다.
 persistent table
 if isempty(table)
     table = zeros(1, 256, 'uint32');

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>DNA 저장 실습 설명서</title>
-<meta name="description" content="이름 · 사진 · 파일을 DNA 가닥 풀로 부호화하고 XOR · Reed–Solomon 오류정정을 거쳐 시퀀싱 read에서 복원하는 실습 설명서 (ACS Nano 2026 방식 교육용 수정판 DNAS-1)">
+<meta name="description" content="이름 · 사진 · 파일을 DNA 가닥 풀로 부호화하고 XOR · Reed–Solomon 오류정정을 거쳐 시퀀싱 read에서 복원하는 실습 설명서 (ACS Nano 2026 방식 · DNAS-1 포맷)">
 <style>
 :root{
   --navy:#16324F; --teal:#529FD9; --amber:#224EBD; --crim:#C03B3B; --ink:#1A1A1A; --gray:#5B6670;
@@ -222,7 +222,7 @@ footer.end{margin-top:56px;padding-top:14px;border-top:1px solid var(--border);f
       <li><a href="#ref"><span class="no">R</span>참고</a></li>
     </ul>
   </div>
-  <div class="toc-foot">Kang et al., ACS Nano 2026, 20, 3444–3460 방식의 교육용 수정판</div>
+  <div class="toc-foot">Kang et al., ACS Nano 2026, 20, 3444–3460 방식의 교육용 실습</div>
 </nav>
 
 <main id="main">
@@ -262,26 +262,6 @@ footer.end{margin-top:56px;padding-top:14px;border-top:1px solid var(--border);f
   <li>복호: 프라이머 위치 고정 비교로 삽입 · 결실 read 제거 → index 자리만 읽어 묶기(iSCAN) → consensus → Global RS → XOR → depth-cut → Local RS → XOR</li>
 </ul>
 <p class="src">Kang et al., ACS Nano 2026, 20, 3444–3460 · p.3446–3453 · Original Sequence/Jikji6.txt</p>
-
-<h3>원본 대비 바꾼 점</h3>
-<p class="tcap">표 1. ACS Nano 원본(논문 · 연구실 MATLAB 코드)과 이번 실습 포맷(DNAS-1) 비교</p>
-<div class="tbl"><table class="w6">
-<thead><tr><th>항목</th><th>ACS Nano 원본</th><th>이번 실습 (DNAS-1)</th><th>이유</th></tr></thead>
-<tbody>
-<tr><td>입력</td><td>STL 3D 모델 → 꼭짓점 · 연결 행렬(3D DTL)</td><td>아무 파일의 byte 그대로 (이름 = UTF-8, 사진 = 축소 JPEG)</td><td>STL 전용 부분 제거</td></tr>
-<tr><td>바깥 부호</td><td>비트열 앞 절반 ⊕ 뒤 절반 = XOR 가닥 (~33 %)</td><td>같음 (행 단위: 앞 절반 행 ⊕ 뒤 절반 행)</td><td>원본 유지</td></tr>
-<tr><td>안쪽 부호</td><td>RS(164,156), 메시지 심볼 1개 = <strong>1 bit</strong></td><td>RS(27,19), 심볼 1개 = <strong>1 byte = 4 nt</strong></td><td>1 nt 치환이 심볼 2개를 망가뜨리는 문제 수정</td></tr>
-<tr><td>정정 능력</td><td>4 심볼 = 데이터 영역 치환 2 nt 보장</td><td>4 byte = 치환 4 nt 보장 (가닥 1개 RS 복호 기준)</td><td>심볼 경계 = nt 경계</td></tr>
-<tr><td>index</td><td>가변 폭 (Jikji6 = 10 bit = 5 nt)</td><td>고정 2 byte = 8 nt (1–65,535)</td><td>설명 단순화</td></tr>
-<tr><td>메타데이터</td><td>마지막 KIS 가닥, RS 뒤 TGCA 무늬로 덮어씀</td><td>1번 가닥 = 헤더, RS 전에 완성</td><td>RS · XOR 보호 적용 (원본 KIS는 둘 다 없음)</td></tr>
-<tr><td>빈자리 채우기</td><td>0 → poly-A (Jikji6 678번 가닥 A 72개)</td><td>PAD 0x1B = ATGC 반복</td><td>호모폴리머 방지</td></tr>
-<tr><td>bit 순서</td><td>LSB부터 (<code>de2bi</code>)</td><td>MSB부터</td><td>3주차 실습과 같은 순서</td></tr>
-<tr><td>가닥 길이</td><td>20 + 110 + 20 = 150 nt</td><td>20 + 108 + 20 = 148 nt</td><td>27 byte × 4 nt = 108</td></tr>
-<tr><td>복호</td><td>… Global RS → XOR → depth-cut → Local RS → XOR</td><td>… Global RS → Local RS → XOR</td><td>depth-cut 생략 (7절 설명)</td></tr>
-<tr><td>무결성 확인</td><td>없음</td><td>CRC-32 (헤더에 저장) + SHA-256</td><td>복원 성공의 기계적 판정</td></tr>
-<tr><td>whitening</td><td>없음</td><td>선택 기능 (기본 꺼짐)</td><td>JPEG byte의 긴 호모폴리머 비교</td></tr>
-</tbody></table></div>
-<p class="src">DNAS-1 설계서 §0 · STL_Encode.m · cCal.m · STL_Decode_231213.m</p>
 </div>
 
 <div class="code"><p class="tag">코드</p>
@@ -316,7 +296,7 @@ footer.end{margin-top:56px;padding-top:14px;border-top:1px solid var(--border);f
   <li>데이터 가닥 하나(17 byte)에 영문 17자 또는 한글 5자(15 byte)</li>
   <li>3-2강 실습 코드 <code>format(ord(c), "08b")</code>: ASCII 전제 → 한글 코드포인트(예: 0xC1A1)는 8 bit에 안 들어감 → UTF-8 byte로 해결</li>
 </ul>
-<p class="tcap">표 2. 이름의 코드포인트와 UTF-8 byte</p>
+<p class="tcap">표 1. 이름의 코드포인트와 UTF-8 byte</p>
 <div class="tbl"><table class="w4">
 <thead><tr><th>글자</th><th>코드포인트</th><th>UTF-8 byte (16진)</th><th class="n">byte 수</th></tr></thead>
 <tbody>
@@ -338,11 +318,11 @@ footer.end{margin-top:56px;padding-top:14px;border-top:1px solid var(--border);f
 <ul>
   <li>예: 3 KB 사진 → <span class="m">D = 1 + ⌈3000 / 17⌉ = 178</span> → N = 267가닥 → 39,516 nt</li>
   <li>예: 10,000 byte 사진 → <span class="m">D = 1 + ⌈10000 / 17⌉ = 590</span> → N = 885가닥 → 130,980 nt (10,240 byte면 N = 906)</li>
-  <li>긴 변 32 → 128 px: 픽셀 수 약 16배, byte 수 약 2.8배 (표 3) → JPEG 머리 부분(양자화표 · 허프만표 등)의 고정 크기 영향 (Pillow 컬러 1 × 1 px JPEG = 631 byte)</li>
-  <li>흑백: 색 성분 없음 → byte 약 20–40 % 감소 (표 3 예시 기준)</li>
+  <li>긴 변 32 → 128 px: 픽셀 수 약 16배, byte 수 약 2.8배 (표 2) → JPEG 머리 부분(양자화표 · 허프만표 등)의 고정 크기 영향 (Pillow 컬러 1 × 1 px JPEG = 631 byte)</li>
+  <li>흑백: 색 성분 없음 → byte 약 20–40 % 감소 (표 2 예시 기준)</li>
   <li>같은 사진도 Python(Pillow) · MATLAB(<code>imwrite</code>) · 브라우저(canvas)의 JPEG 인코더 차이로 byte가 다름 → 같은 byte일 때만 같은 FASTA</li>
 </ul>
-<p class="tcap">표 3. 사진 크기와 가닥 수 예 (강의 그림 helix.jpg 519 × 760 px, Pillow <code>thumbnail</code>, 품질 60)</p>
+<p class="tcap">표 2. 사진 크기와 가닥 수 예 (강의 그림 helix.jpg 519 × 760 px, Pillow <code>thumbnail</code>, 품질 60)</p>
 <div class="tbl"><table class="w6">
 <thead><tr><th class="n">긴 변</th><th>크기 (px)</th><th class="n">컬러 byte</th><th class="n">D</th><th class="n">N</th><th class="n">합성 nt</th><th class="n">흑백 byte</th><th class="n">흑백 N</th></tr></thead>
 <tbody>
@@ -402,11 +382,11 @@ print(L, "byte →", D, "행 →", N, "가닥 →", N * 148, "nt")</code></pre><
 <ul>
   <li>파일 byte 열 → 17 byte 단위 <strong>행</strong> (행 1개 = 가닥 1개의 데이터)</li>
   <li>행 1 = <strong>헤더</strong>(파일 정보), 행 2부터 파일 byte</li>
-  <li>마지막 행 빈자리: <strong>PAD 0x1B</strong> (00 01 10 11 → ATGC)</li>
+  <li>마지막 행 빈자리: <strong>PAD 0x1B</strong> (00 01 10 11 → ATGC 반복 · 호모폴리머 없음 · GC 50 %)</li>
   <li>행 수 <span class="m">D = 1 + ⌈L / 17⌉</span>, 홀수면 PAD 17개 행 추가 → <strong>D 짝수</strong> (XOR 짝: 행 j와 행 j + D/2)</li>
   <li>빈 파일(L = 0) → D = 2 (헤더 + PAD 행)</li>
 </ul>
-<p class="tcap">표 4. 헤더 행 17 byte (원본 KIS 가닥에 해당) · 오른쪽 열 = 이름 "SONG"의 실제 값</p>
+<p class="tcap">표 3. 헤더 행 17 byte · 오른쪽 열 = 이름 "SONG"의 실제 값</p>
 <div class="tbl"><table class="w5">
 <thead><tr><th>byte</th><th>내용</th><th>"SONG" (16진)</th></tr></thead>
 <tbody>
@@ -422,7 +402,7 @@ print(L, "byte →", D, "행 →", N, "가닥 →", N * 148, "nt")</code></pre><
   <li>헤더는 whitening 대상 아님 → 복호의 출발점</li>
   <li>복호기는 헤더의 L로 PAD 제거, CRC-32로 복원 확인, D로 XOR 짝 계산</li>
 </ul>
-<p class="tcap">표 5. 파일 길이 L과 행 · 가닥 수</p>
+<p class="tcap">표 4. 파일 길이 L과 행 · 가닥 수</p>
 <div class="tbl"><table class="w5">
 <thead><tr><th class="n">L (byte)</th><th class="n">1 + ⌈L/17⌉</th><th class="n">D</th><th class="n">H = D/2</th><th class="n">N = 3H</th><th>예</th></tr></thead>
 <tbody>
@@ -432,17 +412,7 @@ print(L, "byte →", D, "행 →", N, "가닥 →", N * 148, "nt")</code></pre><
 <tr><td class="n">70</td><td class="n">6</td><td class="n">6</td><td class="n">3</td><td class="n">9</td><td>6줄 → 9줄 (3절)</td></tr>
 <tr><td class="n">3,000</td><td class="n">178</td><td class="n">178</td><td class="n">89</td><td class="n">267</td><td>3 KB 사진</td></tr>
 </tbody></table></div>
-
-<h3>원본 cCal.m의 빈자리 채우기와 비교</h3>
-<ul>
-  <li>원본: 비트열 길이가 146 bit의 배수가 될 때까지 0 추가 → 0 = 00 = A → <strong>poly-A</strong></li>
-  <li>Jikji6: 678번(마지막 데이터) 가닥에 A 72개, 1,017번(마지막 XOR) 가닥에 A 36개 연속</li>
-  <li>원본 복호기: poly-A를 표식으로 마지막 행 탐색(<code>NullFind.m</code>), 0 개수는 KIS 가닥에 기록</li>
-  <li>원본 메타데이터(KIS): 마지막 가닥(1,018번), 빈 데이터 자리를 RS 계산 <strong>뒤</strong> TGCA 반복으로 덮어씀 → 그 가닥은 RS 부호어가 아님 (4절) · XOR 묶음에도 없음 → RS · XOR 보호 모두 없음</li>
-  <li>이번 판: PAD 0x1B → ATGC 반복 (호모폴리머 없음 · GC 50 %) · 파일 길이 L을 헤더에 저장 → 앞 L byte만 취함 · 헤더는 1번 행으로 RS <strong>전</strong>에 완성</li>
-</ul>
-<figure class="fig"><a class="fig-a" href="fig/fig_kis_fix.svg" target="_blank" rel="noopener"><img src="fig/fig_kis_fix.svg" alt="원본 KIS 가닥(RS 뒤 무늬 덮어쓰기)과 수정판 헤더 가닥(RS 전 완성)의 구조 비교, 0 채우기 poly-A와 0x1B 채우기 ATGC 비교" width="880" height="590"></a><figcaption>그림 3. 메타데이터 가닥 비교 · 원본 KIS(마지막 가닥, RS 뒤 TGCA 덮어쓰기, 0 채우기 = poly-A) · 헤더 가닥(1번, RS 전 완성, PAD = ATGC)</figcaption></figure>
-<p class="src">cCal.m · STL_Encode.m 53–68 · 101–108행 · NullFind.m · Original Sequence/Jikji6.txt · Kang et al. p.3450</p>
+<p class="src">DNAS-1 설계서 §4 · §5</p>
 </div>
 
 <div class="code"><p class="tag">코드</p>
@@ -496,7 +466,7 @@ fprintf('%02x ', rows(1,:)); fprintf('\n');</code></pre></div>
   <li>byte XOR = bit 8개 각각 XOR (예: 0x53 ⊕ 0x1B = 01010011 ⊕ 00011011 = 01001000 = 0x48)</li>
   <li>3-2강 좌석 열 비유: 첫 열 <code>001</code>, 둘째 열 <code>000</code> → 셋째 열 = 001 ⊕ 000 = <code>001</code> (패리티) → 둘째 열이 없어져도 001 ⊕ 001 = <code>000</code></li>
 </ul>
-<p class="tcap">표 6. XOR 진리표</p>
+<p class="tcap">표 5. XOR 진리표</p>
 <div class="tbl"><table style="max-width:280px">
 <thead><tr><th class="c">A</th><th class="c">B</th><th class="c">A ⊕ B</th></tr></thead>
 <tbody>
@@ -510,11 +480,11 @@ fprintf('%02x ', rows(1,:)); fprintf('\n');</code></pre></div>
 <ul>
   <li><span class="m">H = D / 2</span> · 앞 절반 행(1…H) ⊕ 뒤 절반 행(H+1…D)</li>
   <li><span class="m">P<sub>j</sub> = 행 j ⊕ 행 j+H</span> (j = 1…H) → XOR 가닥 D + j</li>
-  <li>전체 가닥 <span class="m">N = D + H = 3H</span> → 데이터 행의 <strong>1.5배</strong>, 풀의 1/3이 XOR 가닥 (원본 “약 33 %”)</li>
+  <li>전체 가닥 <span class="m">N = D + H = 3H</span> → 데이터 행의 <strong>1.5배</strong>, 풀의 1/3이 XOR 가닥</li>
   <li>3-2강 “6줄 → 9줄”: D = 6 → H = 3 → 묶음 (1, 4, 7) · (2, 5, 8) · (3, 6, 9)</li>
-  <li>원본: 비트열 기준 절반 → 절반 경계와 행 경계 불일치 가능 (Jikji6: 49,422 bit ÷ 146 bit = 338.5… → 절반 경계가 339번째 행의 74 bit 지점) · 이번 판: 행 단위 → 묶음 = 가닥 정확히 3개</li>
+  <li>행 단위 XOR → 묶음 1개 = 가닥 정확히 3개 (행 j · 행 j+H · XOR 가닥 D+j)</li>
 </ul>
-<p class="tcap">표 7. 6줄 → 9줄 (D = 6, H = 3, 파일 52–85 byte · 52–68 byte는 PAD 행 추가)</p>
+<p class="tcap">표 6. 6줄 → 9줄 (D = 6, H = 3, 파일 52–85 byte · 52–68 byte는 PAD 행 추가)</p>
 <div class="tbl"><table class="w4">
 <thead><tr><th class="n">가닥</th><th>role</th><th>내용</th><th>묶음</th></tr></thead>
 <tbody>
@@ -528,7 +498,7 @@ fprintf('%02x ', rows(1,:)); fprintf('\n');</code></pre></div>
 <tr><td class="n">8</td><td>xor</td><td>P<sub>2</sub> = 행 2 ⊕ 행 5</td><td>j = 2</td></tr>
 <tr><td class="n">9</td><td>xor</td><td>P<sub>3</sub> = 행 3 ⊕ 행 6</td><td>j = 3</td></tr>
 </tbody></table></div>
-<figure class="fig"><a class="fig-a" href="fig/fig_rows_xor.svg" target="_blank" rel="noopener"><img src="fig/fig_rows_xor.svg" alt="헤더와 파일 byte를 17 byte 행 6개로 나누고 앞 절반 ⊕ 뒤 절반으로 XOR 행 3개를 만드는 과정과 소실 복원 예" width="880" height="480"></a><figcaption>그림 4. 행 단위 XOR · D = 6 → H = 3 → N = 9 · 묶음 (j, j+H, D+j)</figcaption></figure>
+<figure class="fig"><a class="fig-a" href="fig/fig_rows_xor.svg" target="_blank" rel="noopener"><img src="fig/fig_rows_xor.svg" alt="헤더와 파일 byte를 17 byte 행 6개로 나누고 앞 절반 ⊕ 뒤 절반으로 XOR 행 3개를 만드는 과정과 소실 복원 예" width="880" height="480"></a><figcaption>그림 3. 행 단위 XOR · D = 6 → H = 3 → N = 9 · 묶음 (j, j+H, D+j)</figcaption></figure>
 
 <h3>복원 가능 · 불가능</h3>
 <ul>
@@ -537,7 +507,7 @@ fprintf('%02x ', rows(1,:)); fprintf('\n');</code></pre></div>
   <li>같은 묶음에서 2개 이상 소실 → 그 묶음의 데이터 행 복원 불가</li>
   <li>헤더(1번)도 묶음 (1, 1+H, D+1)에 포함 → XOR 보호</li>
 </ul>
-<p class="tcap">표 8. 표 7 배치에서의 소실 예</p>
+<p class="tcap">표 7. 표 6 배치에서의 소실 예</p>
 <div class="tbl"><table class="w4">
 <thead><tr><th>소실 가닥</th><th>결과</th></tr></thead>
 <tbody>
@@ -603,33 +573,13 @@ isequal(back, rows(1+H, :))                   <span class="cm">% 1 (true)</span>
   <li>검산 벡터: <code>rsenc(gf([83 79 78 71],8),8,4)</code> → 패리티 <strong>226 229 64 153</strong> ("SONG", RS(8,4))</li>
 </ul>
 
-<h3>원본 RS(164,156): bit 심볼 방식의 문제</h3>
+<h3>byte 심볼과 치환 정정 범위</h3>
 <ul>
-  <li>원본 코드: <code>k = 156; n = k+8; m = length(de2bi(n))</code> (= 8) → RS(164,156) over GF(2⁸)</li>
-  <li>메시지 심볼 1개 = <strong>1 bit</strong> (0/1만 사용) → 156 bit = 78 nt · 패리티 8 심볼 × 8 bit = 64 bit = 32 nt</li>
-  <li>논문 표기 “RS(220,156)” = bit 단위 길이 (메시지 156 + 패리티 64 bit)</li>
-  <li>문제 1: 1 nt = 2 bit = 메시지 심볼 2개 → 치환 1개가 심볼 최대 2개 손상 (A→C = 00→11) → 데이터 영역 보장 정정 <strong>2 nt</strong></li>
-  <li>원본 방식 무작위 치환 실험(데이터 영역): 2 nt 100 % · 3 nt 약 74 % · 4 nt 약 20 %(MATLAB 1,000회 22.6 % · Python 20,000회 19.8 %) 정답 복원, 5 nt 이상 0 %</li>
-  <li>문제 2: 256값 중 0/1만 사용 → 복호 결과에 0/1이 아닌 값이 있으면 오정정으로 검출 (<code>STL_Decode</code> 130–133행: 값 > 1이면 행 삭제) · 데이터 영역만 틀린 오정정은 늘 0/1 → 이 검사로 못 거름 · 패리티 구간 오류가 섞여도 드물게 0/1에 머묾 (Jikji6 치환 실험, 전 구간 110 nt에 5–8 nt 치환: 오정정 28건 중 0/1 유지 5건, 그중 패리티 구간 치환 포함 2건)</li>
-  <li>문제 3: KIS 가닥 — RS 계산 뒤 TGCA 무늬로 덮어씀 → RS 부호어 아님 (Jikji6.txt 1,018가닥 신드롬: 1,017가닥 = 0, KIS 1,018번만 0 아님) · 원본 복호기는 KIS를 RS 없이 무늬 검색(<code>KeyFind.m</code>)으로 읽음</li>
-  <li>이번 판: 심볼 1개 = 1 byte = 4 nt (자리 고정) → 1 nt 치환은 항상 심볼 1개 → 108 nt 어디서나 치환 <strong>4 nt 보장</strong> (같은 byte 안 치환은 여러 개라도 심볼 1개)</li>
+  <li>심볼 1개 = 1 byte = 4 nt (자리 고정) → 1 nt 치환은 항상 심볼 1개 → 108 nt 어디서나 치환 <strong>4 nt 보장</strong> (같은 byte 안 치환은 여러 개라도 심볼 1개)</li>
   <li>보장 범위 = RS 부호어 1개 복호 · 전체 복호는 RS 전에 index 자리(89–96 nt)로 묶음 → index 자리 치환 read는 엉뚱한 묶음 → index 검사로 버려짐 → coverage 1이면 index 1 nt 치환만으로 가닥 소실 (XOR로만 복구)</li>
-  <li>패리티 길이 같음(32 nt) → 보장 정정 2 nt → 4 nt</li>
 </ul>
-<p class="tcap">표 9. 원본 RS와 이번 판 RS</p>
-<div class="tbl"><table class="w5">
-<thead><tr><th>항목</th><th>원본 RS(164,156)</th><th>이번 판 RS(27,19)</th></tr></thead>
-<tbody>
-<tr><td>심볼</td><td>메시지 1 bit · 패리티 8 bit</td><td>모두 8 bit (1 byte)</td></tr>
-<tr><td>메시지</td><td>156 심볼 = 156 bit = 78 nt</td><td>19 심볼 = 152 bit = 76 nt</td></tr>
-<tr><td>패리티</td><td>8 심볼 = 32 nt</td><td>8 심볼 = 32 nt</td></tr>
-<tr><td>1 nt 치환 → 손상 심볼</td><td>메시지 영역 1–2개 · 패리티 영역 1개</td><td>항상 1개</td></tr>
-<tr><td>보장 정정</td><td>메시지 영역 치환 2 nt</td><td>치환 4 nt</td></tr>
-<tr><td>오정정 검사</td><td>메시지 심볼 값 > 1 (패리티 구간 오류가 섞인 경우만 검출)</td><td>복호된 index 일치 · 파일 CRC-32</td></tr>
-<tr><td>메타데이터 가닥</td><td>RS 뒤 덮어쓰기 → RS 무효</td><td>RS 전 완성 → RS 유효</td></tr>
-</tbody></table></div>
-<figure class="fig"><a class="fig-a" href="fig/fig_rs_symbol.svg" target="_blank" rel="noopener"><img src="fig/fig_rs_symbol.svg" alt="원본 bit 심볼 RS에서 1 nt 치환이 심볼 2개를 바꾸는 경우와 수정판 byte 심볼 RS에서 심볼 1개만 바뀌는 경우 비교" width="880" height="648"></a><figcaption>그림 5. RS 심볼 경계 · 원본(메시지 1 bit = 심볼 1개 → 1 nt = 심볼 2개) · 이번 판(1 byte = 4 nt = 심볼 1개)</figcaption></figure>
-<p class="src">STL_Encode.m 45–87행 · RSdecoding.m · STL_Decode_231213.m 103–105 · 130–133행 · Kang et al. p.3448 · Original Sequence/Jikji6.txt · 원본 방식 치환 실험 (MATLAB rsdec 조건당 1,000회 · Python reedsolo 20,000회)</p>
+<figure class="fig"><a class="fig-a" href="fig/fig_rs_symbol.svg" target="_blank" rel="noopener"><img src="fig/fig_rs_symbol.svg" alt="RS(27,19)의 byte 심볼: 4 nt가 심볼 1개, 1 nt 치환과 같은 byte 안 2 nt 치환이 모두 심볼 1개 오류" width="880" height="314"></a><figcaption>그림 4. RS 심볼 경계 · 1 byte = 4 nt = 심볼 1개 → 1 nt 치환 = 심볼 1개 · 같은 byte 안 치환 2 nt도 심볼 1개</figcaption></figure>
+<p class="src">DNAS-1 설계서 §6 · Kang et al. p.3448 · MATLAB rsenc · rsgenpoly</p>
 </div>
 
 <div class="code"><p class="tag">코드</p>
@@ -680,20 +630,19 @@ g = rsgenpoly(255, 247)                     <span class="cm">% 1 227 44 178 71 1
 
 <div class="concept"><p class="tag">개념</p>
 <h3>2 bit/nt 매핑</h3>
-<p class="tcap">표 10. bit → 염기 (원본 코드의 ATGC 순서)</p>
+<p class="tcap">표 8. bit → 염기 (ACS Nano 2026 방식의 ATGC 순서)</p>
 <div class="tbl"><table style="max-width:420px">
 <thead><tr><th>bit</th><th class="c">00</th><th class="c">01</th><th class="c">10</th><th class="c">11</th></tr></thead>
 <tbody><tr><td>염기</td><td class="c">A</td><td class="c">T</td><td class="c">G</td><td class="c">C</td></tr></tbody>
 </table></div>
 <ul>
-  <li>1 byte = 4 nt, <strong>윗 bit(MSB)부터</strong>: 'S' 0x53 = 01 01 00 11 → <span class="seq">TTAC</span></li>
+  <li>1 byte = 4 nt, <strong>윗 bit(MSB)부터</strong>: 'S' 0x53 = 01 01 00 11 → <span class="seq">TTAC</span> · 3주차 <code>format(…, "08b")</code> · <code>dec2bin</code>과 같은 순서</li>
   <li>PAD 0x1B = 00 01 10 11 → <span class="seq">ATGC</span> · index 1 = 0x00 0x01 → <span class="seq">AAAAAAAT</span></li>
-  <li>3-2강 실습: 00 A · 01 C · 10 G · 11 T (ACGT 순서) → 'S' = <span class="seq">CCAT</span> · 이번 실습은 원본 코드 매핑(ATGC) → 같은 byte도 서열이 다름</li>
-  <li>원본 bit 순서: <code>de2bi</code> LSB부터 (예: index 682 → <span class="seq">TTTTT</span>) · 이번 판: MSB부터 (3주차 <code>format(…, "08b")</code> · <code>dec2bin</code>과 같음)</li>
+  <li>3-2강 실습: 00 A · 01 C · 10 G · 11 T (ACGT 순서) → 'S' = <span class="seq">CCAT</span> · 이번 실습은 ACS Nano 2026 방식 매핑(ATGC) → 같은 byte도 서열이 다름</li>
 </ul>
 
 <h3>148 nt 가닥 구조</h3>
-<p class="tcap">표 11. 가닥 구조 (위치 1부터)</p>
+<p class="tcap">표 9. 가닥 구조 (위치 1부터)</p>
 <div class="tbl"><table class="w5">
 <thead><tr><th>위치</th><th class="n">길이</th><th>내용</th></tr></thead>
 <tbody>
@@ -704,13 +653,12 @@ g = rsgenpoly(255, 247)                     <span class="cm">% 1 227 44 178 71 1
 <tr><td class="mono">129–148</td><td class="n">20 nt</td><td>R 프라이머 <span class="seq">TGCGCTATGGTTTGGCTAAT</span></td></tr>
 </tbody></table></div>
 <ul>
-  <li>원본 Jikji6: 20 + 데이터 73 + index 5 + 패리티 32 + 20 = 150 nt</li>
   <li>프라이머: Jikji6 쌍 (<code>primerSelect.m</code>) · F GC 50 %, R GC 45 %</li>
-  <li>R은 적힌 서열 그대로 3′ 끝에 연결 (원본 Jikji6.txt 131–150 nt와 같은 규칙) · 4-3 실습(<code>week4_oligo_lab.m</code>)은 rc(R) 연결 → 규칙 차이 주의</li>
+  <li>R은 적힌 서열 그대로 3′ 끝에 연결 (Jikji6.txt 131–150 nt와 같은 규칙) · 4-3 실습(<code>week4_oligo_lab.m</code>)은 rc(R) 연결 → 규칙 차이 주의</li>
   <li>프라이머 역할: PCR 증폭 · 파일 선택(파일마다 다른 쌍) · 복호에서 방향 · 길이 확인 표식</li>
   <li>정보 밀도: 데이터 136 bit / 148 nt = 0.92 bit/nt → XOR 포함 × 2/3 ≈ 0.61 bit/nt (헤더 가닥 제외 근사)</li>
 </ul>
-<figure class="fig"><a class="fig-a" href="fig/fig_oligo.svg" target="_blank" rel="noopener"><img src="fig/fig_oligo.svg" alt="원본 150 nt 가닥과 수정판 148 nt 가닥의 구간 구조 비교" width="880" height="470"></a><figcaption>그림 6. 148 nt 가닥 구조 · F 20 | 데이터 68 | index 8 | RS 패리티 32 | R 20 · 원본 150 nt 구조 비교</figcaption></figure>
+<figure class="fig"><a class="fig-a" href="fig/fig_oligo.svg" target="_blank" rel="noopener"><img src="fig/fig_oligo.svg" alt="148 nt 가닥의 구간 구조: F 프라이머 20 · 데이터 68 · index 8 · RS 패리티 32 · R 프라이머 20 nt와 RS 부호어 108 nt" width="880" height="248"></a><figcaption>그림 5. 148 nt 가닥 구조 · F 20 | 데이터 68 | index 8 | RS 패리티 32 | R 20</figcaption></figure>
 
 <h3>FASTA</h3>
 <ul>
@@ -728,12 +676,12 @@ AGCCTTGTGTCCATCAATCCTTAGTACGTACGTATCATGCATCCATCGTGACATGAAACGATGCATGTATGCTGCCTGAC
 
 <h3>GC % · 최대 호모폴리머</h3>
 <ul>
-  <li>GC % = (G + C 개수) / 전체 · 원본 논문 풀: GC 46.9–48.7 %, 호모폴리머 2–11 nt (Jikji6.txt 실측: null 채움 가닥 678 · 1,017번 제외 시 최대 11 nt)</li>
+  <li>GC % = (G + C 개수) / 전체 · Kang et al. 가닥 풀: GC 46.9–48.7 %, 호모폴리머 2–11 nt</li>
   <li>호모폴리머 = 같은 염기 연속 · 길수록 합성 · 시퀀싱 오류 증가 요인</li>
   <li>index 윗 byte 0x00 → <span class="seq">AAAA</span> · 가닥 256개 미만이면 모든 가닥의 index 자리가 A 4개 이상으로 시작</li>
-  <li>헤더 가닥: 길이 칸의 0 byte → 작은 파일일수록 긴 poly-A (표 12)</li>
+  <li>헤더 가닥: 길이 칸의 0 byte → 작은 파일일수록 긴 poly-A (표 10)</li>
 </ul>
-<p class="tcap">표 12. "SONG" 가닥의 GC %와 최대 호모폴리머</p>
+<p class="tcap">표 10. "SONG" 가닥의 GC %와 최대 호모폴리머</p>
 <div class="tbl"><table class="w5">
 <thead><tr><th class="n">가닥</th><th>role</th><th class="n">GC %</th><th class="n">최대 호모폴리머</th><th>위치</th></tr></thead>
 <tbody>
@@ -751,7 +699,7 @@ AGCCTTGTGTCCATCAATCCTTAGTACGTACGTATCATGCATCCATCGTGACATGAAACGATGCATGTATGCTGCCTGAC
   <li>대상 아님: 헤더 행 · index · RS 패리티</li>
   <li>예: helix 그림 64 px · 품질 60 (Pillow) → 최대 호모폴리머 35 nt(끔) → 10 nt(켬, 남은 최댓값은 헤더 가닥) · 전체 GC 45.3 % → 47.2 %</li>
 </ul>
-<figure class="fig"><a class="fig-a" href="fig/fig_homopolymer.svg" target="_blank" rel="noopener"><img src="fig/fig_homopolymer.svg" alt="JPEG 머리 17 byte의 DNA 서열과 최장 A 연속, 행 2 마스크 XOR 뒤 서열과 최장 C 연속" width="880" height="476"></a><figcaption>그림 7. JPEG 머리 17 byte의 DNA와 호모폴리머 · whitening 전(A × 11, GC 25.0 %) · 후(행 2 마스크 XOR, C × 4, GC 54.4 %)</figcaption></figure>
+<figure class="fig"><a class="fig-a" href="fig/fig_homopolymer.svg" target="_blank" rel="noopener"><img src="fig/fig_homopolymer.svg" alt="JPEG 머리 17 byte의 DNA 서열과 최장 A 연속, 행 2 마스크 XOR 뒤 서열과 최장 C 연속" width="880" height="476"></a><figcaption>그림 6. JPEG 머리 17 byte의 DNA와 호모폴리머 · whitening 전(A × 11, GC 25.0 %) · 후(행 2 마스크 XOR, C × 4, GC 54.4 %)</figcaption></figure>
 <p class="src">DNAS-1 설계서 §1–2 · §5 · primerSelect.m · PrimerSort.m · Kang et al. p.3448 · 3-2강 week3_dna.py · 4-3 week4_oligo_lab.m</p>
 </div>
 
@@ -759,7 +707,7 @@ AGCCTTGTGTCCATCAATCCTTAGTACGTACGTATCATGCATCCATCGTGACATGAAACGATGCATGTATGCTGCCTGAC
 <ul>
   <li>byte → 4 nt: <code>(b &gt;&gt; 6) &amp; 3</code>, <code>(b &gt;&gt; 4) &amp; 3</code>, <code>(b &gt;&gt; 2) &amp; 3</code>, <code>b &amp; 3</code> → <code>"ATGC"</code>에서 글자 선택</li>
   <li>MATLAB: <code>bitshift(b, -6)</code> · <code>bitand(…, 3)</code> → 4 × n 행렬 → 열 우선으로 펼침</li>
-  <li>DNA → byte: 역변환, ATGC 외 글자(N 등)는 A(00)로 처리 (원본 <code>Binarization.m</code> 관례)</li>
+  <li>DNA → byte: 역변환, ATGC 외 글자(N 등)는 A(00)로 처리 (연구실 <code>Binarization.m</code> 관례)</li>
   <li>GC % · 최대 호모폴리머: 3-2강 코드와 같은 계산</li>
 </ul>
 <div class="snip"><div class="snip-h"><span>Python · byte → DNA · 가닥 조립 · GC · 호모폴리머</span></div><pre><code class="lang-python">BASES = "ATGC"                            <span class="cm"># 00 A · 01 T · 10 G · 11 C</span>
@@ -803,7 +751,7 @@ fprintf('%s\nGC %.1f %%\n', oligo, 100*mean(oligo == 'G' | oligo == 'C'));</code
   <li>채널 = 가닥 설계부터 read가 돌아오기까지 전 과정 (합성 → 보관 → PCR → 시퀀싱)</li>
   <li>DNA 합성 · 시퀀싱 = 같은 가닥의 복제본 다수 → 통계(consensus)로 정답 추정</li>
 </ul>
-<p class="tcap">표 13. 오류 유형과 복호에서의 처리</p>
+<p class="tcap">표 11. 오류 유형과 복호에서의 처리</p>
 <div class="tbl"><table class="w6">
 <thead><tr><th>오류</th><th>현상</th><th>복호에서의 처리</th></tr></thead>
 <tbody>
@@ -814,13 +762,13 @@ fprintf('%s\nGC %.1f %%\n', oligo, 100*mean(oligo == 'G' | oligo == 'C'));</code
 <tr><td>역방향 read</td><td>상보 가닥을 읽은 read (역상보 서열)</td><td>방향 검사 후 뒤집기</td></tr>
 </tbody></table></div>
 <ul>
-  <li><strong>coverage</strong>: 가닥당 read 수 평균 (원본 Jikji6 평균 depth ×2,593.5)</li>
+  <li><strong>coverage</strong>: 가닥당 read 수 평균 (Kang et al. Jikji6 평균 depth ×2,593.5)</li>
   <li>삽입 · 결실 확률 합 0.004/nt → read 하나가 삽입 · 결실 없이 남을 확률 <span class="m">0.996¹⁴⁸ ≈ 0.55</span> → 삽입 · 결실 read 대부분 탈락 (그중 약 8 %는 프라이머 검사 통과) → coverage 1이면 가닥 약 40 % 이상 소실</li>
-  <li>원본 전략 동일: 삽입 · 결실 read는 버리고 치환만 정정 (p.3451)</li>
+  <li>복호 전략: 삽입 · 결실 read는 버리고 치환만 정정 (ACS Nano 2026 방식, p.3451)</li>
 </ul>
 
 <h3>시뮬레이터 매개변수</h3>
-<p class="tcap">표 14. 채널 시뮬레이터 매개변수 (DNAS-1 설계서 §8)</p>
+<p class="tcap">표 12. 채널 시뮬레이터 매개변수 (DNAS-1 설계서 §8)</p>
 <div class="tbl"><table class="w5">
 <thead><tr><th>매개변수</th><th>뜻</th><th>기본값</th></tr></thead>
 <tbody>
@@ -889,7 +837,7 @@ disp(u)                                     <span class="cm">% 0.2388 0.9135 0.6
 <h3>FASTQ</h3>
 <ul>
   <li>read 1개 = 4줄: <code>@이름</code> / 서열 / <code>+</code> / 품질(염기당 1글자, Phred + 33)</li>
-  <li>시뮬레이터 품질 = 'I' (Phred 40) 고정 · 원본 복호기도 품질 무시 (“without quality filtering”, p.3451)</li>
+  <li>시뮬레이터 품질 = 'I' (Phred 40) 고정 · 복호기는 품질 점수 미사용 (ACS Nano 2026 방식, “without quality filtering”, p.3451)</li>
   <li>아래 예: 역방향 read → 앞 20 nt = R의 역상보 <span class="seq">ATTAGCCAAACCATAGCGCA</span></li>
 </ul>
 <div class="snip"><div class="snip-h"><span>FASTQ · read 1개 ("SONG" 2번 가닥의 역방향 read)</span></div><pre><code class="lang-text">@read_2
@@ -897,36 +845,25 @@ ATTAGCCAAACCATAGCGCAGGGTGCTGTGGGGCTTTTTTAATTCCTGCTCACTTTTTTTGCATGCATGCATGCATGCAT
 +
 IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII</code></pre></div>
 
-<h3>복호 단계와 원본 함수</h3>
-<p class="tcap">표 15. 복호 단계 · 원본 대응 (STL_Decode_231213.m 섹션 · Fastq Function3)</p>
+<h3>복호 단계와 연구실 MATLAB 함수</h3>
+<p class="tcap">표 13. 복호 단계와 연구실 MATLAB 함수 대응 (STL_Decode_231213.m 섹션 · Fastq Function3)</p>
 <div class="tbl"><table class="w6">
-<thead><tr><th>단계</th><th>하는 일</th><th>원본</th></tr></thead>
+<thead><tr><th>단계</th><th>하는 일</th><th>MATLAB 함수 · 섹션</th></tr></thead>
 <tbody>
 <tr><td>1 읽기</td><td>FASTQ · FASTA · 한 줄 read → 대문자, U → T</td><td>Fastq text scan (<code>textscan</code>)</td></tr>
 <tr><td>2 방향</td><td>앞 20 nt와 F ≥ 18 일치 → 정방향, 아니면 역상보 검사</td><td><code>ReverseEvert.m</code> (Evert)</td></tr>
 <tr><td>3 프라이머 정렬</td><td>길이 ≥ 148 · 129–148 nt와 R ≥ 18 일치 → 148 nt로 자름</td><td><code>PrimerSort.m</code></td></tr>
-<tr><td>–</td><td>(이번 판 없음: 헤더 = 1번 가닥)</td><td><code>KeyFind.m</code> · <code>Keysort.m</code></td></tr>
 <tr><td>4 iSCAN</td><td>index 자리(89–96 nt)만 읽어 묶음</td><td><code>Consensus2.m</code></td></tr>
 <tr><td>5 consensus</td><td>자리별 최다 염기</td><td><code>Binarization.m</code> (<code>mode</code>)</td></tr>
 <tr><td>6 Global RS</td><td>consensus 서열 RS 복호</td><td><code>RSdecoding.m</code> (<code>rsdec</code>)</td></tr>
-<tr><td>–</td><td>(이번 판 없음: 헤더의 L 사용)</td><td><code>NullFind.m</code></td></tr>
 <tr><td>7 Local RS</td><td>실패 묶음의 read 하나씩 RS → 최빈값</td><td>LRS 섹션 (282–292행)</td></tr>
 <tr><td>8 배치 · XOR</td><td>헤더로 D · H 결정 → 묶음 (j, j+H, D+j) 복원</td><td><code>XORrun2.m</code></td></tr>
-<tr><td>–</td><td>(이번 판 생략)</td><td>Depthcut &amp; XOR (depth ≤ 16)</td></tr>
 <tr><td>9 파일</td><td>행 연결 → whitening 해제 → 앞 L byte → CRC-32</td><td><code>tridecode</code> (STL 재구성)</td></tr>
 </tbody></table></div>
 <ul>
-  <li>순서 차이: 원본 = Global RS → XOR → depth-cut → Local RS → XOR · 이번 판 = Global RS → Local RS → XOR</li>
-  <li>프라이머 위치 고정 비교 → 삽입 · 결실 read 대부분 2–3단계에서 탈락 (약 8 %는 통과 · 원본과 같은 방식)</li>
+  <li>프라이머 위치 고정 비교 → 삽입 · 결실 read 대부분 2–3단계에서 탈락 (약 8 %는 통과)</li>
 </ul>
-<figure class="fig"><a class="fig-a" href="fig/fig_decode.svg" target="_blank" rel="noopener"><img src="fig/fig_decode.svg" alt="복호 단계 깔때기: 단계별 탈락 · 확보 · 복원 항목" width="880" height="748"></a><figcaption>그림 8. 복호 단계 · read → 방향 → 프라이머 정렬 → iSCAN → consensus → Global RS → Local RS → XOR → 파일</figcaption></figure>
-
-<h3>depth-cut (이번 판 생략)</h3>
-<ul>
-  <li>원본: read 수(depth) ≤ 16이면서 RS 오류가 있던 행을 지우고 XOR로 다시 복원 (“&lt; ×16”, p.3453)</li>
-  <li>취지: 낮은 depth에서 RS가 고친 행을 소실로 돌려 XOR에 맡김</li>
-  <li>이번 판: 설명만 · 구현 없음 → 과제 8에서 토론</li>
-</ul>
+<figure class="fig"><a class="fig-a" href="fig/fig_decode.svg" target="_blank" rel="noopener"><img src="fig/fig_decode.svg" alt="복호 단계 깔때기: 단계별 탈락 · 확보 · 복원 항목" width="880" height="748"></a><figcaption>그림 7. 복호 단계 · read → 방향 → 프라이머 정렬 → iSCAN → consensus → Global RS → Local RS → XOR → 파일</figcaption></figure>
 
 <h3>복호 보고 항목</h3>
 <ul>
@@ -975,7 +912,7 @@ print(len(reads), "→", len(trimmed))      <span class="cm"># 7 → 6</span></c
 <ul>
   <li>3단계를 통과한 read = 148 nt · 프라이머 제자리 → index는 항상 89–96번 nt</li>
   <li>8 nt → 2 byte → uint16 → 묶음 번호 (0이면 버림)</li>
-  <li>서열 정렬(alignment) 없음 → read 수에 비례하는 분류 · 원본 전체 복호 시간: 4.57 M reads 47.44 s (M2 8 GB, p.3452)</li>
+  <li>서열 정렬(alignment) 없음 → read 수에 비례하는 분류 · Kang et al. 전체 복호 시간: 4.57 M reads 47.44 s (M2 8 GB, p.3452)</li>
   <li>한계: index 자리 치환 → 엉뚱한 묶음으로 분류 → 그 묶음의 소수 read → consensus에서 희석, Local RS의 index 검사에서 제외 · coverage 1–2에서는 그 가닥 자체가 소실될 수 있음</li>
 </ul>
 <h3>consensus</h3>
@@ -984,7 +921,7 @@ print(len(reads), "→", len(trimmed))      <span class="cm"># 7 → 6</span></c
   <li>동률 → ATGC 순서의 앞 글자</li>
   <li>read마다 다른 자리의 치환 → 다수결로 제거 · depth 1–2에서는 다수결 불가</li>
 </ul>
-<figure class="fig"><a class="fig-a" href="fig/fig_consensus.svg" target="_blank" rel="noopener"><img src="fig/fig_consensus.svg" alt="index 7 묶음 read 4개의 자리별 정렬, consensus 서열, RS 복호로 행 7 확보" width="880" height="346"></a><figcaption>그림 9. iSCAN 묶음과 consensus · 자리별 A/T/G/C 개수 → 최다 염기 → RS 복호</figcaption></figure>
+<figure class="fig"><a class="fig-a" href="fig/fig_consensus.svg" target="_blank" rel="noopener"><img src="fig/fig_consensus.svg" alt="index 7 묶음 read 4개의 자리별 정렬, consensus 서열, RS 복호로 행 7 확보" width="880" height="346"></a><figcaption>그림 8. iSCAN 묶음과 consensus · 자리별 A/T/G/C 개수 → 최다 염기 → RS 복호</figcaption></figure>
 <h3>Global RS</h3>
 <ul>
   <li>consensus 본문 108 nt → 27 byte → RS 복호</li>
@@ -993,16 +930,15 @@ print(len(reads), "→", len(trimmed))      <span class="cm"># 7 → 6</span></c
 </ul>
 <h3>Local RS</h3>
 <ul>
-  <li>원본 STL_Decode 282–292행: Global RS 실패 묶음의 read를 <strong>하나씩</strong> RS 복호</li>
+  <li>Global RS 실패 묶음의 read를 <strong>하나씩</strong> RS 복호 (<code>STL_Decode_231213.m</code> LRS 섹션 282–292행)</li>
   <li>통과 + index 일치 read들의 17 byte → byte 자리별 최빈값 (동률이면 작은 값) → 행 확보 (<code>local</code>)</li>
-  <li>consensus가 실패해도 오류 4 byte 이하 read가 있으면 복원 (원본 Venus index 12,643: read 14개 중 1개 통과)</li>
+  <li>consensus가 실패해도 오류 4 byte 이하 read가 있으면 복원 (예: Kang et al. Venus 데이터 index 12,643 · read 14개 중 1개 통과)</li>
 </ul>
 <h3>오정정과 index 검사</h3>
 <ul>
   <li>오류 5 byte 이상 → RS가 실패를 알리지 못하고 다른 부호어로 “성공”하는 경우 존재 (오정정)</li>
   <li>방어 1: 복호된 index ≠ 묶음 index → 버림</li>
   <li>방어 2: 파일 전체 CRC-32 비교 (9절)</li>
-  <li>원본의 방어: 메시지 심볼 값 > 1 검사 (bit 심볼 방식에서만 가능 · 패리티 구간 오류가 섞인 오정정만 검출, 4절)</li>
 </ul>
 <p class="src">Consensus2.m · Binarization.m · RSdecoding.m · STL_Decode_231213.m 282–292행 · Kang et al. p.3451–3453</p>
 </div>
@@ -1128,7 +1064,7 @@ print(hashlib.sha256(out).hexdigest())</code></pre></div>
   <li>Python <code>dnastore.py</code> · MATLAB <code>dnas_*.m</code> · JavaScript <code>dnastore.js</code> (웹 도구 내부)</li>
   <li>교차 검증: 같은 입력의 FASTA · 같은 seed의 read · 복호 보고가 세 언어에서 byte 단위로 같음</li>
 </ul>
-<p class="tcap">표 16. 세 언어 API 대응 (DNAS-1 설계서 §10)</p>
+<p class="tcap">표 14. 세 언어 API 대응 (DNAS-1 설계서 §10)</p>
 <div class="tbl"><table class="w6 api">
 <thead><tr><th>기능</th><th>Python <code>dnastore.py</code></th><th>MATLAB</th><th>JS <code>dnastore.js</code></th></tr></thead>
 <tbody>
@@ -1203,7 +1139,7 @@ print(out.decode("utf-8"), report)</code></pre></div>
 
 
 def whitening_mask(row_number):
-    &quot;&quot;&quot;원본에는 없는 선택 기능: 행 번호로 재현 가능한 마스크.&quot;&quot;&quot;
+    &quot;&quot;&quot;선택 기능(whitening): 행 번호로 재현 가능한 마스크.&quot;&quot;&quot;
     state, mask = row_number, bytearray()
     for _ in range(ROW_BYTES):
         state = (1664525 * state + 1013904223) &amp; 0xFFFFFFFF
@@ -1342,7 +1278,7 @@ def _generator(nsym):
 
 
 def rs_encode(msg, nsym=NSYM):
-    &quot;&quot;&quot;원본 rsenc: bit 대신 byte 심볼, 패리티를 뒤에 붙임.&quot;&quot;&quot;
+    &quot;&quot;&quot;원본 rsenc 대응: byte 심볼 RS, 패리티를 뒤에 붙임.&quot;&quot;&quot;
     message = bytes(msg)
     _check_rs_size(len(message) + nsym, nsym)
     generator = _generator(nsym)
@@ -1449,7 +1385,7 @@ logTable = logs;
 end
 
 function codeword = dnas_rs_encode(message, nsym)
-<span class="cm">% ACS Nano nrsin/rsenc 부분: bit 대신 byte를 GF(256) 심볼로 넣는다.</span>
+<span class="cm">% ACS Nano nrsin/rsenc 단계: byte를 GF(256) 심볼로 넣는다.</span>
 if nargin &lt; 2
     nsym = 8;
 end
@@ -1871,11 +1807,11 @@ end</code></pre></div>
   <li>채널 화면: 프리셋 무오류 · 보통 · 혹독(값만 채움, 수정 가능) · 격자에서 가닥 클릭 → 강제 소실 (<code>drop</code>)</li>
   <li>내려받기: FASTA · CSV · FASTQ · 복원 파일</li>
 </ul>
-<figure class="fig shot"><a class="fig-a" href="img/web-input.png"><img src="img/web-input.png" width="1056" height="747" alt="그림 10. 입력 단계"></a><figcaption>그림 10. 입력 단계 · 이름 “송영준 DNA” → 글자별 코드포인트 · UTF-8 byte (13 byte)</figcaption></figure>
-<figure class="fig shot"><a class="fig-a" href="img/web-photo.png"><img src="img/web-photo.png" width="1056" height="606" alt="그림 11. 사진 입력"></a><figcaption>그림 11. 사진 입력 · 예시 그림(64 px) → 브라우저 JPEG 1,663 byte</figcaption></figure>
-<figure class="fig shot"><a class="fig-a" href="img/web-encode.png"><img src="img/web-encode.png" width="1056" height="1023" alt="그림 12. 인코딩 단계"></a><figcaption>그림 12. 인코딩 단계 · 가닥 격자(헤더 / 데이터 / XOR)와 데이터 가닥 2번의 행 → XOR → index → RS → DNA 구간</figcaption></figure>
-<figure class="fig shot"><a class="fig-a" href="img/web-channel.png"><img src="img/web-channel.png" width="1056" height="842" alt="그림 13. 채널 단계"></a><figcaption>그림 13. 채널 단계 · 보통 프리셋(seed 7 · coverage 10) + 가닥 2 · 3 강제 소실</figcaption></figure>
-<figure class="fig shot"><a class="fig-a" href="img/web-decode.png"><img src="img/web-decode.png" width="1056" height="920" alt="그림 14. 불러오기 단계"></a><figcaption>그림 14. 불러오기 단계 · Global RS 142 · Local RS 1 · XOR 7 → 150가닥 전부 확보 · CRC-32 일치 · 복원 사진</figcaption></figure>
+<figure class="fig shot"><a class="fig-a" href="img/web-input.png"><img src="img/web-input.png" width="1056" height="747" alt="그림 9. 입력 단계"></a><figcaption>그림 9. 입력 단계 · 이름 “송영준 DNA” → 글자별 코드포인트 · UTF-8 byte (13 byte)</figcaption></figure>
+<figure class="fig shot"><a class="fig-a" href="img/web-photo.png"><img src="img/web-photo.png" width="1056" height="606" alt="그림 10. 사진 입력"></a><figcaption>그림 10. 사진 입력 · 예시 그림(64 px) → 브라우저 JPEG 1,663 byte</figcaption></figure>
+<figure class="fig shot"><a class="fig-a" href="img/web-encode.png"><img src="img/web-encode.png" width="1056" height="1023" alt="그림 11. 인코딩 단계"></a><figcaption>그림 11. 인코딩 단계 · 가닥 격자(헤더 / 데이터 / XOR)와 데이터 가닥 2번의 행 → XOR → index → RS → DNA 구간</figcaption></figure>
+<figure class="fig shot"><a class="fig-a" href="img/web-channel.png"><img src="img/web-channel.png" width="1056" height="842" alt="그림 12. 채널 단계"></a><figcaption>그림 12. 채널 단계 · 보통 프리셋(seed 7 · coverage 10) + 가닥 2 · 3 강제 소실</figcaption></figure>
+<figure class="fig shot"><a class="fig-a" href="img/web-decode.png"><img src="img/web-decode.png" width="1056" height="920" alt="그림 13. 불러오기 단계"></a><figcaption>그림 13. 불러오기 단계 · Global RS 142 · Local RS 1 · XOR 7 → 150가닥 전부 확보 · CRC-32 일치 · 복원 사진</figcaption></figure>
 
 <h3>Google Colab (Python)</h3>
 <ul>
@@ -1967,16 +1903,6 @@ python3 dnastore.py decode reads.fastq -o out.bin</code></pre></div>
   </ul>
   <p class="rec"><b>기록</b> 최대 호모폴리머 · 전체 GC % · 호모폴리머 6 nt 이상 가닥 수</p>
 </li>
-<li>
-  <h3>토론: 원본 bit 심볼 RS와 depth-cut</h3>
-  <ul>
-    <li>원본 RS(164,156)와 RS(27,19): 같은 패리티 32 nt에서 보장 정정 nt 수</li>
-    <li>데이터 영역 A→C 치환 3개가 원본 방식에서 실패하는 이유</li>
-    <li>“복호 결과 값 > 1” 검사가 원본에서만 가능한 이유 · 데이터 영역만 틀린 오정정을 이 검사로 못 거르는 이유</li>
-    <li>depth-cut을 넣으면 과제 5의 결과가 어떻게 달라질지 예상</li>
-  </ul>
-  <p class="rec"><b>기록</b> 개조식 5줄 이내</p>
-</li>
 </ol>
 </section>
 
@@ -1987,13 +1913,13 @@ python3 dnastore.py decode reads.fastq -o out.bin</code></pre></div>
 <ul class="refs">
   <li>Kang, Lim, Lee, Kim, Huang, Kim, Song, “High-Data-Density, High-Decoding-Speed, and High-Decoding-Accuracy DNA Data Ink for Digital Preservation”, <i>ACS Nano</i> 2026, 20, 3444–3460. <a href="https://doi.org/10.1021/acsnano.5c13665">DOI 10.1021/acsnano.5c13665</a></li>
 </ul>
-<h3>원본 코드 (연구실 MATLAB)</h3>
+<h3>연구실 MATLAB 코드 (ACS Nano 2026)</h3>
 <ul class="refs">
   <li>부호화 (Encoding 통합): <code>STL_Encode.m</code> · <code>cCal.m</code> · <code>genkey.m</code> · <code>primerSelect.m</code></li>
   <li>복호 (Decoding 통합 2): <code>STL_Decode_231213.m</code></li>
   <li>복호 보조 (Fastq Function3): <code>ReverseEvert.m</code> · <code>PrimerSort.m</code> · <code>KeyFind.m</code> · <code>Keysort.m</code> · <code>Consensus2.m</code> · <code>Binarization.m</code> · <code>RSdecoding.m</code> · <code>NullFind.m</code> · <code>XORrun2.m</code></li>
   <li>검증 스크립트: <code>GRS_Check.m</code> · <code>LRS_Check2.m</code> · <code>Depth_Perfect.m</code></li>
-  <li>원본 서열: <code>Original Sequence/Jikji6.txt</code> (1,018가닥 × 150 nt)</li>
+  <li>서열 파일: <code>Original Sequence/Jikji6.txt</code> (1,018가닥 × 150 nt)</li>
   <li>Python 이식: <code>dna_decode_baseline_260506_v8_11.py</code></li>
 </ul>
 <h3>이전 강의 · 실습</h3>
@@ -2004,7 +1930,7 @@ python3 dnastore.py decode reads.fastq -o out.bin</code></pre></div>
   <!-- 4-3 올리고 설계 실습: 별도 HTML 없음 → 강의 사이트와 같은 방식으로 저장소의 MATLAB 파일 보기 링크 -->
   <li><a href="https://github.com/bioelectronicsbiooptics/bbl-site/blob/main/courses/molecular-information-engineering/week04/matlab/week4_oligo_lab.m">4-3 올리고 설계 실습 (week4_oligo_lab.m)</a></li>
 </ul>
-<footer class="end">DNA 저장 실습 설명서 · DNAS-1 포맷 (ACS Nano 2026 방식 교육용 수정판) · 분자정보공학</footer>
+<footer class="end">DNA 저장 실습 설명서 · DNAS-1 포맷 (ACS Nano 2026 방식) · 분자정보공학</footer>
 </section>
 
 </div>

@@ -1,5 +1,5 @@
 %% DNAS-1 이름 실습 — Ctrl+Enter로 섹션별 실행
-% 원본 STL_Encode의 STL 입력을 UTF-8 이름으로 바꾼다.
+% 이름(UTF-8 byte)을 DNA 가닥으로 부호화한다.
 folder = fileparts(mfilename('fullpath'));
 addpath(folder);
 outFolder = fullfile(folder, 'output');

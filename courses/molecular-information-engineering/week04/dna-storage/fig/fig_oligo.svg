@@ -1,84 +1,44 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 470" role="img" aria-labelledby="fig_oligo-t">
-<title id="fig_oligo-t">가닥 구조 비교: ACS Nano 원본 150 nt(RS 메시지 심볼 1개 = 1 bit)와 DNAS-1 수정판 148 nt(RS 심볼 1개 = 1 byte = 4 nt)</title>
-<rect x="0" y="0" width="880" height="470" fill="#FFFFFF" stroke="none"/>
-<text x="65" y="26" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="16" fill="#16324F" text-anchor="start" font-weight="bold">ACS Nano 원본 · 150 nt</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 248" role="img" aria-labelledby="fig_oligo-t">
+<title id="fig_oligo-t">가닥 구조 148 nt: F 프라이머 20 · 데이터 68 · index 8 · RS 패리티 32 · R 프라이머 20 nt, RS 메시지 19 byte와 부호어 27 byte (RS 심볼 1개 = 1 byte = 4 nt)</title>
+<rect x="0" y="0" width="880" height="248" fill="#FFFFFF" stroke="none"/>
+<text x="65" y="26" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="16" fill="#16324F" text-anchor="start" font-weight="bold">가닥 구조 · 148 nt</text>
 <text x="815" y="26" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#5B6670" text-anchor="end"><tspan font-weight="bold">막대 아래 빗살</tspan><tspan> = RS 심볼 경계</tspan></text>
 <rect x="65" y="62" width="100" height="50" fill="#E9EDF2" stroke="#5B6670" stroke-width="1"/>
 <text x="115" y="83" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="14" fill="#5B6670" text-anchor="middle" font-weight="bold">F 프라이머</text>
 <text x="115" y="100" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#5B6670" text-anchor="middle">20 nt</text>
-<rect x="165" y="62" width="365" height="50" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.2"/>
-<text x="347.5" y="83" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="14" fill="#16324F" text-anchor="middle" font-weight="bold">payload 73 nt</text>
-<text x="347.5" y="100" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#5B6670" text-anchor="middle">146 bit</text>
-<rect x="530" y="62" width="25" height="50" fill="#224EBD" stroke="#224EBD" stroke-width="1.2"/>
-<rect x="555" y="62" width="160" height="50" fill="#FBECEC" stroke="#C03B3B" stroke-width="1.2"/>
-<text x="635" y="83" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="14" fill="#C03B3B" text-anchor="middle" font-weight="bold">RS 패리티 32 nt</text>
-<text x="635" y="100" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#C03B3B" text-anchor="middle">8 심볼 × 8 bit</text>
-<rect x="715" y="62" width="100" height="50" fill="#E9EDF2" stroke="#5B6670" stroke-width="1"/>
-<text x="765" y="83" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="14" fill="#5B6670" text-anchor="middle" font-weight="bold">R 프라이머</text>
-<text x="765" y="100" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#5B6670" text-anchor="middle">20 nt</text>
-<path d="M167.5,106 V111.4 M170,106 V111.4 M172.5,106 V111.4 M175,106 V111.4 M177.5,106 V111.4 M180,106 V111.4 M182.5,106 V111.4 M185,106 V111.4 M187.5,106 V111.4 M190,106 V111.4 M192.5,106 V111.4 M195,106 V111.4 M197.5,106 V111.4 M200,106 V111.4 M202.5,106 V111.4 M205,106 V111.4 M207.5,106 V111.4 M210,106 V111.4 M212.5,106 V111.4 M215,106 V111.4 M217.5,106 V111.4 M220,106 V111.4 M222.5,106 V111.4 M225,106 V111.4 M227.5,106 V111.4 M230,106 V111.4 M232.5,106 V111.4 M235,106 V111.4 M237.5,106 V111.4 M240,106 V111.4 M242.5,106 V111.4 M245,106 V111.4 M247.5,106 V111.4 M250,106 V111.4 M252.5,106 V111.4 M255,106 V111.4 M257.5,106 V111.4 M260,106 V111.4 M262.5,106 V111.4 M265,106 V111.4 M267.5,106 V111.4 M270,106 V111.4 M272.5,106 V111.4 M275,106 V111.4 M277.5,106 V111.4 M280,106 V111.4 M282.5,106 V111.4 M285,106 V111.4 M287.5,106 V111.4 M290,106 V111.4 M292.5,106 V111.4 M295,106 V111.4 M297.5,106 V111.4 M300,106 V111.4 M302.5,106 V111.4 M305,106 V111.4 M307.5,106 V111.4 M310,106 V111.4 M312.5,106 V111.4 M315,106 V111.4 M317.5,106 V111.4 M320,106 V111.4 M322.5,106 V111.4 M325,106 V111.4 M327.5,106 V111.4 M330,106 V111.4 M332.5,106 V111.4 M335,106 V111.4 M337.5,106 V111.4 M340,106 V111.4 M342.5,106 V111.4 M345,106 V111.4 M347.5,106 V111.4 M350,106 V111.4 M352.5,106 V111.4 M355,106 V111.4 M357.5,106 V111.4 M360,106 V111.4 M362.5,106 V111.4 M365,106 V111.4 M367.5,106 V111.4 M370,106 V111.4 M372.5,106 V111.4 M375,106 V111.4 M377.5,106 V111.4 M380,106 V111.4 M382.5,106 V111.4 M385,106 V111.4 M387.5,106 V111.4 M390,106 V111.4 M392.5,106 V111.4 M395,106 V111.4 M397.5,106 V111.4 M400,106 V111.4 M402.5,106 V111.4 M405,106 V111.4 M407.5,106 V111.4 M410,106 V111.4 M412.5,106 V111.4 M415,106 V111.4 M417.5,106 V111.4 M420,106 V111.4 M422.5,106 V111.4 M425,106 V111.4 M427.5,106 V111.4 M430,106 V111.4 M432.5,106 V111.4 M435,106 V111.4 M437.5,106 V111.4 M440,106 V111.4 M442.5,106 V111.4 M445,106 V111.4 M447.5,106 V111.4 M450,106 V111.4 M452.5,106 V111.4 M455,106 V111.4 M457.5,106 V111.4 M460,106 V111.4 M462.5,106 V111.4 M465,106 V111.4 M467.5,106 V111.4 M470,106 V111.4 M472.5,106 V111.4 M475,106 V111.4 M477.5,106 V111.4 M480,106 V111.4 M482.5,106 V111.4 M485,106 V111.4 M487.5,106 V111.4 M490,106 V111.4 M492.5,106 V111.4 M495,106 V111.4 M497.5,106 V111.4 M500,106 V111.4 M502.5,106 V111.4 M505,106 V111.4 M507.5,106 V111.4 M510,106 V111.4 M512.5,106 V111.4 M515,106 V111.4 M517.5,106 V111.4 M520,106 V111.4 M522.5,106 V111.4 M525,106 V111.4 M527.5,106 V111.4" fill="none" stroke="#529FD9" stroke-width="0.7"/>
-<path d="M532.5,106 V111.4 M535,106 V111.4 M537.5,106 V111.4 M540,106 V111.4 M542.5,106 V111.4 M545,106 V111.4 M547.5,106 V111.4 M550,106 V111.4 M552.5,106 V111.4" fill="none" stroke="#FFFFFF" stroke-width="0.7"/>
-<path d="M575,106 V111.4 M595,106 V111.4 M615,106 V111.4 M635,106 V111.4 M655,106 V111.4 M675,106 V111.4 M695,106 V111.4" fill="none" stroke="#C03B3B" stroke-width="1.1"/>
-<path d="M542.5,61 V44 H564.5" fill="none" stroke="#224EBD" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round"/>
-<circle cx="542.5" cy="61" r="2.2" fill="#224EBD" stroke="none"/>
-<text x="569.5" y="49" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="14" fill="#224EBD" text-anchor="start" font-weight="bold">index 5 nt (10 bit)</text>
+<rect x="165" y="62" width="340" height="50" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.2"/>
+<text x="335" y="83" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="14" fill="#16324F" text-anchor="middle" font-weight="bold">데이터 68 nt</text>
+<text x="335" y="100" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#5B6670" text-anchor="middle">17 byte</text>
+<rect x="505" y="62" width="40" height="50" fill="#224EBD" stroke="#224EBD" stroke-width="1.2"/>
+<rect x="545" y="62" width="160" height="50" fill="#FBECEC" stroke="#C03B3B" stroke-width="1.2"/>
+<text x="625" y="83" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="14" fill="#C03B3B" text-anchor="middle" font-weight="bold">RS 패리티 32 nt</text>
+<text x="625" y="100" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#C03B3B" text-anchor="middle">8 byte</text>
+<rect x="705" y="62" width="100" height="50" fill="#E9EDF2" stroke="#5B6670" stroke-width="1"/>
+<text x="755" y="83" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="14" fill="#5B6670" text-anchor="middle" font-weight="bold">R 프라이머</text>
+<text x="755" y="100" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#5B6670" text-anchor="middle">20 nt</text>
+<path d="M185,106 V111.4 M205,106 V111.4 M225,106 V111.4 M245,106 V111.4 M265,106 V111.4 M285,106 V111.4 M305,106 V111.4 M325,106 V111.4 M345,106 V111.4 M365,106 V111.4 M385,106 V111.4 M405,106 V111.4 M425,106 V111.4 M445,106 V111.4 M465,106 V111.4 M485,106 V111.4" fill="none" stroke="#529FD9" stroke-width="1.1"/>
+<path d="M525,106 V111.4" fill="none" stroke="#FFFFFF" stroke-width="1.1"/>
+<path d="M565,106 V111.4 M585,106 V111.4 M605,106 V111.4 M625,106 V111.4 M645,106 V111.4 M665,106 V111.4 M685,106 V111.4" fill="none" stroke="#C03B3B" stroke-width="1.1"/>
+<path d="M525,61 V44 H547" fill="none" stroke="#224EBD" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="525" cy="61" r="2.2" fill="#224EBD" stroke="none"/>
+<text x="552" y="49" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="14" fill="#224EBD" text-anchor="start" font-weight="bold">index 8 nt (2 byte)</text>
 <line x1="65" y1="112" x2="65" y2="134" fill="none" stroke="#5B6670" stroke-width="1.1"/>
 <text x="68" y="131" font-family="Menlo,Consolas,monospace" font-size="13" fill="#5B6670" text-anchor="start">1</text>
 <line x1="165" y1="112" x2="165" y2="134" fill="none" stroke="#5B6670" stroke-width="1.1"/>
 <text x="168" y="131" font-family="Menlo,Consolas,monospace" font-size="13" fill="#5B6670" text-anchor="start">21</text>
-<line x1="530" y1="112" x2="530" y2="134" fill="none" stroke="#5B6670" stroke-width="1.1"/>
-<text x="527" y="131" font-family="Menlo,Consolas,monospace" font-size="13" fill="#5B6670" text-anchor="end">93</text>
-<text x="533" y="131" font-family="Menlo,Consolas,monospace" font-size="13" fill="#5B6670" text-anchor="start">94</text>
-<line x1="555" y1="112" x2="555" y2="152" fill="none" stroke="#5B6670" stroke-width="1.1"/>
-<text x="552" y="149" font-family="Menlo,Consolas,monospace" font-size="13" fill="#5B6670" text-anchor="end">98</text>
-<text x="558" y="149" font-family="Menlo,Consolas,monospace" font-size="13" fill="#5B6670" text-anchor="start">99</text>
-<line x1="715" y1="112" x2="715" y2="134" fill="none" stroke="#5B6670" stroke-width="1.1"/>
-<text x="712" y="131" font-family="Menlo,Consolas,monospace" font-size="13" fill="#5B6670" text-anchor="end">130</text>
-<text x="718" y="131" font-family="Menlo,Consolas,monospace" font-size="13" fill="#5B6670" text-anchor="start">131</text>
-<line x1="815" y1="112" x2="815" y2="134" fill="none" stroke="#5B6670" stroke-width="1.1"/>
-<text x="812" y="131" font-family="Menlo,Consolas,monospace" font-size="13" fill="#5B6670" text-anchor="end">150</text>
-<path d="M166.5,160 Q166.5,166 176.5,166 L350,166 Q360,166 360,172 Q360,166 370,166 L543.5,166 Q553.5,166 553.5,160" fill="none" stroke="#5B6670" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round"/>
-<text x="360" y="189" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#1A1A1A" text-anchor="middle"><tspan>RS 메시지 156 심볼 = 156 bit </tspan><tspan fill="#C03B3B" font-weight="bold">(1 심볼 = 1 bit)</tspan></text>
-<path d="M556.5,160 Q556.5,166 566.5,166 L625,166 Q635,166 635,172 Q635,166 645,166 L703.5,166 Q713.5,166 713.5,160" fill="none" stroke="#5B6670" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round"/>
-<text x="635" y="189" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#1A1A1A" text-anchor="middle"><tspan>패리티 8 심볼 = 64 bit</tspan></text>
-<line x1="20" y1="214" x2="860" y2="214" fill="none" stroke="#D8DEE6" stroke-width="1"/>
-<text x="65" y="248" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="16" fill="#16324F" text-anchor="start" font-weight="bold">DNAS-1 수정판 · 148 nt</text>
-<rect x="65" y="284" width="100" height="50" fill="#E9EDF2" stroke="#5B6670" stroke-width="1"/>
-<text x="115" y="305" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="14" fill="#5B6670" text-anchor="middle" font-weight="bold">F 프라이머</text>
-<text x="115" y="322" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#5B6670" text-anchor="middle">20 nt</text>
-<rect x="165" y="284" width="340" height="50" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.2"/>
-<text x="335" y="305" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="14" fill="#16324F" text-anchor="middle" font-weight="bold">데이터 68 nt</text>
-<text x="335" y="322" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#5B6670" text-anchor="middle">17 byte</text>
-<rect x="505" y="284" width="40" height="50" fill="#224EBD" stroke="#224EBD" stroke-width="1.2"/>
-<rect x="545" y="284" width="160" height="50" fill="#FBECEC" stroke="#C03B3B" stroke-width="1.2"/>
-<text x="625" y="305" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="14" fill="#C03B3B" text-anchor="middle" font-weight="bold">RS 패리티 32 nt</text>
-<text x="625" y="322" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#C03B3B" text-anchor="middle">8 byte</text>
-<rect x="705" y="284" width="100" height="50" fill="#E9EDF2" stroke="#5B6670" stroke-width="1"/>
-<text x="755" y="305" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="14" fill="#5B6670" text-anchor="middle" font-weight="bold">R 프라이머</text>
-<text x="755" y="322" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#5B6670" text-anchor="middle">20 nt</text>
-<path d="M185,328 V333.4 M205,328 V333.4 M225,328 V333.4 M245,328 V333.4 M265,328 V333.4 M285,328 V333.4 M305,328 V333.4 M325,328 V333.4 M345,328 V333.4 M365,328 V333.4 M385,328 V333.4 M405,328 V333.4 M425,328 V333.4 M445,328 V333.4 M465,328 V333.4 M485,328 V333.4" fill="none" stroke="#529FD9" stroke-width="1.1"/>
-<path d="M525,328 V333.4" fill="none" stroke="#FFFFFF" stroke-width="1.1"/>
-<path d="M565,328 V333.4 M585,328 V333.4 M605,328 V333.4 M625,328 V333.4 M645,328 V333.4 M665,328 V333.4 M685,328 V333.4" fill="none" stroke="#C03B3B" stroke-width="1.1"/>
-<path d="M525,283 V266 H547" fill="none" stroke="#224EBD" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round"/>
-<circle cx="525" cy="283" r="2.2" fill="#224EBD" stroke="none"/>
-<text x="552" y="271" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="14" fill="#224EBD" text-anchor="start" font-weight="bold">index 8 nt (2 byte)</text>
-<line x1="65" y1="334" x2="65" y2="356" fill="none" stroke="#5B6670" stroke-width="1.1"/>
-<text x="68" y="353" font-family="Menlo,Consolas,monospace" font-size="13" fill="#5B6670" text-anchor="start">1</text>
-<line x1="165" y1="334" x2="165" y2="356" fill="none" stroke="#5B6670" stroke-width="1.1"/>
-<text x="168" y="353" font-family="Menlo,Consolas,monospace" font-size="13" fill="#5B6670" text-anchor="start">21</text>
-<line x1="505" y1="334" x2="505" y2="356" fill="none" stroke="#5B6670" stroke-width="1.1"/>
-<text x="502" y="353" font-family="Menlo,Consolas,monospace" font-size="13" fill="#5B6670" text-anchor="end">88</text>
-<text x="508" y="353" font-family="Menlo,Consolas,monospace" font-size="13" fill="#5B6670" text-anchor="start">89</text>
-<line x1="545" y1="334" x2="545" y2="374" fill="none" stroke="#5B6670" stroke-width="1.1"/>
-<text x="542" y="371" font-family="Menlo,Consolas,monospace" font-size="13" fill="#5B6670" text-anchor="end">96</text>
-<text x="548" y="371" font-family="Menlo,Consolas,monospace" font-size="13" fill="#5B6670" text-anchor="start">97</text>
-<line x1="705" y1="334" x2="705" y2="356" fill="none" stroke="#5B6670" stroke-width="1.1"/>
-<text x="702" y="353" font-family="Menlo,Consolas,monospace" font-size="13" fill="#5B6670" text-anchor="end">128</text>
-<text x="708" y="353" font-family="Menlo,Consolas,monospace" font-size="13" fill="#5B6670" text-anchor="start">129</text>
-<line x1="805" y1="334" x2="805" y2="356" fill="none" stroke="#5B6670" stroke-width="1.1"/>
-<text x="802" y="353" font-family="Menlo,Consolas,monospace" font-size="13" fill="#5B6670" text-anchor="end">148</text>
-<path d="M166.5,382 Q166.5,388 176.5,388 L345,388 Q355,388 355,394 Q355,388 365,388 L533.5,388 Q543.5,388 543.5,382" fill="none" stroke="#5B6670" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round"/>
-<text x="355" y="411" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#1A1A1A" text-anchor="middle"><tspan>RS 메시지 19 byte = 76 nt</tspan></text>
-<path d="M166.5,425 Q166.5,431 176.5,431 L425,431 Q435,431 435,437 Q435,431 445,431 L693.5,431 Q703.5,431 703.5,425" fill="none" stroke="#5B6670" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round"/>
-<text x="435" y="454" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#1A1A1A" text-anchor="middle"><tspan>부호어 27 byte = 108 nt · </tspan><tspan fill="#2E7D54" font-weight="bold">1 심볼 = 1 byte = 4 nt</tspan><tspan> · t = 4</tspan></text>
+<line x1="505" y1="112" x2="505" y2="134" fill="none" stroke="#5B6670" stroke-width="1.1"/>
+<text x="502" y="131" font-family="Menlo,Consolas,monospace" font-size="13" fill="#5B6670" text-anchor="end">88</text>
+<text x="508" y="131" font-family="Menlo,Consolas,monospace" font-size="13" fill="#5B6670" text-anchor="start">89</text>
+<line x1="545" y1="112" x2="545" y2="152" fill="none" stroke="#5B6670" stroke-width="1.1"/>
+<text x="542" y="149" font-family="Menlo,Consolas,monospace" font-size="13" fill="#5B6670" text-anchor="end">96</text>
+<text x="548" y="149" font-family="Menlo,Consolas,monospace" font-size="13" fill="#5B6670" text-anchor="start">97</text>
+<line x1="705" y1="112" x2="705" y2="134" fill="none" stroke="#5B6670" stroke-width="1.1"/>
+<text x="702" y="131" font-family="Menlo,Consolas,monospace" font-size="13" fill="#5B6670" text-anchor="end">128</text>
+<text x="708" y="131" font-family="Menlo,Consolas,monospace" font-size="13" fill="#5B6670" text-anchor="start">129</text>
+<line x1="805" y1="112" x2="805" y2="134" fill="none" stroke="#5B6670" stroke-width="1.1"/>
+<text x="802" y="131" font-family="Menlo,Consolas,monospace" font-size="13" fill="#5B6670" text-anchor="end">148</text>
+<path d="M166.5,160 Q166.5,166 176.5,166 L345,166 Q355,166 355,172 Q355,166 365,166 L533.5,166 Q543.5,166 543.5,160" fill="none" stroke="#5B6670" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="355" y="189" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#1A1A1A" text-anchor="middle"><tspan>RS 메시지 19 byte = 76 nt</tspan></text>
+<path d="M166.5,203 Q166.5,209 176.5,209 L425,209 Q435,209 435,215 Q435,209 445,209 L693.5,209 Q703.5,209 703.5,203" fill="none" stroke="#5B6670" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="435" y="232" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#1A1A1A" text-anchor="middle"><tspan>부호어 27 byte = 108 nt · </tspan><tspan fill="#2E7D54" font-weight="bold">1 심볼 = 1 byte = 4 nt</tspan><tspan> · t = 4</tspan></text>
 </svg>

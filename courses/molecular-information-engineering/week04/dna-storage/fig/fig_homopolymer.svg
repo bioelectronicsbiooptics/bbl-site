@@ -132,7 +132,7 @@
 <rect x="12" y="196" width="856" height="268" rx="8" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1.5"/>
 <text x="24" y="226" font-size="16" fill="#16324F" font-weight="700">행 2(파일 첫 17 byte)를 행 번호 r = 2 마스크로 XOR</text>
 <text x="24" y="250" font-size="13"><tspan fill="#5B6670" font-weight="700">mask: </tspan><tspan fill="#5B6670">x = 2에서 시작, 17번 x = (1664525·x + 1013904223) mod 2³², 매번 mask = ⌊x / 2²⁴⌋</tspan></text>
-<text x="24" y="284" font-size="14" fill="#1A1A1A">원본 byte</text>
+<text x="24" y="284" font-size="14" fill="#1A1A1A">파일 byte</text>
 <rect x="113" y="266" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
 <text x="133.8" y="284" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">FF</text>
 <rect x="156.6" y="266" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
@@ -327,6 +327,6 @@
 <line x1="483.6" y1="399" x2="525.2" y2="399" stroke="#C03B3B" stroke-width="3"/>
 <text x="504.4" y="418" font-size="14" fill="#C03B3B" text-anchor="middle" font-weight="700">C × 4  (nt 35–38)</text>
 <text x="856" y="450" font-size="14" fill="#1A1A1A" text-anchor="end" font-weight="700">최장 연속 C × 4 · GC 54.4 %</text>
-<text x="24" y="450" font-size="14"><tspan fill="#8A5F12" font-weight="700">whitening: </tspan><tspan fill="#1A1A1A">원본에 없는 선택 기능 · 헤더 행은 제외 · 복호 때 같은 마스크로 되돌림</tspan></text>
+<text x="24" y="450" font-size="14"><tspan fill="#8A5F12" font-weight="700">whitening: </tspan><tspan fill="#1A1A1A">선택 기능 · 헤더 행은 제외 · 복호 때 같은 마스크로 되돌림</tspan></text>
 </g>
 </svg>

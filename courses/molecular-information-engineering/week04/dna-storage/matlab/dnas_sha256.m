@@ -1,5 +1,5 @@
 function digest = dnas_sha256(bytes)
-% 원본에는 없던 파일 식별값: JVM · 툴박스 없이 SHA-256을 계산한다.
+% 파일 식별값: JVM · 툴박스 없이 SHA-256을 계산한다.
 persistent K initial
 if isempty(K)
     hex = ['428a2f98'; '71374491'; 'b5c0fbcf'; 'e9b5dba5'; ...
@@ -59,11 +59,11 @@ digest = lower(reshape(dec2hex(H, 8)', 1, []));
 end
 
 function y = rotr(x, count)
-% 원본에 없는 SHA-256 보조 함수: uint32를 오른쪽 순환 이동한다.
+% SHA-256 보조 함수: uint32를 오른쪽 순환 이동한다.
 y = bitor(bitshift(x, -count), bitshift(x, 32 - count));
 end
 
 function y = add(values)
-% 원본에 없는 SHA-256 보조 함수: 포화 대신 modulo 2^32 덧셈.
+% SHA-256 보조 함수: 포화 대신 modulo 2^32 덧셈.
 y = uint32(mod(sum(double(values)), 2^32));
 end

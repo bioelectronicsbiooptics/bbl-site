@@ -1,182 +1,119 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 648" role="img" aria-labelledby="fig_rs_symbol-t">
-<title id="fig_rs_symbol-t">RS 심볼 크기 비교: 원본 1 심볼 = 1 bit, 수정판 1 심볼 = 1 byte = 4 nt</title>
-<rect x="0" y="0" width="880" height="648" fill="#FFFFFF" stroke="none"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 314" role="img" aria-labelledby="fig_rs_symbol-t">
+<title id="fig_rs_symbol-t">RS(27,19)의 심볼 경계: 1 심볼 = 1 byte = 4 nt, 1 nt 치환과 같은 byte 안 2 nt 치환은 모두 심볼 1개 오류</title>
+<rect x="0" y="0" width="880" height="314" fill="#FFFFFF" stroke="none"/>
 <g font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" fill="#1A1A1A">
-<rect x="12" y="12" width="856" height="318" rx="8" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1.5"/>
-<text x="32" y="44" font-size="16" fill="#16324F" font-weight="700">원본: 1 심볼 = 1 bit (GF(2⁸) 원소에 0/1만)</text>
-<text x="848" y="44" font-size="13" fill="#5B6670" text-anchor="end">RS(164,156) · 메시지 156 심볼 = 156 bit</text>
-<text x="192" y="76" font-size="13" fill="#5B6670" text-anchor="middle">nt (2 bit)</text>
-<text x="476" y="76" font-size="13" fill="#5B6670" text-anchor="middle">메시지 심볼 4개 (8 bit 칸에 0 또는 1)</text>
+<rect x="12" y="12" width="856" height="290" rx="8" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1.5"/>
+<text x="32" y="44" font-size="16" fill="#16324F" font-weight="700">1 심볼 = 1 byte = 4 nt</text>
+<text x="848" y="44" font-size="13" fill="#5B6670" text-anchor="end">RS(27,19) · 메시지 19 심볼 = 19 byte</text>
+<text x="283" y="76" font-size="13" fill="#5B6670" text-anchor="middle">nt (4 nt = 1 byte)</text>
+<text x="572" y="76" font-size="13" fill="#5B6670" text-anchor="middle">메시지 심볼 = byte</text>
 <text x="690" y="76" font-size="13" fill="#5B6670">심볼 오류</text>
 <text x="32" y="117" font-size="15" fill="#1A1A1A" font-weight="700">정상</text>
-<rect x="150" y="90" width="40" height="46" rx="4" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.2"/>
-<text x="170" y="112" font-size="18" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">T</text>
-<text x="170" y="129" font-size="13" fill="#5B6670" text-anchor="middle" font-family="Menlo,Consolas,monospace">01</text>
-<rect x="196" y="90" width="40" height="46" rx="4" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.2"/>
-<text x="216" y="112" font-size="18" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">G</text>
-<text x="216" y="129" font-size="13" fill="#5B6670" text-anchor="middle" font-family="Menlo,Consolas,monospace">10</text>
-<line x1="250" y1="113" x2="286" y2="113" stroke="#5B6670" stroke-width="1.8"/><polygon points="294,113 285,108.05 285,117.95" fill="#5B6670" stroke="none"/>
-<rect x="306" y="93" width="74" height="40" rx="4" fill="#F4F6F9" stroke="#16324F" stroke-width="1.2"/>
-<text x="343" y="119" font-size="14" text-anchor="middle" font-family="Menlo,Consolas,monospace"><tspan fill="#9AA4AE">0000000</tspan><tspan fill="#1A1A1A" font-weight="700">0</tspan></text>
-<rect x="390" y="93" width="74" height="40" rx="4" fill="#F4F6F9" stroke="#16324F" stroke-width="1.2"/>
-<text x="427" y="119" font-size="14" text-anchor="middle" font-family="Menlo,Consolas,monospace"><tspan fill="#9AA4AE">0000000</tspan><tspan fill="#1A1A1A" font-weight="700">1</tspan></text>
-<rect x="486" y="93" width="74" height="40" rx="4" fill="#F4F6F9" stroke="#16324F" stroke-width="1.2"/>
-<text x="523" y="119" font-size="14" text-anchor="middle" font-family="Menlo,Consolas,monospace"><tspan fill="#9AA4AE">0000000</tspan><tspan fill="#1A1A1A" font-weight="700">1</tspan></text>
-<rect x="570" y="93" width="74" height="40" rx="4" fill="#F4F6F9" stroke="#16324F" stroke-width="1.2"/>
-<text x="607" y="119" font-size="14" text-anchor="middle" font-family="Menlo,Consolas,monospace"><tspan fill="#9AA4AE">0000000</tspan><tspan fill="#1A1A1A" font-weight="700">0</tspan></text>
+<rect x="150" y="93" width="62" height="40" rx="4" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.2"/>
+<text x="161" y="119" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
+<text x="174.3" y="119" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
+<text x="187.6" y="119" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="200.9" y="119" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
+<rect x="218" y="93" width="62" height="40" rx="4" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.2"/>
+<text x="229" y="119" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
+<text x="242.3" y="119" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="255.6" y="119" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
+<text x="268.9" y="119" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
+<rect x="286" y="93" width="62" height="40" rx="4" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.2"/>
+<text x="297" y="119" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
+<text x="310.3" y="119" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="323.6" y="119" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
+<text x="336.9" y="119" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">G</text>
+<rect x="354" y="93" width="62" height="40" rx="4" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.2"/>
+<text x="365" y="119" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
+<text x="378.3" y="119" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="391.6" y="119" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
+<text x="404.9" y="119" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
+<line x1="426" y1="113" x2="446" y2="113" stroke="#5B6670" stroke-width="1.8"/><polygon points="454,113 445,108.05 445,117.95" fill="#5B6670" stroke="none"/>
+<rect x="462" y="93" width="50" height="40" rx="4" fill="#F4F6F9" stroke="#16324F" stroke-width="1.2"/>
+<text x="487" y="110" font-size="15" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">53</text>
+<text x="487" y="127" font-size="13" fill="#5B6670" text-anchor="middle" font-family="Menlo,Consolas,monospace">'S'</text>
+<rect x="518" y="93" width="50" height="40" rx="4" fill="#F4F6F9" stroke="#16324F" stroke-width="1.2"/>
+<text x="543" y="110" font-size="15" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">4F</text>
+<text x="543" y="127" font-size="13" fill="#5B6670" text-anchor="middle" font-family="Menlo,Consolas,monospace">'O'</text>
+<rect x="574" y="93" width="50" height="40" rx="4" fill="#F4F6F9" stroke="#16324F" stroke-width="1.2"/>
+<text x="599" y="110" font-size="15" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">4E</text>
+<text x="599" y="127" font-size="13" fill="#5B6670" text-anchor="middle" font-family="Menlo,Consolas,monospace">'N'</text>
+<rect x="630" y="93" width="50" height="40" rx="4" fill="#F4F6F9" stroke="#16324F" stroke-width="1.2"/>
+<text x="655" y="110" font-size="15" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">47</text>
+<text x="655" y="127" font-size="13" fill="#5B6670" text-anchor="middle" font-family="Menlo,Consolas,monospace">'G'</text>
 <text x="690" y="118" font-size="15" fill="#5B6670">기준</text>
-<text x="32" y="175" font-size="15" fill="#1A1A1A">치환 G→C</text>
-<rect x="150" y="148" width="40" height="46" rx="4" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.2"/>
-<text x="170" y="170" font-size="18" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">T</text>
-<text x="170" y="187" font-size="13" fill="#5B6670" text-anchor="middle" font-family="Menlo,Consolas,monospace">01</text>
-<rect x="196" y="148" width="40" height="46" rx="4" fill="#EAF3FB" stroke="#C03B3B" stroke-width="2"/>
-<text x="216" y="170" font-size="18" fill="#C03B3B" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">C</text>
-<text x="216" y="187" font-size="13" fill="#C03B3B" text-anchor="middle" font-family="Menlo,Consolas,monospace">11</text>
-<line x1="250" y1="171" x2="286" y2="171" stroke="#5B6670" stroke-width="1.8"/><polygon points="294,171 285,166.05 285,175.95" fill="#5B6670" stroke="none"/>
-<rect x="306" y="151" width="74" height="40" rx="4" fill="#F4F6F9" stroke="#16324F" stroke-width="1.2"/>
-<text x="343" y="177" font-size="14" text-anchor="middle" font-family="Menlo,Consolas,monospace"><tspan fill="#9AA4AE">0000000</tspan><tspan fill="#1A1A1A" font-weight="700">0</tspan></text>
-<rect x="390" y="151" width="74" height="40" rx="4" fill="#F4F6F9" stroke="#16324F" stroke-width="1.2"/>
-<text x="427" y="177" font-size="14" text-anchor="middle" font-family="Menlo,Consolas,monospace"><tspan fill="#9AA4AE">0000000</tspan><tspan fill="#1A1A1A" font-weight="700">1</tspan></text>
-<rect x="486" y="151" width="74" height="40" rx="4" fill="#F4F6F9" stroke="#16324F" stroke-width="1.2"/>
-<text x="523" y="177" font-size="14" text-anchor="middle" font-family="Menlo,Consolas,monospace"><tspan fill="#9AA4AE">0000000</tspan><tspan fill="#1A1A1A" font-weight="700">1</tspan></text>
-<rect x="570" y="151" width="74" height="40" rx="4" fill="#FFFFFF" stroke="#C03B3B" stroke-width="2"/>
-<text x="607" y="177" font-size="14" text-anchor="middle" font-family="Menlo,Consolas,monospace"><tspan fill="#C03B3B">0000000</tspan><tspan fill="#C03B3B" font-weight="700">1</tspan></text>
-<text x="690" y="176" font-size="15"><tspan fill="#1A1A1A">bit 1개 → </tspan><tspan fill="#C03B3B" font-weight="700">심볼 1개</tspan></text>
-<text x="32" y="233" font-size="15" fill="#1A1A1A">치환 T→G</text>
-<rect x="150" y="206" width="40" height="46" rx="4" fill="#EAF3FB" stroke="#C03B3B" stroke-width="2"/>
-<text x="170" y="228" font-size="18" fill="#C03B3B" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">G</text>
-<text x="170" y="245" font-size="13" fill="#C03B3B" text-anchor="middle" font-family="Menlo,Consolas,monospace">10</text>
-<rect x="196" y="206" width="40" height="46" rx="4" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.2"/>
-<text x="216" y="228" font-size="18" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">G</text>
-<text x="216" y="245" font-size="13" fill="#5B6670" text-anchor="middle" font-family="Menlo,Consolas,monospace">10</text>
-<line x1="250" y1="229" x2="286" y2="229" stroke="#5B6670" stroke-width="1.8"/><polygon points="294,229 285,224.05 285,233.95" fill="#5B6670" stroke="none"/>
-<rect x="306" y="209" width="74" height="40" rx="4" fill="#FFFFFF" stroke="#C03B3B" stroke-width="2"/>
-<text x="343" y="235" font-size="14" text-anchor="middle" font-family="Menlo,Consolas,monospace"><tspan fill="#C03B3B">0000000</tspan><tspan fill="#C03B3B" font-weight="700">1</tspan></text>
-<rect x="390" y="209" width="74" height="40" rx="4" fill="#FFFFFF" stroke="#C03B3B" stroke-width="2"/>
-<text x="427" y="235" font-size="14" text-anchor="middle" font-family="Menlo,Consolas,monospace"><tspan fill="#C03B3B">0000000</tspan><tspan fill="#C03B3B" font-weight="700">0</tspan></text>
-<rect x="486" y="209" width="74" height="40" rx="4" fill="#F4F6F9" stroke="#16324F" stroke-width="1.2"/>
-<text x="523" y="235" font-size="14" text-anchor="middle" font-family="Menlo,Consolas,monospace"><tspan fill="#9AA4AE">0000000</tspan><tspan fill="#1A1A1A" font-weight="700">1</tspan></text>
-<rect x="570" y="209" width="74" height="40" rx="4" fill="#F4F6F9" stroke="#16324F" stroke-width="1.2"/>
-<text x="607" y="235" font-size="14" text-anchor="middle" font-family="Menlo,Consolas,monospace"><tspan fill="#9AA4AE">0000000</tspan><tspan fill="#1A1A1A" font-weight="700">0</tspan></text>
-<text x="690" y="234" font-size="15"><tspan fill="#1A1A1A">bit 2개 → </tspan><tspan fill="#C03B3B" font-weight="700">심볼 2개</tspan></text>
-<line x1="306" y1="260" x2="464" y2="260" stroke="#529FD9" stroke-width="1.5"/>
-<text x="385" y="277" font-size="13" fill="#5B6670" text-anchor="middle">1번째 nt의 2 bit</text>
-<line x1="486" y1="260" x2="644" y2="260" stroke="#529FD9" stroke-width="1.5"/>
-<text x="565" y="277" font-size="13" fill="#5B6670" text-anchor="middle">2번째 nt의 2 bit</text>
-<text x="32" y="312" font-size="15"><tspan fill="#C03B3B" font-weight="700">t = 4 심볼 → payload 치환 2 nt만 보장</tspan></text>
-<text x="848" y="312" font-size="13" fill="#5B6670" text-anchor="end">패리티 구간만 1 심볼 = 8 bit = 4 nt</text>
-<rect x="12" y="346" width="856" height="290" rx="8" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1.5"/>
-<text x="32" y="378" font-size="16" fill="#16324F" font-weight="700">수정판: 1 심볼 = 1 byte = 4 nt</text>
-<text x="848" y="378" font-size="13" fill="#5B6670" text-anchor="end">RS(27,19) · 메시지 19 심볼 = 19 byte</text>
-<text x="283" y="410" font-size="13" fill="#5B6670" text-anchor="middle">nt (4 nt = 1 byte)</text>
-<text x="572" y="410" font-size="13" fill="#5B6670" text-anchor="middle">메시지 심볼 = byte</text>
-<text x="690" y="410" font-size="13" fill="#5B6670">심볼 오류</text>
-<text x="32" y="451" font-size="15" fill="#1A1A1A" font-weight="700">정상</text>
-<rect x="150" y="427" width="62" height="40" rx="4" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.2"/>
-<text x="161" y="453" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
-<text x="174.3" y="453" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
-<text x="187.6" y="453" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
-<text x="200.9" y="453" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
-<rect x="218" y="427" width="62" height="40" rx="4" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.2"/>
-<text x="229" y="453" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
-<text x="242.3" y="453" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
-<text x="255.6" y="453" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
-<text x="268.9" y="453" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
-<rect x="286" y="427" width="62" height="40" rx="4" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.2"/>
-<text x="297" y="453" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
-<text x="310.3" y="453" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
-<text x="323.6" y="453" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
-<text x="336.9" y="453" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">G</text>
-<rect x="354" y="427" width="62" height="40" rx="4" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.2"/>
-<text x="365" y="453" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
-<text x="378.3" y="453" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
-<text x="391.6" y="453" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
-<text x="404.9" y="453" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
-<line x1="426" y1="447" x2="446" y2="447" stroke="#5B6670" stroke-width="1.8"/><polygon points="454,447 445,442.05 445,451.95" fill="#5B6670" stroke="none"/>
-<rect x="462" y="427" width="50" height="40" rx="4" fill="#F4F6F9" stroke="#16324F" stroke-width="1.2"/>
-<text x="487" y="444" font-size="15" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">53</text>
-<text x="487" y="461" font-size="13" fill="#5B6670" text-anchor="middle" font-family="Menlo,Consolas,monospace">'S'</text>
-<rect x="518" y="427" width="50" height="40" rx="4" fill="#F4F6F9" stroke="#16324F" stroke-width="1.2"/>
-<text x="543" y="444" font-size="15" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">4F</text>
-<text x="543" y="461" font-size="13" fill="#5B6670" text-anchor="middle" font-family="Menlo,Consolas,monospace">'O'</text>
-<rect x="574" y="427" width="50" height="40" rx="4" fill="#F4F6F9" stroke="#16324F" stroke-width="1.2"/>
-<text x="599" y="444" font-size="15" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">4E</text>
-<text x="599" y="461" font-size="13" fill="#5B6670" text-anchor="middle" font-family="Menlo,Consolas,monospace">'N'</text>
-<rect x="630" y="427" width="50" height="40" rx="4" fill="#F4F6F9" stroke="#16324F" stroke-width="1.2"/>
-<text x="655" y="444" font-size="15" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">47</text>
-<text x="655" y="461" font-size="13" fill="#5B6670" text-anchor="middle" font-family="Menlo,Consolas,monospace">'G'</text>
-<text x="690" y="452" font-size="15" fill="#5B6670">기준</text>
-<text x="32" y="509" font-size="15" fill="#1A1A1A">치환 1 nt</text>
-<rect x="150" y="485" width="62" height="40" rx="4" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.2"/>
-<text x="161" y="511" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
-<text x="174.3" y="511" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
-<text x="187.6" y="511" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
-<text x="200.9" y="511" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
-<rect x="218" y="485" width="62" height="40" rx="4" fill="#EAF3FB" stroke="#C03B3B" stroke-width="2"/>
-<text x="229" y="511" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
-<text x="242.3" y="511" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
-<text x="255.6" y="511" font-size="17" fill="#C03B3B" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">G</text>
-<text x="268.9" y="511" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
-<rect x="286" y="485" width="62" height="40" rx="4" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.2"/>
-<text x="297" y="511" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
-<text x="310.3" y="511" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
-<text x="323.6" y="511" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
-<text x="336.9" y="511" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">G</text>
-<rect x="354" y="485" width="62" height="40" rx="4" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.2"/>
-<text x="365" y="511" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
-<text x="378.3" y="511" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
-<text x="391.6" y="511" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
-<text x="404.9" y="511" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
-<line x1="426" y1="505" x2="446" y2="505" stroke="#5B6670" stroke-width="1.8"/><polygon points="454,505 445,500.05 445,509.95" fill="#5B6670" stroke="none"/>
-<rect x="462" y="485" width="50" height="40" rx="4" fill="#F4F6F9" stroke="#16324F" stroke-width="1.2"/>
-<text x="487" y="502" font-size="15" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">53</text>
-<text x="487" y="519" font-size="13" fill="#5B6670" text-anchor="middle" font-family="Menlo,Consolas,monospace">'S'</text>
-<rect x="518" y="485" width="50" height="40" rx="4" fill="#FFFFFF" stroke="#C03B3B" stroke-width="2"/>
-<text x="543" y="502" font-size="15" fill="#C03B3B" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">4B</text>
-<text x="543" y="519" font-size="13" fill="#C03B3B" text-anchor="middle" font-family="Menlo,Consolas,monospace">'K'</text>
-<rect x="574" y="485" width="50" height="40" rx="4" fill="#F4F6F9" stroke="#16324F" stroke-width="1.2"/>
-<text x="599" y="502" font-size="15" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">4E</text>
-<text x="599" y="519" font-size="13" fill="#5B6670" text-anchor="middle" font-family="Menlo,Consolas,monospace">'N'</text>
-<rect x="630" y="485" width="50" height="40" rx="4" fill="#F4F6F9" stroke="#16324F" stroke-width="1.2"/>
-<text x="655" y="502" font-size="15" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">47</text>
-<text x="655" y="519" font-size="13" fill="#5B6670" text-anchor="middle" font-family="Menlo,Consolas,monospace">'G'</text>
-<text x="690" y="510" font-size="15"><tspan fill="#1A1A1A">nt 1개 → </tspan><tspan fill="#2E7D54" font-weight="700">심볼 1개</tspan></text>
-<text x="32" y="559" font-size="15" fill="#1A1A1A">치환 2 nt</text>
-<text x="32" y="577" font-size="13" fill="#5B6670">(같은 byte)</text>
-<rect x="150" y="543" width="62" height="40" rx="4" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.2"/>
-<text x="161" y="569" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
-<text x="174.3" y="569" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
-<text x="187.6" y="569" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
-<text x="200.9" y="569" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
-<rect x="218" y="543" width="62" height="40" rx="4" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.2"/>
-<text x="229" y="569" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
-<text x="242.3" y="569" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
-<text x="255.6" y="569" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
-<text x="268.9" y="569" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
-<rect x="286" y="543" width="62" height="40" rx="4" fill="#EAF3FB" stroke="#C03B3B" stroke-width="2"/>
-<text x="297" y="569" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
-<text x="310.3" y="569" font-size="17" fill="#C03B3B" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">G</text>
-<text x="323.6" y="569" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
-<text x="336.9" y="569" font-size="17" fill="#C03B3B" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">A</text>
-<rect x="354" y="543" width="62" height="40" rx="4" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.2"/>
-<text x="365" y="569" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
-<text x="378.3" y="569" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
-<text x="391.6" y="569" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
-<text x="404.9" y="569" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
-<line x1="426" y1="563" x2="446" y2="563" stroke="#5B6670" stroke-width="1.8"/><polygon points="454,563 445,558.05 445,567.95" fill="#5B6670" stroke="none"/>
-<rect x="462" y="543" width="50" height="40" rx="4" fill="#F4F6F9" stroke="#16324F" stroke-width="1.2"/>
-<text x="487" y="560" font-size="15" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">53</text>
-<text x="487" y="577" font-size="13" fill="#5B6670" text-anchor="middle" font-family="Menlo,Consolas,monospace">'S'</text>
-<rect x="518" y="543" width="50" height="40" rx="4" fill="#F4F6F9" stroke="#16324F" stroke-width="1.2"/>
-<text x="543" y="560" font-size="15" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">4F</text>
-<text x="543" y="577" font-size="13" fill="#5B6670" text-anchor="middle" font-family="Menlo,Consolas,monospace">'O'</text>
-<rect x="574" y="543" width="50" height="40" rx="4" fill="#FFFFFF" stroke="#C03B3B" stroke-width="2"/>
-<text x="599" y="560" font-size="15" fill="#C03B3B" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">6C</text>
-<text x="599" y="577" font-size="13" fill="#C03B3B" text-anchor="middle" font-family="Menlo,Consolas,monospace">'l'</text>
-<rect x="630" y="543" width="50" height="40" rx="4" fill="#F4F6F9" stroke="#16324F" stroke-width="1.2"/>
-<text x="655" y="560" font-size="15" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">47</text>
-<text x="655" y="577" font-size="13" fill="#5B6670" text-anchor="middle" font-family="Menlo,Consolas,monospace">'G'</text>
-<text x="690" y="568" font-size="15"><tspan fill="#1A1A1A">nt 2개 → </tspan><tspan fill="#2E7D54" font-weight="700">심볼 1개</tspan></text>
-<text x="32" y="618" font-size="15" fill="#2E7D54" font-weight="700">t = 4 심볼 → RS 부호어 안 치환 4 nt 항상 정정 (같은 byte 안이면 그 이상)</text>
+<text x="32" y="175" font-size="15" fill="#1A1A1A">치환 1 nt</text>
+<rect x="150" y="151" width="62" height="40" rx="4" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.2"/>
+<text x="161" y="177" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
+<text x="174.3" y="177" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
+<text x="187.6" y="177" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="200.9" y="177" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
+<rect x="218" y="151" width="62" height="40" rx="4" fill="#EAF3FB" stroke="#C03B3B" stroke-width="2"/>
+<text x="229" y="177" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
+<text x="242.3" y="177" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="255.6" y="177" font-size="17" fill="#C03B3B" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">G</text>
+<text x="268.9" y="177" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
+<rect x="286" y="151" width="62" height="40" rx="4" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.2"/>
+<text x="297" y="177" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
+<text x="310.3" y="177" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="323.6" y="177" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
+<text x="336.9" y="177" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">G</text>
+<rect x="354" y="151" width="62" height="40" rx="4" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.2"/>
+<text x="365" y="177" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
+<text x="378.3" y="177" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="391.6" y="177" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
+<text x="404.9" y="177" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
+<line x1="426" y1="171" x2="446" y2="171" stroke="#5B6670" stroke-width="1.8"/><polygon points="454,171 445,166.05 445,175.95" fill="#5B6670" stroke="none"/>
+<rect x="462" y="151" width="50" height="40" rx="4" fill="#F4F6F9" stroke="#16324F" stroke-width="1.2"/>
+<text x="487" y="168" font-size="15" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">53</text>
+<text x="487" y="185" font-size="13" fill="#5B6670" text-anchor="middle" font-family="Menlo,Consolas,monospace">'S'</text>
+<rect x="518" y="151" width="50" height="40" rx="4" fill="#FFFFFF" stroke="#C03B3B" stroke-width="2"/>
+<text x="543" y="168" font-size="15" fill="#C03B3B" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">4B</text>
+<text x="543" y="185" font-size="13" fill="#C03B3B" text-anchor="middle" font-family="Menlo,Consolas,monospace">'K'</text>
+<rect x="574" y="151" width="50" height="40" rx="4" fill="#F4F6F9" stroke="#16324F" stroke-width="1.2"/>
+<text x="599" y="168" font-size="15" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">4E</text>
+<text x="599" y="185" font-size="13" fill="#5B6670" text-anchor="middle" font-family="Menlo,Consolas,monospace">'N'</text>
+<rect x="630" y="151" width="50" height="40" rx="4" fill="#F4F6F9" stroke="#16324F" stroke-width="1.2"/>
+<text x="655" y="168" font-size="15" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">47</text>
+<text x="655" y="185" font-size="13" fill="#5B6670" text-anchor="middle" font-family="Menlo,Consolas,monospace">'G'</text>
+<text x="690" y="176" font-size="15"><tspan fill="#1A1A1A">nt 1개 → </tspan><tspan fill="#2E7D54" font-weight="700">심볼 1개</tspan></text>
+<text x="32" y="225" font-size="15" fill="#1A1A1A">치환 2 nt</text>
+<text x="32" y="243" font-size="13" fill="#5B6670">(같은 byte)</text>
+<rect x="150" y="209" width="62" height="40" rx="4" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.2"/>
+<text x="161" y="235" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
+<text x="174.3" y="235" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
+<text x="187.6" y="235" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="200.9" y="235" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
+<rect x="218" y="209" width="62" height="40" rx="4" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.2"/>
+<text x="229" y="235" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
+<text x="242.3" y="235" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="255.6" y="235" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
+<text x="268.9" y="235" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
+<rect x="286" y="209" width="62" height="40" rx="4" fill="#EAF3FB" stroke="#C03B3B" stroke-width="2"/>
+<text x="297" y="235" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
+<text x="310.3" y="235" font-size="17" fill="#C03B3B" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">G</text>
+<text x="323.6" y="235" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
+<text x="336.9" y="235" font-size="17" fill="#C03B3B" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">A</text>
+<rect x="354" y="209" width="62" height="40" rx="4" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.2"/>
+<text x="365" y="235" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
+<text x="378.3" y="235" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="391.6" y="235" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
+<text x="404.9" y="235" font-size="17" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
+<line x1="426" y1="229" x2="446" y2="229" stroke="#5B6670" stroke-width="1.8"/><polygon points="454,229 445,224.05 445,233.95" fill="#5B6670" stroke="none"/>
+<rect x="462" y="209" width="50" height="40" rx="4" fill="#F4F6F9" stroke="#16324F" stroke-width="1.2"/>
+<text x="487" y="226" font-size="15" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">53</text>
+<text x="487" y="243" font-size="13" fill="#5B6670" text-anchor="middle" font-family="Menlo,Consolas,monospace">'S'</text>
+<rect x="518" y="209" width="50" height="40" rx="4" fill="#F4F6F9" stroke="#16324F" stroke-width="1.2"/>
+<text x="543" y="226" font-size="15" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">4F</text>
+<text x="543" y="243" font-size="13" fill="#5B6670" text-anchor="middle" font-family="Menlo,Consolas,monospace">'O'</text>
+<rect x="574" y="209" width="50" height="40" rx="4" fill="#FFFFFF" stroke="#C03B3B" stroke-width="2"/>
+<text x="599" y="226" font-size="15" fill="#C03B3B" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">6C</text>
+<text x="599" y="243" font-size="13" fill="#C03B3B" text-anchor="middle" font-family="Menlo,Consolas,monospace">'l'</text>
+<rect x="630" y="209" width="50" height="40" rx="4" fill="#F4F6F9" stroke="#16324F" stroke-width="1.2"/>
+<text x="655" y="226" font-size="15" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">47</text>
+<text x="655" y="243" font-size="13" fill="#5B6670" text-anchor="middle" font-family="Menlo,Consolas,monospace">'G'</text>
+<text x="690" y="234" font-size="15"><tspan fill="#1A1A1A">nt 2개 → </tspan><tspan fill="#2E7D54" font-weight="700">심볼 1개</tspan></text>
+<text x="32" y="284" font-size="15" fill="#2E7D54" font-weight="700">t = 4 심볼 → RS 부호어 안 치환 4 nt 항상 정정 (같은 byte 안이면 그 이상)</text>
 </g>
 </svg>

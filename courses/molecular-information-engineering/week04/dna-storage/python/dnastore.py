@@ -28,7 +28,7 @@ Oligo = namedtuple("Oligo", "index role seq")
 
 
 def text_bytes(s):
-    """원본 STL 읽기 → 임의 문자열 UTF-8 입력으로 바꾼 단계."""
+    """입력 단계: 문자열 → UTF-8 byte."""
     return s.encode("utf-8")
 
 
@@ -40,7 +40,7 @@ def text_info(s):
 
 
 def image_bytes(path, max_side=64, quality=60, gray=False):
-    """원본 STL 읽기 → 사진을 작은 JPEG byte로 바꾼 입력 단계."""
+    """입력 단계: 사진 → 긴 변 축소 → JPEG byte."""
     from PIL import Image
     if max_side < 1 or not 1 <= quality <= 100:
         raise ValueError("max_side ≥ 1, quality = 1..100이어야 합니다.")
@@ -53,7 +53,7 @@ def image_bytes(path, max_side=64, quality=60, gray=False):
 
 
 def crc32(data):
-    """원본에는 없는 무결성 검사: 복호 결과를 CRC-32로 확인."""
+    """무결성 검사: 복호 결과를 CRC-32로 확인."""
     return zlib.crc32(bytes(data)) & 0xFFFFFFFF
 
 
@@ -140,7 +140,7 @@ def _check_rs_size(length, nsym, decoding=False):
 
 
 def rs_encode(msg, nsym=NSYM):
-    """원본 rsenc: bit 대신 byte 심볼, 패리티를 뒤에 붙임."""
+    """원본 rsenc 대응: byte 심볼 RS, 패리티를 뒤에 붙임."""
     message = bytes(msg)
     _check_rs_size(len(message) + nsym, nsym)
     generator = _generator(nsym)
@@ -227,7 +227,7 @@ def rs_decode(cw, nsym=NSYM):
 
 
 def whitening_mask(row_number):
-    """원본에는 없는 선택 기능: 행 번호로 재현 가능한 마스크."""
+    """선택 기능(whitening): 행 번호로 재현 가능한 마스크."""
     state, mask = row_number, bytearray()
     for _ in range(ROW_BYTES):
         state = (1664525 * state + 1013904223) & 0xFFFFFFFF

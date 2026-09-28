@@ -13,7 +13,7 @@
 <text x="20" y="36" font-size="17" fill="#16324F" text-anchor="start" font-weight="700">부호화</text>
 <text x="20" y="226" font-size="17" fill="#5B6670" text-anchor="start" font-weight="700">채널</text>
 <text x="20" y="370" font-size="17" fill="#16324F" text-anchor="start" font-weight="700">복호</text>
-<text x="860" y="370" font-size="13" fill="#5B6670" text-anchor="end">상자 아래 회색 글자 = 원본 MATLAB 함수</text>
+<text x="860" y="370" font-size="13" fill="#5B6670" text-anchor="end">상자 아래 회색 글자 = 대응 연구실 MATLAB 함수</text>
 <rect x="17" y="52" width="126" height="94" rx="8" fill="#FFFFFF" stroke="#16324F" stroke-width="1.5"/>
 <text x="80.0" y="76" font-size="15" fill="#16324F" text-anchor="middle" font-weight="700">① 입력</text>
 <text x="80.0" y="97" font-size="13" fill="#1A1A1A" text-anchor="middle">이름 → UTF-8</text>

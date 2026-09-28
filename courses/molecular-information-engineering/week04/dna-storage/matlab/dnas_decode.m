@@ -135,7 +135,7 @@ index = double(msg(18))*256 + double(msg(19));
 end
 
 function hdr = read_header(bytes)
-% 원본 KeyFind의 KIS 대신 첫 행의 길이 · CRC · 배치를 읽는다.
+% 원본 KIS 역할: 첫 행에서 길이 · CRC · 배치를 읽는다.
 b = double(bytes);
 D = b(11)*256 + b(12);
 L = b(3:6) * [2^24; 2^16; 2^8; 1];

@@ -1,5 +1,5 @@
 function codeword = dnas_rs_encode(message, nsym)
-% ACS Nano nrsin/rsenc 부분: bit 대신 byte를 GF(256) 심볼로 넣는다.
+% ACS Nano nrsin/rsenc 단계: byte를 GF(256) 심볼로 넣는다.
 if nargin < 2
     nsym = 8;
 end

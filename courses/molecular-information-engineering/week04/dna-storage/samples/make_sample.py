@@ -6,7 +6,7 @@ from PIL import Image, ImageDraw
 
 
 def make_sample(path=None):
-    """ACS Nano 입력 준비 대응: STL 대신 작은 JPEG 파일을 만든다."""
+    """예시 입력: 작은 JPEG 파일을 만든다."""
     path = Path(path or Path(__file__).with_name("sample_photo.jpg"))
     side = 64
     image = Image.new("RGB", (side, side))
