@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 748" role="img" aria-labelledby="fdec-t">
+<title id="fdec-t">불러오기(복호) 깔때기: read 전체에서 방향 맞추기, PrimerSort, iSCAN, consensus, Global RS, Local RS, XOR 복원, 헤더 확인을 거쳐 파일로 가는 단계와 단계마다 탈락하거나 복원되는 것</title>
+<defs>
+<marker id="fdec-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#16324F"/></marker>
+</defs>
+<rect x="0" y="0" width="880" height="748" fill="#FFFFFF"/>
+<g font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+<circle cx="536" cy="21.5" r="8" fill="#2E7D54"/><path d="M531.5,21.5 H540.5 M536,17.0 V26.0" stroke="#FFFFFF" stroke-width="2" fill="none"/>
+<text x="550.0" y="26.0" font-size="13" fill="#1A1A1A" text-anchor="start">복원 · 확보</text>
+<circle cx="645.75" cy="21.5" r="8" fill="#C03B3B"/><path d="M641.25,21.5 H650.25" stroke="#FFFFFF" stroke-width="2" fill="none"/>
+<text x="659.8" y="26.0" font-size="13" fill="#1A1A1A" text-anchor="start">탈락 · 실패</text>
+<circle cx="755.5" cy="21.5" r="7.5" fill="#FFFFFF" stroke="#5B6670" stroke-width="1.5"/><circle cx="755.5" cy="21.5" r="2.8" fill="#5B6670"/>
+<text x="769.5" y="26.0" font-size="13" fill="#1A1A1A" text-anchor="start">변환 · 확인</text>
+<text x="282.0" y="26.0" font-size="15" fill="#16324F" text-anchor="middle" font-weight="700">단계</text>
+<polygon points="62.0,48 502.0,48 492.6,108 71.4,108" fill="#F4F6F9" stroke="#5B6670" stroke-width="1.5" stroke-linejoin="round"/>
+<text x="282.0" y="73.0" font-size="15" fill="#16324F" text-anchor="middle" font-weight="700">read 전체</text>
+<text x="282.0" y="94.0" font-size="13" fill="#1A1A1A" text-anchor="middle">정방향 + 역방향 read 섞임 · 순서 무작위</text>
+<line x1="501.3" y1="78.0" x2="533" y2="78.0" stroke="#9AA4AE" stroke-width="1.2"/>
+<circle cx="544" cy="78.0" r="7.5" fill="#FFFFFF" stroke="#5B6670" stroke-width="1.5"/><circle cx="544" cy="78.0" r="2.8" fill="#5B6670"/>
+<text x="558.0" y="82.5" font-size="13" fill="#1A1A1A" text-anchor="start">품질 점수는 쓰지 않고 서열만 읽음</text>
+<polygon points="72.7,116 491.3,116 481.9,176 82.1,176" fill="#E9EDF2" stroke="#5B6670" stroke-width="1.5" stroke-linejoin="round"/>
+<text x="282.0" y="141.0" font-size="15" fill="#16324F" text-anchor="middle" font-weight="700">방향 맞추기</text>
+<text x="282.0" y="162.0" font-size="13" fill="#1A1A1A" text-anchor="middle">앞 20 nt ↔ F · 안 맞으면 역상보로 다시 비교</text>
+<line x1="490.6" y1="146.0" x2="528" y2="146.0" stroke="#9AA4AE" stroke-width="1.2"/>
+<path d="M534,136.0 H528 V156.0 H534" fill="none" stroke="#9AA4AE" stroke-width="1.2"/>
+<circle cx="544" cy="136.0" r="7.5" fill="#FFFFFF" stroke="#5B6670" stroke-width="1.5"/><circle cx="544" cy="136.0" r="2.8" fill="#5B6670"/>
+<text x="558.0" y="140.5" font-size="13" fill="#1A1A1A" text-anchor="start">역방향 read → 역상보로 뒤집어 살림<tspan font-family="Menlo,Consolas,monospace" fill="#5B6670" dx="8">reversed</tspan></text>
+<circle cx="544" cy="156.0" r="8" fill="#C03B3B"/><path d="M539.5,156.0 H548.5" stroke="#FFFFFF" stroke-width="2" fill="none"/>
+<text x="558.0" y="160.5" font-size="13" fill="#1A1A1A" text-anchor="start">F · 역상보 모두 &lt; 18/20 → 탈락<tspan font-family="Menlo,Consolas,monospace" fill="#5B6670" dx="8">no_primer</tspan></text>
+<polygon points="83.4,184 480.6,184 471.2,244 92.8,244" fill="#E9EDF2" stroke="#5B6670" stroke-width="1.5" stroke-linejoin="round"/>
+<text x="282.0" y="209.0" font-size="15" fill="#16324F" text-anchor="middle" font-weight="700">PrimerSort</text>
+<text x="282.0" y="230.0" font-size="13" fill="#1A1A1A" text-anchor="middle">129–148 nt ↔ R (≥ 18/20) · 앞 148 nt만 남김</text>
+<line x1="479.9" y1="214.0" x2="528" y2="214.0" stroke="#9AA4AE" stroke-width="1.2"/>
+<path d="M534,204.0 H528 V224.0 H534" fill="none" stroke="#9AA4AE" stroke-width="1.2"/>
+<circle cx="544" cy="204.0" r="8" fill="#C03B3B"/><path d="M539.5,204.0 H548.5" stroke="#FFFFFF" stroke-width="2" fill="none"/>
+<text x="558.0" y="208.5" font-size="13" fill="#1A1A1A" text-anchor="start">삽입 · 결실 read 대부분 탈락<tspan font-family="Menlo,Consolas,monospace" fill="#5B6670" dx="8">bad_length</tspan></text>
+<text x="558.0" y="228.5" font-size="13" fill="#5B6670" text-anchor="start">길이 &lt; 148 또는 R 자리 어긋남</text>
+<polygon points="94.1,252 469.9,252 460.5,312 103.5,312" fill="#224EBD" stroke="#224EBD" stroke-width="1.5" stroke-linejoin="round"/>
+<text x="282.0" y="277.0" font-size="15" fill="#FFFFFF" text-anchor="middle" font-weight="700">iSCAN</text>
+<text x="282.0" y="298.0" font-size="13" fill="#FFFFFF" text-anchor="middle">RS 풀지 않고 index(본문 69–76 nt)만 읽어 묶음</text>
+<line x1="469.2" y1="282.0" x2="528" y2="282.0" stroke="#9AA4AE" stroke-width="1.2"/>
+<path d="M534,272.0 H528 V292.0 H534" fill="none" stroke="#9AA4AE" stroke-width="1.2"/>
+<circle cx="544" cy="272.0" r="7.5" fill="#FFFFFF" stroke="#5B6670" stroke-width="1.5"/><circle cx="544" cy="272.0" r="2.8" fill="#5B6670"/>
+<text x="558.0" y="276.5" font-size="13" fill="#1A1A1A" text-anchor="start">같은 index = 한 묶음 · 묶음 크기 = depth</text>
+<circle cx="544" cy="292.0" r="8" fill="#C03B3B"/><path d="M539.5,292.0 H548.5" stroke="#FFFFFF" stroke-width="2" fill="none"/>
+<text x="558.0" y="296.5" font-size="13" fill="#1A1A1A" text-anchor="start">index = 0 → 탈락</text>
+<polygon points="104.8,320 459.2,320 449.8,380 114.2,380" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.5" stroke-linejoin="round"/>
+<text x="282.0" y="345.0" font-size="15" fill="#16324F" text-anchor="middle" font-weight="700">consensus</text>
+<text x="282.0" y="366.0" font-size="13" fill="#1A1A1A" text-anchor="middle">묶음마다 108 자리별 최다 염기</text>
+<line x1="458.5" y1="350.0" x2="528" y2="350.0" stroke="#9AA4AE" stroke-width="1.2"/>
+<path d="M534,340.0 H528 V360.0 H534" fill="none" stroke="#9AA4AE" stroke-width="1.2"/>
+<circle cx="544" cy="340.0" r="7.5" fill="#FFFFFF" stroke="#5B6670" stroke-width="1.5"/><circle cx="544" cy="340.0" r="2.8" fill="#5B6670"/>
+<text x="558.0" y="344.5" font-size="13" fill="#1A1A1A" text-anchor="start">묶음 하나 → 대표 서열 하나</text>
+<circle cx="544" cy="360.0" r="8" fill="#2E7D54"/><path d="M539.5,360.0 H548.5 M544,355.5 V364.5" stroke="#FFFFFF" stroke-width="2" fill="none"/>
+<text x="558.0" y="364.5" font-size="13" fill="#1A1A1A" text-anchor="start">read마다 흩어진 치환 → 다수결로 지움</text>
+<polygon points="115.5,388 448.5,388 439.1,448 124.9,448" fill="#FBECEC" stroke="#C03B3B" stroke-width="1.5" stroke-linejoin="round"/>
+<text x="282.0" y="413.0" font-size="15" fill="#16324F" text-anchor="middle" font-weight="700">Global RS</text>
+<text x="282" y="434" font-size="13" fill="#1A1A1A" text-anchor="middle">대표 서열 RS 복호 → <tspan fill="#2E7D54" font-weight="700">성공 행</tspan><tspan fill="#5B6670"> / </tspan><tspan fill="#C03B3B" font-weight="700">실패 행</tspan></text>
+<line x1="447.8" y1="418.0" x2="528" y2="418.0" stroke="#9AA4AE" stroke-width="1.2"/>
+<path d="M534,408.0 H528 V428.0 H534" fill="none" stroke="#9AA4AE" stroke-width="1.2"/>
+<circle cx="544" cy="408.0" r="8" fill="#2E7D54"/><path d="M539.5,408.0 H548.5 M544,403.5 V412.5" stroke="#FFFFFF" stroke-width="2" fill="none"/>
+<text x="558.0" y="412.5" font-size="13" fill="#1A1A1A" text-anchor="start">성공 · index 일치 → 행 확보<tspan font-family="Menlo,Consolas,monospace" fill="#5B6670" dx="8">global</tspan></text>
+<circle cx="544" cy="428.0" r="8" fill="#C03B3B"/><path d="M539.5,428.0 H548.5" stroke="#FFFFFF" stroke-width="2" fill="none"/>
+<text x="558.0" y="432.5" font-size="13" fill="#1A1A1A" text-anchor="start">실패 → 실패 묶음 목록</text>
+<polygon points="126.2,456 437.8,456 428.4,516 135.6,516" fill="#FBECEC" stroke="#C03B3B" stroke-width="1.5" stroke-linejoin="round"/>
+<text x="282.0" y="481.0" font-size="15" fill="#16324F" text-anchor="middle" font-weight="700">Local RS</text>
+<text x="282.0" y="502.0" font-size="13" fill="#1A1A1A" text-anchor="middle">실패 묶음의 read를 하나씩 RS 복호</text>
+<line x1="437.1" y1="486.0" x2="528" y2="486.0" stroke="#9AA4AE" stroke-width="1.2"/>
+<path d="M534,476.0 H528 V496.0 H534" fill="none" stroke="#9AA4AE" stroke-width="1.2"/>
+<circle cx="544" cy="476.0" r="8" fill="#2E7D54"/><path d="M539.5,476.0 H548.5 M544,471.5 V480.5" stroke="#FFFFFF" stroke-width="2" fill="none"/>
+<text x="558.0" y="480.5" font-size="13" fill="#1A1A1A" text-anchor="start">통과 read끼리 byte 최빈값 → 행 확보<tspan font-family="Menlo,Consolas,monospace" fill="#5B6670" dx="8">local</tspan></text>
+<circle cx="544" cy="496.0" r="8" fill="#C03B3B"/><path d="M539.5,496.0 H548.5" stroke="#FFFFFF" stroke-width="2" fill="none"/>
+<text x="558.0" y="500.5" font-size="13" fill="#1A1A1A" text-anchor="start">통과 read 없음 → 빈 행으로 남음</text>
+<polygon points="136.9,524 427.1,524 417.7,584 146.3,584" fill="#FFF4DC" stroke="#8A5F12" stroke-width="1.5" stroke-linejoin="round"/>
+<text x="282.0" y="549.0" font-size="15" fill="#16324F" text-anchor="middle" font-weight="700">XOR 복원</text>
+<text x="282.0" y="570.0" font-size="13" fill="#1A1A1A" text-anchor="middle">(j, j+H, D+j) 중 하나만 없으면 채움</text>
+<line x1="426.4" y1="554.0" x2="528" y2="554.0" stroke="#9AA4AE" stroke-width="1.2"/>
+<path d="M534,534.0 H528 V574.0 H534" fill="none" stroke="#9AA4AE" stroke-width="1.2"/>
+<circle cx="544" cy="534.0" r="7.5" fill="#FFFFFF" stroke="#5B6670" stroke-width="1.5"/><circle cx="544" cy="534.0" r="2.8" fill="#5B6670"/>
+<text x="558.0" y="538.5" font-size="13" fill="#1A1A1A" text-anchor="start">D = 헤더 값 (없으면 확보 행 최대 index로 추정)</text>
+<circle cx="544" cy="554.0" r="8" fill="#2E7D54"/><path d="M539.5,554.0 H548.5 M544,549.5 V558.5" stroke="#FFFFFF" stroke-width="2" fill="none"/>
+<text x="558.0" y="558.5" font-size="13" fill="#1A1A1A" text-anchor="start">빈 1개 = 나머지 두 행의 ⊕<tspan font-family="Menlo,Consolas,monospace" fill="#5B6670" dx="8">xor</tspan></text>
+<circle cx="544" cy="574.0" r="8" fill="#C03B3B"/><path d="M539.5,574.0 H548.5" stroke="#FFFFFF" stroke-width="2" fill="none"/>
+<text x="558.0" y="578.5" font-size="13" fill="#1A1A1A" text-anchor="start">2개 이상 없음 → 복원 불가 · 번호 보고</text>
+<polygon points="147.6,592 416.4,592 407.0,652 157.0,652" fill="#16324F" stroke="#16324F" stroke-width="1.5" stroke-linejoin="round"/>
+<text x="282.0" y="617.0" font-size="15" fill="#FFFFFF" text-anchor="middle" font-weight="700">헤더 (1번 행 · XOR 복원 포함)</text>
+<text x="282.0" y="638.0" font-size="13" fill="#FFFFFF" text-anchor="middle">길이 L · CRC-32 · ext 읽기</text>
+<line x1="415.7" y1="622.0" x2="528" y2="622.0" stroke="#9AA4AE" stroke-width="1.2"/>
+<path d="M534,612.0 H528 V632.0 H534" fill="none" stroke="#9AA4AE" stroke-width="1.2"/>
+<circle cx="544" cy="612.0" r="7.5" fill="#FFFFFF" stroke="#5B6670" stroke-width="1.5"/><circle cx="544" cy="612.0" r="2.8" fill="#5B6670"/>
+<text x="558.0" y="616.5" font-size="13" fill="#1A1A1A" text-anchor="start">행 2..D 이어 붙여 앞 L byte</text>
+<circle cx="544" cy="632.0" r="7.5" fill="#FFFFFF" stroke="#5B6670" stroke-width="1.5"/><circle cx="544" cy="632.0" r="2.8" fill="#5B6670"/>
+<text x="558.0" y="636.5" font-size="13" fill="#1A1A1A" text-anchor="start">CRC-32 비교 → 일치 여부 보고</text>
+<line x1="282" y1="656" x2="282" y2="679" stroke="#16324F" stroke-width="1.8" marker-end="url(#fdec-ah)"/>
+<rect x="157.0" y="682" width="250" height="52" rx="10" fill="#E9F4EE" stroke="#2E7D54" stroke-width="1.8"/>
+<text x="282.0" y="704.0" font-size="15" fill="#2E7D54" text-anchor="middle" font-weight="700">파일</text>
+<text x="282.0" y="723.0" font-size="13" fill="#1A1A1A" text-anchor="middle">이름 · 사진 · byte 그대로</text>
+<line x1="411.0" y1="708.0" x2="528" y2="708.0" stroke="#9AA4AE" stroke-width="1.2"/>
+<path d="M534,698.0 H528 V718.0 H534" fill="none" stroke="#9AA4AE" stroke-width="1.2"/>
+<circle cx="544" cy="698.0" r="7.5" fill="#FFFFFF" stroke="#5B6670" stroke-width="1.5"/><circle cx="544" cy="698.0" r="2.8" fill="#5B6670"/>
+<text x="558.0" y="702.5" font-size="13" fill="#1A1A1A" text-anchor="start">빈 행 = 0x00 → 부분 복원도 출력</text>
+<circle cx="544" cy="718.0" r="7.5" fill="#FFFFFF" stroke="#5B6670" stroke-width="1.5"/><circle cx="544" cy="718.0" r="2.8" fill="#5B6670"/>
+<text x="558.0" y="722.5" font-size="13" fill="#1A1A1A" text-anchor="start">whitening 켬: 해제 뒤 빈 행 = 마스크 값</text>
+<path d="M57.0,50 H52.0 V242 H57.0" fill="none" stroke="#9AA4AE" stroke-width="1.2"/>
+<text x="47.0" y="150.5" font-size="13" fill="#5B6670" text-anchor="end" font-weight="700">read</text>
+<path d="M89.1,254 H84.1 V378 H89.1" fill="none" stroke="#9AA4AE" stroke-width="1.2"/>
+<text x="79.1" y="320.5" font-size="13" fill="#5B6670" text-anchor="end" font-weight="700">묶음</text>
+<path d="M110.5,390 H105.5 V582 H110.5" fill="none" stroke="#9AA4AE" stroke-width="1.2"/>
+<text x="100.5" y="490.5" font-size="13" fill="#5B6670" text-anchor="end" font-weight="700">행</text>
+<path d="M142.6,594 H137.6 V732 H142.6" fill="none" stroke="#9AA4AE" stroke-width="1.2"/>
+<text x="132.6" y="667.5" font-size="13" fill="#5B6670" text-anchor="end" font-weight="700">파일</text>
+<text x="52.0" y="26.0" font-size="13" fill="#5B6670" text-anchor="end" font-weight="700">단위</text>
+</g>
+</svg>

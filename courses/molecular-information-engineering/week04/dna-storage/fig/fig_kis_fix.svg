@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 590" role="img" aria-labelledby="kf-t">
+<title id="kf-t">원본 KIS 가닥은 RS 부호화 뒤 빈자리를 TGCA 무늬로 덮어써 패리티가 내용과 맞지 않고, 수정판 DNAS-1은 헤더와 PAD를 RS 전에 채워 부호어를 그대로 둠</title>
+<defs><pattern id="kf-pad" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#EAF3FB"/><line x1="0" y1="0" x2="0" y2="6" stroke="#529FD9" stroke-width="1.4"/></pattern></defs>
+<rect x="0" y="0" width="880" height="590" fill="#FFFFFF"/>
+<text x="16" y="28" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="16" fill="#16324F" text-anchor="start" font-weight="700">원본 (STL_Encode.m 53–108행)</text>
+<text x="262" y="28" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#5B6670" text-anchor="start">KIS 가닥 = 마지막 행 (J6 index 1018)</text>
+<text x="16" y="56" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#5B6670" text-anchor="start">KIS 메시지 156 심볼 (심볼 1개 = 1 bit)</text>
+<text x="508" y="56" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#5B6670" text-anchor="start">DNA 110 nt (89–99행)</text>
+<rect x="16" y="66" width="50" height="30" fill="#16324F" stroke="#16324F" stroke-width="1.2"/>
+<text x="41.0" y="85.68" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#FFFFFF" text-anchor="middle">key A</text>
+<rect x="66" y="66" width="46" height="30" fill="#E9EDF2" stroke="#5B6670" stroke-width="1.2"/>
+<text x="89.0" y="85.68" font-family="Menlo,Consolas,monospace" font-size="13" fill="#5B6670" text-anchor="middle">AAAA</text>
+<rect x="112" y="66" width="50" height="30" fill="#16324F" stroke="#16324F" stroke-width="1.2"/>
+<text x="137.0" y="85.68" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#FFFFFF" text-anchor="middle">key B</text>
+<rect x="162" y="66" width="46" height="30" fill="#E9EDF2" stroke="#5B6670" stroke-width="1.2"/>
+<text x="185.0" y="85.68" font-family="Menlo,Consolas,monospace" font-size="13" fill="#5B6670" text-anchor="middle">AAAA</text>
+<rect x="208" y="66" width="66" height="30" fill="#16324F" stroke="#16324F" stroke-width="1.2"/>
+<text x="241.0" y="85.68" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#FFFFFF" text-anchor="middle">null 개수</text>
+<rect x="274" y="66" width="34" height="30" fill="#FFFFFF" stroke="#5B6670" stroke-width="1.2"/>
+<text x="291.0" y="85.68" font-family="Menlo,Consolas,monospace" font-size="13" fill="#5B6670" text-anchor="middle">0…0</text>
+<rect x="308" y="66" width="42" height="30" fill="#224EBD" stroke="#224EBD" stroke-width="1.2"/>
+<text x="329.0" y="85.68" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#FFFFFF" text-anchor="middle">index</text>
+<line x1="291" y1="98" x2="291" y2="110" stroke="#5B6670" stroke-width="1.2"/>
+<text x="350" y="126" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#5B6670" text-anchor="end">rsenc는 이 0(= A)으로 패리티 계산</text>
+<line x1="354" y1="81.0" x2="371" y2="81.0" stroke="#5B6670" stroke-width="1.6"/>
+<path d="M378,81.0 l-8,-4.5 l0,9 z" fill="#5B6670"/>
+<rect x="380" y="60" width="104" height="42" rx="4" fill="#F4F6F9" stroke="#16324F" stroke-width="1.3"/>
+<text x="432.0" y="77" font-family="Menlo,Consolas,monospace" font-size="14" fill="#16324F" text-anchor="middle" font-weight="700">rsenc</text>
+<text x="432.0" y="94" font-family="Menlo,Consolas,monospace" font-size="13" fill="#16324F" text-anchor="middle">(164,156)</text>
+<text x="432.0" y="120" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#5B6670" text-anchor="middle">70–71행</text>
+<line x1="486" y1="81.0" x2="499" y2="81.0" stroke="#5B6670" stroke-width="1.6"/>
+<path d="M506,81.0 l-8,-4.5 l0,9 z" fill="#5B6670"/>
+<rect x="508" y="66" width="84" height="30" fill="#16324F" stroke="#16324F" stroke-width="1.2"/>
+<text x="550.0" y="85.68" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#FFFFFF" text-anchor="middle">key · null</text>
+<rect x="592" y="66" width="104" height="30" fill="#C03B3B" stroke="#C03B3B" stroke-width="1.2"/>
+<text x="644.0" y="85.68" font-family="Menlo,Consolas,monospace" font-size="13" fill="#FFFFFF" text-anchor="middle">CATGCATG…CA</text>
+<rect x="696" y="66" width="52" height="30" fill="#E9EDF2" stroke="#5B6670" stroke-width="1.2"/>
+<text x="722.0" y="85.68" font-family="Menlo,Consolas,monospace" font-size="13" fill="#5B6670" text-anchor="middle">AAAAA</text>
+<rect x="748" y="66" width="52" height="30" fill="#224EBD" stroke="#224EBD" stroke-width="1.2"/>
+<text x="774.0" y="85.68" font-family="Menlo,Consolas,monospace" font-size="13" fill="#FFFFFF" text-anchor="middle">TTCCC</text>
+<rect x="800" y="66" width="64" height="30" fill="#FBECEC" stroke="#C03B3B" stroke-width="1.2"/>
+<text x="832.0" y="85.68" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#C03B3B" text-anchor="middle">패리티</text>
+<rect x="590" y="63" width="108" height="36" fill="none" stroke="#C03B3B" stroke-width="2.2"/>
+<path d="M644,100 v10" fill="none" stroke="#C03B3B" stroke-width="2"/>
+<text x="508" y="128" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="14" fill="#C03B3B" text-anchor="start" font-weight="700">RS 뒤에 빈자리를 TGCA 무늬로 덮어씀</text>
+<text x="508" y="148" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#5B6670" text-anchor="start">101–108행 · J6 1018번 가닥 부호어 43–68 nt</text>
+<rect x="380" y="170" width="484" height="58" rx="5" fill="#FFFFFF" stroke="#C03B3B" stroke-width="1.6"/>
+<circle cx="404" cy="199" r="11" fill="#C03B3B"/>
+<path d="M399,194 l10,10 M409,194 l-10,10" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round"/>
+<text x="426" y="194" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="14" fill="#1A1A1A" text-anchor="start" font-weight="700">패리티 ≠ 내용 (J6: 메시지 심볼 26개 불일치, t = 4) → RS 복호 불가</text>
+<text x="426" y="215" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="14" fill="#1A1A1A" text-anchor="start">→ KeyFind가 AAAAA · TGCA 무늬로 따로 탐색</text>
+<line x1="16" y1="250" x2="864" y2="250" stroke="#D8DEE6" stroke-width="1.2"/>
+<text x="16" y="280" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="16" fill="#16324F" text-anchor="start" font-weight="700">수정판 DNAS-1</text>
+<text x="140" y="280" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#5B6670" text-anchor="start">헤더 가닥 = 1번 행 · 부호어 = 메시지 19 B ‖ 패리티 8 B</text>
+<text x="16" y="306" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#5B6670" text-anchor="start">행 1 = 헤더 17 B (version · type · 길이 L · CRC-32 · D · flags · ext)</text>
+<text x="16" y="360" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#5B6670" text-anchor="start">마지막 파일 행 r = 파일 byte + 빈자리 PAD 0x1B</text>
+<rect x="16" y="314" width="34" height="28" fill="#16324F" stroke="#3C5A78" stroke-width="1.2"/>
+<text x="33.0" y="332.68" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#FFFFFF" text-anchor="middle">ver</text>
+<rect x="50" y="314" width="38" height="28" fill="#16324F" stroke="#3C5A78" stroke-width="1.2"/>
+<text x="69.0" y="332.68" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#FFFFFF" text-anchor="middle">type</text>
+<rect x="88" y="314" width="30" height="28" fill="#16324F" stroke="#3C5A78" stroke-width="1.2"/>
+<text x="103.0" y="332.68" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#FFFFFF" text-anchor="middle">L</text>
+<rect x="118" y="314" width="56" height="28" fill="#16324F" stroke="#3C5A78" stroke-width="1.2"/>
+<text x="146.0" y="332.68" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#FFFFFF" text-anchor="middle">CRC-32</text>
+<rect x="174" y="314" width="28" height="28" fill="#16324F" stroke="#3C5A78" stroke-width="1.2"/>
+<text x="188.0" y="332.68" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#FFFFFF" text-anchor="middle">D</text>
+<rect x="202" y="314" width="42" height="28" fill="#16324F" stroke="#3C5A78" stroke-width="1.2"/>
+<text x="223.0" y="332.68" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#FFFFFF" text-anchor="middle">flags</text>
+<rect x="244" y="314" width="36" height="28" fill="#16324F" stroke="#3C5A78" stroke-width="1.2"/>
+<text x="262.0" y="332.68" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#FFFFFF" text-anchor="middle">ext</text>
+<rect x="280" y="314" width="70" height="28" fill="#224EBD" stroke="#224EBD" stroke-width="1.2"/>
+<text x="315.0" y="332.68" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#FFFFFF" text-anchor="middle">index 1</text>
+<rect x="16" y="368" width="150" height="28" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.2"/>
+<text x="91.0" y="386.68" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#16324F" text-anchor="middle">파일 byte</text>
+<rect x="166" y="368" width="114" height="28" fill="url(#kf-pad)" stroke="#529FD9" stroke-width="1.2"/>
+<rect x="180" y="374" width="86" height="16" fill="#EAF3FB"/>
+<text x="223" y="387" font-family="Menlo,Consolas,monospace" font-size="13" fill="#16324F" text-anchor="middle" font-weight="700">1B 1B 1B…</text>
+<rect x="280" y="368" width="70" height="28" fill="#224EBD" stroke="#224EBD" stroke-width="1.2"/>
+<text x="315.0" y="386.68" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#FFFFFF" text-anchor="middle">index r</text>
+<line x1="223" y1="398" x2="223" y2="410" stroke="#2E7D54" stroke-width="1.4"/>
+<text x="350" y="426" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#2E7D54" text-anchor="end" font-weight="700">PAD는 RS 전에 채움 → 패리티에 포함</text>
+<text x="350" y="446" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#5B6670" text-anchor="end">짝수 보정으로 붙인 행 D는 17 B 전부 PAD</text>
+<rect x="380" y="310" width="104" height="90" rx="4" fill="#F4F6F9" stroke="#16324F" stroke-width="1.3"/>
+<text x="432.0" y="347.0" font-family="Menlo,Consolas,monospace" font-size="14" fill="#16324F" text-anchor="middle" font-weight="700">RS(27,19)</text>
+<text x="432.0" y="368.0" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#16324F" text-anchor="middle">심볼 = 1 byte</text>
+<line x1="354" y1="328.0" x2="371" y2="328.0" stroke="#5B6670" stroke-width="1.6"/>
+<path d="M378,328.0 l-8,-4.5 l0,9 z" fill="#5B6670"/>
+<line x1="486" y1="328.0" x2="499" y2="328.0" stroke="#5B6670" stroke-width="1.6"/>
+<path d="M506,328.0 l-8,-4.5 l0,9 z" fill="#5B6670"/>
+<line x1="354" y1="382.0" x2="371" y2="382.0" stroke="#5B6670" stroke-width="1.6"/>
+<path d="M378,382.0 l-8,-4.5 l0,9 z" fill="#5B6670"/>
+<line x1="486" y1="382.0" x2="499" y2="382.0" stroke="#5B6670" stroke-width="1.6"/>
+<path d="M506,382.0 l-8,-4.5 l0,9 z" fill="#5B6670"/>
+<text x="508" y="306" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#5B6670" text-anchor="start">DNA 108 nt = 27 B × 4 nt</text>
+<rect x="508" y="314" width="172" height="28" fill="#16324F" stroke="#16324F" stroke-width="1.2"/>
+<text x="594.0" y="332.68" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#FFFFFF" text-anchor="middle">헤더 68 nt</text>
+<rect x="680" y="314" width="88" height="28" fill="#224EBD" stroke="#224EBD" stroke-width="1.2"/>
+<text x="724.0" y="332.68" font-family="Menlo,Consolas,monospace" font-size="13" fill="#FFFFFF" text-anchor="middle">AAAAAAAT</text>
+<rect x="768" y="314" width="96" height="28" fill="#FBECEC" stroke="#C03B3B" stroke-width="1.2"/>
+<text x="816.0" y="332.68" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#C03B3B" text-anchor="middle">패리티 32 nt</text>
+<rect x="508" y="368" width="84" height="28" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.2"/>
+<text x="550.0" y="386.68" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#16324F" text-anchor="middle">파일 byte</text>
+<rect x="592" y="368" width="88" height="28" fill="url(#kf-pad)" stroke="#529FD9" stroke-width="1.2"/>
+<rect x="597" y="374" width="78" height="16" fill="#EAF3FB"/>
+<text x="636" y="387" font-family="Menlo,Consolas,monospace" font-size="13" fill="#16324F" text-anchor="middle" font-weight="700">ATGCATGC</text>
+<rect x="680" y="368" width="88" height="28" fill="#224EBD" stroke="#224EBD" stroke-width="1.2"/>
+<text x="724.0" y="386.68" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#FFFFFF" text-anchor="middle">index r</text>
+<rect x="768" y="368" width="96" height="28" fill="#FBECEC" stroke="#C03B3B" stroke-width="1.2"/>
+<text x="816.0" y="386.68" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#C03B3B" text-anchor="middle">패리티 32 nt</text>
+<rect x="380" y="430" width="484" height="58" rx="5" fill="#E9F4EE" stroke="#2E7D54" stroke-width="1.6"/>
+<circle cx="404" cy="459" r="11" fill="#2E7D54"/>
+<path d="M398.5,459.5 l4,4 l7,-8.5" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="426" y="454" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="14" fill="#1A1A1A" text-anchor="start" font-weight="700">부호어 그대로 → RS 정정 + XOR 보호</text>
+<text x="426" y="475" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#1A1A1A" text-anchor="start">헤더 행 1도 XOR 묶음 (1, 1+H, D+1)에 포함</text>
+<line x1="16" y1="508" x2="864" y2="508" stroke="#D8DEE6" stroke-width="1.2"/>
+<rect x="16" y="522" width="404" height="56" rx="4" fill="#F4F6F9" stroke="#D8DEE6" stroke-width="1"/>
+<rect x="460" y="522" width="404" height="56" rx="4" fill="#F4F6F9" stroke="#D8DEE6" stroke-width="1"/>
+<text x="440" y="555" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="14" fill="#5B6670" text-anchor="middle" font-weight="700">vs</text>
+<text x="30" y="543" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="14" fill="#16324F" text-anchor="start" font-weight="700">0 채우기 = poly-A</text>
+<text x="406" y="543" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#5B6670" text-anchor="end">J6 678번 가닥 A 72개 (원본)</text>
+<text x="30" y="566" font-family="Menlo,Consolas,monospace" font-size="13" font-weight="700" fill="#1A1A1A"><tspan fill="#C03B3B">T</tspan><tspan fill="#2E7D54">A</tspan><tspan fill="#2E7D54">A</tspan><tspan fill="#2E7D54">A</tspan><tspan fill="#2E7D54">A</tspan><tspan fill="#2E7D54">A</tspan><tspan fill="#2E7D54">A</tspan><tspan fill="#2E7D54">A</tspan><tspan fill="#2E7D54">A</tspan><tspan fill="#2E7D54">A</tspan><tspan fill="#2E7D54">A</tspan><tspan fill="#2E7D54">A</tspan><tspan fill="#2E7D54">A</tspan><tspan fill="#2E7D54">A</tspan><tspan fill="#2E7D54">A</tspan><tspan fill="#2E7D54">A</tspan><tspan fill="#2E7D54">A</tspan><tspan fill="#2E7D54">A</tspan><tspan fill="#2E7D54">A</tspan><tspan fill="#2E7D54">A</tspan><tspan fill="#2E7D54">A</tspan><tspan fill="#2E7D54">A</tspan><tspan fill="#2E7D54">A</tspan><tspan fill="#2E7D54">A</tspan><tspan fill="#2E7D54">A</tspan><tspan fill="#2E7D54">A</tspan><tspan fill="#2E7D54">A</tspan><tspan fill="#2E7D54">A</tspan><tspan fill="#2E7D54">A</tspan><tspan fill="#2E7D54">A</tspan><tspan fill="#2E7D54">A</tspan>…<tspan fill="#2E7D54">A</tspan><tspan fill="#2E7D54">A</tspan><tspan fill="#2E7D54">A</tspan><tspan fill="#2E7D54">A</tspan><tspan fill="#C03B3B">T</tspan><tspan fill="#8A5F12">G</tspan><tspan fill="#C03B3B">T</tspan><tspan fill="#C03B3B">T</tspan></text>
+<text x="474" y="543" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="14" fill="#16324F" text-anchor="start" font-weight="700">0x1B 채우기 = ATGC 반복</text>
+<text x="850" y="543" font-family="Menlo,Consolas,monospace" font-size="13" fill="#5B6670" text-anchor="end">0x1B = 00 01 10 11</text>
+<text x="474" y="566" font-family="Menlo,Consolas,monospace" font-size="13" font-weight="700" fill="#1A1A1A"><tspan fill="#2E7D54">A</tspan><tspan fill="#C03B3B">T</tspan><tspan fill="#8A5F12">G</tspan><tspan fill="#224EBD">C</tspan><tspan fill="#2E7D54">A</tspan><tspan fill="#C03B3B">T</tspan><tspan fill="#8A5F12">G</tspan><tspan fill="#224EBD">C</tspan><tspan fill="#2E7D54">A</tspan><tspan fill="#C03B3B">T</tspan><tspan fill="#8A5F12">G</tspan><tspan fill="#224EBD">C</tspan><tspan fill="#2E7D54">A</tspan><tspan fill="#C03B3B">T</tspan><tspan fill="#8A5F12">G</tspan><tspan fill="#224EBD">C</tspan><tspan fill="#2E7D54">A</tspan><tspan fill="#C03B3B">T</tspan><tspan fill="#8A5F12">G</tspan><tspan fill="#224EBD">C</tspan><tspan fill="#2E7D54">A</tspan><tspan fill="#C03B3B">T</tspan><tspan fill="#8A5F12">G</tspan><tspan fill="#224EBD">C</tspan><tspan fill="#2E7D54">A</tspan><tspan fill="#C03B3B">T</tspan><tspan fill="#8A5F12">G</tspan><tspan fill="#224EBD">C</tspan><tspan fill="#2E7D54">A</tspan><tspan fill="#C03B3B">T</tspan><tspan fill="#8A5F12">G</tspan><tspan fill="#224EBD">C</tspan><tspan fill="#2E7D54">A</tspan><tspan fill="#C03B3B">T</tspan><tspan fill="#8A5F12">G</tspan><tspan fill="#224EBD">C</tspan>…</text>
+</svg>

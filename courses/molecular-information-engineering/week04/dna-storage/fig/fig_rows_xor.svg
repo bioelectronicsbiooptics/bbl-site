@@ -1,0 +1,282 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 480" role="img" aria-labelledby="rx-t">
+<title id="rx-t">행 나누기와 XOR 바깥 부호: 헤더와 파일 byte를 17 B 행 6개로 자르고, 앞 절반 행과 뒤 절반 행의 XOR로 XOR 행 3개를 만들어 한 묶음에서 한 행이 소실되면 복원</title>
+<defs><pattern id="rx-pad" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#EAF3FB"/><line x1="0" y1="0" x2="0" y2="6" stroke="#529FD9" stroke-width="1.6"/></pattern><pattern id="rx-lost" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(45)"><rect width="7" height="7" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="7" stroke="#AEB6BF" stroke-width="1.4"/></pattern></defs>
+<rect x="0" y="0" width="880" height="480" fill="#FFFFFF"/>
+<text x="16" y="26" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="16" fill="#16324F" text-anchor="start" font-weight="700">행 나누기 (17 B/행)</text>
+<text x="16" y="58" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#5B6670" text-anchor="start">byte 열</text>
+<rect x="102" y="40" width="76" height="26" fill="#16324F"/>
+<text x="140" y="58" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#FFFFFF" text-anchor="middle" font-weight="700">헤더 17 B</text>
+<rect x="178" y="40" width="160" height="26" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.2"/>
+<text x="258" y="58" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#16324F" text-anchor="middle">파일 byte (예: L = 76 B)</text>
+<line x1="187.0" y1="70" x2="187.0" y2="98" stroke="#5B6670" stroke-width="1.6"/>
+<path d="M187.0,104 l-4.5,-8 l9,0 z" fill="#5B6670"/>
+<text x="197.0" y="91" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#5B6670" text-anchor="start">17 B씩 자르기</text>
+<rect x="102" y="110" width="170" height="24" fill="#16324F" stroke="#16324F" stroke-width="1.2"/>
+<line x1="112" y1="111" x2="112" y2="133" stroke="#3C5A78" stroke-width="0.7"/>
+<line x1="122" y1="111" x2="122" y2="133" stroke="#3C5A78" stroke-width="0.7"/>
+<line x1="132" y1="111" x2="132" y2="133" stroke="#3C5A78" stroke-width="0.7"/>
+<line x1="142" y1="111" x2="142" y2="133" stroke="#3C5A78" stroke-width="0.7"/>
+<line x1="152" y1="111" x2="152" y2="133" stroke="#3C5A78" stroke-width="0.7"/>
+<line x1="162" y1="111" x2="162" y2="133" stroke="#3C5A78" stroke-width="0.7"/>
+<line x1="172" y1="111" x2="172" y2="133" stroke="#3C5A78" stroke-width="0.7"/>
+<line x1="182" y1="111" x2="182" y2="133" stroke="#3C5A78" stroke-width="0.7"/>
+<line x1="192" y1="111" x2="192" y2="133" stroke="#3C5A78" stroke-width="0.7"/>
+<line x1="202" y1="111" x2="202" y2="133" stroke="#3C5A78" stroke-width="0.7"/>
+<line x1="212" y1="111" x2="212" y2="133" stroke="#3C5A78" stroke-width="0.7"/>
+<line x1="222" y1="111" x2="222" y2="133" stroke="#3C5A78" stroke-width="0.7"/>
+<line x1="232" y1="111" x2="232" y2="133" stroke="#3C5A78" stroke-width="0.7"/>
+<line x1="242" y1="111" x2="242" y2="133" stroke="#3C5A78" stroke-width="0.7"/>
+<line x1="252" y1="111" x2="252" y2="133" stroke="#3C5A78" stroke-width="0.7"/>
+<line x1="262" y1="111" x2="262" y2="133" stroke="#3C5A78" stroke-width="0.7"/>
+<text x="187.0" y="127" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#FFFFFF" text-anchor="middle" font-weight="700">헤더 17 B</text>
+<circle cx="86" cy="122.0" r="10" fill="#224EBD"/>
+<text x="86" y="126.5" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#FFFFFF" text-anchor="middle" font-weight="700">1</text>
+<rect x="102" y="144" width="170" height="24" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.2"/>
+<line x1="112" y1="145" x2="112" y2="167" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="122" y1="145" x2="122" y2="167" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="132" y1="145" x2="132" y2="167" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="142" y1="145" x2="142" y2="167" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="152" y1="145" x2="152" y2="167" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="162" y1="145" x2="162" y2="167" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="172" y1="145" x2="172" y2="167" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="182" y1="145" x2="182" y2="167" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="192" y1="145" x2="192" y2="167" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="202" y1="145" x2="202" y2="167" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="212" y1="145" x2="212" y2="167" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="222" y1="145" x2="222" y2="167" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="232" y1="145" x2="232" y2="167" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="242" y1="145" x2="242" y2="167" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="252" y1="145" x2="252" y2="167" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="262" y1="145" x2="262" y2="167" stroke="#B7D5EF" stroke-width="0.7"/>
+<text x="187.0" y="161" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#16324F" text-anchor="middle">파일 byte 1–17</text>
+<circle cx="86" cy="156.0" r="10" fill="#2E7D54"/>
+<text x="86" y="160.5" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#FFFFFF" text-anchor="middle" font-weight="700">2</text>
+<rect x="102" y="178" width="170" height="24" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.2"/>
+<line x1="112" y1="179" x2="112" y2="201" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="122" y1="179" x2="122" y2="201" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="132" y1="179" x2="132" y2="201" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="142" y1="179" x2="142" y2="201" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="152" y1="179" x2="152" y2="201" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="162" y1="179" x2="162" y2="201" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="172" y1="179" x2="172" y2="201" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="182" y1="179" x2="182" y2="201" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="192" y1="179" x2="192" y2="201" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="202" y1="179" x2="202" y2="201" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="212" y1="179" x2="212" y2="201" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="222" y1="179" x2="222" y2="201" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="232" y1="179" x2="232" y2="201" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="242" y1="179" x2="242" y2="201" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="252" y1="179" x2="252" y2="201" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="262" y1="179" x2="262" y2="201" stroke="#B7D5EF" stroke-width="0.7"/>
+<text x="187.0" y="195" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#16324F" text-anchor="middle">파일 byte 18–34</text>
+<circle cx="86" cy="190.0" r="10" fill="#8A5F12"/>
+<text x="86" y="194.5" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#FFFFFF" text-anchor="middle" font-weight="700">3</text>
+<rect x="102" y="212" width="170" height="24" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.2"/>
+<line x1="112" y1="213" x2="112" y2="235" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="122" y1="213" x2="122" y2="235" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="132" y1="213" x2="132" y2="235" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="142" y1="213" x2="142" y2="235" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="152" y1="213" x2="152" y2="235" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="162" y1="213" x2="162" y2="235" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="172" y1="213" x2="172" y2="235" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="182" y1="213" x2="182" y2="235" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="192" y1="213" x2="192" y2="235" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="202" y1="213" x2="202" y2="235" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="212" y1="213" x2="212" y2="235" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="222" y1="213" x2="222" y2="235" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="232" y1="213" x2="232" y2="235" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="242" y1="213" x2="242" y2="235" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="252" y1="213" x2="252" y2="235" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="262" y1="213" x2="262" y2="235" stroke="#B7D5EF" stroke-width="0.7"/>
+<text x="187.0" y="229" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#16324F" text-anchor="middle">파일 byte 35–51</text>
+<circle cx="86" cy="224.0" r="10" fill="#224EBD"/>
+<text x="86" y="228.5" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#FFFFFF" text-anchor="middle" font-weight="700">4</text>
+<rect x="102" y="246" width="170" height="24" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.2"/>
+<line x1="112" y1="247" x2="112" y2="269" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="122" y1="247" x2="122" y2="269" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="132" y1="247" x2="132" y2="269" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="142" y1="247" x2="142" y2="269" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="152" y1="247" x2="152" y2="269" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="162" y1="247" x2="162" y2="269" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="172" y1="247" x2="172" y2="269" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="182" y1="247" x2="182" y2="269" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="192" y1="247" x2="192" y2="269" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="202" y1="247" x2="202" y2="269" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="212" y1="247" x2="212" y2="269" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="222" y1="247" x2="222" y2="269" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="232" y1="247" x2="232" y2="269" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="242" y1="247" x2="242" y2="269" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="252" y1="247" x2="252" y2="269" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="262" y1="247" x2="262" y2="269" stroke="#B7D5EF" stroke-width="0.7"/>
+<text x="187.0" y="263" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#16324F" text-anchor="middle">파일 byte 52–68</text>
+<circle cx="86" cy="258.0" r="10" fill="#2E7D54"/>
+<text x="86" y="262.5" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#FFFFFF" text-anchor="middle" font-weight="700">5</text>
+<rect x="102" y="280" width="80" height="24" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.2"/>
+<line x1="112" y1="281" x2="112" y2="303" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="122" y1="281" x2="122" y2="303" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="132" y1="281" x2="132" y2="303" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="142" y1="281" x2="142" y2="303" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="152" y1="281" x2="152" y2="303" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="162" y1="281" x2="162" y2="303" stroke="#B7D5EF" stroke-width="0.7"/>
+<line x1="172" y1="281" x2="172" y2="303" stroke="#B7D5EF" stroke-width="0.7"/>
+<rect x="182" y="280" width="90" height="24" fill="url(#rx-pad)" stroke="#529FD9" stroke-width="1.2"/>
+<line x1="192" y1="281" x2="192" y2="303" stroke="#529FD9" stroke-width="0.7"/>
+<line x1="202" y1="281" x2="202" y2="303" stroke="#529FD9" stroke-width="0.7"/>
+<line x1="212" y1="281" x2="212" y2="303" stroke="#529FD9" stroke-width="0.7"/>
+<line x1="222" y1="281" x2="222" y2="303" stroke="#529FD9" stroke-width="0.7"/>
+<line x1="232" y1="281" x2="232" y2="303" stroke="#529FD9" stroke-width="0.7"/>
+<line x1="242" y1="281" x2="242" y2="303" stroke="#529FD9" stroke-width="0.7"/>
+<line x1="252" y1="281" x2="252" y2="303" stroke="#529FD9" stroke-width="0.7"/>
+<line x1="262" y1="281" x2="262" y2="303" stroke="#529FD9" stroke-width="0.7"/>
+<text x="142.0" y="297" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#16324F" text-anchor="middle">69–76</text>
+<line x1="227.0" y1="306" x2="227.0" y2="314" stroke="#529FD9" stroke-width="1.2"/>
+<text x="272" y="330" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#16324F" text-anchor="end">PAD 0x1B = ATGC (9 B)</text>
+<circle cx="86" cy="292.0" r="10" fill="#8A5F12"/>
+<text x="86" y="296.5" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#FFFFFF" text-anchor="middle" font-weight="700">6</text>
+<path d="M72,112 h-6 V200 h6" fill="none" stroke="#5B6670" stroke-width="1.3"/>
+<text x="60" y="154.0" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#5B6670" text-anchor="end" font-weight="700">앞 절반</text>
+<text x="60" y="171.0" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#5B6670" text-anchor="end">(1–3)</text>
+<path d="M72,214 h-6 V302 h6" fill="none" stroke="#5B6670" stroke-width="1.3"/>
+<text x="60" y="256.0" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#5B6670" text-anchor="end" font-weight="700">뒤 절반</text>
+<text x="60" y="273.0" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#5B6670" text-anchor="end">(4–6)</text>
+<text x="16" y="364" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="15" fill="#16324F" text-anchor="start" font-weight="700">D = 6 → H = 3 → N = 9 가닥 (1.5배)</text>
+<text x="350" y="26" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="16" fill="#16324F" text-anchor="start" font-weight="700">XOR 행 (바깥 부호)</text>
+<text x="372" y="116" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="14" fill="#1A1A1A" text-anchor="start">앞 절반(1–3) ⊕ 뒤 절반(4–6)</text>
+<text x="372" y="138" font-family="Menlo,Consolas,monospace" font-size="13" fill="#5B6670" text-anchor="start">원본 xor(xor_A, xor_B)</text>
+<circle cx="276" cy="122.0" r="3" fill="#224EBD"/>
+<line x1="276" y1="122.0" x2="292" y2="122.0" stroke="#224EBD" stroke-width="2"/>
+<circle cx="276" cy="224.0" r="3" fill="#224EBD"/>
+<line x1="276" y1="224.0" x2="292" y2="224.0" stroke="#224EBD" stroke-width="2"/>
+<line x1="292" y1="122.0" x2="292" y2="224.0" stroke="#224EBD" stroke-width="2"/>
+<circle cx="292" cy="173.0" r="7.5" fill="#FFFFFF" stroke="#224EBD" stroke-width="2"/>
+<path d="M287.5,173.0 h9 M292,168.5 v9" fill="none" stroke="#224EBD" stroke-width="1.8"/>
+<line x1="299.5" y1="173.0" x2="360" y2="173.0" stroke="#224EBD" stroke-width="2"/>
+<path d="M362,173.0 l-8,-4.5 l0,9 z" fill="#224EBD"/>
+<rect x="388" y="161.0" width="170" height="24" fill="#FFF4DC" stroke="#8A5F12" stroke-width="1.2"/>
+<line x1="398" y1="162.0" x2="398" y2="184.0" stroke="#E6CF9F" stroke-width="0.7"/>
+<line x1="408" y1="162.0" x2="408" y2="184.0" stroke="#E6CF9F" stroke-width="0.7"/>
+<line x1="418" y1="162.0" x2="418" y2="184.0" stroke="#E6CF9F" stroke-width="0.7"/>
+<line x1="428" y1="162.0" x2="428" y2="184.0" stroke="#E6CF9F" stroke-width="0.7"/>
+<line x1="438" y1="162.0" x2="438" y2="184.0" stroke="#E6CF9F" stroke-width="0.7"/>
+<line x1="448" y1="162.0" x2="448" y2="184.0" stroke="#E6CF9F" stroke-width="0.7"/>
+<line x1="458" y1="162.0" x2="458" y2="184.0" stroke="#E6CF9F" stroke-width="0.7"/>
+<line x1="468" y1="162.0" x2="468" y2="184.0" stroke="#E6CF9F" stroke-width="0.7"/>
+<line x1="478" y1="162.0" x2="478" y2="184.0" stroke="#E6CF9F" stroke-width="0.7"/>
+<line x1="488" y1="162.0" x2="488" y2="184.0" stroke="#E6CF9F" stroke-width="0.7"/>
+<line x1="498" y1="162.0" x2="498" y2="184.0" stroke="#E6CF9F" stroke-width="0.7"/>
+<line x1="508" y1="162.0" x2="508" y2="184.0" stroke="#E6CF9F" stroke-width="0.7"/>
+<line x1="518" y1="162.0" x2="518" y2="184.0" stroke="#E6CF9F" stroke-width="0.7"/>
+<line x1="528" y1="162.0" x2="528" y2="184.0" stroke="#E6CF9F" stroke-width="0.7"/>
+<line x1="538" y1="162.0" x2="538" y2="184.0" stroke="#E6CF9F" stroke-width="0.7"/>
+<line x1="548" y1="162.0" x2="548" y2="184.0" stroke="#E6CF9F" stroke-width="0.7"/>
+<circle cx="372" cy="173.0" r="10" fill="#224EBD"/>
+<text x="372" y="177.5" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#FFFFFF" text-anchor="middle" font-weight="700">7</text>
+<text x="473.0" y="178.0" font-family="Menlo,Consolas,monospace" font-size="14" fill="#8A5F12" text-anchor="middle" font-weight="700">7 = 1 <tspan font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">⊕</tspan> 4</text>
+<circle cx="276" cy="156.0" r="3" fill="#2E7D54"/>
+<line x1="276" y1="156.0" x2="314" y2="156.0" stroke="#2E7D54" stroke-width="2"/>
+<circle cx="276" cy="258.0" r="3" fill="#2E7D54"/>
+<line x1="276" y1="258.0" x2="314" y2="258.0" stroke="#2E7D54" stroke-width="2"/>
+<line x1="314" y1="156.0" x2="314" y2="258.0" stroke="#2E7D54" stroke-width="2"/>
+<circle cx="314" cy="207.0" r="7.5" fill="#FFFFFF" stroke="#2E7D54" stroke-width="2"/>
+<path d="M309.5,207.0 h9 M314,202.5 v9" fill="none" stroke="#2E7D54" stroke-width="1.8"/>
+<line x1="321.5" y1="207.0" x2="360" y2="207.0" stroke="#2E7D54" stroke-width="2"/>
+<path d="M362,207.0 l-8,-4.5 l0,9 z" fill="#2E7D54"/>
+<rect x="388" y="195.0" width="170" height="24" fill="#FFF4DC" stroke="#8A5F12" stroke-width="1.2"/>
+<line x1="398" y1="196.0" x2="398" y2="218.0" stroke="#E6CF9F" stroke-width="0.7"/>
+<line x1="408" y1="196.0" x2="408" y2="218.0" stroke="#E6CF9F" stroke-width="0.7"/>
+<line x1="418" y1="196.0" x2="418" y2="218.0" stroke="#E6CF9F" stroke-width="0.7"/>
+<line x1="428" y1="196.0" x2="428" y2="218.0" stroke="#E6CF9F" stroke-width="0.7"/>
+<line x1="438" y1="196.0" x2="438" y2="218.0" stroke="#E6CF9F" stroke-width="0.7"/>
+<line x1="448" y1="196.0" x2="448" y2="218.0" stroke="#E6CF9F" stroke-width="0.7"/>
+<line x1="458" y1="196.0" x2="458" y2="218.0" stroke="#E6CF9F" stroke-width="0.7"/>
+<line x1="468" y1="196.0" x2="468" y2="218.0" stroke="#E6CF9F" stroke-width="0.7"/>
+<line x1="478" y1="196.0" x2="478" y2="218.0" stroke="#E6CF9F" stroke-width="0.7"/>
+<line x1="488" y1="196.0" x2="488" y2="218.0" stroke="#E6CF9F" stroke-width="0.7"/>
+<line x1="498" y1="196.0" x2="498" y2="218.0" stroke="#E6CF9F" stroke-width="0.7"/>
+<line x1="508" y1="196.0" x2="508" y2="218.0" stroke="#E6CF9F" stroke-width="0.7"/>
+<line x1="518" y1="196.0" x2="518" y2="218.0" stroke="#E6CF9F" stroke-width="0.7"/>
+<line x1="528" y1="196.0" x2="528" y2="218.0" stroke="#E6CF9F" stroke-width="0.7"/>
+<line x1="538" y1="196.0" x2="538" y2="218.0" stroke="#E6CF9F" stroke-width="0.7"/>
+<line x1="548" y1="196.0" x2="548" y2="218.0" stroke="#E6CF9F" stroke-width="0.7"/>
+<circle cx="372" cy="207.0" r="10" fill="#2E7D54"/>
+<text x="372" y="211.5" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#FFFFFF" text-anchor="middle" font-weight="700">8</text>
+<text x="473.0" y="212.0" font-family="Menlo,Consolas,monospace" font-size="14" fill="#8A5F12" text-anchor="middle" font-weight="700">8 = 2 <tspan font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">⊕</tspan> 5</text>
+<circle cx="276" cy="190.0" r="3" fill="#8A5F12"/>
+<line x1="276" y1="190.0" x2="336" y2="190.0" stroke="#8A5F12" stroke-width="2"/>
+<circle cx="276" cy="292.0" r="3" fill="#8A5F12"/>
+<line x1="276" y1="292.0" x2="336" y2="292.0" stroke="#8A5F12" stroke-width="2"/>
+<line x1="336" y1="190.0" x2="336" y2="292.0" stroke="#8A5F12" stroke-width="2"/>
+<circle cx="336" cy="241.0" r="7.5" fill="#FFFFFF" stroke="#8A5F12" stroke-width="2"/>
+<path d="M331.5,241.0 h9 M336,236.5 v9" fill="none" stroke="#8A5F12" stroke-width="1.8"/>
+<line x1="343.5" y1="241.0" x2="360" y2="241.0" stroke="#8A5F12" stroke-width="2"/>
+<path d="M362,241.0 l-8,-4.5 l0,9 z" fill="#8A5F12"/>
+<rect x="388" y="229.0" width="170" height="24" fill="#FFF4DC" stroke="#8A5F12" stroke-width="1.2"/>
+<line x1="398" y1="230.0" x2="398" y2="252.0" stroke="#E6CF9F" stroke-width="0.7"/>
+<line x1="408" y1="230.0" x2="408" y2="252.0" stroke="#E6CF9F" stroke-width="0.7"/>
+<line x1="418" y1="230.0" x2="418" y2="252.0" stroke="#E6CF9F" stroke-width="0.7"/>
+<line x1="428" y1="230.0" x2="428" y2="252.0" stroke="#E6CF9F" stroke-width="0.7"/>
+<line x1="438" y1="230.0" x2="438" y2="252.0" stroke="#E6CF9F" stroke-width="0.7"/>
+<line x1="448" y1="230.0" x2="448" y2="252.0" stroke="#E6CF9F" stroke-width="0.7"/>
+<line x1="458" y1="230.0" x2="458" y2="252.0" stroke="#E6CF9F" stroke-width="0.7"/>
+<line x1="468" y1="230.0" x2="468" y2="252.0" stroke="#E6CF9F" stroke-width="0.7"/>
+<line x1="478" y1="230.0" x2="478" y2="252.0" stroke="#E6CF9F" stroke-width="0.7"/>
+<line x1="488" y1="230.0" x2="488" y2="252.0" stroke="#E6CF9F" stroke-width="0.7"/>
+<line x1="498" y1="230.0" x2="498" y2="252.0" stroke="#E6CF9F" stroke-width="0.7"/>
+<line x1="508" y1="230.0" x2="508" y2="252.0" stroke="#E6CF9F" stroke-width="0.7"/>
+<line x1="518" y1="230.0" x2="518" y2="252.0" stroke="#E6CF9F" stroke-width="0.7"/>
+<line x1="528" y1="230.0" x2="528" y2="252.0" stroke="#E6CF9F" stroke-width="0.7"/>
+<line x1="538" y1="230.0" x2="538" y2="252.0" stroke="#E6CF9F" stroke-width="0.7"/>
+<line x1="548" y1="230.0" x2="548" y2="252.0" stroke="#E6CF9F" stroke-width="0.7"/>
+<circle cx="372" cy="241.0" r="10" fill="#8A5F12"/>
+<text x="372" y="245.5" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#FFFFFF" text-anchor="middle" font-weight="700">9</text>
+<text x="473.0" y="246.0" font-family="Menlo,Consolas,monospace" font-size="14" fill="#8A5F12" text-anchor="middle" font-weight="700">9 = 3 <tspan font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">⊕</tspan> 6</text>
+<text x="600" y="26" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="16" fill="#16324F" text-anchor="start" font-weight="700">소실 복원</text>
+<text x="600" y="64" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="14" fill="#1A1A1A" text-anchor="start" font-weight="700">(a) 5번 소실</text>
+<rect x="600" y="76" width="64" height="26" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.3"/>
+<text x="632.0" y="94" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#16324F" text-anchor="middle" font-weight="700">행 2</text>
+<rect x="682" y="76" width="64" height="26" fill="url(#rx-lost)" stroke="#5B6670" stroke-width="1.3" stroke-dasharray="4 3"/>
+<rect x="699.0" y="81" width="30" height="16" fill="#FFFFFF"/>
+<text x="714.0" y="94" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#5B6670" text-anchor="middle" font-weight="700">행 5</text>
+<rect x="764" y="76" width="64" height="26" fill="#FFF4DC" stroke="#8A5F12" stroke-width="1.3"/>
+<text x="796.0" y="94" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#8A5F12" text-anchor="middle" font-weight="700">행 8</text>
+<text x="600" y="134" font-family="Menlo,Consolas,monospace" font-size="16" fill="#2E7D54" text-anchor="start" font-weight="700">5 = 2 <tspan font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">⊕</tspan> 8</text>
+<circle cx="708" cy="129" r="10" fill="#2E7D54"/>
+<path d="M703,129.5 l3.5,3.8 l6.5,-8" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="726" y="134" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="14" fill="#2E7D54" text-anchor="start" font-weight="700">복원</text>
+<text x="600" y="184" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="14" fill="#1A1A1A" text-anchor="start" font-weight="700">(b) 2번 · 5번 동시 소실</text>
+<rect x="600" y="196" width="64" height="26" fill="url(#rx-lost)" stroke="#5B6670" stroke-width="1.3" stroke-dasharray="4 3"/>
+<rect x="617.0" y="201" width="30" height="16" fill="#FFFFFF"/>
+<text x="632.0" y="214" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#5B6670" text-anchor="middle" font-weight="700">행 2</text>
+<rect x="682" y="196" width="64" height="26" fill="url(#rx-lost)" stroke="#5B6670" stroke-width="1.3" stroke-dasharray="4 3"/>
+<rect x="699.0" y="201" width="30" height="16" fill="#FFFFFF"/>
+<text x="714.0" y="214" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#5B6670" text-anchor="middle" font-weight="700">행 5</text>
+<rect x="764" y="196" width="64" height="26" fill="#FFF4DC" stroke="#8A5F12" stroke-width="1.3"/>
+<text x="796.0" y="214" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#8A5F12" text-anchor="middle" font-weight="700">행 8</text>
+<text x="600" y="254" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="15" fill="#C03B3B" text-anchor="start" font-weight="700">8 하나로는 불가</text>
+<circle cx="724" cy="249" r="10" fill="#C03B3B"/>
+<path d="M719.5,244.5 l9,9 M728.5,244.5 l-9,9" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round"/>
+<text x="600" y="278" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#C03B3B" text-anchor="start">같은 묶음 2개 소실</text>
+<text x="600" y="302" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#5B6670" text-anchor="start">다른 묶음은 각자 복원 가능</text>
+<rect x="16" y="384" width="848" height="80" rx="4" fill="#F4F6F9" stroke="#D8DEE6" stroke-width="1"/>
+<text x="34" y="420" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="14" fill="#16324F" text-anchor="start" font-weight="700">bit 예</text>
+<text x="34" y="441" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#5B6670" text-anchor="start">(묶음 1)</text>
+<text x="130" y="420" font-family="Menlo,Consolas,monospace" font-size="16" fill="#1A1A1A" text-anchor="start" font-weight="700">1010</text>
+<text x="184.52" y="420" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="17" fill="#1A1A1A" text-anchor="middle" font-weight="700">⊕</text>
+<text x="200.52" y="420" font-family="Menlo,Consolas,monospace" font-size="16" fill="#1A1A1A" text-anchor="start" font-weight="700">0110</text>
+<text x="253.04000000000002" y="420" font-family="Menlo,Consolas,monospace" font-size="16" fill="#1A1A1A" text-anchor="middle" font-weight="700">=</text>
+<text x="267.04" y="420" font-family="Menlo,Consolas,monospace" font-size="16" fill="#1A1A1A" text-anchor="start" font-weight="700">1100</text>
+<text x="149.26" y="442" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#224EBD" text-anchor="middle">행 1</text>
+<text x="219.78" y="442" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#224EBD" text-anchor="middle">행 4</text>
+<text x="286.3" y="442" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#8A5F12" text-anchor="middle">행 7</text>
+<text x="344" y="420" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="16" fill="#5B6670" text-anchor="middle" font-weight="700">·</text>
+<text x="372" y="420" font-family="Menlo,Consolas,monospace" font-size="16" fill="#1A1A1A" text-anchor="start" font-weight="700">1100</text>
+<text x="426.52" y="420" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="17" fill="#1A1A1A" text-anchor="middle" font-weight="700">⊕</text>
+<text x="442.52" y="420" font-family="Menlo,Consolas,monospace" font-size="16" fill="#1A1A1A" text-anchor="start" font-weight="700">0110</text>
+<text x="495.04" y="420" font-family="Menlo,Consolas,monospace" font-size="16" fill="#1A1A1A" text-anchor="middle" font-weight="700">=</text>
+<text x="509.04" y="420" font-family="Menlo,Consolas,monospace" font-size="16" fill="#1A1A1A" text-anchor="start" font-weight="700">1010</text>
+<text x="391.26" y="442" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#224EBD" text-anchor="middle">행 7</text>
+<text x="461.78" y="442" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#224EBD" text-anchor="middle">행 4</text>
+<text x="528.3000000000001" y="442" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#2E7D54" text-anchor="middle">행 1 복원</text>
+<text x="600" y="420" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" font-size="13" fill="#5B6670" text-anchor="start">같은 값 두 번 XOR → 원래 값</text>
+<text x="600" y="441" font-family="Menlo,Consolas,monospace" font-size="13" fill="#5B6670" text-anchor="start">(A <tspan font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">⊕</tspan> B) <tspan font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">⊕</tspan> B = A</text>
+</svg>

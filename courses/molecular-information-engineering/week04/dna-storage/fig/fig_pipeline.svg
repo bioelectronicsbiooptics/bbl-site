@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 629" role="img" aria-labelledby="fpipe-t">
+<title id="fpipe-t">부호화–채널–복호 전체 흐름: 입력 byte를 헤더·17 byte 행·XOR 행·RS(27,19)·2 bit/nt 매핑으로 148 nt 가닥으로 바꾸고, 합성·보관·PCR·시퀀싱 채널의 오류를 거친 read를 방향 맞추기·PrimerSort·iSCAN·consensus·Global RS·Local RS·XOR 복원·헤더·CRC-32 확인으로 파일로 되돌리는 과정</title>
+<defs>
+<marker id="fpipe-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#16324F"/></marker>
+<marker id="fpipe-ahg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#5B6670"/></marker>
+<pattern id="fpipe-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="6" stroke="#D3D9E0" stroke-width="1.6"/></pattern>
+</defs>
+<rect x="0" y="0" width="880" height="629" fill="#FFFFFF"/>
+<g font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+<rect x="8" y="8" width="864" height="150" rx="12" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1.2"/>
+<rect x="8" y="198" width="864" height="104" rx="12" fill="#F4F6F9" stroke="#D8DEE6" stroke-width="1.2"/>
+<rect x="8" y="342" width="864" height="279" rx="12" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1.2"/>
+<text x="20" y="36" font-size="17" fill="#16324F" text-anchor="start" font-weight="700">부호화</text>
+<text x="20" y="226" font-size="17" fill="#5B6670" text-anchor="start" font-weight="700">채널</text>
+<text x="20" y="370" font-size="17" fill="#16324F" text-anchor="start" font-weight="700">복호</text>
+<text x="860" y="370" font-size="13" fill="#5B6670" text-anchor="end">상자 아래 회색 글자 = 원본 MATLAB 함수</text>
+<rect x="17" y="52" width="126" height="94" rx="8" fill="#FFFFFF" stroke="#16324F" stroke-width="1.5"/>
+<text x="80.0" y="76" font-size="15" fill="#16324F" text-anchor="middle" font-weight="700">① 입력</text>
+<text x="80.0" y="97" font-size="13" fill="#1A1A1A" text-anchor="middle">이름 → UTF-8</text>
+<text x="80.0" y="116" font-size="13" fill="#1A1A1A" text-anchor="middle">사진 → JPEG</text>
+<text x="80.0" y="135" font-size="13" fill="#1A1A1A" text-anchor="middle">파일 → byte</text>
+<line x1="145" y1="99.0" x2="159" y2="99.0" stroke="#16324F" stroke-width="1.6" marker-end="url(#fpipe-ah)"/>
+<rect x="161" y="52" width="126" height="94" rx="8" fill="#FFFFFF" stroke="#16324F" stroke-width="1.5"/>
+<text x="224.0" y="76" font-size="15" fill="#16324F" text-anchor="middle" font-weight="700">② 행 나누기</text>
+<text x="224.0" y="97" font-size="13" fill="#1A1A1A" text-anchor="middle">1번 행 = 헤더</text>
+<text x="224.0" y="116" font-size="13" fill="#1A1A1A" text-anchor="middle">17 byte씩 행</text>
+<text x="224.0" y="135" font-size="13" fill="#1A1A1A" text-anchor="middle">D행 (짝수)</text>
+<line x1="289" y1="99.0" x2="303" y2="99.0" stroke="#16324F" stroke-width="1.6" marker-end="url(#fpipe-ah)"/>
+<rect x="305" y="52" width="126" height="94" rx="8" fill="#FFF4DC" stroke="#8A5F12" stroke-width="1.5"/>
+<text x="368.0" y="76" font-size="15" fill="#16324F" text-anchor="middle" font-weight="700">③ XOR 행</text>
+<text x="368.0" y="106" font-size="13" fill="#1A1A1A" text-anchor="middle">앞 절반 ⊕ 뒤 절반</text>
+<text x="368.0" y="125" font-size="13" fill="#1A1A1A" text-anchor="middle">H = D/2 행</text>
+<line x1="433" y1="99.0" x2="447" y2="99.0" stroke="#16324F" stroke-width="1.6" marker-end="url(#fpipe-ah)"/>
+<rect x="449" y="52" width="126" height="94" rx="8" fill="#FBECEC" stroke="#C03B3B" stroke-width="1.5"/>
+<text x="512.0" y="76" font-size="15" fill="#16324F" text-anchor="middle" font-weight="700">④ RS(27,19)</text>
+<text x="512.0" y="97" font-size="13" fill="#1A1A1A" text-anchor="middle">행 17 B</text>
+<text x="512.0" y="116" font-size="13" fill="#1A1A1A" text-anchor="middle">+ index 2 B</text>
+<text x="512.0" y="135" font-size="13" fill="#1A1A1A" text-anchor="middle">→ 패리티 8 B</text>
+<line x1="577" y1="99.0" x2="591" y2="99.0" stroke="#16324F" stroke-width="1.6" marker-end="url(#fpipe-ah)"/>
+<rect x="593" y="52" width="126" height="94" rx="8" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.5"/>
+<text x="656.0" y="76" font-size="15" fill="#16324F" text-anchor="middle" font-weight="700">⑤ DNA</text>
+<text x="656.0" y="97" font-size="13" fill="#1A1A1A" text-anchor="middle">2 bit/nt</text>
+<text x="656.0" y="116" font-size="13" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace"><tspan fill="#1A1A1A">00 </tspan><tspan fill="#2E7D54" font-weight="700">A</tspan><tspan fill="#5B6670"> · </tspan><tspan fill="#1A1A1A">01 </tspan><tspan fill="#C03B3B" font-weight="700">T</tspan></text>
+<text x="656.0" y="135" font-size="13" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace"><tspan fill="#1A1A1A">10 </tspan><tspan fill="#8A5F12" font-weight="700">G</tspan><tspan fill="#5B6670"> · </tspan><tspan fill="#1A1A1A">11 </tspan><tspan fill="#224EBD" font-weight="700">C</tspan></text>
+<line x1="721" y1="99.0" x2="735" y2="99.0" stroke="#16324F" stroke-width="1.6" marker-end="url(#fpipe-ah)"/>
+<rect x="737" y="52" width="126" height="94" rx="8" fill="#FFFFFF" stroke="#16324F" stroke-width="1.5"/>
+<text x="800.0" y="76" font-size="15" fill="#16324F" text-anchor="middle" font-weight="700">⑥ 148 nt 가닥</text>
+<text x="800.0" y="97" font-size="13" fill="#1A1A1A" text-anchor="middle">N = 3H</text>
+<rect x="746.00" y="107" width="14.59" height="12" fill="#E9EDF2" stroke="#5B6670" stroke-width="1"/>
+<rect x="760.59" y="107" width="49.62" height="12" fill="#EAF3FB" stroke="#529FD9" stroke-width="1"/>
+<rect x="810.22" y="107" width="5.84" height="12" fill="#224EBD" stroke="#224EBD" stroke-width="1"/>
+<rect x="816.05" y="107" width="23.35" height="12" fill="#FBECEC" stroke="#C03B3B" stroke-width="1"/>
+<rect x="839.41" y="107" width="14.59" height="12" fill="#E9EDF2" stroke="#5B6670" stroke-width="1"/>
+<text x="800.0" y="135" font-size="13" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">20 + 108 + 20</text>
+<rect x="17" y="242" width="112" height="46" rx="8" fill="#FFFFFF" stroke="#5B6670" stroke-width="1.5"/>
+<text x="73.0" y="271" font-size="15" fill="#5B6670" text-anchor="middle" font-weight="700">합성</text>
+<line x1="131" y1="265.0" x2="145" y2="265.0" stroke="#5B6670" stroke-width="1.6" marker-end="url(#fpipe-ahg)"/>
+<rect x="147" y="242" width="112" height="46" rx="8" fill="#FFFFFF" stroke="#5B6670" stroke-width="1.5"/>
+<text x="203.0" y="271" font-size="15" fill="#5B6670" text-anchor="middle" font-weight="700">보관</text>
+<line x1="261" y1="265.0" x2="275" y2="265.0" stroke="#5B6670" stroke-width="1.6" marker-end="url(#fpipe-ahg)"/>
+<rect x="277" y="242" width="112" height="46" rx="8" fill="#FFFFFF" stroke="#5B6670" stroke-width="1.5"/>
+<text x="333.0" y="271" font-size="15" fill="#5B6670" text-anchor="middle" font-weight="700">PCR · 시퀀싱</text>
+<text x="429" y="270" font-size="15" fill="#5B6670" text-anchor="start" font-weight="700">오류</text>
+<rect x="475" y="251" width="52" height="28" rx="14" fill="#FFFFFF" stroke="#5B6670" stroke-width="1.3"/>
+<text x="501.0" y="270" font-size="13" fill="#1A1A1A" text-anchor="middle">치환</text>
+<rect x="536" y="251" width="52" height="28" rx="14" fill="#FFFFFF" stroke="#5B6670" stroke-width="1.3"/>
+<text x="562.0" y="270" font-size="13" fill="#1A1A1A" text-anchor="middle">삽입</text>
+<rect x="597" y="251" width="52" height="28" rx="14" fill="#FFFFFF" stroke="#5B6670" stroke-width="1.3"/>
+<text x="623.0" y="270" font-size="13" fill="#1A1A1A" text-anchor="middle">결실</text>
+<rect x="658" y="251" width="84" height="28" rx="14" fill="url(#fpipe-hatch)" stroke="#5B6670" stroke-width="1.3" stroke-dasharray="4 3"/>
+<text x="700.0" y="270" font-size="13" fill="#1A1A1A" text-anchor="middle">가닥 소실</text>
+<rect x="751" y="251" width="104" height="28" rx="14" fill="#FFFFFF" stroke="#5B6670" stroke-width="1.3"/>
+<text x="803.0" y="270" font-size="13" fill="#1A1A1A" text-anchor="middle">역방향 read</text>
+<rect x="17" y="386" width="154" height="76" rx="8" fill="#FFFFFF" stroke="#16324F" stroke-width="1.5"/>
+<text x="94.0" y="412" font-size="15" fill="#16324F" text-anchor="middle" font-weight="700">① read 읽기</text>
+<text x="94.0" y="439" font-size="13" fill="#1A1A1A" text-anchor="middle">FASTQ · FASTA</text>
+<line x1="173" y1="424.0" x2="188" y2="424.0" stroke="#16324F" stroke-width="1.6" marker-end="url(#fpipe-ah)"/>
+<rect x="190" y="386" width="154" height="76" rx="8" fill="#E9EDF2" stroke="#5B6670" stroke-width="1.5"/>
+<text x="267.0" y="412" font-size="15" fill="#16324F" text-anchor="middle" font-weight="700">② 방향 맞추기</text>
+<text x="267.0" y="439" font-size="13" fill="#1A1A1A" text-anchor="middle">역방향 read → 역상보</text>
+<text x="267.0" y="481" font-size="13" fill="#5B6670" text-anchor="middle" font-family="Menlo,Consolas,monospace">ReverseEvert</text>
+<line x1="346" y1="424.0" x2="361" y2="424.0" stroke="#16324F" stroke-width="1.6" marker-end="url(#fpipe-ah)"/>
+<rect x="363" y="386" width="154" height="76" rx="8" fill="#E9EDF2" stroke="#5B6670" stroke-width="1.5"/>
+<text x="440.0" y="412" font-size="15" fill="#16324F" text-anchor="middle" font-weight="700">③ PrimerSort</text>
+<text x="440.0" y="433" font-size="13" fill="#1A1A1A" text-anchor="middle">프라이머 ≥ 18/20</text>
+<text x="440.0" y="451" font-size="13" fill="#1A1A1A" text-anchor="middle">길이 148</text>
+<text x="440.0" y="481" font-size="13" fill="#5B6670" text-anchor="middle" font-family="Menlo,Consolas,monospace">PrimerSort</text>
+<line x1="519" y1="424.0" x2="534" y2="424.0" stroke="#16324F" stroke-width="1.6" marker-end="url(#fpipe-ah)"/>
+<rect x="536" y="386" width="154" height="76" rx="8" fill="#FFFFFF" stroke="#16324F" stroke-width="1.5"/>
+<text x="613.0" y="412" font-size="15" fill="#16324F" text-anchor="middle" font-weight="700">④ iSCAN</text>
+<text x="613.0" y="433" font-size="13" fill="#1A1A1A" text-anchor="middle">index로 묶기</text>
+<text x="613.0" y="451" font-size="13" fill="#1A1A1A" text-anchor="middle">본문 69–76 nt</text>
+<text x="613.0" y="481" font-size="13" fill="#5B6670" text-anchor="middle" font-family="Menlo,Consolas,monospace">Consensus2</text>
+<line x1="692" y1="424.0" x2="707" y2="424.0" stroke="#16324F" stroke-width="1.6" marker-end="url(#fpipe-ah)"/>
+<rect x="709" y="386" width="154" height="76" rx="8" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.5"/>
+<text x="786.0" y="412" font-size="15" fill="#16324F" text-anchor="middle" font-weight="700">⑤ consensus</text>
+<text x="786.0" y="439" font-size="13" fill="#1A1A1A" text-anchor="middle">자리별 최다 염기</text>
+<text x="786.0" y="481" font-size="13" fill="#5B6670" text-anchor="middle" font-family="Menlo,Consolas,monospace">Binarization</text>
+<rect x="17" y="512" width="154" height="76" rx="8" fill="#FBECEC" stroke="#C03B3B" stroke-width="1.5"/>
+<text x="94.0" y="538" font-size="15" fill="#16324F" text-anchor="middle" font-weight="700">⑥ Global RS</text>
+<text x="94.0" y="559" font-size="13" fill="#1A1A1A" text-anchor="middle">묶음 대표 서열</text>
+<text x="94.0" y="577" font-size="13" fill="#1A1A1A" text-anchor="middle">RS(27,19) 복호</text>
+<text x="94.0" y="607" font-size="13" fill="#5B6670" text-anchor="middle" font-family="Menlo,Consolas,monospace">RSdecoding</text>
+<line x1="173" y1="550.0" x2="188" y2="550.0" stroke="#16324F" stroke-width="1.6" marker-end="url(#fpipe-ah)"/>
+<rect x="190" y="512" width="154" height="76" rx="8" fill="#FBECEC" stroke="#C03B3B" stroke-width="1.5"/>
+<text x="267.0" y="538" font-size="15" fill="#16324F" text-anchor="middle" font-weight="700">⑦ Local RS</text>
+<text x="267.0" y="559" font-size="13" fill="#1A1A1A" text-anchor="middle">실패 묶음의</text>
+<text x="267.0" y="577" font-size="13" fill="#1A1A1A" text-anchor="middle">read 하나씩 RS</text>
+<line x1="346" y1="550.0" x2="361" y2="550.0" stroke="#16324F" stroke-width="1.6" marker-end="url(#fpipe-ah)"/>
+<rect x="363" y="512" width="154" height="76" rx="8" fill="#FFF4DC" stroke="#8A5F12" stroke-width="1.5"/>
+<text x="440.0" y="538" font-size="15" fill="#16324F" text-anchor="middle" font-weight="700">⑧ XOR 복원</text>
+<text x="440.0" y="559" font-size="13" fill="#1A1A1A" text-anchor="middle">헤더 D로 (j, j+H, D+j)</text>
+<text x="440.0" y="577" font-size="13" fill="#1A1A1A" text-anchor="middle">중 빈 1개 채움</text>
+<text x="440.0" y="607" font-size="13" fill="#5B6670" text-anchor="middle" font-family="Menlo,Consolas,monospace">XORrun2</text>
+<line x1="519" y1="550.0" x2="534" y2="550.0" stroke="#16324F" stroke-width="1.6" marker-end="url(#fpipe-ah)"/>
+<rect x="536" y="512" width="154" height="76" rx="8" fill="#16324F" stroke="#16324F" stroke-width="1.5"/>
+<text x="613.0" y="538" font-size="15" fill="#FFFFFF" text-anchor="middle" font-weight="700">⑨ 헤더 · 파일</text>
+<text x="613.0" y="559" font-size="13" fill="#FFFFFF" text-anchor="middle">앞 L byte = 파일</text>
+<text x="613.0" y="577" font-size="13" fill="#FFFFFF" text-anchor="middle">CRC-32 비교</text>
+<path d="M841,462 V496 H39 V510" fill="none" stroke="#16324F" stroke-width="1.6" stroke-linejoin="round" marker-end="url(#fpipe-ah)"/>
+<path d="M800.0,146 V178 H73.0 V240" fill="none" stroke="#16324F" stroke-width="1.6" stroke-linejoin="round" marker-end="url(#fpipe-ah)"/>
+<text x="790.0" y="172" font-size="13" fill="#16324F" text-anchor="end" font-weight="700">FASTA → 합성 주문</text>
+<path d="M333.0,288 V322 H114.0 V384" fill="none" stroke="#5B6670" stroke-width="1.6" stroke-linejoin="round" marker-end="url(#fpipe-ahg)"/>
+<text x="343.0" y="316" font-size="13" fill="#5B6670" text-anchor="start" font-weight="700">read (FASTQ)</text>
+</g>
+</svg>

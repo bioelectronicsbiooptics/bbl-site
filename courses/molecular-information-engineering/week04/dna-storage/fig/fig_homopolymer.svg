@@ -1,0 +1,332 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 476" role="img" aria-labelledby="fig_homopolymer-t">
+<title id="fig_homopolymer-t">JPEG 머리 17 byte의 DNA 변환과 호모폴리머, 행 마스크 XOR(whitening) 뒤의 변화</title>
+<rect x="0" y="0" width="880" height="476" fill="#FFFFFF" stroke="none"/>
+<g font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif" fill="#1A1A1A">
+<rect x="12" y="12" width="856" height="170" rx="8" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1.5"/>
+<text x="24" y="42" font-size="16" fill="#16324F" font-weight="700">JPEG 파일 첫 17 byte (JFIF 머리) → DNA 68 nt</text>
+<text x="856" y="42" font-size="13" fill="#5B6670" text-anchor="end">MSB-first · 00 A · 01 T · 10 G · 11 C</text>
+<text x="24" y="78" font-size="14" fill="#1A1A1A">byte</text>
+<rect x="113" y="60" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="133.8" y="78" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">FF</text>
+<rect x="156.6" y="60" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="177.4" y="78" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">D8</text>
+<rect x="200.2" y="60" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="221" y="78" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">FF</text>
+<rect x="243.8" y="60" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="264.6" y="78" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">E0</text>
+<rect x="287.4" y="60" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="308.2" y="78" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">00</text>
+<rect x="331" y="60" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="351.8" y="78" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">10</text>
+<rect x="374.6" y="60" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="395.4" y="78" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">4A</text>
+<rect x="418.2" y="60" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="439" y="78" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">46</text>
+<rect x="461.8" y="60" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="482.6" y="78" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">49</text>
+<rect x="505.4" y="60" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="526.2" y="78" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">46</text>
+<rect x="549" y="60" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="569.8" y="78" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">00</text>
+<rect x="592.6" y="60" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="613.4" y="78" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">01</text>
+<rect x="636.2" y="60" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="657" y="78" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">01</text>
+<rect x="679.8" y="60" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="700.6" y="78" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">00</text>
+<rect x="723.4" y="60" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="744.2" y="78" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">00</text>
+<rect x="767" y="60" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="787.8" y="78" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">01</text>
+<rect x="810.6" y="60" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="831.4" y="78" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">00</text>
+<text x="24" y="112" font-size="14" fill="#1A1A1A">DNA 68 nt</text>
+<rect x="113" y="94" width="41.6" height="26" rx="3" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1"/>
+<rect x="156.6" y="94" width="41.6" height="26" rx="3" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1"/>
+<rect x="200.2" y="94" width="41.6" height="26" rx="3" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1"/>
+<rect x="243.8" y="94" width="41.6" height="26" rx="3" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1"/>
+<rect x="287.4" y="94" width="41.6" height="26" rx="3" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1"/>
+<rect x="331" y="94" width="41.6" height="26" rx="3" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1"/>
+<rect x="374.6" y="94" width="41.6" height="26" rx="3" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1"/>
+<rect x="418.2" y="94" width="41.6" height="26" rx="3" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1"/>
+<rect x="461.8" y="94" width="41.6" height="26" rx="3" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1"/>
+<rect x="505.4" y="94" width="41.6" height="26" rx="3" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1"/>
+<rect x="549" y="94" width="41.6" height="26" rx="3" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1"/>
+<rect x="592.6" y="94" width="41.6" height="26" rx="3" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1"/>
+<rect x="636.2" y="94" width="41.6" height="26" rx="3" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1"/>
+<rect x="679.8" y="94" width="41.6" height="26" rx="3" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1"/>
+<rect x="723.4" y="94" width="41.6" height="26" rx="3" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1"/>
+<rect x="767" y="94" width="41.6" height="26" rx="3" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1"/>
+<rect x="810.6" y="94" width="41.6" height="26" rx="3" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1"/>
+<text x="117.45" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
+<text x="128.35" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
+<text x="139.25" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
+<text x="150.15" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
+<text x="161.05" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
+<text x="171.95" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
+<text x="182.85" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">G</text>
+<text x="193.75" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="204.65" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
+<text x="215.55" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
+<text x="226.45" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
+<text x="237.35" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
+<text x="248.25" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
+<text x="259.15" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">G</text>
+<text x="270.05" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="280.95" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="291.85" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="302.75" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="313.65" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="324.55" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="335.45" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="346.35" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
+<text x="357.25" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="368.15" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="379.05" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
+<text x="389.95" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="400.85" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">G</text>
+<text x="411.75" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">G</text>
+<text x="422.65" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
+<text x="433.55" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="444.45" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
+<text x="455.35" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">G</text>
+<text x="466.25" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
+<text x="477.15" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="488.05" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">G</text>
+<text x="498.95" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
+<text x="509.85" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
+<text x="520.75" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="531.65" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
+<text x="542.55" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">G</text>
+<text x="553.45" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="564.35" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="575.25" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="586.15" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="597.05" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="607.95" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="618.85" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="629.75" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
+<text x="640.65" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="651.55" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="662.45" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="673.35" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
+<text x="684.25" y="112" font-size="14" fill="#C03B3B" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">A</text>
+<text x="695.15" y="112" font-size="14" fill="#C03B3B" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">A</text>
+<text x="706.05" y="112" font-size="14" fill="#C03B3B" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">A</text>
+<text x="716.95" y="112" font-size="14" fill="#C03B3B" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">A</text>
+<text x="727.85" y="112" font-size="14" fill="#C03B3B" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">A</text>
+<text x="738.75" y="112" font-size="14" fill="#C03B3B" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">A</text>
+<text x="749.65" y="112" font-size="14" fill="#C03B3B" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">A</text>
+<text x="760.55" y="112" font-size="14" fill="#C03B3B" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">A</text>
+<text x="771.45" y="112" font-size="14" fill="#C03B3B" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">A</text>
+<text x="782.35" y="112" font-size="14" fill="#C03B3B" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">A</text>
+<text x="793.25" y="112" font-size="14" fill="#C03B3B" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">A</text>
+<text x="804.15" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
+<text x="815.05" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="825.95" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="836.85" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="847.75" y="112" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<line x1="679.8" y1="125" x2="797.7" y2="125" stroke="#C03B3B" stroke-width="3"/>
+<text x="738.75" y="144" font-size="14" fill="#C03B3B" text-anchor="middle" font-weight="700">A × 11  (nt 53–63)</text>
+<text x="856" y="168" font-size="14" fill="#1A1A1A" text-anchor="end" font-weight="700">최장 연속 A × 11 · GC 25.0 %</text>
+<rect x="12" y="196" width="856" height="268" rx="8" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1.5"/>
+<text x="24" y="226" font-size="16" fill="#16324F" font-weight="700">행 2(파일 첫 17 byte)를 행 번호 r = 2 마스크로 XOR</text>
+<text x="24" y="250" font-size="13"><tspan fill="#5B6670" font-weight="700">mask: </tspan><tspan fill="#5B6670">x = 2에서 시작, 17번 x = (1664525·x + 1013904223) mod 2³², 매번 mask = ⌊x / 2²⁴⌋</tspan></text>
+<text x="24" y="284" font-size="14" fill="#1A1A1A">원본 byte</text>
+<rect x="113" y="266" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="133.8" y="284" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">FF</text>
+<rect x="156.6" y="266" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="177.4" y="284" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">D8</text>
+<rect x="200.2" y="266" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="221" y="284" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">FF</text>
+<rect x="243.8" y="266" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="264.6" y="284" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">E0</text>
+<rect x="287.4" y="266" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="308.2" y="284" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">00</text>
+<rect x="331" y="266" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="351.8" y="284" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">10</text>
+<rect x="374.6" y="266" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="395.4" y="284" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">4A</text>
+<rect x="418.2" y="266" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="439" y="284" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">46</text>
+<rect x="461.8" y="266" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="482.6" y="284" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">49</text>
+<rect x="505.4" y="266" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="526.2" y="284" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">46</text>
+<rect x="549" y="266" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="569.8" y="284" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">00</text>
+<rect x="592.6" y="266" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="613.4" y="284" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">01</text>
+<rect x="636.2" y="266" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="657" y="284" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">01</text>
+<rect x="679.8" y="266" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="700.6" y="284" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">00</text>
+<rect x="723.4" y="266" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="744.2" y="284" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">00</text>
+<rect x="767" y="266" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="787.8" y="284" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">01</text>
+<rect x="810.6" y="266" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="831.4" y="284" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">00</text>
+<text x="24" y="318" font-size="14" fill="#1A1A1A">마스크 r = 2</text>
+<rect x="113" y="300" width="41.6" height="26" rx="3" fill="#F4F6F9" stroke="#5B6670" stroke-width="1.1"/>
+<text x="133.8" y="318" font-size="14" fill="#8A5F12" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">3C</text>
+<rect x="156.6" y="300" width="41.6" height="26" rx="3" fill="#F4F6F9" stroke="#5B6670" stroke-width="1.1"/>
+<text x="177.4" y="318" font-size="14" fill="#8A5F12" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">75</text>
+<rect x="200.2" y="300" width="41.6" height="26" rx="3" fill="#F4F6F9" stroke="#5B6670" stroke-width="1.1"/>
+<text x="221" y="318" font-size="14" fill="#8A5F12" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">30</text>
+<rect x="243.8" y="300" width="41.6" height="26" rx="3" fill="#F4F6F9" stroke="#5B6670" stroke-width="1.1"/>
+<text x="264.6" y="318" font-size="14" fill="#8A5F12" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">BD</text>
+<rect x="287.4" y="300" width="41.6" height="26" rx="3" fill="#F4F6F9" stroke="#5B6670" stroke-width="1.1"/>
+<text x="308.2" y="318" font-size="14" fill="#8A5F12" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">B7</text>
+<rect x="331" y="300" width="41.6" height="26" rx="3" fill="#F4F6F9" stroke="#5B6670" stroke-width="1.1"/>
+<text x="351.8" y="318" font-size="14" fill="#8A5F12" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">1E</text>
+<rect x="374.6" y="300" width="41.6" height="26" rx="3" fill="#F4F6F9" stroke="#5B6670" stroke-width="1.1"/>
+<text x="395.4" y="318" font-size="14" fill="#8A5F12" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">34</text>
+<rect x="418.2" y="300" width="41.6" height="26" rx="3" fill="#F4F6F9" stroke="#5B6670" stroke-width="1.1"/>
+<text x="439" y="318" font-size="14" fill="#8A5F12" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">78</text>
+<rect x="461.8" y="300" width="41.6" height="26" rx="3" fill="#F4F6F9" stroke="#5B6670" stroke-width="1.1"/>
+<text x="482.6" y="318" font-size="14" fill="#8A5F12" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">86</text>
+<rect x="505.4" y="300" width="41.6" height="26" rx="3" fill="#F4F6F9" stroke="#5B6670" stroke-width="1.1"/>
+<text x="526.2" y="318" font-size="14" fill="#8A5F12" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">B2</text>
+<rect x="549" y="300" width="41.6" height="26" rx="3" fill="#F4F6F9" stroke="#5B6670" stroke-width="1.1"/>
+<text x="569.8" y="318" font-size="14" fill="#8A5F12" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">B4</text>
+<rect x="592.6" y="300" width="41.6" height="26" rx="3" fill="#F4F6F9" stroke="#5B6670" stroke-width="1.1"/>
+<text x="613.4" y="318" font-size="14" fill="#8A5F12" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">1B</text>
+<rect x="636.2" y="300" width="41.6" height="26" rx="3" fill="#F4F6F9" stroke="#5B6670" stroke-width="1.1"/>
+<text x="657" y="318" font-size="14" fill="#8A5F12" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">91</text>
+<rect x="679.8" y="300" width="41.6" height="26" rx="3" fill="#F4F6F9" stroke="#5B6670" stroke-width="1.1"/>
+<text x="700.6" y="318" font-size="14" fill="#8A5F12" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">C9</text>
+<rect x="723.4" y="300" width="41.6" height="26" rx="3" fill="#F4F6F9" stroke="#5B6670" stroke-width="1.1"/>
+<text x="744.2" y="318" font-size="14" fill="#8A5F12" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">76</text>
+<rect x="767" y="300" width="41.6" height="26" rx="3" fill="#F4F6F9" stroke="#5B6670" stroke-width="1.1"/>
+<text x="787.8" y="318" font-size="14" fill="#8A5F12" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">72</text>
+<rect x="810.6" y="300" width="41.6" height="26" rx="3" fill="#F4F6F9" stroke="#5B6670" stroke-width="1.1"/>
+<text x="831.4" y="318" font-size="14" fill="#8A5F12" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">03</text>
+<line x1="112" y1="330" x2="853.2" y2="330" stroke="#1A1A1A" stroke-width="1.2"/>
+<text x="24" y="352" font-size="14" fill="#1A1A1A">⊕ 결과</text>
+<rect x="113" y="334" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="133.8" y="352" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">C3</text>
+<rect x="156.6" y="334" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="177.4" y="352" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">AD</text>
+<rect x="200.2" y="334" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="221" y="352" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">CF</text>
+<rect x="243.8" y="334" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="264.6" y="352" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">5D</text>
+<rect x="287.4" y="334" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="308.2" y="352" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">B7</text>
+<rect x="331" y="334" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="351.8" y="352" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">0E</text>
+<rect x="374.6" y="334" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="395.4" y="352" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">7E</text>
+<rect x="418.2" y="334" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="439" y="352" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">3E</text>
+<rect x="461.8" y="334" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="482.6" y="352" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">CF</text>
+<rect x="505.4" y="334" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="526.2" y="352" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">F4</text>
+<rect x="549" y="334" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="569.8" y="352" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">B4</text>
+<rect x="592.6" y="334" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="613.4" y="352" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">1A</text>
+<rect x="636.2" y="334" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="657" y="352" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">90</text>
+<rect x="679.8" y="334" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="700.6" y="352" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">C9</text>
+<rect x="723.4" y="334" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="744.2" y="352" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">76</text>
+<rect x="767" y="334" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="787.8" y="352" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">73</text>
+<rect x="810.6" y="334" width="41.6" height="26" rx="3" fill="#EAF3FB" stroke="#529FD9" stroke-width="1.1"/>
+<text x="831.4" y="352" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">03</text>
+<text x="24" y="386" font-size="14" fill="#1A1A1A">DNA 68 nt</text>
+<rect x="113" y="368" width="41.6" height="26" rx="3" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1"/>
+<rect x="156.6" y="368" width="41.6" height="26" rx="3" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1"/>
+<rect x="200.2" y="368" width="41.6" height="26" rx="3" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1"/>
+<rect x="243.8" y="368" width="41.6" height="26" rx="3" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1"/>
+<rect x="287.4" y="368" width="41.6" height="26" rx="3" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1"/>
+<rect x="331" y="368" width="41.6" height="26" rx="3" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1"/>
+<rect x="374.6" y="368" width="41.6" height="26" rx="3" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1"/>
+<rect x="418.2" y="368" width="41.6" height="26" rx="3" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1"/>
+<rect x="461.8" y="368" width="41.6" height="26" rx="3" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1"/>
+<rect x="505.4" y="368" width="41.6" height="26" rx="3" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1"/>
+<rect x="549" y="368" width="41.6" height="26" rx="3" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1"/>
+<rect x="592.6" y="368" width="41.6" height="26" rx="3" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1"/>
+<rect x="636.2" y="368" width="41.6" height="26" rx="3" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1"/>
+<rect x="679.8" y="368" width="41.6" height="26" rx="3" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1"/>
+<rect x="723.4" y="368" width="41.6" height="26" rx="3" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1"/>
+<rect x="767" y="368" width="41.6" height="26" rx="3" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1"/>
+<rect x="810.6" y="368" width="41.6" height="26" rx="3" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="1"/>
+<text x="117.45" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
+<text x="128.35" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="139.25" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="150.15" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
+<text x="161.05" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">G</text>
+<text x="171.95" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">G</text>
+<text x="182.85" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
+<text x="193.75" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
+<text x="204.65" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
+<text x="215.55" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="226.45" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
+<text x="237.35" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
+<text x="248.25" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
+<text x="259.15" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
+<text x="270.05" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
+<text x="280.95" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
+<text x="291.85" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">G</text>
+<text x="302.75" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
+<text x="313.65" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
+<text x="324.55" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
+<text x="335.45" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="346.35" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="357.25" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
+<text x="368.15" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">G</text>
+<text x="379.05" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
+<text x="389.95" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
+<text x="400.85" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
+<text x="411.75" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">G</text>
+<text x="422.65" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="433.55" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
+<text x="444.45" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
+<text x="455.35" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">G</text>
+<text x="466.25" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
+<text x="477.15" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="488.05" y="386" font-size="14" fill="#C03B3B" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">C</text>
+<text x="498.95" y="386" font-size="14" fill="#C03B3B" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">C</text>
+<text x="509.85" y="386" font-size="14" fill="#C03B3B" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">C</text>
+<text x="520.75" y="386" font-size="14" fill="#C03B3B" text-anchor="middle" font-weight="700" font-family="Menlo,Consolas,monospace">C</text>
+<text x="531.65" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
+<text x="542.55" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="553.45" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">G</text>
+<text x="564.35" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
+<text x="575.25" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
+<text x="586.15" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="597.05" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="607.95" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
+<text x="618.85" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">G</text>
+<text x="629.75" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">G</text>
+<text x="640.65" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">G</text>
+<text x="651.55" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
+<text x="662.45" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="673.35" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="684.25" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
+<text x="695.15" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="706.05" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">G</text>
+<text x="716.95" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
+<text x="727.85" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
+<text x="738.75" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
+<text x="749.65" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
+<text x="760.55" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">G</text>
+<text x="771.45" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">T</text>
+<text x="782.35" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
+<text x="793.25" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="804.15" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
+<text x="815.05" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="825.95" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="836.85" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">A</text>
+<text x="847.75" y="386" font-size="14" fill="#1A1A1A" text-anchor="middle" font-family="Menlo,Consolas,monospace">C</text>
+<line x1="483.6" y1="399" x2="525.2" y2="399" stroke="#C03B3B" stroke-width="3"/>
+<text x="504.4" y="418" font-size="14" fill="#C03B3B" text-anchor="middle" font-weight="700">C × 4  (nt 35–38)</text>
+<text x="856" y="450" font-size="14" fill="#1A1A1A" text-anchor="end" font-weight="700">최장 연속 C × 4 · GC 54.4 %</text>
+<text x="24" y="450" font-size="14"><tspan fill="#8A5F12" font-weight="700">whitening: </tspan><tspan fill="#1A1A1A">원본에 없는 선택 기능 · 헤더 행은 제외 · 복호 때 같은 마스크로 되돌림</tspan></text>
+</g>
+</svg>
