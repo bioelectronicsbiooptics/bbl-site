@@ -136,6 +136,13 @@ fprintf('%d ',syndrome); fprintf('\n');
 disp('첫 codeword (HEX)'); fprintf('%02X ',codewords(1,:)); fprintf('\n');
 
 %% 5. byte → DNA → primer → FASTA / sequence TXT 저장
+% F와 R은 1단계 설정에서 이미 선언한 프라이머를 그대로 사용합니다.
+% F = 'AGCCTTGTGTCCATCAATCC';  % 1단계에서 선언한 forward primer (20 nt)
+% R = 'TGCGCTATGGTTTGGCTAAT';  % 1단계에서 선언한 reverse primer (20 nt)
+% 위 두 줄은 설명용 주석입니다. 1~4단계를 실행했다면 다시 선언할 필요가 없습니다.
+% 아래 [F bodyDNA R]은 F를 108 nt 본문 앞에, R을 뒤에 붙입니다.
+% 여기서 R은 가닥 끝에 넣을 서열로 정해져 있어 다시 역상보 변환하지 않습니다.
+% 전체 길이: F 20 nt + 본문 108 nt + R 20 nt = 148 nt.
 % 00=A, 01=T, 10=G, 11=C. 한 byte를 높은 bit부터 4 nt로 읽습니다.
 assert(numel(F)==20 && numel(R)==20 && all(ismember([F R],'ATGC')));
 BASES = 'ATGC'; seqs = cell(1,N);

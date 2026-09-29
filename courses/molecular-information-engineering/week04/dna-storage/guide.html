@@ -303,6 +303,13 @@ assert(isequal(codewords(:,1:19), messageByRow) &amp;&amp; ~any(syndrome));
 fprintf(&#x27;Block 4 PASS | %d codewords × 27 bytes, first syndrome = &#x27;,N);
 fprintf(&#x27;%d &#x27;,syndrome); fprintf(&#x27;\n&#x27;);
 disp(&#x27;첫 codeword (HEX)&#x27;); fprintf(&#x27;%02X &#x27;,codewords(1,:)); fprintf(&#x27;\n&#x27;);</code></pre></div><p class="output"><strong>기본 이름 예제에서 확인:</strong> Block 4 PASS | 3 codewords × 27 bytes, first syndrome = 0 0 0 0 0 0 0 0</p><p><a href="downloads/DNA_data_storage_Encoding/DNA_data_storage_Encoding_1_4.m">4단계까지 누적된 .m 파일</a></p></section><section id="step5"><h2>5. primer 붙이기 · 148 nt 저장</h2><p>27 byte를 108 nt로 변환합니다. 앞에 F 20 nt, 뒤에 R 20 nt를 그대로 붙여 총 148 nt로 만듭니다. 여기서 R은 코드에 주어진 가닥 끝 서열이며 다시 역상보 변환하지 않습니다. FASTA의 &gt;이름 줄은 파일 형식 표지일 뿐 DNA metadata header가 아닙니다.</p><div class="snip"><div class="snip-h">5번 · 앞 코드 맨 아래에 이어 붙이기<button class="copy" type="button">코드 복사</button></div><pre><code class="lang-matlab">%% 5. byte → DNA → primer → FASTA / sequence TXT 저장
+% F와 R은 1단계 설정에서 이미 선언한 프라이머를 그대로 사용합니다.
+% F = &#x27;AGCCTTGTGTCCATCAATCC&#x27;;  % 1단계에서 선언한 forward primer (20 nt)
+% R = &#x27;TGCGCTATGGTTTGGCTAAT&#x27;;  % 1단계에서 선언한 reverse primer (20 nt)
+% 위 두 줄은 설명용 주석입니다. 1~4단계를 실행했다면 다시 선언할 필요가 없습니다.
+% 아래 [F bodyDNA R]은 F를 108 nt 본문 앞에, R을 뒤에 붙입니다.
+% 여기서 R은 가닥 끝에 넣을 서열로 정해져 있어 다시 역상보 변환하지 않습니다.
+% 전체 길이: F 20 nt + 본문 108 nt + R 20 nt = 148 nt.
 % 00=A, 01=T, 10=G, 11=C. 한 byte를 높은 bit부터 4 nt로 읽습니다.
 assert(numel(F)==20 &amp;&amp; numel(R)==20 &amp;&amp; all(ismember([F R],&#x27;ATGC&#x27;)));
 BASES = &#x27;ATGC&#x27;; seqs = cell(1,N);
