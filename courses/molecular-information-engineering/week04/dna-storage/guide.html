@@ -1923,11 +1923,11 @@ python3 dnastore.py decode reads.fastq -o out.bin</code></pre></div>
 <p><a href="downloads/DNA_data_storage_Encoding.zip">DNA_data_storage_Encoding 폴더 ZIP</a>을 MATLAB Drive에 올리고 압축을 풉니다. 각 번호 파일은 앞 블록을 포함한 독립 실행본입니다. 각 파일을 실행해 검증 로그를 확인한 뒤 다음 번호로 이동합니다.</p>
 <ol>
   <li><code>DNA_data_storage_Encoding_1.m</code>: 입력 → byte, HEX 출력 (<code>FF FF</code>처럼 확인)</li>
-  <li><code>DNA_data_storage_Encoding_1-2.m</code>: byte를 17개씩 자르고 PAD 검증</li>
-  <li><code>DNA_data_storage_Encoding_1-3.m</code>: XOR parity 행 생성 및 검증</li>
-  <li><code>DNA_data_storage_Encoding_1-4.m</code>: 2 byte 고정 index 붙이기</li>
-  <li><code>DNA_data_storage_Encoding_1-5.m</code>: inner RS(27,19) 적용</li>
-  <li><code>DNA_data_storage_Encoding_1-6.m</code>: primer 결합, 148 nt 검사, FASTA와 <code>dnas_sequences.txt</code> 생성</li>
+  <li><code>DNA_data_storage_Encoding_1_2.m</code>: byte를 17개씩 자르고 PAD 검증</li>
+  <li><code>DNA_data_storage_Encoding_1_3.m</code>: XOR parity 행 생성 및 검증</li>
+  <li><code>DNA_data_storage_Encoding_1_4.m</code>: 2 byte 고정 index 붙이기</li>
+  <li><code>DNA_data_storage_Encoding_1_5.m</code>: inner RS(27,19) 적용</li>
+  <li><code>DNA_data_storage_Encoding_1_6.m</code>: primer 결합, 148 nt 검사, FASTA와 <code>dnas_sequences.txt</code> 생성</li>
 </ol>
 <ul>
   <li>기본 입력은 이름 예시입니다. 사진 입력은 <code>inputMode = 'image'</code>, 파일 입력은 <code>inputMode = 'file'</code>로 설정합니다. <a href="samples/dna_helix_demo.jpg">DNA 이중나선 JPG 예시</a>를 폴더에 두고 인코딩합니다.</li>
