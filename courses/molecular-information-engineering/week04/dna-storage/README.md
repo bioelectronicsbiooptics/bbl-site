@@ -14,6 +14,8 @@
 - [Colab 노트북](https://colab.research.google.com/github/bioelectronicsbiooptics/bbl-site/blob/main/courses/molecular-information-engineering/week04/dna-storage/python/dna_storage_lab.ipynb)
 - [Python 실습 ZIP](downloads/dna-storage-python.zip)
 - [MATLAB 실습 ZIP](downloads/dna-storage-matlab.zip)
+- [누적 MATLAB Encoding/Decoding 단계별 ZIP](downloads/DNA_data_storage_Encoding.zip)
+- [MATLAB 복호 설정 폼](upload.html) (로컬 설정 생성, NAS 전송 없음)
 - [4주차 인코딩·복호 PPT](downloads/DNA_storage_encoding_decoding_4week.pptx)
 - [추가: 헤더 없는 복붙 인코더·디코더](matlab/README.md#13-헤더-없는-고정-index-실습)
 - ZIP 압축 해제 후 `dna-storage-python/python/` 또는
@@ -56,6 +58,8 @@ python3 python/dnastore.py decode reads.fastq -o restored.txt
 - `demo_photo`, `demo_decode`, `run_all` 순서로 확장.
 - 구현은 기본 MATLAB만 사용. Communications Toolbox는 선택 대조용.
 - 상세: [matlab/README.md](matlab/README.md).
+- 학생별 FASTA 복호 설정은 [upload.html](upload.html)에서 파일을 브라우저 안에서 확인하고
+  MATLAB 코드만 생성합니다. FASTA/TXT 파일 자체는 학생이 MATLAB Drive로 직접 올립니다.
 
 ## 검증
 

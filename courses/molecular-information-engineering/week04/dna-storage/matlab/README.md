@@ -81,6 +81,11 @@ disp(rep)
 
 ## 13. 헤더 없는 고정 index 실습 — MATLAB 단계별 Encoding/Decoding
 
+학생용 순서 안내와 파일별 실습 설명은 [4주차 DNA 저장 강의록](../guide.html#headerless)을,
+FASTA 선택과 복호 설정 코드 생성은 [MATLAB 복호 설정 폼](../upload.html)을 참고하세요.
+설정 폼은 파일을 브라우저 안에서 검사할 뿐 전송하지 않습니다. 선택한 FASTA/TXT와
+디코더 `.m` 파일은 학생이 직접 MATLAB Drive에 올립니다.
+
 번호별 코드가 한 폴더에 들어 있는 `downloads/DNA_data_storage_Encoding.zip`을 사용하세요. MATLAB Online에서 MATLAB Drive로 ZIP을 올려 압축을 푼 다음 `DNA_data_storage_Encoding` 폴더를 현재 폴더로 선택합니다. 각 Encoding 파일은 그 단계까지 필요한 코드를 누적한 독립 실행본입니다. 복사할 때 helper/function 파일을 따로 고를 필요가 없습니다.
 
 명령창에서 아래 순서로 한 줄씩 실행합니다. 단계 로그에 `Block n PASS`가 나타나는지 확인하고 다음 명령을 실행합니다. MATLAB은 파일명에서 하이픈을 빼기 기호로 해석하므로 단계 구분은 밑줄(`1_2`)을 씁니다.

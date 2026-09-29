@@ -26,6 +26,8 @@ groups = repmat({char(zeros(0, 108))}, 1, N);
 nRev = 0; nNoP = 0; nBad = 0; nIdx = 0;
 for k = 1:numel(seqs)
     s = upper(regexprep(seqs{k}, '\s', '')); s(s == 'U') = 'T';
+    % N/갭 등 불명 염기는 byte 변환에서 A로 오인하지 않도록 해당 read를 제외합니다.
+    if any(~ismember(s, 'ATGC')), nBad = nBad + 1; continue; end
     if numel(s) < 148 || sum(s(1:20) == F) < 18
         s = reverse_complement(s);
         if numel(s) < 148 || sum(s(1:20) == F) < 18
@@ -159,6 +161,10 @@ end
 
 function b = dna_to_bytes(s)
 % ATGC를 00/01/10/11로 되돌리고 4 nt마다 1 byte로 묶습니다.
+s = upper(char(s));
+if mod(numel(s), 4) ~= 0 || any(~ismember(s, 'ATGC'))
+    error('DNA-to-byte input must contain only ATGC and have a length divisible by 4.');
+end
 v = zeros(1, numel(s)); v(s == 'T') = 1; v(s == 'G') = 2; v(s == 'C') = 3;
 v = reshape(v, 4, []); b = uint8([64 16 4 1] * v);
 end
