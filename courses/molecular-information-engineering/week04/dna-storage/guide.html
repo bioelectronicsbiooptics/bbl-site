@@ -1907,8 +1907,9 @@ python3 dnastore.py decode reads.fastq -o out.bin</code></pre></div>
   <li><strong>입력 → byte</strong>: 문자열은 UTF-8, 사진과 파일은 선택한 원본 파일의 byte 그대로 읽습니다.</li>
   <li><strong>행 분할</strong>: byte를 17개씩 잘라 데이터 행 D개를 만들고, 마지막 빈 칸은 PAD 0x1B로 채웁니다. D는 짝수로 올립니다.</li>
   <li><strong>XOR 추가</strong>: H = D/2. 행 j와 j+H를 byte별 XOR한 parity 행을 D+j 자리에 붙입니다. 총 strand 수 N = D+H입니다.</li>
-  <li><strong>index + RS</strong>: 각 17 byte 행 뒤에 고정 순번 index를 big-endian 2 byte로 붙여 19 byte 메시지를 만든 뒤 RS(27,19)를 적용합니다. RS parity는 8 byte입니다.</li>
-  <li><strong>DNA + primer</strong>: 27 byte를 MSB부터 2 bit씩 ATGC로 바꾸어 108 nt 본문을 만듭니다. 앞 primer 20 nt와 뒤 primer 20 nt를 붙이면 strand 하나가 148 nt입니다.</li>
+  <li><strong>고정 index</strong>: 각 17 byte 행 뒤에 strand 순번을 big-endian 2 byte로 붙여 19 byte 메시지를 만듭니다.</li>
+  <li><strong>inner RS</strong>: 19 byte 메시지에 RS(27,19)를 적용해 8 byte parity를 추가합니다. index도 RS 보호를 받습니다.</li>
+  <li><strong>primer + 출력</strong>: 27 byte를 MSB부터 2 bit씩 ATGC로 바꾸어 108 nt 본문을 만듭니다. 양쪽 20 nt primer를 붙여 148 nt로 만들고 FASTA와 줄당 1개 sequence인 TXT를 저장합니다.</li>
 </ol>
 <p class="eq">D = 2⌈⌈L / 17⌉ / 2⌉ · H = D/2 · N = D+H · strand = 20 + 108 + 20 = 148 nt</p>
 <p><code>index</code>는 RS의 19 byte 메시지에 포함됩니다. 이 위치로 108 nt 본문 길이를 유지하면서 RS가 index와 행 데이터를 함께 보호합니다. 여기서 “고정”은 생성 시 순번 1..N을 부여한다는 뜻이며, 오류가 있는 read는 몸체의 RS-protected index로 묶습니다.</p>
@@ -1918,14 +1919,23 @@ python3 dnastore.py decode reads.fastq -o out.bin</code></pre></div>
 
 <p class="note"><strong>헤더가 없을 때:</strong> 원본 byte 길이 <code>L</code>, 짝수 데이터 행 수 <code>D</code>, 확장자 <code>ext</code>가 DNA 안에 저장되지 않습니다. 인코더 실행 결과를 기록해 복호 설정에 옮겨 적어야 합니다. 이 복붙 변형은 CRC도 기록하지 않으며, index 오류·삽입/결실을 포함한 noisy FASTQ에는 한계가 있습니다. 공식 DNAS-1 실습은 위의 헤더 포함 버전을 사용합니다.</p>
 
-<h3>한 파일에 단계별로 누적 실행</h3>
+<h3>한 폴더에서 블록별로 누적 실행</h3>
+<p><a href="downloads/DNA_data_storage_Encoding.zip">DNA_data_storage_Encoding 폴더 ZIP</a>을 MATLAB Drive에 올리고 압축을 풉니다. 각 번호 파일은 앞 블록을 포함한 독립 실행본입니다. 각 파일을 실행해 검증 로그를 확인한 뒤 다음 번호로 이동합니다.</p>
+<ol>
+  <li><code>DNA_data_storage_Encoding_1.m</code>: 입력 → byte, HEX 출력 (<code>FF FF</code>처럼 확인)</li>
+  <li><code>DNA_data_storage_Encoding_1-2.m</code>: byte를 17개씩 자르고 PAD 검증</li>
+  <li><code>DNA_data_storage_Encoding_1-3.m</code>: XOR parity 행 생성 및 검증</li>
+  <li><code>DNA_data_storage_Encoding_1-4.m</code>: 2 byte 고정 index 붙이기</li>
+  <li><code>DNA_data_storage_Encoding_1-5.m</code>: inner RS(27,19) 적용</li>
+  <li><code>DNA_data_storage_Encoding_1-6.m</code>: primer 결합, 148 nt 검사, FASTA와 <code>dnas_sequences.txt</code> 생성</li>
+</ol>
 <ul>
-  <li><a href="matlab/dna_encode_noheader.m">누적 MATLAB 인코더</a>를 MATLAB Online에 열고 Run을 누릅니다. 설정은 첫 섹션에서 이름·사진·파일, FASTA 이름, primer를 지정합니다. 나머지 <code>%%</code> 섹션이 byte 입력 → 분할 → XOR → RS/index → 148 nt → FASTA 순서로 이어집니다.</li>
+  <li>기본 입력은 이름 예시입니다. 사진 입력은 <code>inputMode = 'image'</code>, 파일 입력은 <code>inputMode = 'file'</code>로 설정합니다. <a href="samples/dna_helix_demo.jpg">DNA 이중나선 JPG 예시</a>를 폴더에 두고 인코딩합니다.</li>
   <li>기본 입력은 이름 예시입니다. 사진 입력은 <code>inputMode = 'image'</code>, 파일 입력은 <code>inputMode = 'file'</code>로 설정합니다. <a href="samples/dna_helix_demo.jpg">DNA 이중나선 JPG 예시</a>를 MATLAB Drive에 올려 인코딩할 수 있습니다.</li>
   <li>출력에서 <code>L</code>, <code>D</code>, 확장자를 기록하고 FASTA 파일을 복호기와 같은 현재 폴더에 둡니다.</li>
-  <li><a href="matlab/dna_decode_noheader.m">누적 MATLAB 디코더</a> 첫 섹션에 FASTA/FASTQ 파일명, <code>L</code>, <code>D</code>, 확장자를 넣고 전체 Run을 누릅니다. Global/Local RS·XOR 수와 복원 byte 또는 그림을 확인합니다.</li>
+  <li><a href="downloads/DNA_data_storage_Encoding/DNA_data_storage_Decoding_1.m">같은 폴더의 디코더</a>에서 sequence TXT 파일명과 인코더의 <code>L</code>, <code>D</code>, 확장자를 입력해 실행합니다. 결과 파일은 작업 폴더에 저장됩니다. FASTA/FASTQ도 읽을 수 있습니다.</li>
 </ul>
-<p class="more"><a href="downloads/dna-storage-matlab.zip">MATLAB 실습 ZIP (헤더 없는 인코더·디코더·JPG 포함)</a> · <a href="downloads/DNA_storage_encoding_decoding_4week.pptx">4주차 인코딩·복호 PPT</a> · <a href="matlab/README.md">MATLAB 실행 안내</a></p>
+<p class="more"><a href="downloads/DNA_data_storage_Encoding.zip">블록별 DNA_data_storage_Encoding 폴더</a> · <a href="downloads/dna-storage-matlab.zip">MATLAB 실습 ZIP (헤더 없는 인코더·디코더·JPG 포함)</a> · <a href="downloads/DNA_storage_encoding_decoding_4week.pptx">4주차 인코딩·복호 PPT</a> · <a href="matlab/README.md">MATLAB 실행 안내</a></p>
 </section>
 
 <!-- ============================================================ -->

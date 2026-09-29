@@ -1,10 +1,7 @@
-%% DNA 저장 인코더 — 헤더 없음 · 고정 index · XOR → RS(27,19) · 148 nt
-% 이 파일 전체를 MATLAB 편집기에 붙여넣고 위에서 아래로 한 번에 실행하세요.
-% 입력: text(UTF-8) / image(파일 byte 그대로) / file(모든 파일 byte 그대로)
-% 순서: 입력 byte → 17 byte 데이터 행 → XOR 행 → 2 byte index → RS(27,19)
-%       → 108 nt 본문 → forward primer + reverse primer → 148 nt FASTA
+%% DNA data storage Encoding — 누적 실습 checkpoint 1-5
+% 이 파일은 앞 단계 코드를 누적한 실행본입니다. 각 파일을 별도로 실행해 현재 단계까지 확인하세요.
+% 이후 파일은 앞 단계에 해당하는 모든 코드와 검증을 포함합니다.
 clear; clc;
-
 %% 0. 설정 — 여기만 바꿔 실행
 inputMode = 'text';             % 'text' | 'image' | 'file'
 textInput = '송영준 DNA';         % inputMode='text'일 때 입력 문자열
@@ -90,32 +87,6 @@ for index = 1:N
 end
 assert(size(codewords, 2) == 27, 'Block 5 RS 길이 검증 실패');
 fprintf('Block 5 PASS | inner RS codewords = %d × 27 bytes (%d nt body each).\n', N, size(codewords, 2) * 4);
-
-%% 6. codeword를 DNA 본문으로 바꾸고 primer를 붙여 148 nt 완성
-seqs = cell(1, N);
-for index = 1:N
-    bodyDNA = bytes_to_dna(codewords(index, :));
-    seqs{index} = [F bodyDNA R];
-    if numel(seqs{index}) ~= 148
-        error('내부 길이 오류: index %d의 길이는 %d nt입니다.', index, numel(seqs{index}));
-    end
-end
-fprintf('Block 6 PASS | primers + DNA body: %d strands, strand length %d nt.\n', N, numel(seqs{1}));
-
-%% 7. FASTA와 평문 TXT 시퀀스 파일 출력
-fid = fopen(outFasta, 'wt');
-if fid < 0, error('출력 파일을 만들 수 없습니다: %s', outFasta); end
-for index = 1:N
-    fprintf(fid, '>strand_%05d|role=%s|index=%d\n%s\n', index, ...
-        ternary(index <= D, 'data', 'xor'), index, seqs{index});
-end
-fclose(fid);
-fid = fopen(outSequencesTxt, 'wt');
-if fid < 0, error('출력 파일을 만들 수 없습니다: %s', outSequencesTxt); end
-for index = 1:N, fprintf(fid, '%s\n', seqs{index}); end
-fclose(fid);
-fprintf('저장: %s (FASTA) + %s (sequence TXT)\n', outFasta, outSequencesTxt);
-fprintf('디코더 설정값: L=%d, D=%d, ext=''%s''\n', L, D, ext);
 
 %% 로컬 함수 — 외부 Toolbox 불필요
 function codeword = rs_encode_27_19(message, nsym)

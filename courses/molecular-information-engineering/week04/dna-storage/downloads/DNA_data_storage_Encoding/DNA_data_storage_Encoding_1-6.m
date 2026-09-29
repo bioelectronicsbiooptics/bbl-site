@@ -1,10 +1,7 @@
-%% DNA 저장 인코더 — 헤더 없음 · 고정 index · XOR → RS(27,19) · 148 nt
-% 이 파일 전체를 MATLAB 편집기에 붙여넣고 위에서 아래로 한 번에 실행하세요.
-% 입력: text(UTF-8) / image(파일 byte 그대로) / file(모든 파일 byte 그대로)
-% 순서: 입력 byte → 17 byte 데이터 행 → XOR 행 → 2 byte index → RS(27,19)
-%       → 108 nt 본문 → forward primer + reverse primer → 148 nt FASTA
+%% DNA data storage Encoding — 누적 실습 checkpoint 1-6
+% 이 파일은 앞 단계 코드를 누적한 실행본입니다. 각 파일을 별도로 실행해 현재 단계까지 확인하세요.
+% 이후 파일은 앞 단계에 해당하는 모든 코드와 검증을 포함합니다.
 clear; clc;
-
 %% 0. 설정 — 여기만 바꿔 실행
 inputMode = 'text';             % 'text' | 'image' | 'file'
 textInput = '송영준 DNA';         % inputMode='text'일 때 입력 문자열
