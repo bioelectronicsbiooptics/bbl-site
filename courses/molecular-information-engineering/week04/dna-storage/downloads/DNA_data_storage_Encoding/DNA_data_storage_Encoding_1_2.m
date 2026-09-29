@@ -6,7 +6,7 @@ clear; clc;
 %% 0. 설정 — 입력 종류와 파일 이름만 바꿔 실행
 % 'text'=한글/문자열, 'image'=사진 파일, 'file'=일반 파일
 inputMode = 'text';             % 'text' | 'image' | 'file'
-textInput = '송영준 DNA';         % inputMode='text'일 때 입력 문자열
+textInput = '나노바이오공학전공';         % inputMode='text'일 때 입력 문자열
 inputFile = '';                 % 비우면 파일 선택창 (image / file)
 % FASTA는 헤더 포함 형식, TXT는 sequence만 있어 붙여넣기·복호 입력이 간단합니다.
 outFasta = 'dnas_out.fasta';

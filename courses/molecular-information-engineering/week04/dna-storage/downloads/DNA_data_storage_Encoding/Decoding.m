@@ -8,7 +8,7 @@ clear; clc;
 % [바꾸는 곳] 인코더 로그의 L, D, ext를 아래에 옮깁니다.
 % 명령창에서 미리 설정해도 clear가 지우므로 이 파일 내부를 수정하세요.
 inFile = 'dnas_sequences.txt'; % 인코더 TXT (한 줄에 서열 하나) / FASTA / FASTQ
-L = 13;                        % 인코더가 출력한 원본 byte 길이
+L = 27;                        % 인코더가 출력한 원본 byte 길이
 D = 2;                         % 인코더가 출력한 짝수 data row 수
 ext = 'txt';                   % 결과 파일 확장자: txt, jpg, png, ...
 outFile = ['decoded.' ext];

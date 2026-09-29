@@ -1,2680 +1,331 @@
-<!doctype html>
-<html lang="ko">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>DNAS-1 · DNA 저장 실습</title>
-    <style>
-      :root {
-        --navy: #16324f;
-        --teal: #529fd9;
-        --amber: #224ebd;
-        --crim: #c03b3b;
-        --green: #2e7d54;
-        --lgray: #f4f6f9;
-        --border: #d8dee6;
-        font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
-        color: var(--navy);
-        background: var(--lgray);
-      }
-      * {
-        box-sizing: border-box;
-      }
-      body {
-        margin: 0;
-      }
-      button,
-      input,
-      select {
-        font: inherit;
-      }
-      button,
-      a,
-      input,
-      select {
-        touch-action: manipulation;
-      }
-      button {
-        cursor: pointer;
-      }
-      button:disabled {
-        opacity: 0.45;
-        cursor: default;
-      }
-      a {
-        color: var(--amber);
-        text-underline-offset: 3px;
-      }
-      h1,
-      h2,
-      h3,
-      p {
-        margin-top: 0;
-      }
-      h1 {
-        font-size: clamp(30px, 4vw, 48px);
-        line-height: 1.2;
-        letter-spacing: -1.5px;
-        margin-bottom: 20px;
-      }
-      h2 {
-        font-size: 25px;
-        margin-bottom: 12px;
-      }
-      h3 {
-        font-size: 17px;
-        margin: 25px 0 12px;
-      }
-      p,
-      li {
-        line-height: 1.65;
-      }
-      .wrap {
-        max-width: 1120px;
-        margin: auto;
-        padding: 0 32px;
-      }
-      .top {
-        height: 68px;
-        border-bottom: 1px solid var(--border);
-        background: white;
-      }
-      .top .wrap {
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 10px;
-      }
-      .brand {
-        font-size: 19px;
-        font-weight: 800;
-        letter-spacing: 0.5px;
-      }
-      .course {
-        font-size: 12px;
-        color: #637387;
-      }
-      .hero {
-        display: flex;
-        gap: 48px;
-        align-items: center;
-        padding-top: 44px;
-        padding-bottom: 36px;
-      }
-      .hero-main {
-        flex: 1;
-      }
-      .eyebrow {
-        font-size: 11px;
-        font-weight: 800;
-        letter-spacing: 2px;
-        margin-bottom: 14px;
-        color: var(--amber);
-      }
-      .hero p {
-        font-size: 14px;
-        color: #55677a;
-        max-width: 600px;
-        margin: 0;
-      }
-      .diagram {
-        width: 245px;
-        padding: 24px;
-        background: white;
-        border: 1px solid var(--border);
-        border-radius: 12px;
-      }
-      .diagram code {
-        font-size: 14px;
-        letter-spacing: 2px;
-        word-break: break-all;
-      }
-      .diagram .arrow {
-        color: var(--teal);
-        margin: 11px 0;
-      }
-      .diagram small {
-        display: block;
-        font-size: 10px;
-        color: #677b90;
-        margin: 7px 0;
-      }
-      .stepper {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 8px;
-        margin-bottom: 20px;
-      }
-      .step {
-        background: transparent;
-        border: 1px solid var(--border);
-        text-align: left;
-        padding: 15px;
-        border-radius: 7px;
-        color: #617185;
-        font-weight: 700;
-        display: flex;
-        gap: 10px;
-        align-items: center;
-      }
-      .step b {
-        font-family: Menlo, monospace;
-        font-size: 12px;
-        border: 1px solid currentColor;
-        width: 24px;
-        height: 24px;
-        display: grid;
-        place-items: center;
-        border-radius: 50%;
-      }
-      .step.active {
-        color: white;
-        background: var(--navy);
-        border-color: var(--navy);
-      }
-      .step.done:not(.active) {
-        color: var(--green);
-        background: #eff7f2;
-      }
-      .panel {
-        background: white;
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        padding: 30px;
-        margin-bottom: 28px;
-      }
-      .panel[hidden],
-      .mode[hidden],
-      [hidden] {
-        display: none !important;
-      }
-      .section-top {
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
-        gap: 15px;
-        border-bottom: 1px solid var(--border);
-        padding-bottom: 18px;
-        margin-bottom: 24px;
-      }
-      .section-num {
-        font:
-          11px Menlo,
-          monospace;
-        letter-spacing: 1px;
-        color: #698196;
-      }
-      .desc {
-        font-size: 13px;
-        color: #54677a;
-        padding-left: 17px;
-        margin: 8px 0 0;
-      }
-      .help {
-        font-size: 12px;
-        white-space: nowrap;
-      }
-      .tabs {
-        display: flex;
-        gap: 7px;
-        margin-bottom: 22px;
-      }
-      .tab,
-      .secondary {
-        background: #fff;
-        color: var(--navy);
-        border: 1px solid var(--border);
-        border-radius: 6px;
-        padding: 9px 15px;
-        font-size: 13px;
-      }
-      .tab.active {
-        color: var(--amber);
-        border-color: var(--amber);
-        background: #f1f5ff;
-      }
-      .primary {
-        background: var(--amber);
-        color: white;
-        border: 1px solid var(--amber);
-        border-radius: 6px;
-        padding: 12px 20px;
-        font-size: 14px;
-        font-weight: 700;
-      }
-      .actions {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        flex-wrap: wrap;
-        margin-top: 24px;
-      }
-      .actions .note {
-        margin-left: auto;
-      }
-      .note {
-        color: #67788b;
-        font-size: 12px;
-        line-height: 1.5;
-      }
-      .field label,
-      .field-label {
-        display: block;
-        font-size: 12px;
-        font-weight: 700;
-        margin-bottom: 7px;
-      }
-      .text-input,
-      input[type='number'],
-      select {
-        width: 100%;
-        min-width: 0;
-        border: 1px solid #bbc7d5;
-        border-radius: 5px;
-        padding: 10px 11px;
-        background: white;
-        color: var(--navy);
-      }
-      #input-text {
-        font-size: 24px;
-        padding: 16px;
-        letter-spacing: 0.5px;
-      }
-      .split {
-        display: grid;
-        grid-template-columns: 1.2fr 1fr;
-        gap: 26px;
-      }
-      .box {
-        border: 1px solid var(--border);
-        border-radius: 7px;
-        padding: 17px;
-        background: #fafbfd;
-        min-width: 0;
-      }
-      .box p:last-child {
-        margin-bottom: 0;
-      }
-      .box-title {
-        font-size: 11px;
-        text-transform: uppercase;
-        letter-spacing: 0.8px;
-        color: #667b8f;
-        margin-bottom: 12px;
-      }
-      .table {
-        width: 100%;
-        border-collapse: collapse;
-        font-size: 12px;
-        table-layout: fixed;
-      }
-      .table th {
-        text-align: left;
-        font-weight: 600;
-        color: #6e7e8f;
-        background: #f5f7fa;
-      }
-      .table th,
-      .table td {
-        padding: 9px;
-        border-bottom: 1px solid var(--border);
-        overflow-wrap: anywhere;
-      }
-      .table th:first-child {
-        width: 16%;
-      }
-      .table th:nth-child(2) {
-        width: 28%;
-      }
-      .mono,
-      code {
-        font-family: Menlo, monospace;
-        font-size: 11px;
-        line-height: 1.65;
-        overflow-wrap: anywhere;
-      }
-      .tag {
-        display: inline-block;
-        padding: 4px 7px;
-        background: #e9f2fa;
-        border-radius: 4px;
-        font-size: 11px;
-        color: var(--navy);
-      }
-      .success {
-        color: var(--green);
-      }
-      .danger {
-        color: var(--crim);
-      }
-      .file-zone {
-        border: 1px dashed #b1c4d8;
-        border-radius: 8px;
-        padding: 24px;
-        background: #f9fbfe;
-        min-width: 0;
-      }
-      .file-zone input {
-        max-width: 100%;
-        font-size: 12px;
-      }
-      .preview {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 155px;
-        background: repeating-conic-gradient(#f4f6f9 0% 25%, #fff 0% 50%)
-          50%/16px 16px;
-        border: 1px solid var(--border);
-        border-radius: 7px;
-      }
-      .preview img {
-        max-width: 100%;
-        max-height: 230px;
-        object-fit: contain;
-        image-rendering: auto;
-      }
-      .settings {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 14px;
-        margin-top: 18px;
-      }
-      .check {
-        display: flex;
-        align-items: center;
-        gap: 7px;
-        font-size: 13px;
-      }
-      .check input {
-        accent-color: var(--amber);
-      }
-      .statistics {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 12px;
-        margin: 18px 0;
-      }
-      .stat {
-        padding: 16px;
-        border: 1px solid var(--border);
-        border-radius: 7px;
-        min-width: 0;
-      }
-      .stat strong {
-        display: block;
-        font:
-          24px Menlo,
-          monospace;
-        letter-spacing: -1px;
-        margin-bottom: 5px;
-      }
-      .stat span {
-        font-size: 11px;
-        color: #607386;
-      }
-      .workflow {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 9px;
-        margin: 20px 0;
-      }
-      .workflow .box {
-        padding: 13px;
-      }
-      .workflow strong {
-        font-size: 13px;
-        display: block;
-        margin-bottom: 8px;
-      }
-      .workflow p {
-        font-size: 11px;
-        color: #5d7082;
-        margin: 0;
-      }
-      .workflow a {
-        font-size: 11px;
-      }
-      .grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(36px, 1fr));
-        gap: 5px;
-        max-height: 240px;
-        overflow: auto;
-        padding: 3px;
-      }
-      .strand {
-        border: 1px solid #c1d7e8;
-        background: #eaf4fc;
-        border-radius: 4px;
-        color: #31516d;
-        padding: 8px 0;
-        font:
-          10px Menlo,
-          monospace;
-        min-height: 32px;
-      }
-      .strand.header {
-        background: #dbe5fd;
-        color: var(--amber);
-        border-color: #abbfe9;
-      }
-      .strand.xor {
-        background: #e3f2e9;
-        color: var(--green);
-        border-color: #b5d8c4;
-      }
-      .strand.selected {
-        outline: 2px solid var(--navy);
-        outline-offset: 1px;
-      }
-      .strand.dropped,
-      .strand.missing {
-        background: #fbe8e7;
-        color: var(--crim);
-        border-color: #dda8a5;
-        text-decoration: line-through;
-      }
-      #decoded-grid .strand:disabled {
-        opacity: 1;
-      }
-      .strand.global {
-        background: #eaf4fc;
-        color: #266995;
-      }
-      .strand.local {
-        background: #e8eefe;
-        color: var(--amber);
-        border-color: #afbbe2;
-      }
-      .legend {
-        display: flex;
-        gap: 14px;
-        flex-wrap: wrap;
-        font-size: 11px;
-        color: #607386;
-        margin: 12px 0;
-      }
-      .legend span:before {
-        content: '';
-        display: inline-block;
-        width: 8px;
-        height: 8px;
-        border-radius: 2px;
-        background: var(--swatch);
-        margin-right: 5px;
-      }
-      .inspector {
-        border: 1px solid var(--border);
-        padding: 18px;
-        border-radius: 8px;
-        margin-top: 20px;
-        background: #fcfdff;
-      }
-      .inspector h3 {
-        margin-top: 0;
-        font-size: 14px;
-      }
-      .dna-line {
-        font:
-          12px/2 Menlo,
-          monospace;
-        word-break: break-all;
-      }
-      .seg-f,
-      .seg-r {
-        background: #e9edf2;
-        color: #54677a;
-      }
-      .seg-data {
-        background: #e4f2fc;
-        color: #226c9d;
-      }
-      .seg-index {
-        background: #e2eafe;
-        color: var(--amber);
-      }
-      .seg-rs {
-        background: #e3f1e8;
-        color: var(--green);
-      }
-      .dna-line span {
-        padding: 3px 0;
-      }
-      .byte-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(49px, 1fr));
-        gap: 4px;
-        margin: 14px 0;
-      }
-      .byte-cell {
-        border: 1px solid var(--border);
-        border-radius: 3px;
-        padding: 6px 2px;
-        font:
-          11px Menlo,
-          monospace;
-      }
-      .byte-cell small {
-        display: block;
-        font-size: 8px;
-        opacity: 0.65;
-        margin-bottom: 3px;
-      }
-      .byte-cell.active {
-        outline: 2px solid var(--navy);
-        outline-offset: -1px;
-      }
-      .byte-details {
-        font-size: 12px;
-        margin: 10px 0 0;
-        color: #435c73;
-        overflow-wrap: anywhere;
-      }
-      .encoding-table {
-        margin: 14px 0;
-      }
-      .encoding-table th:first-child {
-        width: 24%;
-      }
-      .encoding-table th:nth-child(2) {
-        width: auto;
-      }
-      .encoding-table td:first-child {
-        font-family: inherit;
-        font-size: 11px;
-        color: #62788d;
-      }
-      .detail-rows {
-        display: grid;
-        grid-template-columns: 85px 1fr;
-        gap: 9px;
-        font-size: 11px;
-        margin: 14px 0;
-      }
-      .detail-rows dt {
-        color: #678095;
-      }
-      .detail-rows dd {
-        margin: 0;
-        overflow-wrap: anywhere;
-      }
-      .channel-fields {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 16px;
-      }
-      .channel-fields .field label {
-        font-family: Menlo, monospace;
-        font-size: 11px;
-      }
-      .channel-fields .field small {
-        font: 10px sans-serif;
-        color: #607386;
-        display: block;
-        margin-top: 5px;
-      }
-      .preset {
-        display: flex;
-        gap: 8px;
-        flex-wrap: wrap;
-        align-items: center;
-        margin: 16px 0 24px;
-      }
-      .preset button {
-        font-size: 11px;
-        padding: 7px 11px;
-      }
-      .preset button.active {
-        color: var(--amber);
-        border-color: var(--amber);
-        background: #f1f5ff;
-      }
-      .resource-links {
-        display: flex;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 10px 18px;
-        font-size: 12px;
-      }
-      .top-links {
-        padding-top: 16px;
-      }
-      .footer-links {
-        align-content: flex-start;
-        font-size: 11px;
-      }
-      .status-banner {
-        padding: 17px 20px;
-        border: 1px solid var(--border);
-        border-radius: 8px;
-        margin-top: 22px;
-        font-size: 14px;
-      }
-      .status-banner[data-ok='true'] {
-        background: #eff8f2;
-        border-color: #b3d6c0;
-        color: var(--green);
-      }
-      .status-banner[data-ok='false'] {
-        background: #fff3f1;
-        border-color: #e5bab5;
-        color: var(--crim);
-      }
-      .report-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 10px;
-        margin-top: 20px;
-      }
-      .report-item {
-        background: #f5f7fa;
-        border-radius: 5px;
-        padding: 12px;
-      }
-      .report-item small {
-        display: block;
-        color: #63788c;
-        font-size: 11px;
-        margin-bottom: 5px;
-      }
-      .report-item strong {
-        font:
-          18px Menlo,
-          monospace;
-      }
-      .result-text {
-        white-space: pre-wrap;
-        overflow-wrap: anywhere;
-        font-size: 24px;
-        line-height: 1.5;
-        margin: 12px 0;
-      }
-      .error {
-        background: #fff0ee;
-        border: 1px solid #e3b4ae;
-        padding: 14px;
-        border-radius: 6px;
-        color: var(--crim);
-        font-size: 13px;
-        margin-bottom: 18px;
-      }
-      .footer {
-        font-size: 11px;
-        color: #778799;
-        display: flex;
-        justify-content: space-between;
-        gap: 18px;
-        padding-bottom: 30px;
-        line-height: 1.6;
-      }
-      .empty {
-        font-size: 13px;
-        color: #79899a;
-        padding: 22px;
-        text-align: center;
-      }
-      .tiny {
-        font-size: 11px;
-      }
-      .compare {
-        font-size: 12px;
-        line-height: 1.8;
-        color: #4c6279;
-        background: #f5f8fc;
-        padding: 12px;
-        border-radius: 5px;
-        margin-top: 12px;
-      }
-      details {
-        font-size: 12px;
-        margin-top: 20px;
-      }
-      summary {
-        cursor: pointer;
-        color: #62768a;
-      }
-      button:focus-visible,
-      a:focus-visible,
-      input:focus-visible,
-      select:focus-visible {
-        outline: 3px solid var(--teal);
-        outline-offset: 3px;
-      }
-      .result-meta {
-        font-size: 11px;
-        color: #677b8e;
-        overflow-wrap: anywhere;
-        margin-top: 14px;
-      }
-      @media (max-width: 700px) {
-        .wrap {
-          padding: 0 18px;
-        }
-        .top {
-          height: 57px;
-        }
-        .course {
-          font-size: 10px;
-          text-align: right;
-          max-width: 165px;
-        }
-        .hero {
-          padding-top: 28px;
-          padding-bottom: 26px;
-        }
-        .diagram {
-          display: none;
-        }
-        .hero p {
-          font-size: 12px;
-        }
-        .stepper {
-          gap: 5px;
-        }
-        .step {
-          font-size: 11px;
-          padding: 10px 5px;
-          gap: 5px;
-          justify-content: center;
-        }
-        .step b {
-          font-size: 9px;
-          width: 18px;
-          height: 18px;
-        }
-        .panel {
-          padding: 19px 15px;
-          border-radius: 9px;
-        }
-        .section-top {
-          gap: 8px;
-        }
-        h2 {
-          font-size: 21px;
-        }
-        .desc {
-          font-size: 11px;
-        }
-        .help {
-          font-size: 10px;
-        }
-        .split {
-          grid-template-columns: 1fr;
-          gap: 15px;
-        }
-        .statistics {
-          grid-template-columns: repeat(2, 1fr);
-          gap: 8px;
-        }
-        .stat {
-          padding: 13px;
-        }
-        .stat strong {
-          font-size: 21px;
-        }
-        .workflow {
-          grid-template-columns: repeat(2, 1fr);
-        }
-        .settings {
-          grid-template-columns: repeat(2, 1fr);
-        }
-        .channel-fields {
-          grid-template-columns: repeat(2, 1fr);
-          gap: 14px;
-        }
-        .report-grid {
-          grid-template-columns: repeat(2, 1fr);
-        }
-        .actions .note {
-          margin-left: 0;
-          width: 100%;
-        }
-        .actions .primary {
-          flex: 1;
-        }
-        .footer {
-          display: block;
-        }
-        .footer span {
-          display: block;
-          margin-top: 5px;
-        }
-        .inspector {
-          padding: 12px;
-        }
-        .detail-rows {
-          grid-template-columns: 68px 1fr;
-        }
-        .table th,
-        .table td {
-          padding: 8px 5px;
-        }
-        .byte-grid {
-          grid-template-columns: repeat(auto-fill, minmax(42px, 1fr));
-        }
-        .file-zone {
-          padding: 17px;
-        }
-        #input-text {
-          font-size: 21px;
-        }
-        .hero h1 {
-          font-size: 31px;
-        }
-        .section-num {
-          font-size: 9px;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <header class="top">
-      <div class="wrap">
-        <div class="brand">DNAS<span style="color: var(--teal)">–1</span></div>
-        <div class="course">
-          분자정보공학 · DNA 저장 실습
-        </div>
-      </div>
-    </header>
-    <main class="wrap">
-      <nav class="resource-links top-links" aria-label="설명서와 코드">
-        <a id="top-guide-link" href="guide.html">실습 설명서 ↗</a>
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>4주차 MATLAB DNA 저장 실습 · 1~5단계와 복호화</title><meta name="description" content="MATLAB 코드를 1~5단계로 이어 붙이며 이름과 사진을 DNA로 인코딩하고 파일로 복호화하는 실습."><style>
+:root{
+  --navy:#16324F; --teal:#529FD9; --amber:#224EBD; --crim:#C03B3B; --ink:#1A1A1A; --gray:#5B6670;
+  --lgray:#F4F6F9; --white:#FFFFFF; --border:#D8DEE6; --green:#2E7D54; --cream:#FAF6EC;
+  --code:#1E2530; --codeink:#E6EDF3; --codecm:#8FB7A0; --sub1:#A8C4D4; --sub2:#C8D8E4;
+  --tealwash:#EAF3FB; --crimwash:#FBECEC; --greenwash:#E9F4EE; --ochre:#8A5F12;
+  --canvas:#E9EDF2; --side-hover:#1F4263; --side-line:#2A4A68;
+  --sans:"Apple SD Gothic Neo","Helvetica Neue","Noto Sans KR","Malgun Gothic",-apple-system,BlinkMacSystemFont,sans-serif;
+  --mono:Menlo,"SFMono-Regular",Consolas,"Liberation Mono",monospace;
+  --math:"STIX Two Math","Cambria Math","Latin Modern Math","Times New Roman","Apple SD Gothic Neo","Noto Sans KR",serif;
+  --side-w:272px;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:20px}
+body{margin:0;background:var(--white);color:var(--ink);font:16px/1.72 var(--sans);word-break:keep-all;overflow-wrap:anywhere;-webkit-text-size-adjust:100%}
+p,h1,h2,h3,h4,ul,ol,figure,pre{margin:0}
+a{color:var(--amber)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--teal);outline-offset:2px;border-radius:4px}
+.skip{position:absolute;left:-9999px;top:0;background:var(--white);padding:8px 12px;z-index:50}
+.skip:focus{left:8px;top:8px}
 
-        <a id="top-code-link" href="https://github.com/bioelectronicsbiooptics/bbl-site/tree/main/courses/molecular-information-engineering/week04/dna-storage">코드 · GitHub ↗</a>
-      </nav>
-      <div class="hero">
-        <div class="hero-main">
-          <div class="eyebrow">MOLECULAR INFORMATION ENGINEERING</div>
-          <h1>이름과 사진을<br />DNA에 저장하기</h1>
-          <p>
-            UTF-8과 파일 byte에서 DNA 가닥까지.<br />XOR · Reed–Solomon 부호를
-            적용하고, 오류가 있는 read에서 정보를 복원한다.
-          </p>
-        </div>
-        <div class="diagram" aria-label="byte에서 DNA로 변환">
-          <small>UTF-8 BYTE</small><code>53 4F 4E 47</code>
-          <div class="arrow">↓ &nbsp; 00 A · 01 T · 10 G · 11 C</div>
-          <small>DNA · MSB FIRST</small
-          ><code style="color: var(--amber)"
-            >TTAC TAC<span style="color: var(--green)">C TACG TATC</span></code
-          ><small>19 B 메시지 + 8 B RS → 108 nt 본문</small>
-        </div>
-      </div>
-      <nav class="stepper" aria-label="실습 단계">
-        <button id="step-1" class="step active" data-step="1">
-          <b>1</b>입력</button
-        ><button id="step-2" class="step" data-step="2"><b>2</b>인코딩</button
-        ><button id="step-3" class="step" data-step="3"><b>3</b>채널</button
-        ><button id="step-4" class="step" data-step="4">
-          <b>4</b>불러오기
-        </button>
-      </nav>
-      <div id="app-error" class="error" role="alert" hidden></div>
-      <section id="panel-1" class="panel">
-        <div class="section-top">
-          <div>
-            <div class="section-num">01 / SOURCE</div>
-            <h2>저장할 정보 선택</h2>
-            <ul class="desc">
-              <li>이름은 UTF-8 byte, 파일은 원래 byte를 사용</li>
-              <li>
-                사진은 축소한 JPEG로 변환 · 모든 처리는 이 브라우저에서 실행
-              </li>
-            </ul>
-          </div>
-          <a class="help" href="guide.html#enc-input">입력 설명 ↗</a>
-        </div>
-        <div class="tabs" role="tablist" aria-label="입력 형식">
-          <button
-            id="mode-text"
-            class="tab active"
-            data-mode="text"
-            role="tab"
-            aria-selected="true"
-          >
-            이름 · 텍스트</button
-          ><button
-            id="mode-image"
-            class="tab"
-            data-mode="image"
-            role="tab"
-            aria-selected="false"
-          >
-            사진</button
-          ><button
-            id="mode-file"
-            class="tab"
-            data-mode="file"
-            role="tab"
-            aria-selected="false"
-          >
-            파일
-          </button>
-        </div>
-        <div id="mode-panel-text" class="mode">
-          <div class="split">
-            <div>
-              <label class="field-label" for="input-text"
-                >이름 또는 짧은 문장</label
-              ><input
-                id="input-text"
-                class="text-input"
-                value="송영준"
-                autocomplete="off"
-              />
-              <p class="note" style="margin-top: 12px">
-                한글 한 글자는 보통 3 byte · ASCII 문자는 1 byte<br />한 글자와
-                한 byte의 차이를 확인한다.
-              </p>
-              <span id="ascii-status" class="tag"></span>
-            </div>
-            <div class="box">
-              <div class="box-title">문자 → 코드포인트 → UTF-8</div>
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th>문자</th>
-                    <th>코드포인트</th>
-                    <th>UTF-8 · hex</th>
-                  </tr>
-                </thead>
-                <tbody id="utf8-table"></tbody>
-              </table>
-              <div
-                id="text-byte-count"
-                class="note"
-                style="margin-top: 10px"
-              ></div>
-            </div>
-          </div>
-        </div>
-        <div id="mode-panel-image" class="mode" hidden>
-          <div class="split">
-            <div>
-              <div class="file-zone">
-                <label class="field-label" for="image-file"
-                  >사진 선택 · JPEG / PNG / WebP 등</label
-                ><input id="image-file" type="file" accept="image/*" />
-                <p class="note">
-                  긴 변을 지정한 크기 이하로 줄여 JPEG로 저장한다.
-                </p>
-                <button id="sample-button" class="secondary">
-                  예제 그림 불러오기
-                </button>
-              </div>
-              <div class="settings">
-                <div class="field">
-                  <label for="image-size">긴 변 · px</label
-                  ><select id="image-size">
-                    <option>32</option>
-                    <option>48</option>
-                    <option selected>64</option>
-                    <option>96</option>
-                    <option>128</option>
-                  </select>
-                </div>
-                <div class="field">
-                  <label for="image-quality">JPEG 품질 · %</label
-                  ><input
-                    id="image-quality"
-                    type="number"
-                    min="1"
-                    max="100"
-                    value="60"
-                  />
-                </div>
-                <label class="check"
-                  ><input id="image-gray" type="checkbox" />흑백 변환</label
-                >
-              </div>
-            </div>
-            <div>
-              <div class="preview">
-                <img id="image-preview" alt="축소 JPEG 미리보기" hidden /><span
-                  id="image-placeholder"
-                  class="note"
-                  >사진을 선택하면 여기에 표시</span
-                >
-              </div>
-              <p id="image-info" class="note" style="margin-top: 10px"></p>
-            </div>
-          </div>
-        </div>
-        <div id="mode-panel-file" class="mode" hidden>
-          <div class="file-zone">
-            <label class="field-label" for="file-input">아무 파일 선택</label
-            ><input id="file-input" type="file" />
-            <p class="note">
-              파일의 byte를 그대로 저장한다. 확장자는 소문자 4자까지 헤더에
-              기록한다.
-            </p>
-            <div id="file-info" class="mono"></div>
-          </div>
-        </div>
-        <details>
-          <summary>인코딩 설정</summary>
-          <div class="settings">
-            <label class="check"
-              ><input id="whiten" type="checkbox" />Whitening 적용</label
-            >
-            <div class="field">
-              <label for="primer-f">F primer · 5′ → 3′</label
-              ><input
-                id="primer-f"
-                class="text-input mono"
-                value="AGCCTTGTGTCCATCAATCC"
-              />
-            </div>
-            <div class="field">
-              <label for="primer-r">R primer · 저장 방향</label
-              ><input
-                id="primer-r"
-                class="text-input mono"
-                value="TGCGCTATGGTTTGGCTAAT"
-              />
-            </div>
-          </div>
-          <p class="note">
-            Whitening은 헤더 이외 행을 결정적인 마스크와 XOR하여 염기 반복을
-            줄인다.
-          </p>
-        </details>
-        <div class="actions">
-          <button id="encode-button" class="primary">DNA로 인코딩 →</button
-          ><span id="input-summary" class="note"></span>
-        </div>
-      </section>
-      <section id="panel-2" class="panel" hidden>
-        <div class="section-top">
-          <div>
-            <div class="section-num">02 / ENCODING</div>
-            <h2>Byte에서 DNA 가닥으로</h2>
-            <ul class="desc">
-              <li>17 byte씩 나누고 헤더·XOR 행을 추가</li>
-              <li>
-                행 + index에 RS 패리티 8 byte 추가 · 한 byte를 4 nt로 변환
-              </li>
-            </ul>
-          </div>
-          <a class="help" href="guide.html#enc-dna">DNA 설명 ↗</a>
-        </div>
-        <div id="encoding-empty" class="empty">
-          1단계에서 입력을 인코딩하면 결과가 표시된다.
-        </div>
-        <div id="encoding-result" hidden>
-          <div class="workflow">
-            <div class="box">
-              <strong>01 · 행 나누기</strong>
-              <p id="rows-description"></p>
-              <a href="guide.html#enc-rows">헤더와 행 ↗</a>
-            </div>
-            <div class="box">
-              <strong>02 · XOR</strong>
-              <p id="xor-description"></p>
-              <a href="guide.html#enc-xor">바깥 부호 ↗</a>
-            </div>
-            <div class="box">
-              <strong>03 · RS(27,19)</strong>
-              <p>17 B + index 2 B<br />패리티 8 B · t = 4 byte</p>
-              <a href="guide.html#enc-rs">안쪽 부호 ↗</a>
-            </div>
-            <div class="box">
-              <strong>04 · DNA</strong>
-              <p>MSB-first · 4 nt / byte<br />F + 본문 108 nt + R</p>
-              <a href="guide.html#enc-dna">염기 매핑 ↗</a>
-            </div>
-          </div>
-          <div id="encoding-stats" class="statistics"></div>
-          <label class="check"
-            ><input id="compare-whitening" type="checkbox" />Whitening 켜기 /
-            끄기 통계 비교</label
-          >
-          <div id="whitening-comparison" class="compare" hidden></div>
-          <h3>
-            가닥 목록 <span class="note">· 번호를 눌러 byte와 구간 확인</span>
-          </h3>
-          <div class="legend">
-            <span style="--swatch: #224ebd">헤더</span
-            ><span style="--swatch: #529fd9">데이터</span
-            ><span style="--swatch: #2e7d54">XOR</span>
-          </div>
-          <div id="encoding-grid" class="grid"></div>
-          <div class="inspector">
-            <h3 id="strand-title"></h3>
-            <table class="table encoding-table">
-              <thead>
-                <tr>
-                  <th>부호화 단계</th>
-                  <th>선택 가닥 · hex byte / DNA</th>
-                </tr>
-              </thead>
-              <tbody id="row-details"></tbody>
-            </table>
-            <div class="legend">
-              <span style="--swatch: #9aaabc">F / R primer</span
-              ><span style="--swatch: #529fd9">데이터 17 B</span
-              ><span style="--swatch: #224ebd">index 2 B</span
-              ><span style="--swatch: #2e7d54">RS 8 B</span>
-            </div>
-            <div id="strand-dna" class="dna-line"></div>
-            <div id="byte-grid" class="byte-grid"></div>
-            <p id="byte-details" class="byte-details"></p>
-          </div>
-          <div class="actions">
-            <button id="download-fasta" class="secondary">FASTA ↓</button
-            ><button id="download-csv" class="secondary">CSV ↓</button
-            ><button id="go-channel" class="primary">채널 설정 →</button>
-          </div>
-        </div>
-      </section>
-      <section id="panel-3" class="panel" hidden>
-        <div class="section-top">
-          <div>
-            <div class="section-num">03 / CHANNEL</div>
-            <h2>오류와 소실 만들기</h2>
-            <ul class="desc">
-              <li>Seed가 같으면 같은 read 생성 · coverage는 평균 복제 수</li>
-              <li>
-                가닥 클릭으로 강제 소실 · 삽입·결실은 primer 및 길이 검사에 영향
-              </li>
-            </ul>
-          </div>
-          <a class="help" href="guide.html#channel">채널 설명 ↗</a>
-        </div>
-        <div class="preset">
-          <button class="secondary active" id="preset-clean" data-preset="clean" aria-pressed="true">무오류</button>
-          <button class="secondary" id="preset-normal" data-preset="normal" aria-pressed="false">보통</button>
-          <button class="secondary" id="preset-harsh" data-preset="harsh" aria-pressed="false">혹독</button>
-          <span class="note">· 선택 시 매개변수만 입력 · 값 수정 가능</span>
-        </div>
-        <div class="channel-fields">
-          <div class="field">
-            <label for="channel-seed">seed</label
-            ><input id="channel-seed" type="number" step="1" value="7" /><small
-              >LCG 난수 시작값</small
-            >
-          </div>
-          <div class="field">
-            <label for="channel-coverage">coverage</label
-            ><input
-              id="channel-coverage"
-              type="number"
-              min="1"
-              max="100"
-              step="1"
-              value="10"
-            /><small>평균 read 수 / 가닥</small>
-          </div>
-          <div class="field">
-            <label for="channel-p-drop">p_drop</label
-            ><input
-              id="channel-p-drop"
-              type="number"
-              min="0"
-              max="1"
-              step=".001"
-              value="0"
-            /><small>가닥 전체 소실 확률</small>
-          </div>
-          <div class="field">
-            <label for="channel-p-sub">p_sub</label
-            ><input
-              id="channel-p-sub"
-              type="number"
-              min="0"
-              max="1"
-              step=".001"
-              value="0"
-            /><small>염기 치환 확률</small>
-          </div>
-          <div class="field">
-            <label for="channel-p-ins">p_ins</label
-            ><input
-              id="channel-p-ins"
-              type="number"
-              min="0"
-              max="1"
-              step=".001"
-              value="0"
-            /><small>염기 뒤 삽입 확률</small>
-          </div>
-          <div class="field">
-            <label for="channel-p-del">p_del</label
-            ><input
-              id="channel-p-del"
-              type="number"
-              min="0"
-              max="1"
-              step=".001"
-              value="0"
-            /><small>염기 결실 확률</small>
-          </div>
-          <div class="field">
-            <label for="channel-p-rc">p_rc</label
-            ><input
-              id="channel-p-rc"
-              type="number"
-              min="0"
-              max="1"
-              step=".1"
-              value="0.5"
-            /><small>역상보 read 비율</small>
-          </div>
-        </div>
-        <h3>강제 소실 <span class="note">· 다시 누르면 선택 해제</span></h3>
-        <p id="drop-info" class="note">선택한 가닥 없음</p>
-        <div id="drop-grid" class="grid"></div>
-        <p class="note">
-          한 XOR 묶음에서 두 가닥이 사라지면 남은 한 가닥만으로는 복원할 수
-          없다.
-        </p>
-        <div class="actions">
-          <button id="simulate-button" class="primary" disabled>
-            채널 시뮬레이션 →</button
-          ><button id="download-fastq" class="secondary" disabled>
-            FASTQ ↓</button
-          ><span id="channel-result" class="note"></span>
-        </div>
-      </section>
-      <section id="panel-4" class="panel" hidden>
-        <div class="section-top">
-          <div>
-            <div class="section-num">04 / DECODING</div>
-            <h2>Read에서 정보 불러오기</h2>
-            <ul class="desc">
-              <li>
-                방향·primer 검사 → index 묶음·consensus → Global / Local RS
-              </li>
-              <li>
-                XOR로 소실 행 복원 → 헤더 읽기 → CRC-32로 파일 무결성 확인
-              </li>
-            </ul>
-          </div>
-          <a class="help" href="guide.html#dec-overview">복호 설명 ↗</a>
-        </div>
-        <div class="split">
-          <div class="box">
-            <label class="check"
-              ><input
-                type="radio"
-                name="read-source"
-                id="source-channel"
-                value="channel"
-                checked
-              />방금 시뮬레이션한 read</label
-            >
-            <p id="reads-info" class="note" style="margin: 12px 0 0">
-              채널 시뮬레이션을 먼저 실행한다.
-            </p>
-          </div>
-          <div class="box">
-            <label class="check"
-              ><input
-                type="radio"
-                name="read-source"
-                id="source-upload"
-                value="upload"
-              />FASTQ / FASTA 불러오기</label
-            ><input
-              id="reads-file"
-              type="file"
-              accept=".fastq,.fq,.fasta,.fa,.txt"
-              style="font-size: 11px; max-width: 100%; margin-top: 12px"
-            />
-            <p id="uploaded-info" class="note" style="margin: 8px 0 0">
-              한 줄당 한 read인 텍스트 파일도 지원
-            </p>
-          </div>
-        </div>
-        <div class="actions">
-          <button id="decode-button" class="primary" disabled>복호 실행</button
-          ><a class="help" href="guide.html#dec-rs">Global / Local RS ↗</a
-          ><a class="help" href="guide.html#dec-xor">XOR 복원 ↗</a>
-        </div>
-        <div id="decoding-result" hidden>
-          <div id="crc-result" class="status-banner" role="status"></div>
-          <div id="decode-report" class="report-grid"></div>
-          <h3>가닥별 복원 결과</h3>
-          <div class="legend">
-            <span style="--swatch: #529fd9">Global RS</span
-            ><span style="--swatch: #224ebd">Local RS</span
-            ><span style="--swatch: #2e7d54">XOR</span
-            ><span style="--swatch: #c03b3b">없음</span>
-          </div>
-          <div id="decoded-grid" class="grid"></div>
-          <p id="missing-info" class="note"></p>
-          <div id="recovered-content" class="box" style="margin-top: 22px">
-            <div class="box-title">복원된 정보</div>
-            <div id="decoded-text" class="result-text" hidden></div>
-            <div id="decoded-image-wrap" class="preview" hidden>
-              <img id="decoded-image" alt="복원된 JPEG" />
-            </div>
-            <div id="decoded-file-info" class="mono"></div>
-            <div id="decoded-meta" class="result-meta"></div>
-          </div>
-          <div class="actions">
-            <button id="download-restored" class="secondary">복원 파일 ↓</button
-            ><button id="back-input" class="secondary">다른 입력 실습</button>
-          </div>
-        </div>
-      </section>
-      <footer class="footer">
-        <span
-          >DNAS-1 · RS(27,19) / GF(256) / fcr = 1</span
-        ><span
-          >오프라인 실행 · 외부 전송 없음<br />00 A · 01 T · 10 G · 11 C</span
-        >
-        <span class="resource-links footer-links">
-          <a id="bottom-guide-link" href="guide.html">실습 설명서 ↗</a>
+/* ---------- 목차 ---------- */
+.toc{position:fixed;top:0;bottom:0;left:0;width:var(--side-w);background:var(--navy);color:#E8EEF4;border-right:3px solid var(--amber);display:flex;flex-direction:column;z-index:20}
+.toc-head{padding:22px 20px 16px;border-bottom:1px solid var(--side-line);display:flex;align-items:flex-start;gap:10px}
+.toc-head .ttl{flex:1;min-width:0}
+.toc-head .k{font:700 11px/1.4 "Helvetica Neue",var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--teal)}
+.toc-head .t{display:block;font-size:17px;font-weight:700;line-height:1.38;color:#fff;margin-top:4px;text-decoration:none}
+.toc-head .s{font-size:12.5px;color:var(--sub1);margin-top:4px;line-height:1.5}
+.toc-btn{display:none;align-items:center;gap:6px;min-height:36px;padding:6px 12px;border:1px solid var(--side-line);border-radius:8px;background:var(--side-hover);color:#fff;cursor:pointer;font-size:14px;white-space:nowrap}
+.toc-btn .bars{display:inline-block;width:14px;height:10px;border-top:2px solid currentColor;border-bottom:2px solid currentColor;position:relative}
+.toc-btn .bars::after{content:"";position:absolute;left:0;right:0;top:2px;border-top:2px solid currentColor}
+.toc-nav{flex:1;min-height:0;overflow-y:auto;padding:8px 10px 18px}
+.toc-g{font:700 11.5px/1.4 var(--sans);letter-spacing:.06em;color:var(--sub1);padding:12px 10px 4px}
+.toc-list{list-style:none;margin:0;padding:0}
+.toc-list a{display:flex;gap:8px;padding:6px 10px;border-radius:6px;color:#E8EEF4;text-decoration:none;font-size:14px;line-height:1.45}
+.toc-list a .no{font:600 12px/1.75 var(--mono);color:var(--sub1);min-width:1.7em}
+.toc-list a:hover{background:var(--side-hover)}
+.toc-list a[aria-current="true"]{background:#fff;color:var(--navy);font-weight:700}
+.toc-list a[aria-current="true"] .no{color:var(--amber)}
+.toc-foot{border-top:1px solid var(--side-line);padding:12px 20px 14px;font-size:12px;line-height:1.55;color:var(--sub1)}
 
-          <a id="bottom-code-link" href="https://github.com/bioelectronicsbiooptics/bbl-site/tree/main/courses/molecular-information-engineering/week04/dna-storage">코드 · GitHub ↗</a>
-        </span>
-      </footer>
-    </main>
-    <script>
-/* DNAS-1: DNA 저장 실습용 byte 기반 구현. */
-(function (root, factory) {
-  if (typeof module === 'object' && module.exports) module.exports = factory();
-  else root.DNAS = root.DNAStore = factory();
-}(typeof globalThis !== 'undefined' ? globalThis : this, function () {
-  'use strict';
+/* ---------- 본문 ---------- */
+main{margin-left:var(--side-w);padding:52px 44px 96px}
+.wrap{max-width:820px;margin:0 auto}
+.doc-head{padding-bottom:26px;border-bottom:1px solid var(--border)}
+.doc-head .k{font:700 12.5px/1.4 var(--sans);letter-spacing:.06em;color:var(--amber)}
+h1{font-size:31px;line-height:1.3;margin:8px 0 12px;color:var(--navy);letter-spacing:-.01em}
+.lead{color:var(--gray);font-size:16.5px;line-height:1.65}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px;padding:0;list-style:none}
+.chips li{font:600 12.5px/1.5 var(--mono);padding:3px 10px;border:1px solid var(--border);border-radius:999px;background:var(--lgray);color:var(--navy)}
+section{padding-top:44px}
+h2{font-size:23px;line-height:1.38;color:var(--navy);margin:0 0 14px;padding-top:16px;border-top:3px solid var(--teal)}
+h3{font-size:17.5px;line-height:1.45;color:var(--navy);margin:22px 0 8px}
+.concept>h3:first-of-type,.code>h3:first-of-type{margin-top:4px}
+h4{font-size:15.5px;color:var(--ink);margin:16px 0 6px}
+p{margin:0 0 10px}
+ul,ol{margin:0 0 12px;padding-left:1.35em}
+li{margin:3px 0}
+li::marker{color:var(--teal)}
+ol>li::marker{font:600 .92em var(--mono);color:var(--amber)}
+strong{color:var(--navy)}
+.concept,.code{border:1px solid var(--border);border-radius:10px;padding:16px 22px 14px;margin:18px 0}
+.concept{background:var(--white);border-left:4px solid var(--teal)}
+.code{background:var(--lgray);border-left:4px solid var(--amber)}
+.tag{display:inline-block;font:700 11.5px/1 var(--sans);letter-spacing:.08em;padding:5px 9px;border-radius:4px;margin:0 0 10px}
+.concept>.tag{background:var(--tealwash);color:var(--amber)}
+.code>.tag{background:var(--navy);color:#fff}
+.src{font-size:12px;line-height:1.5;color:#8C96A0;margin:6px 0 12px}
+.note{font-size:14.5px;color:var(--gray)}
+.more{font-size:14.5px;margin:8px 0 0}
+.more a{text-decoration:none;border-bottom:1px solid var(--sub2)}
 
-  const BASES = 'ATGC';
-  const F_PRIMER = 'AGCCTTGTGTCCATCAATCC';
-  const R_PRIMER = 'TGCGCTATGGTTTGGCTAAT';
-  const ROW_BYTES = 17, IDX_BYTES = 2, NSYM = 8;
-  const MSG_BYTES = 19, CW_BYTES = 27, BODY_NT = 108;
-  const OLIGO_NT = 148, PAD = 0x1B;
-  const PRIMER_MIN = F_PRIMER.length - 2; // 기본 20 nt 프라이머의 일치 수.
-  const TYPES = {file: 0, text: 1, image: 2};
+code{font-family:var(--mono);font-size:.88em;background:var(--tealwash);color:var(--navy);padding:1px 5px;border-radius:4px}
+.seq{font-family:var(--mono);font-size:.86em;word-break:break-all;overflow-wrap:anywhere}
+.m{font-family:var(--math);font-size:1.06em;white-space:nowrap}
+.eq{font-family:var(--math);font-size:17px;line-height:1.6;background:var(--white);border:1px solid var(--border);border-radius:8px;padding:9px 14px;margin:8px 0 12px;overflow-x:auto;white-space:nowrap}
+.code .eq{background:var(--white)}
 
-  // 입력 단계: 모든 입력을 byte 배열로 통일한다.
-  function bytes(value) {
-    if (value instanceof Uint8Array) return value;
-    if (value instanceof ArrayBuffer) return new Uint8Array(value);
-    return Uint8Array.from(value || []);
-  }
+/* 표: 가로줄만 */
+.tbl{overflow-x:auto;margin:6px 0 14px;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;font-size:14.5px;line-height:1.55;border-top:2px solid var(--navy);border-bottom:2px solid var(--navy)}
+th,td{padding:7px 10px;text-align:left;vertical-align:top;border:0;border-bottom:1px solid var(--border)}
+thead th{border-bottom:1.5px solid var(--navy);color:var(--navy);font-weight:700;white-space:nowrap}
+tbody tr:last-child td{border-bottom:0}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+td.c,th.c{text-align:center}
+td.mono{font-family:var(--mono);font-size:13px;white-space:nowrap}
+tbody td:first-child{white-space:nowrap}
+table.api td.mono{font-size:12px;white-space:normal;overflow-wrap:normal;word-break:normal}
+table.api td:first-child{min-width:5.5em}
+.tasks ul{list-style:disc}
+table.w6{min-width:600px} table.w5{min-width:520px} table.w4{min-width:440px}
+.tcap{font-size:13.5px;font-weight:600;color:var(--gray);margin:16px 0 4px}
 
-  // 입력 단계: 이름 문자열 → UTF-8 byte.
-  function textBytes(s) { return new TextEncoder().encode(String(s)); }
+/* 코드 블록 */
+.snip{margin:10px 0 14px;border-radius:8px;overflow:hidden;background:var(--code)}
+.src-link{margin-left:auto;color:var(--sub1);font:500 11.5px var(--sans);text-decoration:underline;text-underline-offset:2px;white-space:nowrap}
+.src-link:hover{color:#fff}
+.snip-h{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:34px;padding:4px 6px 4px 14px;background:#161C25;color:var(--sub1);font:600 12px/1.4 var(--mono)}
+.snip pre{background:var(--code);color:var(--codeink);padding:12px 16px 14px;overflow-x:auto;font:13px/1.62 var(--mono);tab-size:4;-webkit-overflow-scrolling:touch}
+.snip pre code{font:inherit;background:none;color:inherit;padding:0;border-radius:0;white-space:pre}
+.snip .cm{color:var(--codecm)}
+.copy{font:600 12px/1 var(--sans);min-height:26px;padding:5px 11px;border-radius:6px;border:1px solid #3A4656;background:#2A3442;color:#E6EDF3;cursor:pointer}
+.copy:hover{background:#34404F}
 
-  // 원본 대응: 입력 문자와 bin_payload 사이의 관계를 확인한다.
-  function describeText(s) {
-    return Array.from(s, ch => ({character: ch,
-      codepoint: 'U+' + ch.codePointAt(0).toString(16).toUpperCase().padStart(4, '0'),
-      bytes: Array.from(textBytes(ch)), ascii: ch.codePointAt(0) < 128}));
-  }
+/* 그림 · 자리 표시 */
+.fig{margin:20px 0 16px}
+.fig img,.fig svg,.fig canvas,.fig video{display:block;max-width:100%;height:auto;margin:0 auto}
+.fig-a{display:block}
+.fig figcaption{font-size:13.5px;line-height:1.55;color:var(--gray);margin-top:8px}
+.ph{border:1.5px dashed #B9C3CF;border-radius:10px;background:repeating-linear-gradient(135deg,#F7F9FB 0 12px,#F1F4F8 12px 24px);min-height:150px;display:grid;place-items:center;color:#7D8893;font:600 13px/1.4 var(--mono);padding:12px;text-align:center}
+.ph-code{min-height:90px;background:#EEF1F5}
+.ph-shot{min-height:200px}
+.code-slot{margin:10px 0 6px}
 
-  // 입력 단계: 사진 축소 → JPEG byte.
-  async function imageBytes(file, opts = {}) {
-    if (typeof document === 'undefined') {
-      throw new Error('imageBytes는 canvas가 있는 브라우저에서 실행합니다.');
-    }
-    const maxSide = opts.maxSide ?? opts.max_side ?? 64;
-    const quality = opts.quality ?? 60;
-    if (!(maxSide > 0) || quality < 1 || quality > 100) {
-      throw new Error('사진 크기와 품질 범위를 확인하세요.');
-    }
-    const url = URL.createObjectURL(file);
-    const img = new Image();
-    try {
-      await new Promise((resolve, reject) => {
-        img.onload = resolve; img.onerror = reject; img.src = url;
-      });
-      const scale = Math.min(1, maxSide / Math.max(img.width, img.height));
-      const canvas = document.createElement('canvas');
-      canvas.width = Math.max(1, Math.round(img.width * scale));
-      canvas.height = Math.max(1, Math.round(img.height * scale));
-      const ctx = canvas.getContext('2d');
-      ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-      if (opts.gray) {
-        const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        for (let i = 0; i < pixels.data.length; i += 4) {
-          const g = Math.round(0.299 * pixels.data[i] +
-            0.587 * pixels.data[i + 1] + 0.114 * pixels.data[i + 2]);
-          pixels.data[i] = pixels.data[i + 1] = pixels.data[i + 2] = g;
-        }
-        ctx.putImageData(pixels, 0, 0);
-      }
-      const blob = await new Promise(resolve =>
-        canvas.toBlob(resolve, 'image/jpeg', quality / 100));
-      if (!blob) throw new Error('JPEG 변환에 실패했습니다.');
-      return new Uint8Array(await blob.arrayBuffer());
-    } finally { URL.revokeObjectURL(url); }
-  }
+/* 실행 경로 버튼 */
+.paths{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:10px 0 14px}
+.path{display:flex;flex-direction:column;gap:2px;padding:13px 15px;border:1px solid var(--border);border-radius:10px;background:var(--white);text-decoration:none;color:var(--ink);min-height:44px}
+.path b{color:var(--navy);font-size:16px}
+.path span{font-size:13px;color:var(--gray);line-height:1.45}
+.path:hover{border-color:var(--amber);background:var(--tealwash)}
+.path.pri{background:var(--amber);border-color:var(--amber)}
+.path.pri b,.path.pri span{color:#fff}
+.path.pri:hover{background:#1B3F9C}
 
-  // 원본 대응: Binarization의 역방향. 매핑은 ATGC, 순서는 MSB-first.
-  function bytesToDNA(value) {
-    let dna = '';
-    for (const b of bytes(value)) {
-      dna += BASES[b >>> 6] + BASES[(b >>> 4) & 3] +
-        BASES[(b >>> 2) & 3] + BASES[b & 3];
-    }
-    return dna;
-  }
+/* 과제 */
+.tasks{list-style:none;padding:0;counter-reset:t}
+.tasks>li{counter-increment:t;position:relative;padding:14px 16px 12px 58px;border:1px solid var(--border);border-radius:10px;margin:0 0 10px;background:var(--white)}
+.tasks>li::before{content:counter(t);position:absolute;left:16px;top:13px;width:28px;height:28px;border-radius:50%;background:var(--navy);color:#fff;font:700 14px/28px var(--mono);text-align:center}
+.tasks h3{margin:0 0 4px;font-size:16.5px}
+.tasks ul{margin-bottom:6px}
+.rec{font-size:14px;color:var(--gray);margin:4px 0 0}
+.rec b{color:var(--amber)}
 
-  // 원본 대응: Binarization.m, 알려지지 않은 염기는 A로 처리한다.
-  function dnaToBytes(dna) {
-    if (dna.length % 4) throw new Error('DNA 본문 길이는 4의 배수여야 합니다.');
-    const result = new Uint8Array(dna.length / 4);
-    for (let i = 0; i < result.length; i++) {
-      for (let j = 0; j < 4; j++) {
-        const value = BASES.indexOf(dna[i * 4 + j]);
-        result[i] = (result[i] << 2) | Math.max(0, value);
-      }
-    }
-    return result;
-  }
+.refs li{margin:6px 0}
+footer.end{margin-top:56px;padding-top:14px;border-top:1px solid var(--border);font-size:12.5px;color:var(--gray)}
 
-  // 원본 대응: ReverseEvert, 역방향 read를 정방향으로 바꾼다.
-  function reverseComplement(seq) {
-    const complement = {A: 'T', T: 'A', G: 'C', C: 'G', N: 'N'};
-    return Array.from(seq).reverse().map(b => complement[b] || b).join('');
-  }
+@media (max-width:860px){
+  html{scroll-padding-top:66px}
+  .toc{position:sticky;top:0;bottom:auto;width:auto;max-height:100vh;border-right:0;border-bottom:3px solid var(--amber)}
+  .toc-head{padding:9px 16px;align-items:center;border-bottom:0}
+  .toc-head .k,.toc-head .s{display:none}
+  .toc-head .t{font-size:15px;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .toc-btn{display:inline-flex}
+  .toc-nav{display:none;max-height:calc(100vh - 60px);border-top:1px solid var(--side-line)}
+  .toc.open .toc-nav{display:block}
+  .toc-foot{display:none}
+  main{margin-left:0;padding:26px 16px 72px}
+  h1{font-size:25px}
+  h2{font-size:20.5px}
+  .concept,.code{padding:14px 14px 12px}
+  .paths{grid-template-columns:minmax(0,1fr)}
+  .tasks>li{padding:12px 12px 10px 50px}
+  .tasks>li::before{left:12px}
+  .snip pre{font-size:12px;padding:10px 12px 12px}
+  .fig-a{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .fig-a img{max-width:none;width:640px}
+}
+@media print{
+  .toc,.copy,.skip{display:none!important}
+  main{margin:0;padding:0}
+  body{font-size:10.5pt;line-height:1.55}
+  section{padding-top:18px}
+  h2,h3{break-after:avoid}
+  .snip pre,.snip pre code{white-space:pre-wrap;word-break:break-all}
+  .tbl{overflow:visible} table.w6,table.w5,table.w4{min-width:0}
+  .ph{min-height:60px}
+  .fig-a{overflow:visible} .fig-a img{width:auto;max-width:100%}
+  a{color:inherit;text-decoration:none}
+  .path{border-color:#999}
+}
 
-  // 원본 대응: RSenc/RSdecoding의 GF(256) 표를 직접 만든다.
-  function makeField() {
-    const exp = new Uint8Array(510), log = new Uint16Array(256);
-    let x = 1;
-    for (let i = 0; i < 255; i++) {
-      exp[i] = x; log[x] = i; x <<= 1;
-      if (x & 256) x ^= 0x11D;
-    }
-    for (let i = 255; i < 510; i++) exp[i] = exp[i - 255];
-    return {exp, log};
-  }
-  const GF = makeField();
+.copy{float:right;border:1px solid #a8c4d4;border-radius:6px;padding:5px 12px;cursor:pointer;background:white;color:#16324f}.snip pre{max-height:640px;overflow:auto} .snip{margin:16px 0} .snip-h{padding:10px 14px;background:#eaf3fb} pre{padding:18px;background:#1e2530;color:#e6edf3;overflow:auto;white-space:pre;word-break:normal} pre code{background:none;color:inherit;padding:0;font-size:13px}.output{background:#e9f4ee;color:#1a1a1a;padding:14px;border-radius:8px} @media(max-width:860px){.toc{position:static}.toc-nav{display:block;max-height:none}.toc-head{padding:12px 18px}main{padding-top:24px}.toc-list a{padding:4px 10px}}
+</style></head><body><aside class="toc" id="toc"><div class="toc-head"><div class="ttl"><div class="k">Week 04 · MATLAB</div><a class="t" href="guide.html">DNA 저장 실습 강의록</a><div class="s">입력부터 복호화까지</div></div></div><nav class="toc-nav"><ul class="toc-list"><li><a href="#start">실습 준비 · 붙여 넣는 방법</a></li><li><a href="#step1">1. 데이터 입력 · HEX byte 확인</a></li><li><a href="#step2">2. 17 byte씩 데이터 자르기</a></li><li><a href="#step3">3. outer XOR 행 붙이기</a></li><li><a href="#step4">4. 고정 index 붙이기 · inner RS</a></li><li><a href="#step5">5. primer 붙이기 · 148 nt 저장</a></li><li><a href="#decode">복호화 · Decoding.m</a></li></ul></nav></aside><main><div class="wrap"><header class="doc-head"><p class="k">분자정보공학 · 4주차 4-3강</p><h1>나노바이오공학전공을 DNA로<br>MATLAB 1~5단계 실습</h1><p class="lead">같은 스크립트 아래에 코드를 순서대로 이어 붙이고, 각 단계의 데이터를 확인한 뒤 파일을 복호화합니다.</p></header><section id="start"><span id="headerless"></span><h2>실습 준비</h2><p>MATLAB Online 또는 MATLAB에서 새 스크립트를 만들고 <code>DNA_data_storage_Encoding.m</code>으로 저장합니다. 아래 <strong>1번 코드부터 붙여넣어 실행하고, 2~5번을 차례로 맨 아래에 추가</strong>하세요. %%는 실행 구간을 구분합니다. 현재 섹션 실행 또는 전체 Run을 사용할 수 있습니다. 2번 이후에는 clear를 추가하지 마세요.</p><p><a href="submit.html">결과 제출</a></p><p><a href="downloads/DNA_data_storage_Encoding.zip">실습 코드와 JPG 예제 ZIP 다운로드</a> · <a href="https://matlab.mathworks.com/" target="_blank" rel="noopener">MATLAB Online 열기</a></p><p>ZIP의 <code>DNA_data_storage_Encoding_1.m</code>, <code>DNA_data_storage_Encoding_1_2.m</code> … <code>DNA_data_storage_Encoding_1_5.m</code>은 각각 해당 단계까지 누적한 완성본입니다. 이미 이어 붙이고 있다면 파일 내용을 다시 덧붙이지 마세요. 디코더는 새 스크립트에서 실행합니다.</p><div class="eq">17 byte 데이터 + 2 byte index + 8 byte RS = 27 byte = 108 nt<br>20 nt F + 108 nt 본문 + 20 nt R = 148 nt</div><p class="note">이 실습은 metadata header가 없습니다. 원본 길이 L, 데이터 행 수 D, 확장자 ext를 인코더 출력에서 기록해 디코더 설정에 입력합니다. 기존 헤더 포함 DNAS-1 파일과 혼용하지 마세요.</p></section><section id="step1"><h2>1. 데이터 입력 · HEX byte 확인</h2><p>이름은 UTF-8 byte로 바꿉니다. 사진은 픽셀을 다시 압축하지 않고 JPG 파일의 byte 그대로 읽습니다. 먼저 기본 이름 예제로 진행하세요. <code>uint8</code>은 0~255 정수이고 <code>%02X</code>는 한 byte를 두 자리 16진수로 출력합니다.</p><div class="snip"><div class="snip-h">1번 · 새 스크립트에 붙여 넣기<button class="copy" type="button">코드 복사</button></div><pre><code class="lang-matlab">%% DNA 저장 실습 — 1~5단계 누적 인코딩
+% 1단계부터 5단계까지 같은 스크립트 아래에 순서대로 이어 붙입니다.
+% clear는 맨 처음에만 사용합니다. 각 %% 섹션을 위에서 아래로 실행하세요.
+% clear는 이전 실행 변수 제거, clc는 명령창을 비워 이번 단계 로그를 보기 쉽게 합니다.
+clear; clc;
+%% 0. 설정 — 입력 종류와 파일 이름만 바꿔 실행
+% &#x27;text&#x27;=한글/문자열, &#x27;image&#x27;=사진 파일, &#x27;file&#x27;=일반 파일
+inputMode = &#x27;text&#x27;;             % &#x27;text&#x27; | &#x27;image&#x27; | &#x27;file&#x27;
+textInput = &#x27;나노바이오공학전공&#x27;;         % inputMode=&#x27;text&#x27;일 때 입력 문자열
+inputFile = &#x27;&#x27;;                 % 비우면 파일 선택창 (image / file)
+% FASTA는 헤더 포함 형식, TXT는 sequence만 있어 붙여넣기·복호 입력이 간단합니다.
+outFasta = &#x27;dnas_out.fasta&#x27;;
+outSequencesTxt = &#x27;dnas_sequences.txt&#x27;; % plain TXT: one 148 nt sequence per line
+F = &#x27;AGCCTTGTGTCCATCAATCC&#x27;;     % forward primer (20 nt)
+R = &#x27;TGCGCTATGGTTTGGCTAAT&#x27;;     % reverse primer (20 nt)
 
-  // 원본 대응: GF 심볼 곱셈, RS의 byte 연산이다.
-  function gfMul(a, b) { return a && b ? GF.exp[GF.log[a] + GF.log[b]] : 0; }
+%% 1. 입력 → byte (Block 1: 이름은 UTF-8, 사진은 raw byte)
+switch lower(inputMode)
+    case &#x27;text&#x27;
+        dataBytes = uint8(unicode2native(textInput, &#x27;UTF-8&#x27;));
+        sourceName = &#x27;text&#x27;; ext = &#x27;txt&#x27;;
+    case {&#x27;image&#x27;,&#x27;file&#x27;}
+        if isempty(inputFile)
+            [fn, fp] = uigetfile(&#x27;*.*&#x27;, &#x27;인코딩할 파일 선택&#x27;);
+            if isequal(fn, 0), error(&#x27;파일 선택을 취소했습니다.&#x27;); end
+            inputFile = fullfile(fp, fn);
+        end
+        fid = fopen(inputFile, &#x27;rb&#x27;);
+        if fid &lt; 0, error(&#x27;파일을 열 수 없습니다: %s&#x27;, inputFile); end
+        dataBytes = fread(fid, Inf, &#x27;*uint8&#x27;).&#x27;; fclose(fid);
+        [~, sourceName, ext0] = fileparts(inputFile);
+        ext = lower(strrep(ext0, &#x27;.&#x27;, &#x27;&#x27;));
+        if isempty(ext), ext = &#x27;bin&#x27;; end
+    otherwise
+        error(&quot;inputMode는 &#x27;text&#x27;, &#x27;image&#x27;, &#x27;file&#x27; 중 하나여야 합니다.&quot;);
+end
+dataBytes = reshape(uint8(dataBytes), 1, []);
+L = numel(dataBytes);
+if L == 0, error(&#x27;입력 byte가 비어 있습니다.&#x27;); end
+fprintf(&#x27;입력: %s | %d byte | 확장자 .%s\n&#x27;, sourceName, L, ext);
+nShow = min(32, L);
+fprintf(&#x27;Block 1 HEX (first %d of %d bytes):&#x27;, nShow, L); fprintf(&#x27; %02X&#x27;, dataBytes(1:nShow));
+if L &gt; nShow, fprintf(&#x27; ... (%d more bytes)&#x27;, L - nShow); end
+fprintf(&#x27;\n&#x27;);
 
-  // 원본 대응: RS 오류 크기 계산에 쓰는 GF 나눗셈이다.
-  function gfDiv(a, b) {
-    if (!b) throw new Error('GF에서 0으로 나눌 수 없습니다.');
-    return a ? GF.exp[(GF.log[a] - GF.log[b] + 255) % 255] : 0;
-  }
+assert(isa(dataBytes, &#x27;uint8&#x27;) &amp;&amp; L &gt; 0);
+fprintf(&#x27;Block 1 PASS | %d bytes\n&#x27;, L);</code></pre></div><p class="output"><strong>기본 이름 예제에서 확인:</strong> Block 1 PASS | 27 bytes · HEX: EB 82 98 EB 85 B8 EB B0 94 EC 9D B4 EC 98 A4 EA B3 B5 ED 95 99 EC A0 84 EA B3 B5</p><p><a href="downloads/DNA_data_storage_Encoding/DNA_data_storage_Encoding_1.m">1단계까지 누적된 .m 파일</a></p></section><section id="step2"><h2>2. 17 byte씩 데이터 자르기</h2><p>한 데이터 행은 17 byte입니다. <code>D</code>를 짝수로 올리고 빈 칸을 <code>0x1B</code>로 채웁니다. 뒤에서 XOR 행을 넣을 공간까지 <code>rows</code>에 미리 확보합니다. 사진에서는 D가 커지지만 같은 코드로 처리합니다.</p><div class="snip"><div class="snip-h">2번 · 앞 코드 맨 아래에 이어 붙이기<button class="copy" type="button">코드 복사</button></div><pre><code class="lang-matlab">%% 2. 17 byte 행 분할 (Block 2: 빈 자리는 PAD=0x1B)
+PAD = uint8(27); ROW_BYTES = 17; NSYM = 8;
+% 헤더 없는 포맷이므로 사용자가 decoder에 L과 D를 알려 줍니다.
+% 데이터 행 D는 짝수로 올림: 앞 절반과 뒤 절반을 XOR합니다.
+% data row는 최소 2개·짝수여야 XOR 쌍을 만들 수 있습니다.
+D = max(2, 2 * ceil(ceil(L / ROW_BYTES) / 2));
+H = D / 2; N = D + H;
+if N &gt; 65535, error(&#x27;고정 index 한계(65535 strand)를 넘었습니다.&#x27;); end
+rows = repmat(PAD, N, ROW_BYTES);
+for row = 1:D
+    first = (row - 1) * ROW_BYTES + 1;
+    last = min(row * ROW_BYTES, L);
+    if first &lt;= last
+        rows(row, 1:last-first+1) = dataBytes(first:last);
+    end
+end
+assert(isequal(reshape(rows(1:D, :)&#x27;, 1, []), [dataBytes repmat(PAD, 1, 17*D-L)]), &#x27;Block 2 분할 검증 실패&#x27;);
+fprintf(&#x27;Block 2 PASS | %d data rows × 17 byte (D=%d, H=%d, N=%d)\n&#x27;, D, D, H, N);
 
-  // 원본 대응: RS 생성다항식 곱셈(높은 차수 계수가 먼저).
-  function polyMul(a, b) {
-    const out = new Uint8Array(a.length + b.length - 1);
-    for (let i = 0; i < a.length; i++) {
-      for (let j = 0; j < b.length; j++) out[i + j] ^= gfMul(a[i], b[j]);
-    }
-    return out;
-  }
+disp(&#x27;첫 데이터 행 (HEX)&#x27;); fprintf(&#x27;%02X &#x27;,rows(1,:)); fprintf(&#x27;\n&#x27;);</code></pre></div><p class="output"><strong>기본 이름 예제에서 확인:</strong> Block 2 PASS | 2 data rows × 17 byte (D=2, H=1, N=3)</p><p><a href="downloads/DNA_data_storage_Encoding/DNA_data_storage_Encoding_1_2.m">2단계까지 누적된 .m 파일</a></p></section><section id="step3"><h2>3. outer XOR 행 붙이기</h2><p>앞 절반의 j행과 뒤 절반의 j+H행을 같은 열끼리 XOR합니다. 결과를 D+j행에 붙입니다. 한 묶음 A, B, A⊕B 중 하나가 없어지면 나머지 둘의 XOR로 복원할 수 있습니다.</p><div class="snip"><div class="snip-h">3번 · 앞 코드 맨 아래에 이어 붙이기<button class="copy" type="button">코드 복사</button></div><pre><code class="lang-matlab">%% 3. 바깥 XOR 행 추가 (Block 3: 같은 위치 byte끼리 XOR)
+% XOR 행의 고정 위치는 D+j (j=1..H)입니다.
+for j = 1:H
+    rows(D + j, :) = bitxor(rows(j, :), rows(j + H, :));
+end
+assert(isequal(rows(D+1:end, :), bitxor(rows(1:H, :), rows(H+1:D, :))), &#x27;Block 3 XOR 검증 실패&#x27;);
+fprintf(&#x27;Block 3 PASS | XOR parity rows = %d\n&#x27;, H);
 
-  // 원본 대응: RS 신드롬, 높은 차수부터 Horner 계산한다.
-  function polyEval(poly, x) {
-    let value = 0;
-    for (const coefficient of poly) value = gfMul(value, x) ^ coefficient;
-    return value;
-  }
+disp(&#x27;첫 XOR 행 (HEX)&#x27;); fprintf(&#x27;%02X &#x27;,rows(D+1,:)); fprintf(&#x27;\n&#x27;);</code></pre></div><p class="output"><strong>기본 이름 예제에서 확인:</strong> Block 3 PASS | XOR parity rows = 1</p><p><a href="downloads/DNA_data_storage_Encoding/DNA_data_storage_Encoding_1_3.m">3단계까지 누적된 .m 파일</a></p></section><section id="step4"><h2>4. 고정 index 붙이기 · inner RS</h2><p>4-1: 데이터와 XOR 각 행에 순번 1..N을 2 byte big-endian으로 붙입니다. 4-2: 그 19 byte 전체에 RS(27,19)를 적용해 parity 8 byte를 붙입니다. index는 전체 가닥의 89~96번째 nt에 고정됩니다. GF(256) 계산도 블록 안에 있어 외부 함수나 Communications Toolbox가 필요 없습니다.</p><div class="snip"><div class="snip-h">4번 · 앞 코드 맨 아래에 이어 붙이기<button class="copy" type="button">코드 복사</button></div><pre><code class="lang-matlab">%% 4. 고정 index → inner RS(27,19)
+% index 1..N을 2 byte big-endian으로 표현합니다.
+indexBytesByRow = zeros(N, 2, &#x27;uint8&#x27;);
+messageByRow = zeros(N, 19, &#x27;uint8&#x27;);
+for index = 1:N
+    % 높은 byte 먼저 저장: index 3은 [0, 3], decoder가 2 byte를 다시 읽습니다.
+    indexBytesByRow(index, :) = uint8([floor(index / 256), mod(index, 256)]);
+    messageByRow(index, :) = [rows(index, :) indexBytesByRow(index, :)];
+end
+assert(isequal(messageByRow(:, 18:19), indexBytesByRow), &#x27;Block 4 index 검증 실패&#x27;);
+fprintf(&#x27;index 부착: %d rows × 19 bytes\n&#x27;, N);
 
-  // 원본 대응: 오류 위치 다항식은 상수항부터 저장한다.
-  function evalAscending(poly, x) {
-    let value = 0;
-    for (let i = poly.length - 1; i >= 0; i--) value = gfMul(value, x) ^ poly[i];
-    return value;
-  }
-
-  // 원본 대응: MATLAB rsenc 대신 fcr=1 계통 RS를 직접 부호화한다.
-  function rsEncode(message, nsym = NSYM) {
-    const msg = bytes(message);
-    if (!Number.isInteger(nsym) || nsym < 1 || nsym > 254 || msg.length + nsym > 255) {
-      throw new Error('RS 부호어는 255 byte 이하, 패리티는 양의 정수입니다.');
-    }
-    let generator = new Uint8Array([1]);
-    for (let i = 1; i <= nsym; i++) generator = polyMul(generator, [1, GF.exp[i]]);
-    const remainder = new Uint8Array(msg.length + nsym);
-    remainder.set(msg);
-    for (let i = 0; i < msg.length; i++) {
-      const coefficient = remainder[i];
-      if (coefficient) {
-        for (let j = 1; j < generator.length; j++) {
-          remainder[i + j] ^= gfMul(generator[j], coefficient);
-        }
-      }
-    }
-    remainder.set(msg);
-    return remainder;
-  }
-
-  // 원본 대응: RSdecoding의 신드롬 S1..S8이다.
-  function syndromes(cw, nsym) {
-    return Array.from({length: nsym}, (_, i) => polyEval(cw, GF.exp[i + 1]));
-  }
-
-  // 원본 대응: RSdecoding의 오류 위치 계산, Berlekamp–Massey.
-  function errorLocator(syndrome) {
-    let locator = [1], previous = [1];
-    let degree = 0, shift = 1, lastDiscrepancy = 1;
-    for (let n = 0; n < syndrome.length; n++) {
-      let discrepancy = syndrome[n];
-      for (let i = 1; i <= degree; i++) {
-        discrepancy ^= gfMul(locator[i] || 0, syndrome[n - i]);
-      }
-      if (!discrepancy) { shift++; continue; }
-      const saved = locator.slice(), factor = gfDiv(discrepancy, lastDiscrepancy);
-      while (locator.length < previous.length + shift) locator.push(0);
-      for (let i = 0; i < previous.length; i++) {
-        locator[i + shift] ^= gfMul(factor, previous[i]);
-      }
-      if (2 * degree <= n) {
-        degree = n + 1 - degree; previous = saved;
-        lastDiscrepancy = discrepancy; shift = 1;
-      } else shift++;
-    }
-    return {locator: locator.slice(0, degree + 1), degree};
-  }
-
-  // 원본 대응: Global/Local RS. BM → Chien → Forney, 실패는 null.
-  function rsDecode(codeword, nsym = NSYM) {
-    const cw = bytes(codeword).slice();
-    if (!Number.isInteger(nsym) || nsym < 1 || nsym > 254 || cw.length < nsym || cw.length > 255) {
-      return null;
-    }
-    const syndrome = syndromes(cw, nsym);
-    if (!syndrome.some(Boolean)) return {message: cw.slice(0, -nsym), corrected: 0};
-    const {locator, degree} = errorLocator(syndrome);
-    if (!degree || degree > Math.floor(nsym / 2)) return null;
-    const positions = [];
-    // Chien: 부호어 밖의 근까지 검사해 잘못된 위치를 거절한다.
-    for (let power = 0; power < 255; power++) {
-      const inverse = GF.exp[(255 - power) % 255];
-      if (evalAscending(locator, inverse) === 0) {
-        const position = cw.length - 1 - power;
-        if (position < 0) return null;
-        positions.push({position, inverse});
-      }
-    }
-    if (positions.length !== degree) return null;
-    const evaluator = new Uint8Array(nsym);
-    for (let i = 0; i < syndrome.length; i++) {
-      for (let j = 0; j < locator.length && i + j < nsym; j++) {
-        evaluator[i + j] ^= gfMul(syndrome[i], locator[j]);
-      }
-    }
-    const derivative = locator.slice(1).map((v, i) => i % 2 === 0 ? v : 0);
-    for (const {position, inverse} of positions) {
-      const denominator = evalAscending(derivative, inverse);
-      if (!denominator) return null;
-      // fcr=1이므로 Ω(z)/Λ′(z)가 바로 오류 byte 값이다.
-      cw[position] ^= gfDiv(evalAscending(evaluator, inverse), denominator);
-    }
-    if (syndromes(cw, nsym).some(Boolean)) return null;
-    return {message: cw.slice(0, -nsym), corrected: positions.length};
-  }
-
-  // 무결성 검산: IEEE CRC-32.
-  function crc32(value) {
-    let crc = 0xFFFFFFFF;
-    for (const b of bytes(value)) {
-      crc ^= b;
-      for (let j = 0; j < 8; j++) crc = (crc >>> 1) ^ ((crc & 1) ? 0xEDB88320 : 0);
-    }
-    return (crc ^ 0xFFFFFFFF) >>> 0;
-  }
-
-  // 원본 대응: 채널 난수 및 선택 whitening의 재현 가능한 LCG.
-  function makeRng(seed) {
-    let state = Number(seed) >>> 0;
-    return function next() {
-      state = (Math.imul(1664525, state) + 1013904223) >>> 0;
-      return state / 4294967296;
-    };
-  }
-
-  // 원본 대응: null 패턴 이후 선택 whitening(행 번호는 1부터).
-  function whitenRow(row, rowNumber) {
-    const next = makeRng(rowNumber);
-    return Uint8Array.from(row, b => b ^ Math.floor(next() * 256));
-  }
-
-  // 원본 대응: xor(xor_A, xor_B), 행 byte별 XOR.
-  function xorRows(a, b) { return Uint8Array.from(a, (value, i) => value ^ b[i]); }
-
-  // 원본 대응: KIS 역할의 헤더 행(1번 행)을 만든다.
-  function makeHeader(data, dtype, ext, D, whiten) {
-    const header = new Uint8Array(ROW_BYTES), view = new DataView(header.buffer);
-    header[0] = 1; header[1] = dtype;
-    view.setUint32(2, data.length); view.setUint32(6, crc32(data));
-    view.setUint16(10, D); header[12] = whiten ? 1 : 0;
-    header.fill(32, 13);
-    for (let i = 0; i < ext.length; i++) header[13 + i] = ext.charCodeAt(i);
-    return header;
-  }
-
-  // 원본 대응: column_data → xor_data → nrsin → bin_payload → DNA_library.
-  function encode(value, opts = {}) {
-    const data = bytes(value);
-    const typeValue = opts.dtype ?? opts.type ?? 'file';
-    const dtype = typeof typeValue === 'number' ? typeValue : TYPES[typeValue];
-    if (![0, 1, 2].includes(dtype)) throw new Error('type은 file, text, image입니다.');
-    const ext = String(opts.ext ?? 'bin').toLowerCase().slice(0, 4);
-    if (!/^[\x20-\x7E]{0,4}$/.test(ext)) throw new Error('확장자는 ASCII 4자 이내입니다.');
-    const F = String(opts.f ?? opts.F ?? F_PRIMER).toUpperCase();
-    const R = String(opts.r ?? opts.R ?? R_PRIMER).toUpperCase();
-    if (!/^[ATGC]+$/.test(F) || !/^[ATGC]+$/.test(R)) throw new Error('프라이머는 ATGC로 입력하세요.');
-    const whiten = Boolean(opts.whiten);
-    let D = 1 + Math.ceil(data.length / ROW_BYTES);
-    if (D % 2) D++;
-    if (D * 1.5 > 65535 || data.length > 0xFFFFFFFF) throw new Error('가닥 수가 uint16 범위를 넘습니다.');
-    const rows = [makeHeader(data, dtype, ext, D, whiten)];
-    for (let i = 1; i < D; i++) {
-      let row = new Uint8Array(ROW_BYTES).fill(PAD);
-      row.set(data.slice((i - 1) * ROW_BYTES, i * ROW_BYTES));
-      if (whiten) row = whitenRow(row, i + 1);
-      rows.push(row);
-    }
-    const H = D / 2;
-    for (let j = 0; j < H; j++) rows.push(xorRows(rows[j], rows[j + H]));
-    return rows.map((row, i) => {
-      const index = i + 1, message = new Uint8Array(MSG_BYTES);
-      message.set(row); message[17] = index >>> 8; message[18] = index & 255;
-      const codeword = rsEncode(message);
-      const role = index === 1 ? 'header' : index <= D ? 'data' : 'xor';
-      return {index, role, seq: F + bytesToDNA(codeword) + R, row, message, codeword};
-    });
-  }
-
-  // 원본 대응: DNA_library 출력, FASTA 마지막 줄도 개행한다.
-  function toFasta(oligos) {
-    return oligos.map(o => `>dnas_${String(o.index).padStart(4, '0')} ` +
-      `idx=${o.index} role=${o.role} len=${o.seq.length}\n${o.seq}\n`).join('');
-  }
-
-  // 원본 대응: FASTQ 읽기와 PrimerSort 전처리.
-  function readSequences(text) {
-    const lines = String(text).replace(/\r\n?/g, '\n').split('\n');
-    if (lines[lines.length - 1] === '') lines.pop();
-    while (lines.length && !lines[0].trim()) lines.shift();
-    if (!lines.length) return [];
-    const reads = [];
-    const normalize = seq => seq.replace(/\s/g, '').toUpperCase().replace(/U/g, 'T');
-    if (lines[0].trimStart().startsWith('@')) {
-      if (lines.length % 4) throw new Error('FASTQ는 read마다 4줄이어야 합니다.');
-      for (let i = 0; i < lines.length; i += 4) {
-        if (!lines[i].trimStart().startsWith('@')) {
-          throw new Error('FASTQ 이름 줄은 @로 시작해야 합니다.');
-        }
-        if (!lines[i + 2].trimStart().startsWith('+')) {
-          throw new Error('FASTQ 세 번째 줄은 +로 시작해야 합니다.');
-        }
-        reads.push(normalize(lines[i + 1]));
-      }
-    } else if (lines[0].trimStart().startsWith('>')) {
-      let sequence = '', seenHeader = false;
-      for (const line of lines) {
-        if (line.trimStart().startsWith('>')) {
-          if (seenHeader) reads.push(normalize(sequence));
-          sequence = ''; seenHeader = true;
-        } else sequence += line;
-      }
-      if (seenHeader) reads.push(normalize(sequence));
-    } else {
-      for (const line of lines) if (line.trim()) reads.push(normalize(line));
-    }
-    return reads;
-  }
-
-  // 원본 대응: 실험 read 대신 치환·삽입·결실·소실 채널을 만든다.
-  function simulate(sequences, opts = {}) {
-    const seed = opts.seed ?? 1, coverage = opts.coverage ?? 10;
-    const pDrop = opts.p_drop ?? 0, pSub = opts.p_sub ?? 0;
-    const pIns = opts.p_ins ?? 0, pDel = opts.p_del ?? 0, pRC = opts.p_rc ?? 0.5;
-    if (!Number.isInteger(coverage) || coverage < 1) throw new Error('coverage는 1 이상 정수입니다.');
-    if ([pDrop, pSub, pIns, pDel, pRC].some(p => !Number.isFinite(p) || p < 0 || p > 1) ||
-        pSub + pIns + pDel > 1) throw new Error('확률 범위를 확인하세요.');
-    const next = makeRng(seed), dropped = new Set(opts.drop || []), reads = [];
-    sequences.forEach((oligo, offset) => {
-      const seq = typeof oligo === 'string' ? oligo : oligo.seq;
-      const u = next();
-      if (dropped.has(offset + 1) || u < pDrop) return;
-      const copies = 1 + Math.floor(next() * (2 * coverage - 1));
-      for (let copy = 0; copy < copies; copy++) {
-        let read = '';
-        for (const b of seq) {
-          const uBase = next();
-          if (uBase < pDel) continue;
-          if (uBase < pDel + pIns) read += b + BASES[Math.floor(next() * 4)];
-          else if (uBase < pDel + pIns + pSub) {
-            const others = BASES.replace(b, '');
-            read += others[Math.floor(next() * 3)];
-          } else read += b;
-        }
-        if (next() < pRC) read = reverseComplement(read);
-        reads.push(read);
-      }
-    });
-    if (opts.shuffle !== false) {
-      for (let k = reads.length - 1; k > 0; k--) {
-        const j = Math.floor(next() * (k + 1));
-        [reads[k], reads[j]] = [reads[j], reads[k]];
-      }
-    }
-    return reads;
-  }
-
-  // 원본 대응: 모의 read를 FASTQ로 내보내는 수업용 출력.
-  function toFastq(reads) {
-    return reads.map((seq, i) => `@read_${i + 1}\n${seq}\n+\n${'I'.repeat(seq.length)}\n`).join('');
-  }
-
-  // 원본 대응: PrimerSort의 같은 위치 프라이머 일치 수.
-  function matches(a, b) {
-    let count = 0;
-    for (let i = 0; i < b.length; i++) if (a[i] === b[i]) count++;
-    return count;
-  }
-
-  // 원본 대응: Consensus2, 동률은 원본 매핑표 ATGC 순서.
-  function consensus(bodies) {
-    let sequence = '';
-    for (let p = 0; p < BODY_NT; p++) {
-      const counts = [0, 0, 0, 0];
-      for (const body of bodies) {
-        const index = BASES.indexOf(body[p]);
-        if (index >= 0) counts[index]++;
-      }
-      let winner = 0;
-      for (let b = 1; b < 4; b++) if (counts[b] > counts[winner]) winner = b;
-      sequence += BASES[winner];
-    }
-    return sequence;
-  }
-
-  // 원본 대응: Local RS 성공 read들을 byte 위치별 다수결한다.
-  function byteConsensus(rows) {
-    const row = new Uint8Array(ROW_BYTES);
-    for (let p = 0; p < ROW_BYTES; p++) {
-      const counts = new Uint32Array(256);
-      for (const candidate of rows) counts[candidate[p]]++;
-      let winner = 0;
-      for (let b = 1; b < 256; b++) if (counts[b] > counts[winner]) winner = b;
-      row[p] = winner;
-    }
-    return row;
-  }
-
-  // 원본 대응: KIS 역할의 헤더 행을 읽는다.
-  function parseHeader(row) {
-    if (!row || row.length !== ROW_BYTES ||
-        row.slice(13, 17).some(b => b > 127)) return null;
-    const view = new DataView(row.buffer, row.byteOffset, row.byteLength);
-    const header = {version: row[0], type: row[1], length: view.getUint32(2),
-      crc32: view.getUint32(6), D: view.getUint16(10), flags: row[12],
-      ext: String.fromCharCode(...row.slice(13, 17)).replace(/ +$/, '')};
-    if (header.version !== 1 || header.type > 2 || header.D < 2 ||
-        header.D % 2 || header.D * 1.5 > 65535 ||
-        header.length > (header.D - 1) * ROW_BYTES) return null;
-    return header;
-  }
-
-  // 원본 대응: XORrun2의 세 가닥 중 정확히 하나가 없으면 복원한다.
-  function recoverXor(rows, status, D) {
-    const H = D / 2;
-    let recovered = 0;
-    for (let j = 1; j <= H; j++) {
-      const indices = [j, j + H, D + j];
-      const missing = indices.filter(i => !rows.has(i));
-      if (missing.length === 1) {
-        const present = indices.filter(i => rows.has(i));
-        rows.set(missing[0], xorRows(rows.get(present[0]), rows.get(present[1])));
-        status.set(missing[0], 'xor'); recovered++;
-      }
-    }
-    return recovered;
-  }
-
-  // 복원 파일 SHA-256 검산(브라우저 오프라인).
-  function sha256(value) {
-    const data = bytes(value);
-    const constants = [
-      0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,
-      0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,
-      0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,
-      0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,
-      0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,
-      0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,
-      0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,
-      0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,
-      0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,
-      0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,
-      0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
-    const hash = [0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,
-      0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
-    const total = Math.ceil((data.length + 9) / 64) * 64;
-    const padded = new Uint8Array(total); padded.set(data); padded[data.length] = 128;
-    const view = new DataView(padded.buffer);
-    view.setUint32(total - 8, Math.floor(data.length / 536870912));
-    view.setUint32(total - 4, (data.length * 8) >>> 0);
-    const rotate = (x, n) => (x >>> n) | (x << (32 - n));
-    const words = new Uint32Array(64);
-    for (let start = 0; start < total; start += 64) {
-      for (let i = 0; i < 16; i++) words[i] = view.getUint32(start + i * 4);
-      for (let i = 16; i < 64; i++) {
-        const a = words[i - 15], b = words[i - 2];
-        const s0 = rotate(a, 7) ^ rotate(a, 18) ^ (a >>> 3);
-        const s1 = rotate(b, 17) ^ rotate(b, 19) ^ (b >>> 10);
-        words[i] = (words[i - 16] + s0 + words[i - 7] + s1) >>> 0;
-      }
-      let [a,b,c,d,e,f,g,h] = hash;
-      for (let i = 0; i < 64; i++) {
-        const sum1 = rotate(e, 6) ^ rotate(e, 11) ^ rotate(e, 25);
-        const choice = (e & f) ^ (~e & g);
-        const t1 = (h + sum1 + choice + constants[i] + words[i]) >>> 0;
-        const sum0 = rotate(a, 2) ^ rotate(a, 13) ^ rotate(a, 22);
-        const majority = (a & b) ^ (a & c) ^ (b & c);
-        const t2 = (sum0 + majority) >>> 0;
-        h = g; g = f; f = e; e = (d + t1) >>> 0;
-        d = c; c = b; b = a; a = (t1 + t2) >>> 0;
-      }
-      [a,b,c,d,e,f,g,h].forEach((n, i) => { hash[i] = (hash[i] + n) >>> 0; });
-    }
-    return hash.map(n => n.toString(16).padStart(8, '0')).join('');
-  }
-
-  // 원본 대응: STL_Decode의 방향 → PrimerSort → iSCAN → RS → XOR.
-  function decode(input, opts = {}) {
-    const reads = typeof input === 'string' ? readSequences(input) : Array.from(input);
-    const F = String(opts.f ?? opts.F ?? F_PRIMER).toUpperCase();
-    const R = String(opts.r ?? opts.R ?? R_PRIMER).toUpperCase();
-    if (!/^[ATGC]+$/.test(F) || !/^[ATGC]+$/.test(R)) throw new Error('프라이머는 ATGC로 입력하세요.');
-    const expectedLength = F.length + BODY_NT + R.length;
-    const report = {reads: reads.length, reversed: 0, no_primer: 0,
-      bad_length: 0, invalid_index: 0, groups: 0, expected: 0,
-      global: 0, local: 0, xor: 0, missing: [], crc_ok: false,
-      type: -1, ext: '', length: 0, sha256: sha256([]), status: []};
-    const groups = new Map(), rows = new Map(), status = new Map();
-    for (const raw of reads) {
-      let read = String(raw).replace(/\s/g, '').toUpperCase().replace(/U/g, 'T');
-      if (matches(read, F) < F.length - 2) {
-        read = reverseComplement(read);
-        if (matches(read, F) < F.length - 2) {
-          report.no_primer++; continue;
-        }
-        report.reversed++;
-      }
-      if (read.length < expectedLength ||
-          matches(read.slice(F.length + BODY_NT, expectedLength), R) <
-          R.length - 2) {
-        report.bad_length++; continue;
-      }
-      const body = read.slice(F.length, F.length + BODY_NT);
-      const indexBytes = dnaToBytes(body.slice(ROW_BYTES * 4, MSG_BYTES * 4));
-      const index = indexBytes[0] * 256 + indexBytes[1];
-      if (!index) { report.invalid_index++; continue; }
-      if (!groups.has(index)) groups.set(index, []);
-      groups.get(index).push(body);
-    }
-    report.groups = groups.size;
-    const ordered = Array.from(groups.keys()).sort((a, b) => a - b);
-    for (const index of ordered) {
-      const bodies = groups.get(index), result = rsDecode(dnaToBytes(consensus(bodies)));
-      if (result && result.message[17] * 256 + result.message[18] === index) {
-        rows.set(index, result.message.slice(0, ROW_BYTES));
-        status.set(index, 'global'); report.global++; continue;
-      }
-      const local = [];
-      for (const body of bodies) {
-        const result = rsDecode(dnaToBytes(body));
-        if (result && result.message[17] * 256 + result.message[18] === index) {
-          local.push(result.message.slice(0, ROW_BYTES));
-        }
-      }
-      if (local.length) {
-        rows.set(index, byteConsensus(local)); status.set(index, 'local'); report.local++;
-      }
-    }
-    let header = parseHeader(rows.get(1));
-    let maximumIndex = 0;
-    for (const index of rows.keys()) maximumIndex = Math.max(maximumIndex, index);
-    let D = header ? header.D : 2 * Math.ceil(maximumIndex / 3);
-    if (D) report.xor += recoverXor(rows, status, D);
-    const recoveredHeader = parseHeader(rows.get(1));
-    if (!header && recoveredHeader) {
-      header = recoveredHeader; D = header.D;
-      report.xor += recoverXor(rows, status, D);
-    }
-    report.expected = D * 1.5;
-    for (let i = 1; i <= report.expected; i++) {
-      report.status.push(status.get(i) || 'missing');
-      if (!rows.has(i)) report.missing.push(i);
-    }
-    if (!header) return {data: new Uint8Array(), header: null, report};
-    const buffer = new Uint8Array((D - 1) * ROW_BYTES);
-    for (let index = 2; index <= D; index++) {
-      let row = rows.get(index) || new Uint8Array(ROW_BYTES);
-      if (header.flags & 1) row = whitenRow(row, index);
-      buffer.set(row, (index - 2) * ROW_BYTES);
-    }
-    const data = buffer.slice(0, header.length);
-    report.crc_ok = crc32(data) === header.crc32;
-    report.type = header.type; report.ext = header.ext; report.length = header.length;
-    report.sha256 = sha256(data);
-    return {data, header, report};
-  }
-
-  // 원본 대응: cCal의 GC 계산과 호모폴리머 확인용 통계.
-  function statistics(oligos) {
-    let total = 0, gc = 0, maxRun = 0;
-    for (const value of oligos) {
-      const seq = typeof value === 'string' ? value : value.seq;
-      let previous = '', run = 0;
-      for (const b of seq) {
-        total++; if (b === 'G' || b === 'C') gc++;
-        run = b === previous ? run + 1 : 1;
-        maxRun = Math.max(maxRun, run); previous = b;
-      }
-    }
-    return {count: oligos.length, total_nt: total,
-      gc_percent: total ? 100 * gc / total : 0, max_homopolymer: maxRun};
-  }
-
-  return {BASES, F_PRIMER, R_PRIMER, ROW_BYTES, IDX_BYTES, NSYM,
-    MSG_BYTES, CW_BYTES, BODY_NT, OLIGO_NT, PAD, PRIMER_MIN,
-    textBytes, describeText, imageBytes, bytesToDNA, bytesToDna: bytesToDNA,
-    dnaToBytes, reverseComplement, rsEncode, rsDecode, crc32, sha256,
-    makeRng, whitenRow, xorRows, parseHeader, encode, toFasta, readSequences,
-    simulate, toFastq, decode, statistics};
-}));
-
-</script>
-    <script>
-      'use strict';
-      const SAMPLE_PHOTO = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCABAAEADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDicUuKXFbXh2xt7hnlnAYoQoVsFRnuR1/T8+3dFXdjllLlVytaaNNcWwneaG3RiMNMxUY9Se3arH/CP/8AUY0j/wACf/rVd1HTrm8lKzaxpKIrHEX2n7p6c8cmqf8Awj//AFGNI/8AAn/61Da6Di31G3fh+5t7D7XHNBcxgncYG3AKO+e/Oc+n54yMV1WkWl5p86pb6xpUkbuN0P2nO89OOOD9PbrUXizTrW1aKe2URtISpRcBTjuB1H4DH078sa0oVfZ1Nb7P9GdHKpQ5o9Nzm8UuKXFGK7DO4zFS2881tL5kDlHxjIpmKMVCMTd/0XWrf+CG9H4bjj9Rx9R/NY/Cl7JHvS6szx03tkfhto0nRR5A1LUZTBbIQ4HRmHrntzjHc9uxrbk1jSBaeXBf7Dtxjy5Mnj+9jOff9a554h1HyUld9+iNI0vZrmm9O3Uz/wDQvDlp/wAsrjUm/HYcfmBg/U/y567up72YzXUhkfGMnjA9gOlX9Q07KNfWshmiclmzyR7579/esvFXSw/s3zS1k+v+XkN1udWjouwmKXFLilroFcjxXR+FNOtbppZ7hRIYyFCNgqM9yOp/EY+vbnsVPaXU9nMJraQxvjGRzkfTvXNXpyqU3GDsyaU4xmnJXOg1Z7C/mZLjXjGiOdsP2NxsPTn1P19+lUP7O0b/AKD3/km/+NXJrnStYshLeSLZXasAzqhbPHoOSMD8P51P7P0b/oO/+Sj/AONTh2uTl5eW3T+ty6vxXve5asE021kCw68XVmGY/sb/ADfT3qrrtnBAySQgKWJBC8A47gdf0/8ArvWTT9OhZrWVbqYsQrlCv6HkDn8f5Zc80txJ5kzlmxjNdmysc61ldEOKXFLilxSNbjMUYpcUuKgxuX9Ct7G71OK21E3ASYiNDBtyHLADOe3Wtm38P6df6/e6ZYSXS/ZoJMNMyjMytt7D7nI7ZrI0OextNTiudQFwUhIkQQbclwwIznt1rUGtadbavqN7Yi9X7ZayqC+0MkztnIweFHHvUu99DSLVtSW78L29pdzW0kspeHSmu2KsMGUHBA4+7+vvWRrOnw2H2DyWdvtNnHO+8g4Zs5A46cVsR+IrGW7WS9W8dH0oWUzKFLlyfmYEn68n8qzPEF/aX9xafYVnWG2tUgHnABjtJ54OOhFEea+o3y20MnFGKXFLitRXP//Z';
-      const $ = (id) => document.getElementById(id);
-      const lab = (window.dnasLab = {
-        mode: 'text',
-        bytes: new Uint8Array(),
-        oligos: [],
-        reads: [],
-        decoded: null,
-        uploaded: [],
-        drop: new Set(),
-        dtype: 'text',
-        ext: 'txt',
-        f: DNAS.F_PRIMER || 'AGCCTTGTGTCCATCAATCC',
-        r: DNAS.R_PRIMER || 'TGCGCTATGGTTTGGCTAAT',
-        whiten: false,
-      });
-      let imageFile = null,
-        fileBytes = null,
-        fileName = '',
-        imageUrl = null,
-        decodedUrl = null;
-      const hex = (bytes) =>
-        Array.from(bytes, (x) =>
-          x.toString(16).toUpperCase().padStart(2, '0'),
-        ).join(' ');
-      const format = (n) => n.toLocaleString('ko-KR');
-      function error(message) {
-        $('app-error').textContent = message;
-        $('app-error').hidden = !message;
-      }
-      function showStep(n) {
-        document
-          .querySelectorAll('.panel')
-          .forEach((p, i) => (p.hidden = i !== n - 1));
-        document.querySelectorAll('.step').forEach((b, i) => {
-          b.classList.toggle('active', i === n - 1);
-          b.setAttribute('aria-current', i === n - 1 ? 'step' : 'false');
-        });
-        error('');
-      }
-      function download(name, data, type = 'text/plain;charset=utf-8') {
-        const a = document.createElement('a');
-        const u = URL.createObjectURL(new Blob([data], { type }));
-        a.href = u;
-        a.download = name;
-        a.click();
-        setTimeout(() => URL.revokeObjectURL(u), 1000);
-      }
-      function selectMode(mode) {
-        lab.mode = mode;
-        document.querySelectorAll('[data-mode]').forEach((b) => {
-          const on = b.dataset.mode === mode;
-          b.classList.toggle('active', on);
-          b.setAttribute('aria-selected', String(on));
-        });
-        document
-          .querySelectorAll('.mode')
-          .forEach((p) => (p.hidden = p.id !== 'mode-panel-' + mode));
-        updateInputSummary();
-      }
-      function updateText() {
-        const text = $('input-text').value,
-          bytes = DNAS.textBytes(text);
-        const body = $('utf8-table');
-        body.replaceChildren();
-        Array.from(text).forEach((c) => {
-          const row = document.createElement('tr');
-          [
-            c,
-            'U+' + c.codePointAt(0).toString(16).toUpperCase().padStart(4, '0'),
-            hex(DNAS.textBytes(c)),
-          ].forEach((s, i) => {
-            const td = document.createElement('td');
-            td.textContent = s;
-            if (i) td.className = 'mono';
-            row.append(td);
-          });
-          body.append(row);
-        });
-        $('ascii-status').textContent = Array.from(text).every(
-          (c) => c.codePointAt(0) < 128,
-        )
-          ? 'ASCII 문자만 포함'
-          : 'UTF-8 필요 · ASCII 밖 문자 포함';
-        $('text-byte-count').textContent =
-          Array.from(text).length + ' 글자 · ' + bytes.length + ' byte';
-        updateInputSummary();
-      }
-      function updateInputSummary() {
-        let data =
-          lab.mode === 'text'
-            ? DNAS.textBytes($('input-text').value)
-            : lab.mode === 'image'
-              ? lab.imageBytes
-              : fileBytes;
-        const valid = !!data,
-          tooLarge = valid && data.length > 742713;
-        $('encode-button').disabled = !valid || tooLarge;
-        $('input-summary').classList.toggle('danger', !!tooLarge);
-        $('input-summary').textContent = tooLarge
-          ? '용량 초과 · 최대 742,713 byte (65,535 가닥)'
-          : valid
-            ? format(data.length) +
-              ' byte · 헤더 포함 데이터 행 ' +
-              Math.ceil((1 + Math.ceil(data.length / 17)) / 2) * 2 +
-              '개'
-            : '파일을 먼저 선택한다.';
-      }
-      async function loadImage(file) {
-        imageFile = file;
-        const bytes = await DNAS.imageBytes(file, {
-          maxSide: Number($('image-size').value),
-          quality: Number($('image-quality').value),
-          gray: $('image-gray').checked,
-        });
-        lab.imageBytes = bytes;
-        if (imageUrl) URL.revokeObjectURL(imageUrl);
-        imageUrl = URL.createObjectURL(
-          new Blob([bytes], { type: 'image/jpeg' }),
-        );
-        $('image-preview').src = imageUrl;
-        $('image-preview').hidden = false;
-        $('image-placeholder').hidden = true;
-        $('image-info').textContent =
-          '축소 JPEG · ' +
-          format(bytes.length) +
-          ' byte · 긴 변 ≤ ' +
-          $('image-size').value +
-          ' px';
-        updateInputSummary();
-      }
-      function stats(oligos) {
-        if (DNAS.statistics) return DNAS.statistics(oligos);
-        let total = 0,
-          gc = 0,
-          max = 0;
-        for (const o of oligos) {
-          let prev = '',
-            run = 0;
-          for (const b of o.seq) {
-            total++;
-            if (b === 'G' || b === 'C') gc++;
-            run = b === prev ? run + 1 : 1;
-            prev = b;
-            max = Math.max(max, run);
-          }
-        }
-        return {
-          count: oligos.length,
-          total_nt: total,
-          gc_percent: total ? (gc / total) * 100 : 0,
-          max_homopolymer: max,
-        };
-      }
-      function addStats(target, items, cls = 'stat') {
-        const box = $(target);
-        box.replaceChildren();
-        for (const [value, label] of items) {
-          const el = document.createElement('div');
-          el.className = cls;
-          const strong = document.createElement('strong');
-          strong.textContent = value;
-          const span = document.createElement(
-            cls === 'stat' ? 'span' : 'small',
-          );
-          span.textContent = label;
-          cls === 'stat' ? el.append(strong, span) : el.append(span, strong);
-          box.append(el);
-        }
-      }
-      function strandGrid(id, statuses, click) {
-        const grid = $(id);
-        grid.replaceChildren();
-        statuses.forEach((kind, i) => {
-          const b = document.createElement('button');
-          b.className = 'strand ' + kind;
-          b.textContent = i + 1;
-          b.title = '가닥 ' + (i + 1) + ' · ' + kind;
-          b.setAttribute('aria-label', b.title);
-          if (click) b.addEventListener('click', () => click(i + 1));
-          else b.disabled = true;
-          grid.append(b);
-        });
-      }
-      function inspect(index) {
-        const o = lab.oligos[index - 1],
-          cw =
-            o.codeword ||
-            DNAS.dnaToBytes(o.seq.slice(lab.f.length, lab.f.length + 108)),
-          row = o.row || cw.slice(0, 17);
-        $('strand-title').textContent =
-          '가닥 ' +
-          index +
-          ' · ' +
-          { header: '헤더', data: '데이터', xor: 'XOR' }[o.role] +
-          ' · ' +
-          o.seq.length +
-          ' nt';
-        Array.from($('encoding-grid').children).forEach((b, i) =>
-          b.classList.toggle('selected', i === index - 1),
-        );
-        const D = (lab.oligos.length * 2) / 3,
-          H = D / 2;
-        const j = index <= H ? index : index <= D ? index - H : index - D;
-        const a = lab.oligos[j - 1].row,
-          b = lab.oligos[j + H - 1].row,
-          p = lab.oligos[D + j - 1].row;
-        const details = [
-          ['행 · 17 B', hex(row)],
-          ['XOR A · 행 ' + j, hex(a)],
-          ['XOR B · 행 ' + (j + H), hex(b)],
-          ['A ⊕ B · 행 ' + (D + j), hex(p)],
-          ['index · 2 B', hex(cw.slice(17, 19))],
-          ['메시지 · 19 B', hex(cw.slice(0, 19))],
-          ['패리티 · 8 B', hex(cw.slice(19))],
-          ['RS 부호어 · 27 B', hex(cw)],
-          ['DNA 본문 · 108 nt', DNAS.bytesToDna(cw)],
-        ];
-        if (o.role === 'xor')
-          details.unshift([
-            'XOR 구성',
-            '행 ' + (index - D) + ' ⊕ 행 ' + (index - D + H),
-          ]);
-        if (o.role === 'header')
-          details.unshift([
-            '헤더 내용',
-            'version 1 · ' +
-              lab.dtype +
-              ' · ' +
-              lab.bytes.length +
-              ' B · D = ' +
-              D +
-              ' · CRC-32 ' +
-              DNAS.crc32(lab.bytes).toString(16).toUpperCase().padStart(8, '0'),
-          ]);
-        $('row-details').replaceChildren();
-        for (const [a, b] of details) {
-          const tr = document.createElement('tr'),
-            dt = document.createElement('td'),
-            dd = document.createElement('td');
-          dt.textContent = a;
-          dd.className = 'mono';
-          dd.textContent = b;
-          tr.append(dt, dd);
-          $('row-details').append(tr);
-        }
-        $('strand-dna').replaceChildren();
-        [
-          ['f', lab.f],
-          ['data', DNAS.bytesToDna(cw.slice(0, 17))],
-          ['index', DNAS.bytesToDna(cw.slice(17, 19))],
-          ['rs', DNAS.bytesToDna(cw.slice(19))],
-          ['r', lab.r],
-        ].forEach(([kind, text]) => {
-          const s = document.createElement('span');
-          s.className = 'seg-' + kind;
-          s.textContent = text + ' ';
-          $('strand-dna').append(s);
-        });
-        $('byte-grid').replaceChildren();
-        Array.from(cw).forEach((value, i) => {
-          const b = document.createElement('button');
-          b.className =
-            'byte-cell seg-' + (i < 17 ? 'data' : i < 19 ? 'index' : 'rs');
-          const small = document.createElement('small');
-          small.textContent = 'B' + (i + 1);
-          b.append(small, document.createTextNode(hex([value])));
-          b.addEventListener('click', () => {
-            Array.from($('byte-grid').children).forEach((el, j) =>
-              el.classList.toggle('active', j === i),
-            );
-            $('byte-details').textContent =
-              'Byte ' +
-              (i + 1) +
-              ' : 0x' +
-              hex([value]) +
-              ' = ' +
-              value +
-              ' = ' +
-              value.toString(2).padStart(8, '0').match(/../g).join(' ') +
-              ' → ' +
-              DNAS.bytesToDna([value]);
-          });
-          $('byte-grid').append(b);
-        });
-        $('byte-grid').firstElementChild.click();
-      }
-      function compareWhitening() {
-        const on = $('compare-whitening').checked;
-        $('whitening-comparison').hidden = !on;
-        if (!on) return;
-        const a = stats(
-            DNAS.encode(lab.bytes, {
-              dtype: lab.dtype,
-              ext: lab.ext,
-              whiten: false,
-              f: lab.f,
-              r: lab.r,
-            }),
-          ),
-          b = stats(
-            DNAS.encode(lab.bytes, {
-              dtype: lab.dtype,
-              ext: lab.ext,
-              whiten: true,
-              f: lab.f,
-              r: lab.r,
-            }),
-          );
-        $('whitening-comparison').textContent =
-          '꺼짐: GC ' +
-          a.gc_percent.toFixed(2) +
-          '% · 최대 반복 ' +
-          a.max_homopolymer +
-          ' nt  /  켜짐: GC ' +
-          b.gc_percent.toFixed(2) +
-          '% · 최대 반복 ' +
-          b.max_homopolymer +
-          ' nt. 통계는 primer를 포함한 모든 가닥 기준. 현재 인코딩: ' +
-          (lab.whiten ? '켜짐' : '꺼짐') +
-          '.';
-      }
-      function encodeInput() {
-        lab.bytes =
-          lab.mode === 'text'
-            ? DNAS.textBytes($('input-text').value)
-            : lab.mode === 'image'
-              ? lab.imageBytes
-              : fileBytes;
-        if (!lab.bytes) throw Error('입력 파일을 선택한다.');
-        if (lab.bytes.length > 742713)
-          throw Error(
-            'DNAS-1 최대 용량은 742,713 byte이다. 더 작은 파일을 선택한다.',
-          );
-        lab.dtype = lab.mode;
-        lab.ext =
-          lab.mode === 'text'
-            ? 'txt'
-            : lab.mode === 'image'
-              ? 'jpg'
-              : fileName.includes('.')
-                ? fileName
-                    .split('.')
-                    .pop()
-                    .toLowerCase()
-                    .replace(/[^a-z0-9]/g, '')
-                    .slice(0, 4) || 'bin'
-                : 'bin';
-        lab.f = $('primer-f').value.toUpperCase().replace(/\s/g, '');
-        lab.r = $('primer-r').value.toUpperCase().replace(/\s/g, '');
-        if (!/^[ATGC]+$/.test(lab.f) || !/^[ATGC]+$/.test(lab.r))
-          throw Error('Primer는 A/T/G/C로 입력한다.');
-        lab.whiten = $('whiten').checked;
-        lab.oligos = DNAS.encode(lab.bytes, {
-          dtype: lab.dtype,
-          ext: lab.ext,
-          whiten: lab.whiten,
-          f: lab.f,
-          r: lab.r,
-        });
-        lab.reads = [];
-        lab.decoded = null;
-        lab.drop.clear();
-        $('decoding-result').hidden = true;
-        $('download-fastq').disabled = true;
-        $('channel-result').textContent = '';
-        $('reads-info').textContent = '채널 시뮬레이션을 먼저 실행한다.';
-        $('encoding-empty').hidden = true;
-        $('encoding-result').hidden = false;
-        const s = stats(lab.oligos),
-          D = (lab.oligos.length * 2) / 3;
-        addStats('encoding-stats', [
-          [format(s.count), '가닥 수 · N'],
-          [format(s.total_nt), '총 염기 수 · nt'],
-          [s.gc_percent.toFixed(1) + '%', 'GC 함량'],
-          [s.max_homopolymer + ' nt', '최대 호모폴리머'],
-        ]);
-        $('rows-description').textContent =
-          '헤더 포함 ' + D + '개 행\n17 B / 행 · PAD = 0x1B';
-        $('xor-description').textContent =
-          '앞 절반 ⊕ 뒤 절반\n' + D / 2 + '개 XOR 행 추가';
-        strandGrid(
-          'encoding-grid',
-          lab.oligos.map((o) => o.role),
-          inspect,
-        );
-        strandGrid(
-          'drop-grid',
-          lab.oligos.map((o) => o.role),
-          toggleDrop,
-        );
-        $('drop-info').textContent = '선택한 가닥 없음';
-        $('simulate-button').disabled = false;
-        inspect(1);
-        compareWhitening();
-        updateDecodeButton();
-        $('step-1').classList.add('done');
-        showStep(2);
-      }
-      function toggleDrop(index) {
-        lab.drop.has(index) ? lab.drop.delete(index) : lab.drop.add(index);
-        $('drop-grid').children[index - 1].classList.toggle(
-          'dropped',
-          lab.drop.has(index),
-        );
-        $('drop-grid').children[index - 1].setAttribute(
-          'aria-pressed',
-          String(lab.drop.has(index)),
-        );
-        $('drop-info').textContent = lab.drop.size
-          ? '강제 소실: ' +
-            Array.from(lab.drop)
-              .sort((a, b) => a - b)
-              .join(', ')
-          : '선택한 가닥 없음';
-      }
-      function channelOptions() {
-        const opts = { drop: Array.from(lab.drop), shuffle: true };
-        for (const key of [
-          'seed',
-          'coverage',
-          'p_drop',
-          'p_sub',
-          'p_ins',
-          'p_del',
-          'p_rc',
-        ]) {
-          const input = $('channel-' + key.replace(/_/g, '-'));
-          if (!input.checkValidity() || input.value === '')
-            throw Error(key + ' 값을 확인한다.');
-          opts[key] = Number(input.value);
-        }
-        return opts;
-      }
-      function simulate() {
-        if (!lab.oligos.length) throw Error('먼저 입력을 인코딩한다.');
-        lab.reads = DNAS.simulate(
-          lab.oligos.map((o) => o.seq),
-          channelOptions(),
-        );
-        $('channel-result').textContent =
-          format(lab.reads.length) + ' reads 생성';
-        $('reads-info').textContent =
-          format(lab.reads.length) + ' reads · seed ' + $('channel-seed').value;
-        $('download-fastq').disabled = false;
-        $('source-channel').checked = true;
-        $('decoding-result').hidden = true;
-        lab.decoded = null;
-        updateDecodeButton();
-        $('step-2').classList.add('done');
-        $('step-3').classList.add('done');
-        showStep(4);
-      }
-      function updateDecodeButton() {
-        $('decode-button').disabled = $('source-upload').checked
-          ? !lab.uploadedLoaded
-          : !lab.oligos.length || $('download-fastq').disabled;
-      }
-      function decode() {
-        lab.f = $('primer-f').value.toUpperCase().replace(/\s/g, '');
-        lab.r = $('primer-r').value.toUpperCase().replace(/\s/g, '');
-        if (!/^[ATGC]+$/.test(lab.f) || !/^[ATGC]+$/.test(lab.r))
-          throw Error('Primer는 A/T/G/C로 입력한다.');
-        const reads = $('source-upload').checked ? lab.uploaded : lab.reads;
-        const result = DNAS.decode(reads, { f: lab.f, r: lab.r });
-        lab.decoded = result;
-        const r = result.report;
-        $('decoding-result').hidden = false;
-        $('crc-result').dataset.ok = String(r.crc_ok);
-        $('crc-result').textContent = r.crc_ok
-          ? '✓ CRC-32 일치 · 입력 byte 복원 완료'
-          : result.header
-            ? 'CRC-32 불일치 · 부분 복원 결과'
-            : '헤더 복원 실패 · 파일을 해석할 수 없음';
-        addStats(
-          'decode-report',
-          [
-            [format(r.reads), '전체 reads'],
-            [format(r.reversed), '역방향 보정'],
-            [format(r.no_primer), 'F primer 탈락'],
-            [format(r.bad_length), '길이 / R primer 탈락'],
-            [format(r.invalid_index), '유효하지 않은 index'],
-            [format(r.groups), 'index 묶음'],
-            [format(r.expected), '기대 가닥 · N'],
-            [format(r.global), 'Global RS'],
-            [format(r.local), 'Local RS'],
-            [format(r.xor), 'XOR 복원'],
-            [format(r.missing.length), '없는 가닥'],
-            [format(r.length) + ' B', '원본 파일 길이'],
-          ],
-          'report-item',
-        );
-        strandGrid('decoded-grid', r.status);
-        $('missing-info').textContent = r.missing.length
-          ? '끝내 없는 가닥: ' + r.missing.join(', ')
-          : !result.header || !r.expected
-            ? '유효한 헤더가 없어 배치를 확정할 수 없음'
-            : '기대 가닥을 모두 확보함';
-        $('decoded-text').hidden = true;
-        $('decoded-image-wrap').hidden = true;
-        $('decoded-file-info').textContent = '';
-        if (result.header) {
-          if (r.type === 1) {
-            $('decoded-text').textContent = new TextDecoder().decode(
-              result.data,
-            );
-            $('decoded-text').hidden = false;
-          } else if (r.type === 2) {
-            if (decodedUrl) URL.revokeObjectURL(decodedUrl);
-            decodedUrl = URL.createObjectURL(
-              new Blob([result.data], { type: 'image/jpeg' }),
-            );
-            $('decoded-image').src = decodedUrl;
-            $('decoded-image-wrap').hidden = false;
-          } else
-            $('decoded-file-info').textContent =
-              '파일 · ' + r.ext + ' · ' + format(result.data.length) + ' byte';
-        } else
-          $('decoded-file-info').textContent =
-            '헤더가 없어 복원 byte를 제공할 수 없음';
-        $('decoded-meta').textContent =
-          'type ' +
-          r.type +
-          ' · ext ' +
-          (r.ext || '—') +
-          ' · ' +
-          format(result.data.length) +
-          ' byte\nSHA-256 ' +
-          r.sha256;
-        $('download-restored').disabled = !result.header;
-        $('step-4').classList.add('done');
-      }
-      async function safely(action) {
-        try {
-          error('');
-          await action();
-        } catch (e) {
-          error(e.message || String(e));
-        }
-      }
-      document
-        .querySelectorAll('[data-step]')
-        .forEach((b) =>
-          b.addEventListener('click', () => showStep(Number(b.dataset.step))),
-        );
-      document
-        .querySelectorAll('[data-mode]')
-        .forEach((b) =>
-          b.addEventListener('click', () => selectMode(b.dataset.mode)),
-        );
-      $('input-text').addEventListener('input', updateText);
-      $('image-file').addEventListener('change', () =>
-        safely(() => {
-          if ($('image-file').files[0])
-            return loadImage($('image-file').files[0]);
-        }),
-      );
-      ['image-size', 'image-quality', 'image-gray'].forEach((id) =>
-        $(id).addEventListener('change', () =>
-          safely(() => (imageFile ? loadImage(imageFile) : undefined)),
-        ),
-      );
-      $('sample-button').addEventListener('click', () =>
-        safely(async () => {
-          const response = await fetch(SAMPLE_PHOTO);
-          if (!response.ok)
-            throw Error('예제 그림을 불러오지 못했다. 사진 파일을 선택한다.');
-          await loadImage(await response.blob());
-        }),
-      );
-      $('file-input').addEventListener('change', () =>
-        safely(async () => {
-          const file = $('file-input').files[0];
-          if (!file) return;
-          fileName = file.name;
-          if (file.size > 742713) {
-            fileBytes = null;
-            $('file-info').textContent =
-              file.name + ' · ' + format(file.size) + ' byte · 용량 초과';
-            updateInputSummary();
-            throw Error(
-              'DNAS-1 최대 용량은 742,713 byte이다. 더 작은 파일을 선택한다.',
-            );
-          }
-          fileBytes = new Uint8Array(await file.arrayBuffer());
-          $('file-info').textContent =
-            file.name + ' · ' + format(fileBytes.length) + ' byte';
-          updateInputSummary();
-        }),
-      );
-      $('encode-button').addEventListener('click', () => safely(encodeInput));
-      $('compare-whitening').addEventListener('change', () =>
-        safely(compareWhitening),
-      );
-      $('go-channel').addEventListener('click', () => showStep(3));
-      $('simulate-button').addEventListener('click', () => safely(simulate));
-      $('decode-button').addEventListener('click', () => safely(decode));
-      $('back-input').addEventListener('click', () => showStep(1));
-      $('download-fasta').addEventListener('click', () =>
-        download('dnas-library.fasta', DNAS.toFasta(lab.oligos)),
-      );
-      $('download-csv').addEventListener('click', () =>
-        download(
-          'dnas-library.csv',
-          'name,sequence\n' +
-            lab.oligos
-              .map(
-                (o) => 'dnas_' + String(o.index).padStart(4, '0') + ',' + o.seq,
-              )
-              .join('\n') +
-            '\n',
-          'text/csv;charset=utf-8',
-        ),
-      );
-      $('download-fastq').addEventListener('click', () =>
-        download(
-          'dnas-reads.fastq',
-          lab.reads
-            .map(
-              (s, i) =>
-                '@read_' +
-                (i + 1) +
-                '\n' +
-                s +
-                '\n+\n' +
-                'I'.repeat(s.length) +
-                '\n',
-            )
-            .join(''),
-        ),
-      );
-      $('download-restored').addEventListener('click', () => {
-        if (lab.decoded)
-          download(
-            'restored.' + (lab.decoded.report.ext || 'bin'),
-            lab.decoded.data,
-            'application/octet-stream',
-          );
-      });
-      ['source-channel', 'source-upload'].forEach((id) =>
-        $(id).addEventListener('change', updateDecodeButton),
-      );
-      $('reads-file').addEventListener('change', () =>
-        safely(async () => {
-          const file = $('reads-file').files[0];
-          if (!file) return;
-          lab.uploaded = DNAS.readSequences(await file.text());
-          lab.uploadedLoaded = true;
-          $('source-upload').checked = true;
-          $('uploaded-info').textContent =
-            file.name + ' · ' + format(lab.uploaded.length) + ' reads';
-          updateDecodeButton();
-        }),
-      );
-      const channelPresets = {
-        clean: { coverage: 10, p_drop: 0, p_sub: 0, p_ins: 0, p_del: 0 },
-        normal: {
-          coverage: 10, p_drop: 0.01, p_sub: 0.005,
-          p_ins: 0.001, p_del: 0.001,
-        },
-        harsh: {
-          coverage: 5, p_drop: 0.03, p_sub: 0.02,
-          p_ins: 0.003, p_del: 0.003,
-        },
-      };
-      function syncPreset() {
-        document.querySelectorAll('[data-preset]').forEach((button) => {
-          const selected = Object.entries(channelPresets[button.dataset.preset])
-            .every(([key, value]) => {
-              const field = $('channel-' + key.replace(/_/g, '-'));
-              return field.value !== '' && Number(field.value) === value;
-            });
-          button.classList.toggle('active', selected);
-          button.setAttribute('aria-pressed', String(selected));
-        });
-      }
-      function preset(name) {
-        Object.entries(channelPresets[name]).forEach(([key, value]) => {
-          $('channel-' + key.replace(/_/g, '-')).value = value;
-        });
-        syncPreset();
-      }
-      document.querySelectorAll('[data-preset]').forEach((button) => {
-        button.addEventListener('click', () => preset(button.dataset.preset));
-      });
-      Object.keys(channelPresets.clean).forEach((key) => {
-        $('channel-' + key.replace(/_/g, '-'))
-          .addEventListener('input', syncPreset);
-      });
-      updateText();
-    </script>
-  </body>
-</html>
+% GF(256) 표: primitive polynomial 0x11D, alpha=2.
+% 로그 표에서 지수를 더하면 GF 곱셈이 됩니다. 0은 별도로 처리합니다.
+powers = zeros(1,512); logs = zeros(1,256); x = 1;
+for k = 0:254
+    powers(k+1) = x; logs(x+1) = k;
+    x = x*2;
+    if x &gt;= 256, x = bitxor(x,285); end
+end
+for k = 255:511, powers(k+1) = powers(k-254); end
+% 생성다항식 g(x) = product(x + alpha^r), r=1..8.
+generator = 1;
+for r = 1:8
+    product = zeros(size(generator)); nz = generator ~= 0;
+    product(nz) = powers(logs(generator(nz)+1) + logs(powers(r+1)+1) + 1);
+    generator = bitxor([generator 0], [0 product]);
+end
+% 각 19 byte message 뒤에 나눗셈 나머지 8 byte를 붙입니다.
+codewords = zeros(N,27,&#x27;uint8&#x27;);
+for index = 1:N
+    message = double(messageByRow(index,:));
+    work = [message zeros(1,8)];
+    for k = 1:19
+        coefficient = work(k);
+        if coefficient ~= 0
+            g = generator(2:end); product = zeros(1,8); nz = g ~= 0;
+            product(nz) = powers(logs(g(nz)+1)+logs(coefficient+1)+1);
+            work(k+(1:8)) = bitxor(work(k+(1:8)),product);
+        end
+    end
+    codewords(index,:) = uint8([message work(20:27)]);
+end
+% 첫 codeword의 syndrome 8개가 모두 0인지 확인합니다.
+syndrome = zeros(1,8);
+for r = 1:8
+    y = 0;
+    for c = double(codewords(1,:))
+        if y ~= 0, y = powers(logs(y+1)+r+1); end
+        y = bitxor(y,c);
+    end
+    syndrome(r) = y;
+end
+assert(isequal(codewords(:,1:19), messageByRow) &amp;&amp; ~any(syndrome));
+fprintf(&#x27;Block 4 PASS | %d codewords × 27 bytes, first syndrome = &#x27;,N);
+fprintf(&#x27;%d &#x27;,syndrome); fprintf(&#x27;\n&#x27;);
+disp(&#x27;첫 codeword (HEX)&#x27;); fprintf(&#x27;%02X &#x27;,codewords(1,:)); fprintf(&#x27;\n&#x27;);</code></pre></div><p class="output"><strong>기본 이름 예제에서 확인:</strong> Block 4 PASS | 3 codewords × 27 bytes, first syndrome = 0 0 0 0 0 0 0 0</p><p><a href="downloads/DNA_data_storage_Encoding/DNA_data_storage_Encoding_1_4.m">4단계까지 누적된 .m 파일</a></p></section><section id="step5"><h2>5. primer 붙이기 · 148 nt 저장</h2><p>27 byte를 108 nt로 변환합니다. 앞에 F 20 nt, 뒤에 R 20 nt를 그대로 붙여 총 148 nt로 만듭니다. 여기서 R은 코드에 주어진 가닥 끝 서열이며 다시 역상보 변환하지 않습니다. FASTA의 &gt;이름 줄은 파일 형식 표지일 뿐 DNA metadata header가 아닙니다.</p><div class="snip"><div class="snip-h">5번 · 앞 코드 맨 아래에 이어 붙이기<button class="copy" type="button">코드 복사</button></div><pre><code class="lang-matlab">%% 5. byte → DNA → primer → FASTA / sequence TXT 저장
+% 00=A, 01=T, 10=G, 11=C. 한 byte를 높은 bit부터 4 nt로 읽습니다.
+assert(numel(F)==20 &amp;&amp; numel(R)==20 &amp;&amp; all(ismember([F R],&#x27;ATGC&#x27;)));
+BASES = &#x27;ATGC&#x27;; seqs = cell(1,N);
+for index = 1:N
+    bytes = double(codewords(index,:)); v = zeros(4,27);
+    for k = 1:4, v(k,:) = mod(floor(bytes/2^(8-2*k)),4); end
+    bodyDNA = BASES(reshape(v,1,[])+1);
+    seqs{index} = [F bodyDNA R];
+end
+assert(all(cellfun(@numel,seqs)==148));
+fid = fopen(outFasta,&#x27;wt&#x27;);
+if fid &lt; 0, error(&#x27;FASTA 출력 파일을 열 수 없습니다.&#x27;); end
+for index = 1:N
+    fprintf(fid,&#x27;&gt;strand_%05d\n%s\n&#x27;,index,seqs{index});
+end
+fclose(fid);
+fid = fopen(outSequencesTxt,&#x27;wt&#x27;);
+if fid &lt; 0, error(&#x27;TXT 출력 파일을 열 수 없습니다.&#x27;); end
+for index = 1:N, fprintf(fid,&#x27;%s\n&#x27;,seqs{index}); end
+fclose(fid);
+fprintf(&#x27;Block 5 PASS | %d strands × 148 nt\n&#x27;,N);
+fprintf(&#x27;첫 sequence: %s\n&#x27;,seqs{1});
+fprintf(&#x27;저장: %s / %s\n&#x27;,outFasta,outSequencesTxt);
+fprintf(&#x27;디코더 설정: L=%d; D=%d; ext=&#x27;&#x27;%s&#x27;&#x27;;\n&#x27;,L,D,ext);
+% 정확한 byte 비교용 원본을 보관합니다. DNA에 헤더를 넣는 것은 아닙니다.
+save(&#x27;original_bytes.mat&#x27;,&#x27;dataBytes&#x27;,&#x27;L&#x27;,&#x27;D&#x27;,&#x27;ext&#x27;);</code></pre></div><p class="output"><strong>기본 이름 예제에서 확인:</strong> Block 5 PASS | 3 strands × 148 nt · 디코더 설정: L=27; D=2; ext=&#x27;txt&#x27;;</p><p><a href="downloads/DNA_data_storage_Encoding/DNA_data_storage_Encoding_1_5.m">5단계까지 누적된 .m 파일</a></p></section><section id="decode"><h2>복호화 · Decoding.m 파일 하나로 실행</h2><p><a href="downloads/DNA_data_storage_Encoding/Decoding.m" download><strong>Decoding.m 다운로드</strong></a></p><ol><li>5단계에서 만든 <code>dnas_sequences.txt</code> 또는 <code>dnas_out.fasta</code>와 <code>Decoding.m</code>을 같은 MATLAB 현재 폴더에 둡니다.</li><li><code>Decoding.m</code>을 열고 파일 안의 <code>inFile</code>, <code>L</code>, <code>D</code>, <code>ext</code>를 인코더 출력값으로 바꿉니다. 기본 이름 예제는 <code>L=27; D=2; ext='txt';</code>입니다.</li><li>전체 Run을 누르면 <code>decoded.txt</code> 또는 <code>decoded.jpg</code>가 생성됩니다. 각 처리 과정과 함수의 설명은 코드 주석에 포함되어 있습니다.</li></ol><p class="output">기본 이름 예제의 결과: 데이터 행 전부 확보 · decoded.txt (27 byte) · 나노바이오공학전공</p><p>사진은 1번의 <code>inputMode='image'</code>, <code>inputFile='dna_helix_demo.jpg'</code>로 바꾸고 1~5번을 다시 실행합니다. 인코더에 출력된 L, D와 <code>ext='jpg'</code>를 Decoding.m 안에 입력하세요. JPG 예제는 ZIP에 함께 들어 있습니다.</p><p class="note">index 오류와 삽입/결실 정렬을 처리하지 않는 교육용 예제입니다. 같은 XOR 묶음에서 두 가닥이 없으면 원본 전체를 복원할 수 없습니다. 원본 byte 비교 결과가 표시될 때 PASS까지 확인하세요.</p></section></div></main><script>document.querySelectorAll('.copy').forEach(button=>button.addEventListener('click',async()=>{const code=button.closest('.snip').querySelector('code');try{await navigator.clipboard.writeText(code.textContent);button.textContent='복사 완료';setTimeout(()=>button.textContent='코드 복사',1500);}catch{const range=document.createRange();range.selectNodeContents(code);const selection=window.getSelection();selection.removeAllRanges();selection.addRange(range);button.textContent='선택됨 · 직접 복사';}}));</script></body></html>
