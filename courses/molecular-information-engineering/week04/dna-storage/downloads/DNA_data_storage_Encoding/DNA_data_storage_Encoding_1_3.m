@@ -1,6 +1,6 @@
-%% DNA data storage Encoding — 누적 실습 checkpoint 1-3
-% 이 파일은 앞 단계 코드를 누적한 실행본입니다. 각 파일을 별도로 실행해 현재 단계까지 확인하세요.
-% 이후 파일은 앞 단계에 해당하는 모든 코드와 검증을 포함합니다.
+%% DNA 저장 실습 — 1~5단계 누적 인코딩
+% 1단계부터 5단계까지 같은 스크립트 아래에 순서대로 이어 붙입니다.
+% clear는 맨 처음에만 사용합니다. 각 %% 섹션을 위에서 아래로 실행하세요.
 % clear는 이전 실행 변수 제거, clc는 명령창을 비워 이번 단계 로그를 보기 쉽게 합니다.
 clear; clc;
 %% 0. 설정 — 입력 종류와 파일 이름만 바꿔 실행
@@ -43,6 +43,9 @@ fprintf('Block 1 HEX (first %d of %d bytes):', nShow, L); fprintf(' %02X', dataB
 if L > nShow, fprintf(' ... (%d more bytes)', L - nShow); end
 fprintf('\n');
 
+assert(isa(dataBytes, 'uint8') && L > 0);
+fprintf('Block 1 PASS | %d bytes\n', L);
+
 %% 2. 17 byte 행 분할 (Block 2: 빈 자리는 PAD=0x1B)
 PAD = uint8(27); ROW_BYTES = 17; NSYM = 8;
 % 헤더 없는 포맷이므로 사용자가 decoder에 L과 D를 알려 줍니다.
@@ -62,6 +65,8 @@ end
 assert(isequal(reshape(rows(1:D, :)', 1, []), [dataBytes repmat(PAD, 1, 17*D-L)]), 'Block 2 분할 검증 실패');
 fprintf('Block 2 PASS | %d data rows × 17 byte (D=%d, H=%d, N=%d)\n', D, D, H, N);
 
+disp('첫 데이터 행 (HEX)'); fprintf('%02X ',rows(1,:)); fprintf('\n');
+
 %% 3. 바깥 XOR 행 추가 (Block 3: 같은 위치 byte끼리 XOR)
 % XOR 행의 고정 위치는 D+j (j=1..H)입니다.
 for j = 1:H
@@ -70,3 +75,4 @@ end
 assert(isequal(rows(D+1:end, :), bitxor(rows(1:H, :), rows(H+1:D, :))), 'Block 3 XOR 검증 실패');
 fprintf('Block 3 PASS | XOR parity rows = %d\n', H);
 
+disp('첫 XOR 행 (HEX)'); fprintf('%02X ',rows(D+1,:)); fprintf('\n');

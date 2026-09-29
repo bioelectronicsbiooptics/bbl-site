@@ -1,6 +1,6 @@
-%% DNA data storage Encoding — 누적 실습 checkpoint 1
-% 이 파일은 앞 단계 코드를 누적한 실행본입니다. 각 파일을 별도로 실행해 현재 단계까지 확인하세요.
-% 이후 파일은 앞 단계에 해당하는 모든 코드와 검증을 포함합니다.
+%% DNA 저장 실습 — 1~5단계 누적 인코딩
+% 1단계부터 5단계까지 같은 스크립트 아래에 순서대로 이어 붙입니다.
+% clear는 맨 처음에만 사용합니다. 각 %% 섹션을 위에서 아래로 실행하세요.
 % clear는 이전 실행 변수 제거, clc는 명령창을 비워 이번 단계 로그를 보기 쉽게 합니다.
 clear; clc;
 %% 0. 설정 — 입력 종류와 파일 이름만 바꿔 실행
@@ -43,3 +43,5 @@ fprintf('Block 1 HEX (first %d of %d bytes):', nShow, L); fprintf(' %02X', dataB
 if L > nShow, fprintf(' ... (%d more bytes)', L - nShow); end
 fprintf('\n');
 
+assert(isa(dataBytes, 'uint8') && L > 0);
+fprintf('Block 1 PASS | %d bytes\n', L);

@@ -1,10 +1,12 @@
-%% DNA 저장 디코더 — 헤더 없음 · index 고정 · Global/Local RS · XOR
-% dna_encode.m 출력 FASTA 또는 시퀀싱 FASTQ를 입력합니다.
+%% Decoding.m — 1~5단계 인코더의 파일 복호 예제
+% 5단계 인코더의 FASTA / sequence TXT 또는 시퀀싱 FASTQ를 입력합니다.
 % 인코더 실행창의 L, D 값을 아래에 그대로 입력해야 원본 파일 길이를 정확히 복원합니다.
 clear; clc;
 
 %% 0. 설정 — 인코더 출력값 입력
 % 결과 파일은 현재 폴더(MATLAB Drive의 이 스크립트 폴더)에 저장됩니다.
+% [바꾸는 곳] 인코더 로그의 L, D, ext를 아래에 옮깁니다.
+% 명령창에서 미리 설정해도 clear가 지우므로 이 파일 내부를 수정하세요.
 inFile = 'dnas_sequences.txt'; % 인코더 TXT (한 줄에 서열 하나) / FASTA / FASTQ
 L = 13;                        % 인코더가 출력한 원본 byte 길이
 D = 2;                         % 인코더가 출력한 짝수 data row 수
@@ -48,6 +50,10 @@ for k = 1:numel(seqs)
 end
 
 %% 3. 묶음별 consensus → Global RS → read별 Local RS
+% 같은 index의 read에서 위치별 최빈 염기를 고른 것이 consensus입니다.
+% Global은 consensus 한 가닥에 RS를 적용하는 단계이며 별도 outer RS가 아닙니다.
+% 실패하면 각 read를 따로 RS 복호하고 성공한 byte들의 최빈값을 사용합니다.
+% RS(27,19)는 8 parity byte를 이용해 최대 4개의 byte 오류를 정정합니다.
 rows = zeros(N, 17, 'uint8');
 have = false(1, N); how = repmat({'missing'}, 1, N);
 for index = 1:N
@@ -75,6 +81,8 @@ for index = 1:N
 end
 
 %% 4. 바깥 XOR로 (j, j+H, D+j) 중 하나만 빠진 행 복원
+% A XOR B = P이므로 A XOR P = B, B XOR P = A입니다.
+% 세 행 중 두 행이 있어야 빠진 하나를 복원할 수 있습니다.
 nXor = 0;
 for j = 1:H
     triple = [j, j + H, D + j];
@@ -92,6 +100,8 @@ if ~isempty(missingData)
     warning('복원되지 않은 data row가 있습니다: %s. 해당 영역은 0 byte로 기록됩니다.', ...
         mat2str(missingData));
 end
+% XOR 행을 제외한 데이터 D행을 원래 순서로 연결합니다.
+% PAD 값과 같은 원본 byte도 있을 수 있으므로 L로 잘라야 정확합니다.
 allData = reshape(rows(1:D, :)', 1, []);
 data = allData(1:L);
 fid = fopen(outFile, 'wb');
@@ -111,6 +121,18 @@ if strcmpi(ext, 'txt')
 elseif ismember(lower(ext), {'jpg','jpeg','png','tif','tiff','bmp'})
     try, figure('Name', outFile); image(imread(outFile)); axis image off;
     catch err, warning('이미지 표시 실패: %s', err.message); end
+end
+
+%% 7. 같은 폴더에 원본 byte 기록이 있으면 정확한 일치 확인
+% 5단계에서 저장한 original_bytes.mat는 실습 검증용이며 복호 필수 입력은 아닙니다.
+% 다른 데이터를 새로 인코딩하면 이 파일도 덮어써집니다.
+if isfile('original_bytes.mat')
+    original = load('original_bytes.mat','dataBytes');
+    if isequal(original.dataBytes,data)
+        fprintf('ROUNDTRIP PASS | %d bytes identical\n',numel(data));
+    else
+        warning('원본 byte와 복원 결과가 다릅니다. 설정값과 누락 행을 확인하세요.');
+    end
 end
 
 %% 로컬 함수 — FASTA/FASTQ와 RS 복호를 이 파일 하나에서 처리

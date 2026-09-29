@@ -1,12 +1,8 @@
-%% DNA 저장 인코더 — 헤더 없음 · 고정 index · XOR → RS(27,19) · 148 nt
-% 각 단계 파일은 앞 코드를 누적한 독립본입니다. 번호 순서대로 실행하고 PASS를 확인하세요.
-% MATLAB Online 명령창 예: run('DNA_data_storage_Encoding_1_2.m')
-% 텍스트는 UTF-8 byte로, 사진·파일은 디스크의 원본 byte 그대로 입력합니다.
-% 순서: 입력 byte → 17 byte 데이터 행 → outer XOR → 고정 index → inner RS(27,19)
-%       → 108 nt 본문 → 양쪽 20 nt primer → 148 nt 가닥 → FASTA/TXT
+%% DNA 저장 실습 — 1~5단계 누적 인코딩
+% 1단계부터 5단계까지 같은 스크립트 아래에 순서대로 이어 붙입니다.
+% clear는 맨 처음에만 사용합니다. 각 %% 섹션을 위에서 아래로 실행하세요.
 % clear는 이전 실행 변수 제거, clc는 명령창을 비워 이번 단계 로그를 보기 쉽게 합니다.
 clear; clc;
-
 %% 0. 설정 — 입력 종류와 파일 이름만 바꿔 실행
 % 'text'=한글/문자열, 'image'=사진 파일, 'file'=일반 파일
 inputMode = 'text';             % 'text' | 'image' | 'file'
@@ -47,6 +43,9 @@ fprintf('Block 1 HEX (first %d of %d bytes):', nShow, L); fprintf(' %02X', dataB
 if L > nShow, fprintf(' ... (%d more bytes)', L - nShow); end
 fprintf('\n');
 
+assert(isa(dataBytes, 'uint8') && L > 0);
+fprintf('Block 1 PASS | %d bytes\n', L);
+
 %% 2. 17 byte 행 분할 (Block 2: 빈 자리는 PAD=0x1B)
 PAD = uint8(27); ROW_BYTES = 17; NSYM = 8;
 % 헤더 없는 포맷이므로 사용자가 decoder에 L과 D를 알려 줍니다.
@@ -66,6 +65,8 @@ end
 assert(isequal(reshape(rows(1:D, :)', 1, []), [dataBytes repmat(PAD, 1, 17*D-L)]), 'Block 2 분할 검증 실패');
 fprintf('Block 2 PASS | %d data rows × 17 byte (D=%d, H=%d, N=%d)\n', D, D, H, N);
 
+disp('첫 데이터 행 (HEX)'); fprintf('%02X ',rows(1,:)); fprintf('\n');
+
 %% 3. 바깥 XOR 행 추가 (Block 3: 같은 위치 byte끼리 XOR)
 % XOR 행의 고정 위치는 D+j (j=1..H)입니다.
 for j = 1:H
@@ -74,7 +75,9 @@ end
 assert(isequal(rows(D+1:end, :), bitxor(rows(1:H, :), rows(H+1:D, :))), 'Block 3 XOR 검증 실패');
 fprintf('Block 3 PASS | XOR parity rows = %d\n', H);
 
-%% 4. 고정 index 추가 (Block 4: 순번을 big-endian 2 byte로 표현)
+disp('첫 XOR 행 (HEX)'); fprintf('%02X ',rows(D+1,:)); fprintf('\n');
+
+%% 4. 고정 index → inner RS(27,19)
 % index 1..N을 2 byte big-endian으로 표현합니다.
 indexBytesByRow = zeros(N, 2, 'uint8');
 messageByRow = zeros(N, 19, 'uint8');
@@ -84,110 +87,78 @@ for index = 1:N
     messageByRow(index, :) = [rows(index, :) indexBytesByRow(index, :)];
 end
 assert(isequal(messageByRow(:, 18:19), indexBytesByRow), 'Block 4 index 검증 실패');
-fprintf('Block 4 PASS | %d fixed indices attached; message width = %d bytes.\n', N, size(messageByRow, 2));
+fprintf('index 부착: %d rows × 19 bytes\n', N);
 
-%% 5. inner RS(27,19) (Block 5: 19 byte message에 8 parity byte 추가)
-% 8 parity byte를 덧붙여 codeword 27 byte = 108 nt가 됩니다.
-F = upper(char(F)); R = upper(char(R));
-if numel(F) ~= 20 || numel(R) ~= 20 || ...
-        any(~ismember(F, 'ATGC')) || any(~ismember(R, 'ATGC'))
-    error('F와 R은 각각 A/T/G/C로 된 20 nt primer여야 합니다.');
+% GF(256) 표: primitive polynomial 0x11D, alpha=2.
+% 로그 표에서 지수를 더하면 GF 곱셈이 됩니다. 0은 별도로 처리합니다.
+powers = zeros(1,512); logs = zeros(1,256); x = 1;
+for k = 0:254
+    powers(k+1) = x; logs(x+1) = k;
+    x = x*2;
+    if x >= 256, x = bitxor(x,285); end
 end
-codewords = zeros(N, 27, 'uint8');
-for index = 1:N
-    codewords(index, :) = rs_encode_27_19(messageByRow(index, :), NSYM);
-end
-assert(size(codewords, 2) == 27, 'Block 5 RS 길이 검증 실패');
-fprintf('Block 5 PASS | inner RS codewords = %d × 27 bytes (%d nt body each).\n', N, size(codewords, 2) * 4);
-
-%% 6. DNA 본문과 primer 조립 (Block 6: 108 + 20 + 20 = 148 nt)
-seqs = cell(1, N);
-for index = 1:N
-    bodyDNA = bytes_to_dna(codewords(index, :));
-    % Primer는 RS payload 바깥에 두어 본문은 항상 108 nt로 유지합니다.
-    seqs{index} = [F bodyDNA R];
-    if numel(seqs{index}) ~= 148
-        error('내부 길이 오류: index %d의 길이는 %d nt입니다.', index, numel(seqs{index}));
-    end
-end
-fprintf('Block 6 PASS | primers + DNA body: %d strands, strand length %d nt.\n', N, numel(seqs{1}));
-
-%% 7. FASTA와 평문 TXT 출력 (TXT는 한 줄에 148 nt 서열 하나)
-fid = fopen(outFasta, 'wt');
-if fid < 0, error('출력 파일을 만들 수 없습니다: %s', outFasta); end
-for index = 1:N
-    fprintf(fid, '>strand_%05d|role=%s|index=%d\n%s\n', index, ...
-        ternary(index <= D, 'data', 'xor'), index, seqs{index});
-end
-fclose(fid);
-fid = fopen(outSequencesTxt, 'wt');
-if fid < 0, error('출력 파일을 만들 수 없습니다: %s', outSequencesTxt); end
-for index = 1:N, fprintf(fid, '%s\n', seqs{index}); end
-fclose(fid);
-fprintf('저장: %s (FASTA) + %s (sequence TXT)\n', outFasta, outSequencesTxt);
-fprintf('디코더 설정값: L=%d, D=%d, ext=''%s''\n', L, D, ext);
-
-%% 로컬 함수 — 이 파일 끝에 포함되어 별도 함수 파일이나 Toolbox가 필요 없습니다.
-function codeword = rs_encode_27_19(message, nsym)
-% RS 생성다항식을 나눗셈으로 구성합니다. GF(256), primitive polynomial 0x11D, roots alpha^1..alpha^8.
-message = double(reshape(uint8(message), 1, []));
-if numel(message) ~= 19 || nsym ~= 8
-    error('RS(27,19)는 19 message byte와 8 parity byte를 요구합니다.');
-end
-[powers, logs] = gf_tables();
+for k = 255:511, powers(k+1) = powers(k-254); end
+% 생성다항식 g(x) = product(x + alpha^r), r=1..8.
 generator = 1;
-for root = 1:nsym
-    shifted = [0 gf_multiply(generator, powers(root + 1), powers, logs)];
-    generator = bitxor([generator 0], shifted);
+for r = 1:8
+    product = zeros(size(generator)); nz = generator ~= 0;
+    product(nz) = powers(logs(generator(nz)+1) + logs(powers(r+1)+1) + 1);
+    generator = bitxor([generator 0], [0 product]);
 end
-work = [message zeros(1, nsym)];
-for k = 1:numel(message)
-    coefficient = work(k);
-    if coefficient ~= 0
-        idx = k + (1:nsym);
-        product = gf_multiply(generator(2:end), coefficient, powers, logs);
-        work(idx) = bitxor(work(idx), product);
+% 각 19 byte message 뒤에 나눗셈 나머지 8 byte를 붙입니다.
+codewords = zeros(N,27,'uint8');
+for index = 1:N
+    message = double(messageByRow(index,:));
+    work = [message zeros(1,8)];
+    for k = 1:19
+        coefficient = work(k);
+        if coefficient ~= 0
+            g = generator(2:end); product = zeros(1,8); nz = g ~= 0;
+            product(nz) = powers(logs(g(nz)+1)+logs(coefficient+1)+1);
+            work(k+(1:8)) = bitxor(work(k+(1:8)),product);
+        end
     end
+    codewords(index,:) = uint8([message work(20:27)]);
 end
-codeword = uint8([message work(numel(message) + 1:end)]);
-end
-
-function product = gf_multiply(values, value, powers, logs)
-% GF(256)에서 로그 지수를 더해 다항식 곱을 빠르게 계산합니다. 0 곱은 별도 처리합니다.
-product = zeros(size(values));
-nonzero = values ~= 0 & value ~= 0;
-if any(nonzero)
-    exponents = logs(values(nonzero) + 1) + logs(value + 1);
-    product(nonzero) = powers(exponents + 1);
-end
-end
-
-function [powers, logs] = gf_tables()
-% alpha=2의 거듭제곱/로그 표를 0x11D 원시 다항식으로 한 번 만들고 재사용합니다.
-persistent p l
-if isempty(p)
-    p = zeros(1, 512); l = zeros(1, 256); x = 1;
-    for k = 0:254
-        p(k + 1) = x; l(x + 1) = k;
-        x = x * 2;
-        if x >= 256, x = bitxor(x, 285); end
+% 첫 codeword의 syndrome 8개가 모두 0인지 확인합니다.
+syndrome = zeros(1,8);
+for r = 1:8
+    y = 0;
+    for c = double(codewords(1,:))
+        if y ~= 0, y = powers(logs(y+1)+r+1); end
+        y = bitxor(y,c);
     end
-    for k = 255:511, p(k + 1) = p(k - 254); end
+    syndrome(r) = y;
 end
-powers = p; logs = l;
-end
+assert(isequal(codewords(:,1:19), messageByRow) && ~any(syndrome));
+fprintf('Block 4 PASS | %d codewords × 27 bytes, first syndrome = ',N);
+fprintf('%d ',syndrome); fprintf('\n');
+disp('첫 codeword (HEX)'); fprintf('%02X ',codewords(1,:)); fprintf('\n');
 
-function dna = bytes_to_dna(bytes)
-% byte의 상위 bit부터 2개씩 읽습니다: 00=A, 01=T, 10=G, 11=C. byte당 4 nt입니다.
-bases = 'ATGC'; b = double(reshape(uint8(bytes), 1, []));
-v = zeros(4, numel(b));
-for k = 1:4
-    v(k, :) = mod(floor(b / 2^(8 - 2*k)), 4);
+%% 5. byte → DNA → primer → FASTA / sequence TXT 저장
+% 00=A, 01=T, 10=G, 11=C. 한 byte를 높은 bit부터 4 nt로 읽습니다.
+assert(numel(F)==20 && numel(R)==20 && all(ismember([F R],'ATGC')));
+BASES = 'ATGC'; seqs = cell(1,N);
+for index = 1:N
+    bytes = double(codewords(index,:)); v = zeros(4,27);
+    for k = 1:4, v(k,:) = mod(floor(bytes/2^(8-2*k)),4); end
+    bodyDNA = BASES(reshape(v,1,[])+1);
+    seqs{index} = [F bodyDNA R];
 end
-dna = bases(reshape(v, 1, []) + 1);
+assert(all(cellfun(@numel,seqs)==148));
+fid = fopen(outFasta,'wt');
+if fid < 0, error('FASTA 출력 파일을 열 수 없습니다.'); end
+for index = 1:N
+    fprintf(fid,'>strand_%05d\n%s\n',index,seqs{index});
 end
-
-function out = ternary(test, yes, no)
-% FASTA 헤더에 data/xor 역할 문자열을 고르는 간단한 조건 함수입니다.
-if test, out = yes; else, out = no; end
-end
+fclose(fid);
+fid = fopen(outSequencesTxt,'wt');
+if fid < 0, error('TXT 출력 파일을 열 수 없습니다.'); end
+for index = 1:N, fprintf(fid,'%s\n',seqs{index}); end
+fclose(fid);
+fprintf('Block 5 PASS | %d strands × 148 nt\n',N);
+fprintf('첫 sequence: %s\n',seqs{1});
+fprintf('저장: %s / %s\n',outFasta,outSequencesTxt);
+fprintf('디코더 설정: L=%d; D=%d; ext=''%s'';\n',L,D,ext);
+% 정확한 byte 비교용 원본을 보관합니다. DNA에 헤더를 넣는 것은 아닙니다.
+save('original_bytes.mat','dataBytes','L','D','ext');
