@@ -1,0 +1,118 @@
+{
+  "paper": "Lee et al. Bioorganic Chemistry 179 (2026) 110000",
+  "doi": "10.1016/j.bioorg.2026.110000",
+  "source_pdf": "1-s2.0-S0045206826005365-main.pdf",
+  "source_pdf_sha256": "103a8c6683e8a4484b1b8cbb6344e0336fdf6cce80dcfcf613452ef28cbd73a2",
+  "figures": [
+    {
+      "figure": 1,
+      "pdf_page": 2,
+      "pdf_image_xref": 4,
+      "asset": "fig01.jpeg",
+      "sha256": "a6961c29b3df7bf3bcfbc1a715dc48d502976d3e5ad318cac4d04768dc40c580"
+    },
+    {
+      "figure": 2,
+      "pdf_page": 4,
+      "pdf_image_xref": 35,
+      "asset": "fig02.jpeg",
+      "sha256": "5b25f2d037dc5f7cca203e10505c147b0222b211c32065495971e7dfe7eebbf8"
+    },
+    {
+      "figure": 3,
+      "pdf_page": 5,
+      "pdf_image_xref": 70,
+      "asset": "fig03.jpeg",
+      "sha256": "47ff324e4fe95621bb6d1aa07061afc87842c4c1fe4a1d2be63cc9386b367e15"
+    },
+    {
+      "figure": 4,
+      "pdf_page": 6,
+      "pdf_image_xref": 81,
+      "asset": "fig04.jpeg",
+      "sha256": "03bdfb0b7d6520f7f054cf01794ecee9b882f9eb6504b4929d9c69436b5a0408"
+    },
+    {
+      "figure": 5,
+      "pdf_page": 7,
+      "pdf_image_xref": 106,
+      "asset": "fig05.jpeg",
+      "sha256": "c6e09719049d6d13660dc5f2e0b5411946e00be0bbd7d3b18f71a42a733b5d54"
+    },
+    {
+      "figure": 6,
+      "pdf_page": 8,
+      "pdf_image_xref": 128,
+      "asset": "fig06.jpeg",
+      "sha256": "800b91bbf065e69c2671b3553e41b9a2502a26eea9ad400f57844c4edd538e7a"
+    },
+    {
+      "figure": 7,
+      "pdf_page": 9,
+      "pdf_image_xref": 144,
+      "asset": "fig07.jpeg",
+      "sha256": "6656a827d65e497e887f9c8b9ff0a413e7f4e5477072115a008bbd474999c0d2"
+    },
+    {
+      "figure": 8,
+      "pdf_page": 10,
+      "pdf_image_xref": 158,
+      "asset": "fig08.jpeg",
+      "sha256": "bfac9d9ed3ec17a62fb7a355829691b43deb34afc9e2f1dccd107e3474aa89e5"
+    },
+    {
+      "figure": 9,
+      "pdf_page": 11,
+      "pdf_image_xref": 167,
+      "asset": "fig09.jpeg",
+      "sha256": "967ed7415332c1edce2e95c1811ebff1239ebe6efa3c4d389e6c6bbf47ae6ae6"
+    },
+    {
+      "figure": 10,
+      "pdf_page": 11,
+      "pdf_image_xref": 169,
+      "asset": "fig10.jpeg",
+      "sha256": "fa9efd46cd1b5f613ceeba0a599b81a5c718824f483f8d2dead31626319debbb"
+    },
+    {
+      "figure": 11,
+      "pdf_page": 12,
+      "pdf_image_xref": 175,
+      "asset": "fig11.jpeg",
+      "sha256": "c4705d97d205b1f4ee188f1371adf2ac432a8458d39d909acc3bd4f58009dad1"
+    },
+    {
+      "figure": 12,
+      "pdf_page": 13,
+      "pdf_image_xref": 191,
+      "asset": "fig12.jpeg",
+      "sha256": "158d09742743e2f00855a7b8b8e1792964e54d5188484e3faac7940953577d87"
+    },
+    {
+      "figure": 13,
+      "pdf_page": 15,
+      "pdf_image_xref": 217,
+      "asset": "fig13.jpeg",
+      "sha256": "0567c8df8c4a324bdaaabf65663143943b10d82c86de14a441a668476f93c001"
+    }
+  ],
+  "table": {
+    "number": 1,
+    "pdf_page": 4,
+    "clip_points": [
+      36,
+      51,
+      560,
+      310
+    ],
+    "scale": 4
+  },
+  "notes": [
+    "All 13 figure images extracted byte-for-byte from embedded PDF JPEG objects; no redrawing or relabeling.",
+    "Table 1 rendered from the original PDF with all table footnotes.",
+    "Korean explanations paraphrase main text and captions; displayed panel labels take precedence when caption order conflicts.",
+    "Fig 12 caption a/b is reversed relative to image labels. Right panel labels 2-OMe whereas text describes nusinersen as 2-MOE/PS. Explicitly noted on the slide.",
+    "Fig 7 curves are conceptual; exact plot positions differ from representative ranges in text.",
+    "Fig 9 molecular example identities attributed to caption; no invented accession or resolution."
+  ]
+}
