@@ -58,10 +58,7 @@ function submitAssignment(form) {
     }
     ensureJob_(receipt,file,seqs);
   }finally{lock.releaseLock();}
-  // Saving FASTA is final even if noise generation fails. Receipt allows resume.
-  let fastq;
-  try {fastq=processJob_(receipt,180000);}catch(error){fastq={status:'pending',error:error.message};}
-  return {ok:true,studentId:id,filename:file.getName(),fastq:fastq};
+  return {ok:true,studentId:id,filename:file.getName()};
 }
 function jobFile_(receipt) {
   const it=folder_('FASTQ_FOLDER_ID').getFilesByName(receipt+'.json');return it.hasNext()?it.next():null;
@@ -103,7 +100,7 @@ function latestForStudent_(student) {
   if(existing){const job=JSON.parse(existing.getBlob().getDataAsString());if(job.L===null){const meta=sourceMetadata_(found,job.N);if(meta.L!==null){job.L=meta.L;job.ext=meta.ext;existing.setContent(JSON.stringify(job));}}}
   return {file:found,receipt};
 }
-function refreshStudentFastq(student) {setup_();return processJob_(latestForStudent_(student).receipt,180000);}
+function refreshStudentFastq(student) {setup_();return summary_(JSON.parse(resolveJob_(latestForStudent_(student).receipt).getBlob().getDataAsString()));}
 function downloadStudentPart(student,index) {return downloadFastqPart(latestForStudent_(student).receipt,index);}
 function getStudentDecoder(student) {return getDecoder(latestForStudent_(student).receipt);}
 
@@ -120,10 +117,42 @@ function resolveJob_(receipt) {
 function summary_(job) {
   return {status:job.status,filename:job.sourceName,receiptId:job.receipt,L:job.L,D:job.D,ext:job.ext,N:job.N,processed:job.next,partCount:job.parts.length,bytes:job.parts.reduce((s,p)=>s+p.bytes,0),coverage:3,seed:job.seed,error:job.error||''};
 }
-function refreshFastq(receipt) {setup_();return processJob_(receipt_(receipt),180000);}
-function processJob_(receipt,budget) {
+function refreshFastq(receipt) {setup_();return summary_(JSON.parse(resolveJob_(receipt_(receipt)).getBlob().getDataAsString()));}
+// Install one owner-owned time trigger: processFastqQueue, every minute.
+// The lock keeps overlapping triggers from processing submissions out of order.
+function processFastqQueue() {
+  setup_();
+  const lock=LockService.getScriptLock();if(!lock.tryLock(1000))return;
+  const deadline=Date.now()+240000;
+  try {
+    const files=folder_('FASTQ_FOLDER_ID').getFiles(),queue=[];
+    while(files.hasNext()){
+      const file=files.next();if(!file.getName().endsWith('.json'))continue;
+      const job=JSON.parse(file.getBlob().getDataAsString());
+      if(job.status==='pending'||job.status==='processing')queue.push({file,job});
+    }
+    queue.sort((a,b)=>a.job.created.localeCompare(b.job.created)||a.job.receipt.localeCompare(b.job.receipt));
+    for(const item of queue){
+      while(Date.now()<deadline){
+        try {
+          const result=processJob_(item.job.receipt,Math.min(180000,deadline-Date.now()),true);
+          if(result.status==='ready')break;
+        }catch(error){
+          const job=JSON.parse(item.file.getBlob().getDataAsString());
+          job.error=String(error.message||error);job.attempts=(job.attempts||0)+1;
+          if(job.attempts>=3)job.status='failed';
+          item.file.setContent(JSON.stringify(job));
+          console.error(item.job.receipt+': '+job.error);
+          return; // Retry this submission on the next tick before later files.
+        }
+      }
+      if(Date.now()>=deadline)return;
+    }
+  }finally{lock.releaseLock();}
+}
+function processJob_(receipt,budget,lockHeld) {
   const started=Date.now(),lock=LockService.getScriptLock();
-  if(!lock.tryLock(1000))return {status:'busy',receiptId:receipt};
+  if(!lockHeld&&!lock.tryLock(1000))return {status:'busy',receiptId:receipt};
   try {
     const jf=resolveJob_(receipt),job=JSON.parse(jf.getBlob().getDataAsString());
     if(job.status==='ready')return summary_(job);
@@ -141,7 +170,7 @@ function processJob_(receipt,budget) {
       job.next=end;produced++;jf.setContent(JSON.stringify(job));
     }
     job.status=job.next===job.N?'ready':'processing';jf.setContent(JSON.stringify(job));return summary_(job);
-  }finally{lock.releaseLock();}
+  }finally{if(!lockHeld)lock.releaseLock();}
 }
 function downloadFastqPart(receipt,index) {
   receipt=receipt_(receipt);index=Number(index);

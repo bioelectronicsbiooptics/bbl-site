@@ -18,7 +18,9 @@ Script properties `SEMESTER_FOLDER_ID`, `FOLDER_ID` and `FASTQ_FOLDER_ID` hold t
 
 ## Generation and recovery
 
-New uploads start generation before the server returns and the form automatically resumes partial work. If the browser closes or a request fails, Week 12 Refresh continues from the last persisted part. This is request-driven generation, not an unattended scheduled trigger. Each server request produces one part with at most 3000 original strand indices and a 180-second generation budget; the browser automatically requests the next part. Completed jobs are reused on Refresh, never randomized again.
+New uploads only save FASTA and enqueue a job. An owner-owned time trigger runs `processFastqQueue` every minute, processing jobs by submission time under one script lock. Browsers only read status; closing a browser does not stop the queue. Each tick works for up to four minutes using persisted parts of up to 3000 strand indices. Completed jobs are reused. Failed work is retried on later ticks; after three errors it is marked failed and later jobs proceed. The instructor can inspect the job error and reset status to pending after fixing the cause.
+
+After saving the bundle, create exactly one Apps Script time-driven trigger for `processFastqQueue`, minutes timer, every minute, executing as the owner.
 
 Three reads per retained strand; three distinct RS byte errors shared across its reads; primers and index unchanged; no indels; approximately half reverse-complemented. One data strand is dropped in XOR groups 1,21,41,... . Original codewords are validated before generation. FASTQ qualities are synthetic (`I` unchanged, `5` substituted), and are ignored by the existing decoder.
 
