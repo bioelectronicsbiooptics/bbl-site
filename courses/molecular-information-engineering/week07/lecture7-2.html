@@ -483,6 +483,19 @@ table.tbl.rdpath td:first-child,table.tbl.rdpath th:first-child{white-space:nowr
 
 /* XNA instrument figures share the existing BLUE design tokens. */
 .instrument-figure{margin:0}.instrument-figure svg{width:100%;height:auto;max-height:18em}.instrument-figure figcaption{font-size:.6em;color:var(--gray);text-align:right}.instrument-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.8em}.instrument-cards .kb{padding:.65em .8em}.instrument-cards .small{font-size:.81em;line-height:1.55}.xna-instrument .src{font-size:.55em;overflow-wrap:anywhere}.xna-instrument .src a{color:var(--navy)}.read .instrument-figure svg{max-height:none}@media(max-width:700px){.read .instrument-cards{grid-template-columns:1fr}}
+
+/* 동영상 목록 (6-2와 동일) */
+/* 동영상 목록 (6-2/extra.css와 동일) */
+ul.vids{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.42em}
+ul.vids li{display:grid;grid-template-columns:1.9em 1fr;gap:.6em;align-items:start;
+  border:1px solid var(--border);border-left:.22em solid var(--teal);border-radius:.3em;
+  background:var(--white);padding:.4em .7em .45em}
+ul.vids li .pl{inline-size:1.55em;block-size:1.55em;border-radius:50%;background:var(--amber);color:#fff;
+  font:700 .62em/1.55em var(--sans);text-align:center}
+ul.vids li b{font-size:.84em;line-height:1.35;color:var(--navy);display:block}
+ul.vids li b a{text-decoration:none;border-bottom:1px solid var(--teal)}
+ul.vids li span{font-size:.76em;color:var(--gray);line-height:1.4}
+ul.vids li em{font-style:normal;font-family:var(--mono);font-size:.72em;color:var(--amber);font-weight:700}
 </style>
 </head>
 <body>
@@ -4342,6 +4355,34 @@ M  END
   </div>
   <p class="src">Lee et al., <i>Bioorg. Chem.</i> <b>179</b> (2026) 110000 — §5.2 (refs [128–131]) · §5.3 · Fig. 13 · §5.5 ｜ Qin et al., <i>Angew. Chem. Int. Ed.</i> <b>63</b> (2024) e202317334 (ref [146]) · Gasse et al., <i>ChemBioChem</i> <b>24</b> (2023) e202300191 (ref [147])</p>
 </section>
+
+<section class="slide" data-part="p5" data-title="수업 중 볼 동영상">
+  <header><h2>수업 중 볼 동영상 — XNA가 쓰이는 곳</h2><p class="sub">진단 · 치료 · 알파벳 확장 · 접속 확인된 링크만</p></header>
+  <div class="body mid">
+    <ul class="vids">
+      <li><span class="pl">▶</span><span>
+        <b><a href="https://www.youtube.com/watch?v=qtN2glqynhE" target="_blank" rel="noopener">Custom LNA oligos for commercial use</a> <em>0:53</em></b>
+        <span>볼 것 — LNA를 넣으면 프로브가 짧아져도 된다: PART 2 LNA 브리지(고친화)의 실용 결과 (LGC Biosearch)</span></span></li>
+      <li><span class="pl">▶</span><span>
+        <b><a href="https://www.youtube.com/watch?v=WUdJaZxEWZ0" target="_blank" rel="noopener">Unit 10 Part 4   Peptide Nucleic Acid PNA</a> <em>2:48</em></b>
+        <span>볼 것 — 당 · 인산 대신 폴리아마이드 골격 — PNA clamping 위젯에서 왜 PNA가 연장되지 않는가 (교토대 OCW)</span></span></li>
+      <li><span class="pl">▶</span><span>
+        <b><a href="https://www.youtube.com/watch?v=p8KFtND911A" target="_blank" rel="noopener">Fixing Genes with Antisense Oligonucleotides (ASOs)</a> <em>2:12</em></b>
+        <span>볼 것 — 안티센스 올리고가 RNA에 붙어 유전병을 고치는 원리 — nusinersen · eteplirsen 도입 (Harvard Medical School)</span></span></li>
+      <li><span class="pl">▶</span><span>
+        <b><a href="https://www.youtube.com/watch?v=THJJCMbjGf0" target="_blank" rel="noopener">Prosensa's Video Animation on Exon Skipping</a> <em>1:27</em></b>
+        <span>볼 것 — exon skipping으로 리딩프레임 복원 · 단 Prosensa는 다른 약(drisapersen) 회사 — <b>기전만</b> 볼 것 (eteplirsen은 PMO)</span></span></li>
+      <li><span class="pl">▶</span><span>
+        <b><a href="https://www.youtube.com/watch?v=ZuePUbe5-VE" target="_blank" rel="noopener">Ichiro HIRAO - Genetic alphabet expansion...</a> <em>33:53</em></b>
+        <span>과제 시청 — 비천연 염기쌍으로 알파벳을 넓힌다: PART 6 '저장 밀도 — 알파벳 확장' 예습</span></span></li>
+      <li><span class="pl">▶</span><span>
+        <b><a href="https://www.youtube.com/watch?v=zXO4rpkVxsQ" target="_blank" rel="noopener">Philipp HOLLIGER - Synthetic genetics</a> <em>42:37</em></b>
+        <span>과제 시청 — XNA를 복제 · 진화시키는 폴리머레이스 공학 (IHES 2015) — PART 3 효소 합성 확장</span></span></li>
+    </ul>
+  </div>
+  <p class="src">YouTube · 2026-09-29 접속 확인</p>
+</section>
+
 
 <!-- ============================ 30 · PART 6 표지 ============================ -->
 <section class="slide sect" data-part="p6" data-title="PART 6 표지">

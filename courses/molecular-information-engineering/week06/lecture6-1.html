@@ -409,6 +409,19 @@ svg.dia .lbl.big{font-size:14px}
 .proc .hl{stroke:var(--ochre)}
 svg.dia .hl{stroke:var(--ochre)}
 
+/* 동영상 목록 (6-2와 동일) */
+/* 동영상 목록 (6-2/extra.css와 동일) */
+ul.vids{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.42em}
+ul.vids li{display:grid;grid-template-columns:1.9em 1fr;gap:.6em;align-items:start;
+  border:1px solid var(--border);border-left:.22em solid var(--teal);border-radius:.3em;
+  background:var(--white);padding:.4em .7em .45em}
+ul.vids li .pl{inline-size:1.55em;block-size:1.55em;border-radius:50%;background:var(--amber);color:#fff;
+  font:700 .62em/1.55em var(--sans);text-align:center}
+ul.vids li b{font-size:.84em;line-height:1.35;color:var(--navy);display:block}
+ul.vids li b a{text-decoration:none;border-bottom:1px solid var(--teal)}
+ul.vids li span{font-size:.76em;color:var(--gray);line-height:1.4}
+ul.vids li em{font-style:normal;font-family:var(--mono);font-size:.72em;color:var(--amber);font-weight:700}
+
 </style>
 </head>
 <body>
@@ -2824,6 +2837,31 @@ Q 144.8 217.1, 146.7 217.1
     <p class="src">Glen Research, Glen Report 37-26 (2025/26), <i>Greener Roads Ahead</i> · <i>Enzymatic de novo oligonucleotide synthesis</i>, Biotechnol Adv (2025), doi:10.1016/j.biotechadv.2025.108604 · 화학 합성 단량체 농도 약 0.1 M vs 효소 합성 0.001~0.01 M</p>
   </div>
 </section>
+
+<section class="slide" data-part="p4" data-title="수업 중 볼 동영상">
+  <header><h2>수업 중 볼 동영상</h2><p class="sub">컬럼 속 4단계 사이클을 움직이는 그림으로 · 접속 확인된 링크만</p></header>
+  <div class="body mid">
+    <ul class="vids">
+      <li><span class="pl">▶</span><span>
+        <b><a href="https://www.youtube.com/watch?v=yw0nrLWZSUw" target="_blank" rel="noopener">Educational video oligo synthesis</a> <em>1:37</em></b>
+        <span>볼 것 — Cytiva 애니메이션의 순서는 탈트리틸화 → 커플링 → <b>산화 → 캡핑</b>. 오늘 위젯(캡핑 → 산화)과 어디가 다른가?</span></span></li>
+      <li><span class="pl">▶</span><span>
+        <b><a href="https://www.youtube.com/watch?v=kjSojZWnPQ4" target="_blank" rel="noopener">What is Oligonucleotide Synthesis?</a> <em>4:09</em></b>
+        <span>볼 것 — 탈트리틸화 · 활성화 · 커플링 · 아세틸 캡핑 · 산화 · 암모니아 절단까지 오늘 PART 1–3 전체를 한 번에 (METTLER TOLEDO)</span></span></li>
+      <li><span class="pl">▶</span><span>
+        <b><a href="https://www.youtube.com/watch?v=1S0x3aRCviM" target="_blank" rel="noopener">Gene Synthesis by GeneArt®</a> <em>4:11</em></b>
+        <span>볼 것 — 실제 공장: 필터를 찍어 웰에 넣고 CPG를 채운 뒤 자동 합성 · 하루 13,500 올리고 (Thermo Fisher GeneArt) — 후반 PCR 조립은 7-1에서 다시</span></span></li>
+      <li><span class="pl">▶</span><span>
+        <b><a href="https://www.youtube.com/watch?v=GXOR09Q_VEA" target="_blank" rel="noopener">Unit 3 Part 3   Synthesizing DNA by Solid Phase Synthesis</a> <em>8:37</em></b>
+        <span>복습 — 교토대 공개강의 '생명의 화학' 고상 합성 편</span></span></li>
+      <li><span class="pl">▶</span><span>
+        <b><a href="https://www.youtube.com/watch?v=t29CQywQpMY" target="_blank" rel="noopener">Solid state oligonucleotide synthesis (phosphoramidite method)</a> <em>27:29</em></b>
+        <span>과제 시청 — "프라이머를 주문하면 무슨 일이 일어나나": 보호기 · 부반응 · 절단까지 긴 해설</span></span></li>
+    </ul>
+  </div>
+  <p class="src">YouTube · 2026-09-29 접속 확인</p>
+</section>
+
 
 <!-- ===================== 정리 ===================== -->
 <section class="slide" data-part="p5" data-title="정리">

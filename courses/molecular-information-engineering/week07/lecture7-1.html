@@ -459,6 +459,19 @@ table.tbl th.num{font-family:inherit}
 /* p.sub 안에서도 표 범례를 같은 색으로 쓴다 */
 p.sub .pap{color:var(--amber);font-weight:700} p.sub .gray{color:var(--gray)}
 
+/* 동영상 목록 (6-2와 동일) */
+/* 동영상 목록 (6-2/extra.css와 동일) */
+ul.vids{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.42em}
+ul.vids li{display:grid;grid-template-columns:1.9em 1fr;gap:.6em;align-items:start;
+  border:1px solid var(--border);border-left:.22em solid var(--teal);border-radius:.3em;
+  background:var(--white);padding:.4em .7em .45em}
+ul.vids li .pl{inline-size:1.55em;block-size:1.55em;border-radius:50%;background:var(--amber);color:#fff;
+  font:700 .62em/1.55em var(--sans);text-align:center}
+ul.vids li b{font-size:.84em;line-height:1.35;color:var(--navy);display:block}
+ul.vids li b a{text-decoration:none;border-bottom:1px solid var(--teal)}
+ul.vids li span{font-size:.76em;color:var(--gray);line-height:1.4}
+ul.vids li em{font-style:normal;font-family:var(--mono);font-size:.72em;color:var(--amber);font-weight:700}
+
 </style>
 </head>
 <body>
@@ -1979,6 +1992,34 @@ Q 259.4 180.6, 260.9 180.6
   <p class="src">Assessment of enzymatically synthesized DNA for gene assembly, <i>Front Bioeng Biotechnol</i> 11:1208784 (2023) · Palluk S et al., <i>Nat Biotechnol</i> 36:645–650 (2018) · Arlow DH PhD thesis, UC Berkeley (2018) · Glen Report 37-26 · <i>Biotechnol Adv</i> (2025), doi:10.1016/j.biotechadv.2025.108604 · Forget SM et al., <i>Nucleic Acids Res</i> 53(4):gkaf115 (2025)</p>
 </section>
 
+<section class="slide" data-part="p4" data-title="수업 중 볼 동영상">
+  <header><h2>수업 중 볼 동영상 — 효소 합성 회사</h2><p class="sub">오늘 위젯 두 개를 회사가 그린 애니메이션으로 다시 · 접속 확인된 공식 영상만</p></header>
+  <div class="body mid">
+    <ul class="vids">
+      <li><span class="pl">▶</span><span>
+        <b><a href="https://www.youtube.com/watch?v=tFumRX1fbPg" target="_blank" rel="noopener">Faster, Cheaper, Better: A New Way to Synthesize DNA</a> <em>2:03</em></b>
+        <span>볼 것 — Palluk 2018의 두 대학원생이 직접 설명하는 polymerase–nucleotide conjugate (JBEI · Berkeley Lab)</span></span></li>
+      <li><span class="pl">▶</span><span>
+        <b><a href="https://www.youtube.com/watch?v=bkkhsUXAKGk" target="_blank" rel="noopener">Enzymatic DNA Synthesis Technology | Ansa Bio</a> <em>1:43</em></b>
+        <span>볼 것 — TdT에 뉴클레오타이드 하나를 매단다 → 붙인 뒤 효소가 떨어지지 않아 두 번째 부가를 막는다 → 다른 효소로 링커 절단 (conjugate 위젯의 실물)</span></span></li>
+      <li><span class="pl">▶</span><span>
+        <b><a href="https://www.youtube.com/watch?v=J9hRNsAnAl0" target="_blank" rel="noopener">DNA Script - Enzymatic DNA Synthesis (EDS) Technology</a> <em>1:41</em></b>
+        <span>볼 것 — 레진의 iDNA → 공학 TdT가 가역 종결기 dNTP 부가 → 산성 시약으로 종결기 해제 → 반복 → 효소로 절단 (가역적 종결기 위젯)</span></span></li>
+      <li><span class="pl">▶</span><span>
+        <b><a href="https://www.youtube.com/watch?v=QxOy9QLdBRA" target="_blank" rel="noopener">DNA Script SYNTAX System Workflow</a> <em>2:31</em></b>
+        <span>볼 것 — 벤치탑 장비 실물과 15분 설정. 영상 속 "60 nt"는 2021년 스펙 — 현행 키트는 기업 지도 표가 최신</span></span></li>
+      <li><span class="pl">▶</span><span>
+        <b><a href="https://www.youtube.com/watch?v=BSMmF_aXUCA" target="_blank" rel="noopener">Enzymatic DNA Synthesis EDS for Data Storage</a> <em>4:23</em></b>
+        <span>볼 것 — '제3의 길' Lee et al. 2019의 제1저자 Henry Lee가 설명하는 저장용 저비용 효소 쓰기 (Wyss Institute)</span></span></li>
+      <li><span class="pl">▶</span><span>
+        <b><a href="https://www.youtube.com/watch?v=2r4Ejsu5c_U" target="_blank" rel="noopener">Evonetix DNA synthesis on silicon arrays</a> <em>1:11</em></b>
+        <span>볼 것 — 칩 위 열 제어 합성 + 오류 검출 조립: 기업 지도의 '반도체 × 합성' 축 (6-2 트리거와 연결)</span></span></li>
+    </ul>
+  </div>
+  <p class="src">YouTube · 2026-09-29 접속 확인</p>
+</section>
+
+
 <!-- ===================== PART 5 ===================== -->
 <section class="slide sect" data-part="p5" data-title="PART 5 섹션 표지">
   <div class="sl"><div class="no">PART 5</div><h2>오류 제거와 조립</h2><p class="en">정제로 못 잡는 오류 · 혼성화 선발 · MutS · PCA</p></div>
@@ -3197,6 +3238,25 @@ END
   </div>
   <p class="src">김영창 · 노동현 · 김용대 · 김양훈, 《합성생물학》, 충북대학교 출판부, 8.3 (그림 8.11 · 8.12 · 8.13 · 8.15)</p>
 </section>
+
+<section class="slide" data-part="p5" data-title="수업 중 볼 동영상 · 조립">
+  <header><h2>수업 중 볼 동영상 — 올리고에서 유전자로</h2><p class="sub">PCA 위젯의 공장판과 다음 단계</p></header>
+  <div class="body mid">
+    <ul class="vids">
+      <li><span class="pl">▶</span><span>
+        <b><a href="https://www.youtube.com/watch?v=1S0x3aRCviM" target="_blank" rel="noopener">Gene Synthesis by GeneArt®</a> <em>4:11</em></b>
+        <span>볼 것 — 후반부: 중첩 올리고를 PCR로 조립하는 자동 스테이션(하루 약 400개 · 약 1 kb) → 클로닝 → 서열 확인 (Thermo Fisher GeneArt)</span></span></li>
+      <li><span class="pl">▶</span><span>
+        <b><a href="https://www.youtube.com/watch?v=RliAX4oJGvc" target="_blank" rel="noopener">Wyss Insitute: Low-cost gene synthesis</a> <em>3:17</em></b>
+        <span>볼 것 — 칩 한 장의 수십만 올리고를 골라 증폭해 유전자로 (Sriram Kosuri) — 6-2 칩 풀과 오늘 조립의 연결</span></span></li>
+      <li><span class="pl">▶</span><span>
+        <b><a href="https://www.youtube.com/watch?v=tlVbf5fXhp4" target="_blank" rel="noopener">Introduction to Gibson Assembly</a> <em>2:06</em></b>
+        <span>볼 것 — 엑소뉴클레이스 · 어닐링 · 중합효소 · 리가아제 한 튜브 등온 조립 — PCA 조각을 더 길게 잇는 다음 단계 (NEB)</span></span></li>
+    </ul>
+  </div>
+  <p class="src">YouTube · 2026-09-29 접속 확인</p>
+</section>
+
 
 <section class="slide" data-part="p5" data-title="정확도 로드맵">
   <header><h2>정확도 로드맵 — 오류 1개당 몇 염기</h2><p class="sub">무엇이 얼마나 개선했는가 · 그리고 용도에 따라 무엇이 충분한가</p></header>
