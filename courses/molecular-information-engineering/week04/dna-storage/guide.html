@@ -219,6 +219,7 @@ footer.end{margin-top:56px;padding-top:14px;border-top:1px solid var(--border);f
       <li><a href="#code"><span class="no">10</span>코드 설명</a></li>
       <li><a href="#run"><span class="no">11</span>실행 방법</a></li>
       <li><a href="#tasks"><span class="no">12</span>실습 과제</a></li>
+      <li><a href="#headerless"><span class="no">13</span>헤더 없는 복붙 인코딩·복호</a></li>
       <li><a href="#ref"><span class="no">R</span>참고</a></li>
     </ul>
   </div>
@@ -1894,6 +1895,37 @@ python3 dnastore.py decode reads.fastq -o out.bin</code></pre></div>
   <p class="rec"><b>기록</b> 최대 호모폴리머 · 전체 GC % · 호모폴리머 6 nt 이상 가닥 수</p>
 </li>
 </ol>
+</section>
+
+<!-- ============================================================ -->
+<section id="headerless">
+<h2>13. 헤더 없는 복붙 인코딩 · 복호</h2>
+<p class="note">앞의 DNAS-1 헤더 포함 실습을 보존하는 추가 변형입니다. 입력 byte를 행으로 자르는 단계부터 FASTA까지 한 MATLAB 스크립트에 누적해 실행하고, 별도 스크립트로 복호합니다.</p>
+
+<h3>인코딩 순서 · 148 nt strand</h3>
+<ol>
+  <li><strong>입력 → byte</strong>: 문자열은 UTF-8, 사진과 파일은 선택한 원본 파일의 byte 그대로 읽습니다.</li>
+  <li><strong>행 분할</strong>: byte를 17개씩 잘라 데이터 행 D개를 만들고, 마지막 빈 칸은 PAD 0x1B로 채웁니다. D는 짝수로 올립니다.</li>
+  <li><strong>XOR 추가</strong>: H = D/2. 행 j와 j+H를 byte별 XOR한 parity 행을 D+j 자리에 붙입니다. 총 strand 수 N = D+H입니다.</li>
+  <li><strong>index + RS</strong>: 각 17 byte 행 뒤에 고정 순번 index를 big-endian 2 byte로 붙여 19 byte 메시지를 만든 뒤 RS(27,19)를 적용합니다. RS parity는 8 byte입니다.</li>
+  <li><strong>DNA + primer</strong>: 27 byte를 MSB부터 2 bit씩 ATGC로 바꾸어 108 nt 본문을 만듭니다. 앞 primer 20 nt와 뒤 primer 20 nt를 붙이면 strand 하나가 148 nt입니다.</li>
+</ol>
+<p class="eq">D = 2⌈⌈L / 17⌉ / 2⌉ · H = D/2 · N = D+H · strand = 20 + 108 + 20 = 148 nt</p>
+<p><code>index</code>는 RS의 19 byte 메시지에 포함됩니다. 이 위치로 108 nt 본문 길이를 유지하면서 RS가 index와 행 데이터를 함께 보호합니다. 여기서 “고정”은 생성 시 순번 1..N을 부여한다는 뜻이며, 오류가 있는 read는 몸체의 RS-protected index로 묶습니다.</p>
+
+<h3>복호 순서</h3>
+<p>FASTA/FASTQ를 읽고 reverse-complement 방향을 확인 → primer 검사 → index로 read 묶기 → 가닥별 consensus → Global RS → read별 Local RS → 각 XOR 묶음에서 빠진 strand 하나 복원 → 처음 D개 데이터 행을 연결하고 입력 길이 L byte에서 자릅니다. 복원 결과 파일은 입력한 확장자로 저장합니다.</p>
+
+<p class="note"><strong>헤더가 없을 때:</strong> 원본 byte 길이 <code>L</code>, 짝수 데이터 행 수 <code>D</code>, 확장자 <code>ext</code>가 DNA 안에 저장되지 않습니다. 인코더 실행 결과를 기록해 복호 설정에 옮겨 적어야 합니다. 이 복붙 변형은 CRC도 기록하지 않으며, index 오류·삽입/결실을 포함한 noisy FASTQ에는 한계가 있습니다. 공식 DNAS-1 실습은 위의 헤더 포함 버전을 사용합니다.</p>
+
+<h3>한 파일에 단계별로 누적 실행</h3>
+<ul>
+  <li><a href="matlab/dna_encode_noheader.m">누적 MATLAB 인코더</a>를 MATLAB Online에 열고 Run을 누릅니다. 설정은 첫 섹션에서 이름·사진·파일, FASTA 이름, primer를 지정합니다. 나머지 <code>%%</code> 섹션이 byte 입력 → 분할 → XOR → RS/index → 148 nt → FASTA 순서로 이어집니다.</li>
+  <li>기본 입력은 이름 예시입니다. 사진 입력은 <code>inputMode = 'image'</code>, 파일 입력은 <code>inputMode = 'file'</code>로 설정합니다. <a href="samples/dna_helix_demo.jpg">DNA 이중나선 JPG 예시</a>를 MATLAB Drive에 올려 인코딩할 수 있습니다.</li>
+  <li>출력에서 <code>L</code>, <code>D</code>, 확장자를 기록하고 FASTA 파일을 복호기와 같은 현재 폴더에 둡니다.</li>
+  <li><a href="matlab/dna_decode_noheader.m">누적 MATLAB 디코더</a> 첫 섹션에 FASTA/FASTQ 파일명, <code>L</code>, <code>D</code>, 확장자를 넣고 전체 Run을 누릅니다. Global/Local RS·XOR 수와 복원 byte 또는 그림을 확인합니다.</li>
+</ul>
+<p class="more"><a href="downloads/dna-storage-matlab.zip">MATLAB 실습 ZIP (헤더 없는 인코더·디코더·JPG 포함)</a> · <a href="downloads/DNA_storage_encoding_decoding_4week.pptx">4주차 인코딩·복호 PPT</a> · <a href="matlab/README.md">MATLAB 실행 안내</a></p>
 </section>
 
 <!-- ============================================================ -->

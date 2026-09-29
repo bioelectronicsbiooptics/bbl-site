@@ -1,0 +1,157 @@
+%% DNA 저장 인코더 — 헤더 없음 · 고정 index · XOR → RS(27,19) · 148 nt
+% 이 파일 전체를 MATLAB 편집기에 붙여넣고 위에서 아래로 한 번에 실행하세요.
+% 입력: text(UTF-8) / image(파일 byte 그대로) / file(모든 파일 byte 그대로)
+% 순서: 입력 byte → 17 byte 데이터 행 → XOR 행 → 2 byte index → RS(27,19)
+%       → 108 nt 본문 → forward primer + reverse primer → 148 nt FASTA
+clear; clc;
+
+%% 0. 설정 — 여기만 바꿔 실행
+inputMode = 'text';             % 'text' | 'image' | 'file'
+textInput = '송영준 DNA';         % inputMode='text'일 때 입력 문자열
+inputFile = '';                 % 비우면 파일 선택창 (image / file)
+outFasta = 'dnas_out.fasta';
+F = 'AGCCTTGTGTCCATCAATCC';     % forward primer (20 nt)
+R = 'TGCGCTATGGTTTGGCTAAT';     % reverse primer (20 nt)
+
+%% 1. 입력을 byte로 읽기
+switch lower(inputMode)
+    case 'text'
+        dataBytes = uint8(unicode2native(textInput, 'UTF-8'));
+        sourceName = 'text'; ext = 'txt';
+    case {'image','file'}
+        if isempty(inputFile)
+            [fn, fp] = uigetfile('*.*', '인코딩할 파일 선택');
+            if isequal(fn, 0), error('파일 선택을 취소했습니다.'); end
+            inputFile = fullfile(fp, fn);
+        end
+        fid = fopen(inputFile, 'rb');
+        if fid < 0, error('파일을 열 수 없습니다: %s', inputFile); end
+        dataBytes = fread(fid, Inf, '*uint8').'; fclose(fid);
+        [~, sourceName, ext0] = fileparts(inputFile);
+        ext = lower(strrep(ext0, '.', ''));
+        if isempty(ext), ext = 'bin'; end
+    otherwise
+        error("inputMode는 'text', 'image', 'file' 중 하나여야 합니다.");
+end
+dataBytes = reshape(uint8(dataBytes), 1, []);
+L = numel(dataBytes);
+if L == 0, error('입력 byte가 비어 있습니다.'); end
+fprintf('입력: %s | %d byte | 확장자 .%s\n', sourceName, L, ext);
+
+%% 2. 데이터를 17 byte씩 자르고 마지막 행을 PAD(0x1B)로 채우기
+PAD = uint8(27); ROW_BYTES = 17; NSYM = 8;
+% 헤더 없는 포맷이므로 사용자가 decoder에 L과 D를 알려 줍니다.
+% 데이터 행 D는 짝수로 올림: 앞 절반과 뒤 절반을 XOR합니다.
+D = max(2, 2 * ceil(ceil(L / ROW_BYTES) / 2));
+H = D / 2; N = D + H;
+if N > 65535, error('고정 index 한계(65535 strand)를 넘었습니다.'); end
+rows = repmat(PAD, N, ROW_BYTES);
+for row = 1:D
+    first = (row - 1) * ROW_BYTES + 1;
+    last = min(row * ROW_BYTES, L);
+    if first <= last
+        rows(row, 1:last-first+1) = dataBytes(first:last);
+    end
+end
+fprintf('분할: %d data rows × 17 byte (D=%d, H=%d, N=%d)\n', D, D, H, N);
+
+%% 3. 바깥 XOR 행을 덧붙이기: XOR(data row j, data row j+H)
+% XOR 행의 고정 위치는 D+j (j=1..H)입니다.
+for j = 1:H
+    rows(D + j, :) = bitxor(rows(j, :), rows(j + H, :));
+end
+fprintf('XOR: %d parity rows를 data rows 뒤에 추가했습니다.\n', H);
+
+%% 4. 고정 index 2 byte를 각 행 뒤에 붙이고 안쪽 RS(27,19)
+% RS 입력 19 byte = 17 data/XOR byte + big-endian strand index 2 byte.
+% RS 출력 27 byte = 19 message + 8 parity byte = 108 nt.
+F = upper(char(F)); R = upper(char(R));
+if numel(F) ~= 20 || numel(R) ~= 20 || ...
+        any(~ismember(F, 'ATGC')) || any(~ismember(R, 'ATGC'))
+    error('F와 R은 각각 A/T/G/C로 된 20 nt primer여야 합니다.');
+end
+seqs = cell(1, N);
+for index = 1:N
+    indexBytes = uint8([floor(index / 256), mod(index, 256)]);
+    message = [rows(index, :) indexBytes];
+    codeword = rs_encode_27_19(message, NSYM);
+    bodyDNA = bytes_to_dna(codeword);
+    seqs{index} = [F bodyDNA R];
+    if numel(seqs{index}) ~= 148
+        error('내부 길이 오류: index %d의 길이는 %d nt입니다.', index, numel(seqs{index}));
+    end
+end
+fprintf('RS + index + primer: %d strands, strand length %d nt.\n', N, numel(seqs{1}));
+
+%% 5. FASTA 출력 (index는 RS message에 기록되고 FASTA 이름도 고정 순번)
+fid = fopen(outFasta, 'wt');
+if fid < 0, error('출력 파일을 만들 수 없습니다: %s', outFasta); end
+for index = 1:N
+    fprintf(fid, '>strand_%05d|role=%s|index=%d\n%s\n', index, ...
+        ternary(index <= D, 'data', 'xor'), index, seqs{index});
+end
+fclose(fid);
+fprintf('저장: %s\n', outFasta);
+fprintf('디코더 설정값: L=%d, D=%d, ext=''%s''\n', L, D, ext);
+
+%% 로컬 함수 — 외부 Toolbox 불필요
+function codeword = rs_encode_27_19(message, nsym)
+% GF(256), primitive polynomial 0x11D, roots alpha^1 ... alpha^8.
+message = double(reshape(uint8(message), 1, []));
+if numel(message) ~= 19 || nsym ~= 8
+    error('RS(27,19)는 19 message byte와 8 parity byte를 요구합니다.');
+end
+[powers, logs] = gf_tables();
+generator = 1;
+for root = 1:nsym
+    shifted = [0 gf_multiply(generator, powers(root + 1), powers, logs)];
+    generator = bitxor([generator 0], shifted);
+end
+work = [message zeros(1, nsym)];
+for k = 1:numel(message)
+    coefficient = work(k);
+    if coefficient ~= 0
+        idx = k + (1:nsym);
+        product = gf_multiply(generator(2:end), coefficient, powers, logs);
+        work(idx) = bitxor(work(idx), product);
+    end
+end
+codeword = uint8([message work(numel(message) + 1:end)]);
+end
+
+function product = gf_multiply(values, value, powers, logs)
+product = zeros(size(values));
+nonzero = values ~= 0 & value ~= 0;
+if any(nonzero)
+    exponents = logs(values(nonzero) + 1) + logs(value + 1);
+    product(nonzero) = powers(exponents + 1);
+end
+end
+
+function [powers, logs] = gf_tables()
+persistent p l
+if isempty(p)
+    p = zeros(1, 512); l = zeros(1, 256); x = 1;
+    for k = 0:254
+        p(k + 1) = x; l(x + 1) = k;
+        x = x * 2;
+        if x >= 256, x = bitxor(x, 285); end
+    end
+    for k = 255:511, p(k + 1) = p(k - 254); end
+end
+powers = p; logs = l;
+end
+
+function dna = bytes_to_dna(bytes)
+% 2-bit mapping 00=A, 01=T, 10=G, 11=C; byte MSB first.
+bases = 'ATGC'; b = double(reshape(uint8(bytes), 1, []));
+v = zeros(4, numel(b));
+for k = 1:4
+    v(k, :) = mod(floor(b / 2^(8 - 2*k)), 4);
+end
+dna = bases(reshape(v, 1, []) + 1);
+end
+
+function out = ternary(test, yes, no)
+if test, out = yes; else, out = no; end
+end

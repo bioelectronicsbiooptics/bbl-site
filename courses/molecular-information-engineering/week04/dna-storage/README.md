@@ -14,6 +14,8 @@
 - [Colab 노트북](https://colab.research.google.com/github/bioelectronicsbiooptics/bbl-site/blob/main/courses/molecular-information-engineering/week04/dna-storage/python/dna_storage_lab.ipynb)
 - [Python 실습 ZIP](downloads/dna-storage-python.zip)
 - [MATLAB 실습 ZIP](downloads/dna-storage-matlab.zip)
+- [4주차 인코딩·복호 PPT](downloads/DNA_storage_encoding_decoding_4week.pptx)
+- [추가: 헤더 없는 복붙 인코더·디코더](matlab/README.md#13-헤더-없는-고정-index-실습)
 - ZIP 압축 해제 후 `dna-storage-python/python/` 또는
   `dna-storage-matlab/matlab/`에서 실행. 상위 `samples/`를 함께 유지.
 
@@ -82,13 +84,16 @@ node tests/test_web.mjs
 | `fig/*.svg`, `img/*.png` | 설명서 그림·실제 웹 화면 |
 | `python/dnastore.py` | 표준 라이브러리 기반 API·CLI |
 | `python/dna_storage_lab.ipynb` | 실행 출력이 포함된 Colab 실습 |
-| `matlab/dnas_*.m` | 기본 MATLAB 부호화·채널·복호 함수 |
+| `matlab/dnas_*.m` | 기본 MATLAB 부호화·채널·복호 함수 (헤더 포함 DNAS-1) |
+| `matlab/dna_*_noheader.m` | 고정 index·헤더 없는 148 nt 누적 인코더·디코더 연습 |
 | `matlab/demo_*.m`, `run_all.m`, `test_vectors.m` | 단계별 실습·검산 |
 | `web/dnastore.js` | 브라우저·Node 공용 UMD 코덱 |
 | `samples/sample_photo.jpg` | 코드로 그린 64 px 예제 그림 |
+| `samples/dna_helix_demo.jpg` | 헤더 없는 인코더에 쓰는 DNA 이중나선 JPEG 예시 |
 | `samples/make_sample.py` | 예제 그림 생성 코드 |
 | `downloads/dna-storage-python.zip` | Python 코드·노트북·README·예제 사진 |
 | `downloads/dna-storage-matlab.zip` | MATLAB 함수·실습·README·예제 사진 |
+| `downloads/DNA_storage_encoding_decoding_4week.pptx` | 4주차 인코딩·복호 순서와 검증 결과 발표 자료 |
 | `README.md` | 실행법·배포 파일표 |
 
 ## 사이트 배포 도구
