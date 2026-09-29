@@ -1,0 +1,583 @@
+{
+  "sources": {
+    "fable": "Fable v2 / 46 pages",
+    "astra": "Astra v2 / 46 pages"
+  },
+  "selection": "Astra covers; original Astra 6 and 15 included before Fable counterparts; original 18 uses Fable; all other body slides retained.",
+  "slides": [
+    {
+      "page": 1,
+      "source": "astra",
+      "original_page": 1,
+      "title": "해시와 DNA 코딩 전략",
+      "source_slide_sha256": "9343377e7c08b430c635383171c65c823d25606509e5994da96bd168e53cc061"
+    },
+    {
+      "page": 2,
+      "source": "fable",
+      "original_page": 2,
+      "title": "교과서 속 DNA 데이터 저장",
+      "source_slide_sha256": "6b821cd91cff4cd645eb0587ae00feef930f368c4d49221543a438371231af56"
+    },
+    {
+      "page": 3,
+      "source": "astra",
+      "original_page": 2,
+      "title": "교과서에서 출발하는 DNA 데이터 저장",
+      "source_slide_sha256": "24680876f68039e9f80b7839a85dd5aaef3b318a0ce0512328aeebae26b4d25b"
+    },
+    {
+      "page": 4,
+      "source": "fable",
+      "original_page": 3,
+      "title": "5단계와 여덟 기술의 위치",
+      "source_slide_sha256": "a8edbaf9eaec3ef9bdce59f62d942547ad64e91f69d0f85a1bf44ebcbc2970c1"
+    },
+    {
+      "page": 5,
+      "source": "astra",
+      "original_page": 3,
+      "title": "저장 5단계와 여덟 기술의 위치",
+      "source_slide_sha256": "141823c8262148311493e0fa1dabd190782b30328b76e04fdcdac597a20deded"
+    },
+    {
+      "page": 6,
+      "source": "astra",
+      "original_page": 4,
+      "title": "PART 1 · SHA-256",
+      "source_slide_sha256": "74abe8345c25d8fbba430b6fb4181eb8e771885b5a71246b08eda992cfa33c29"
+    },
+    {
+      "page": 7,
+      "source": "fable",
+      "original_page": 5,
+      "title": "SHA-256 · 원리",
+      "source_slide_sha256": "3b4da0283c3b4cf05af595da6ac71f594094cbd9d97fadcface13ba6c7c5f985"
+    },
+    {
+      "page": 8,
+      "source": "astra",
+      "original_page": 5,
+      "title": "SHA-256의 원리 — 파일의 지문",
+      "source_slide_sha256": "28e37bf4a938fc96d7d5776278073dcf04ac56e5ac7647b8186308601905d4dd"
+    },
+    {
+      "page": 9,
+      "source": "astra",
+      "original_page": 6,
+      "title": "SHA-256의 수학 — bit 수와 경우의 수",
+      "source_slide_sha256": "013f2b2e7df41765ee1f859182210ced55a21a9b2bbe886819c27d1838637184"
+    },
+    {
+      "page": 10,
+      "source": "fable",
+      "original_page": 6,
+      "title": "SHA-256 · 수학 다이어그램",
+      "source_slide_sha256": "7385112a764de9fe7b94a38b5bc988c636332f6137ed712e60265706ced6d1c4"
+    },
+    {
+      "page": 11,
+      "source": "fable",
+      "original_page": 7,
+      "title": "SHA-256 · 표준 문서 그림",
+      "source_slide_sha256": "553e4759e22099ba18c2a459ef98ec37e0e835e6efdb8854d11f3920220d8115"
+    },
+    {
+      "page": 12,
+      "source": "astra",
+      "original_page": 7,
+      "title": "원 표준 그림 — SHA-256의 출력 크기",
+      "source_slide_sha256": "3c393dac81ee2884e7022c035ef2fb23e528c6934998557c9afe33e6c731fd25"
+    },
+    {
+      "page": 13,
+      "source": "fable",
+      "original_page": 8,
+      "title": "SHA-256 · DNA 저장",
+      "source_slide_sha256": "166ea0a3c6b5f14bb992ab2a51e5ad7a76ade5eb6ec1926a81657edbc788ad7b"
+    },
+    {
+      "page": 14,
+      "source": "astra",
+      "original_page": 8,
+      "title": "DNA 저장 관점 — 오류 교정 뒤의 최종 대조",
+      "source_slide_sha256": "c53c65b78adff2b4f7b257763cc92fa94841a7dcab973111cd4a2a7e6587dfb8"
+    },
+    {
+      "page": 15,
+      "source": "astra",
+      "original_page": 9,
+      "title": "PART 2 · DNA Fountain",
+      "source_slide_sha256": "3cc06879941ad170652e5dd2995e2d5b59a66d5a1180cfbe8b0e0d4de327c334"
+    },
+    {
+      "page": 16,
+      "source": "fable",
+      "original_page": 10,
+      "title": "DNA Fountain · 원리",
+      "source_slide_sha256": "1909dbcfcaf9c6c6efeb203542683fbd59f6516e77a672b3b6f613befefb4c4e"
+    },
+    {
+      "page": 17,
+      "source": "astra",
+      "original_page": 10,
+      "title": "DNA Fountain의 원리 — 조각을 섞은 단서",
+      "source_slide_sha256": "51a48f4e506d867f1ebae4d4b655600c551ababa49fd95688c7db453ae43261a"
+    },
+    {
+      "page": 18,
+      "source": "fable",
+      "original_page": 11,
+      "title": "DNA Fountain · 수학 다이어그램",
+      "source_slide_sha256": "95ed362da2f21bad737f8970b6b4d3e6590c34e3ea6bfd33742bc1f858f9b63e"
+    },
+    {
+      "page": 19,
+      "source": "astra",
+      "original_page": 11,
+      "title": "DNA Fountain의 수학 — 같은 값을 XOR하면 상쇄",
+      "source_slide_sha256": "0b80c372a8c5264b5e929b3ff4f05e2f5390bc5464c0829de0a7b72cf93caa23"
+    },
+    {
+      "page": 20,
+      "source": "fable",
+      "original_page": 12,
+      "title": "DNA Fountain · 논문 그림",
+      "source_slide_sha256": "b85603729d07e4b71402658d08c8f74444d5cf0e9d7d8c6d6d40f73bcf074c9f"
+    },
+    {
+      "page": 21,
+      "source": "astra",
+      "original_page": 12,
+      "title": "원 논문 그림 — droplet 생성과 서열 선별",
+      "source_slide_sha256": "416e9c7f34e8019444a8c25fa6cc2016cad37e81e3bf2295612a041d002910e8"
+    },
+    {
+      "page": 22,
+      "source": "fable",
+      "original_page": 13,
+      "title": "DNA Fountain · DNA 저장",
+      "source_slide_sha256": "1ba471e937beed014e2a5d6162a082a5ffa5d7a3906827dd0ff2446c07b9a888"
+    },
+    {
+      "page": 23,
+      "source": "astra",
+      "original_page": 13,
+      "title": "DNA 저장 관점 — 합성 가능한 여분의 가닥",
+      "source_slide_sha256": "5562b5960011dc08f0ab655f3c9137c9c404c279db9c67c5cc1e2001259e80b6"
+    },
+    {
+      "page": 24,
+      "source": "astra",
+      "original_page": 14,
+      "title": "PART 3 · Yin–Yang",
+      "source_slide_sha256": "f534b899efbc8eedad8f994cca5a9c330e5de0965f86b855c48c1a4a93a3b26b"
+    },
+    {
+      "page": 25,
+      "source": "astra",
+      "original_page": 15,
+      "title": "Yin–Yang의 원리 — 두 정보 흐름의 결합",
+      "source_slide_sha256": "fd3c3b93fe241c9a8472eb6d3174dbcc431aa075835fad9daae5055727a970ed"
+    },
+    {
+      "page": 26,
+      "source": "fable",
+      "original_page": 15,
+      "title": "Yin–Yang · 원리",
+      "source_slide_sha256": "7d437a37c188e89d751cbb576e772e0c34ccb06d3e339bc2cb69a891f604dacd"
+    },
+    {
+      "page": 27,
+      "source": "fable",
+      "original_page": 16,
+      "title": "Yin–Yang · 수학 다이어그램",
+      "source_slide_sha256": "5d64fca872aaefbb44b76fb98d96f901b588fa3caac5896bd59b82142b2ab133"
+    },
+    {
+      "page": 28,
+      "source": "astra",
+      "original_page": 16,
+      "title": "Yin–Yang의 수학 — 후보 집합의 교집합",
+      "source_slide_sha256": "47521fbb3745f10d0e410188eed3c210665739e4e3913f7b5b836fe331f0b697"
+    },
+    {
+      "page": 29,
+      "source": "fable",
+      "original_page": 17,
+      "title": "Yin–Yang · 논문 그림",
+      "source_slide_sha256": "3cf8cd2c59f191c4c84ee0ce99ff8554230438d6bc5ffacd225e2db39c814677"
+    },
+    {
+      "page": 30,
+      "source": "astra",
+      "original_page": 17,
+      "title": "원 논문 그림 — 두 규칙과 screening",
+      "source_slide_sha256": "33d72aa82aa65a39833d8b0abaa27c5385bb00a03c98a23f69c83016afe0af53"
+    },
+    {
+      "page": 31,
+      "source": "fable",
+      "original_page": 18,
+      "title": "Yin–Yang · DNA 저장",
+      "source_slide_sha256": "96d27841ba65f604cdad640b716438415d043c54596ff296c010aed24275275d"
+    },
+    {
+      "page": 32,
+      "source": "astra",
+      "original_page": 19,
+      "title": "PART 4 · HEDGES",
+      "source_slide_sha256": "a349736f8eb79405a8c3e447f596a10a959b2b8a8f576e88171d3a02f7df06d1"
+    },
+    {
+      "page": 33,
+      "source": "fable",
+      "original_page": 20,
+      "title": "HEDGES · 원리",
+      "source_slide_sha256": "c4d1172f7eaf27630fa26e5f93b3a62a3589f6abce02f04053d930e2df0881b1"
+    },
+    {
+      "page": 34,
+      "source": "astra",
+      "original_page": 20,
+      "title": "HEDGES의 원리 — 관측과 맞는 경로 찾기",
+      "source_slide_sha256": "ab25c730bb1b93cd3948fbf4205a9aa63b8e67a0ce40e8e1f633e7688a525dec"
+    },
+    {
+      "page": 35,
+      "source": "fable",
+      "original_page": 21,
+      "title": "HEDGES · 수학 다이어그램",
+      "source_slide_sha256": "8f1d266a2c2a3c0306e709d41395196498ddb511322664824119a51f50538fcf"
+    },
+    {
+      "page": 36,
+      "source": "astra",
+      "original_page": 21,
+      "title": "HEDGES의 수학 — 넷으로 나눈 나머지",
+      "source_slide_sha256": "a95d338d61e489cb92d71be8dc95db3a55eb3e50b3454f03744859e4c8923faf"
+    },
+    {
+      "page": 37,
+      "source": "fable",
+      "original_page": 22,
+      "title": "HEDGES · 논문 그림",
+      "source_slide_sha256": "3fd0b08a4bc9c0c6009401905043118bd90f94101e84fb25c304a24fbd7571b1"
+    },
+    {
+      "page": 38,
+      "source": "astra",
+      "original_page": 22,
+      "title": "원 논문 그림 — single read와 두 층의 복구",
+      "source_slide_sha256": "43fe4e4b0f36c6d64d11b20c1b0e3416cf95b0640308188cfa52668ad1d57eb1"
+    },
+    {
+      "page": 39,
+      "source": "fable",
+      "original_page": 23,
+      "title": "HEDGES · DNA 저장",
+      "source_slide_sha256": "6d8d1f47d78e66dff92ce8b39da4a711534274d5448540d37ad40f1a85f8dca4"
+    },
+    {
+      "page": 40,
+      "source": "astra",
+      "original_page": 23,
+      "title": "DNA 저장 관점 — 가닥 내부의 indel 교정",
+      "source_slide_sha256": "f7280276fe031b4a840f4983e8e6691c6611b337a61587c6ee90a57db6cb95bb"
+    },
+    {
+      "page": 41,
+      "source": "astra",
+      "original_page": 24,
+      "title": "PART 5 · k-mer",
+      "source_slide_sha256": "314a50edaad385a83dbf99f8982e83d319b9d91b12a9b24300b5595183ac58ec"
+    },
+    {
+      "page": 42,
+      "source": "fable",
+      "original_page": 25,
+      "title": "k-mer · 원리",
+      "source_slide_sha256": "f9169b04f5853496f49a478a7f18d574898c6acaf8fff682ab8589fad5f2d331"
+    },
+    {
+      "page": 43,
+      "source": "astra",
+      "original_page": 25,
+      "title": "k-mer의 원리 — 겹치는 짧은 단어",
+      "source_slide_sha256": "0ed8abcccb059c15be9dad1a91f3982c7b67b7c7bc4c42f3f809bb7e289ad309"
+    },
+    {
+      "page": 44,
+      "source": "fable",
+      "original_page": 26,
+      "title": "k-mer · 수학 다이어그램",
+      "source_slide_sha256": "99c80eb8c8fadc09aa1e7509562a2de9ece867226c7d6f6ad38b1a807f4fe62d"
+    },
+    {
+      "page": 45,
+      "source": "astra",
+      "original_page": 26,
+      "title": "k-mer의 수학 — 창의 수와 단어의 종류",
+      "source_slide_sha256": "4203c18b0f02a4d239357b683707c73ad1133859692550e304cd5ded8fde4250"
+    },
+    {
+      "page": 46,
+      "source": "fable",
+      "original_page": 27,
+      "title": "k-mer · 논문 그림",
+      "source_slide_sha256": "7e7b276c21b91a2a27be252b2e6c680bc7a9ffc407725c149378e422754e2fae"
+    },
+    {
+      "page": 47,
+      "source": "astra",
+      "original_page": 27,
+      "title": "원 논문 그림 — read 군집화에서 합의 서열까지",
+      "source_slide_sha256": "b3e044ff45f111c4cb5b99290959551d1aa6d89f9126e72a06353e9b75d0b635"
+    },
+    {
+      "page": 48,
+      "source": "fable",
+      "original_page": 28,
+      "title": "k-mer · DNA 저장",
+      "source_slide_sha256": "e22b5c7c147fd6c3248a461fedb0b93200f166ef2659fc0d63df5789e2627b1a"
+    },
+    {
+      "page": 49,
+      "source": "astra",
+      "original_page": 28,
+      "title": "DNA 저장 관점 — 같은 원본의 read 모으기",
+      "source_slide_sha256": "6891b5ed631d79b3b6b8f29c109fda8599ff33e4533995b19294b70f03694f68"
+    },
+    {
+      "page": 50,
+      "source": "astra",
+      "original_page": 29,
+      "title": "PART 6 · mCGR",
+      "source_slide_sha256": "01459530f46ddafc770fcd8e5def6c79e33806b1229282e2d672aa08db3b0b05"
+    },
+    {
+      "page": 51,
+      "source": "fable",
+      "original_page": 30,
+      "title": "mCGR · 원리",
+      "source_slide_sha256": "eb74671b800a1c00448fa4b301033500cdfda09b7e41970a7ec2f1b41cc16792"
+    },
+    {
+      "page": 52,
+      "source": "astra",
+      "original_page": 30,
+      "title": "mCGR의 원리 — 절반 이동을 모은 지도",
+      "source_slide_sha256": "0c420a8c497a8ef256a9bcf4a480f696230915347f27030823c05dc48dfaa047"
+    },
+    {
+      "page": 53,
+      "source": "fable",
+      "original_page": 31,
+      "title": "mCGR · 수학 다이어그램",
+      "source_slide_sha256": "b2eadd2f23b37965026b6f1bf674182144da86d40303dd142766c2d301e254b3"
+    },
+    {
+      "page": 54,
+      "source": "astra",
+      "original_page": 31,
+      "title": "mCGR의 수학 — 절반의 절반",
+      "source_slide_sha256": "3f286153b65329f7052a491ce55af1d5aab7252305efb3a779fff96034c383fb"
+    },
+    {
+      "page": 55,
+      "source": "fable",
+      "original_page": 32,
+      "title": "mCGR · 논문 그림",
+      "source_slide_sha256": "bc8a26e9921cd1e83d0af3b7826d225f8f78393f091fd046f65c60f0f7596a9d"
+    },
+    {
+      "page": 56,
+      "source": "astra",
+      "original_page": 32,
+      "title": "원 논문 그림 — Jikji 서열의 matrix CGR",
+      "source_slide_sha256": "9c9363656c64308421e7a757cf0eda0ad62abf683425752ae7911032c3f0b295"
+    },
+    {
+      "page": 57,
+      "source": "fable",
+      "original_page": 33,
+      "title": "mCGR · DNA 저장",
+      "source_slide_sha256": "da54d4ac00d9b364a5715d285a66d78fea82ec6e9f990b9186524ac1731fa51d"
+    },
+    {
+      "page": 58,
+      "source": "astra",
+      "original_page": 33,
+      "title": "DNA 저장 관점 — 분포의 고르기 비교",
+      "source_slide_sha256": "ab12901c1ea1bf3730828f36bc45130c5145e15d1885b3b4c7520c503c4d0d19"
+    },
+    {
+      "page": 59,
+      "source": "astra",
+      "original_page": 34,
+      "title": "PART 7 · LDPC 부호",
+      "source_slide_sha256": "203995a78b1fc589ffef47988bce7aa2f18a2025f53e9588310b5e8f7c03996f"
+    },
+    {
+      "page": 60,
+      "source": "fable",
+      "original_page": 35,
+      "title": "LDPC · 원리",
+      "source_slide_sha256": "e5a6178b9555509e41d97c168f3fa045a90ee8424ba7dae3c955ad6f69a6d104"
+    },
+    {
+      "page": 61,
+      "source": "astra",
+      "original_page": 35,
+      "title": "LDPC의 원리 — 성긴 연결의 패리티 검사",
+      "source_slide_sha256": "02164b88235a07173202f0ae0fa8d9ded95a1f699bce8ad0201653997d5f50b6"
+    },
+    {
+      "page": 62,
+      "source": "fable",
+      "original_page": 36,
+      "title": "LDPC · 수학 다이어그램",
+      "source_slide_sha256": "d9378a2c3d1955c563c9afa32a3c6d4b564adbdf1e72b29d7c35480f967f6004"
+    },
+    {
+      "page": 63,
+      "source": "astra",
+      "original_page": 36,
+      "title": "LDPC의 수학 — 불만족 검사가 모인 bit 뒤집기",
+      "source_slide_sha256": "eaeddfd5e727c21d2c7bc4bb732533e46116e534184e12499e40bbb82a3f96bd"
+    },
+    {
+      "page": 64,
+      "source": "fable",
+      "original_page": 37,
+      "title": "LDPC · 논문 그림",
+      "source_slide_sha256": "39e2c4c19d1c10f826cd02b6fa00978aedbaaf387b41e7efa0ce505434e956d6"
+    },
+    {
+      "page": 65,
+      "source": "astra",
+      "original_page": 37,
+      "title": "원 논문 그림 — LDPC를 중심으로 연결한 저장 과정",
+      "source_slide_sha256": "a183c570e279246749352c3f16f47414be48a529dc1ffeb726768ef5941d5543"
+    },
+    {
+      "page": 66,
+      "source": "fable",
+      "original_page": 38,
+      "title": "LDPC · DNA 저장",
+      "source_slide_sha256": "48da3729a76826c5a311c3e1804230f26f4218fcf96900c59786de95f356408d"
+    },
+    {
+      "page": 67,
+      "source": "astra",
+      "original_page": 38,
+      "title": "DNA 저장 관점 — 오류와 소실의 공동 복구",
+      "source_slide_sha256": "afe41b2db38d58acf97e61f8081ea93592e341bc8cb4602614fb1e048c289b31"
+    },
+    {
+      "page": 68,
+      "source": "astra",
+      "original_page": 39,
+      "title": "PART 8 · VT 부호",
+      "source_slide_sha256": "6af72eff6c963e6fd3bb96f408f0c36fb5b592eb0c3563200a7500f5d5b5e537"
+    },
+    {
+      "page": 69,
+      "source": "fable",
+      "original_page": 40,
+      "title": "VT · 원리",
+      "source_slide_sha256": "bdb305db7dde5d09196b4b636c5367f9fc002968187bfbb1e48e218d231be787"
+    },
+    {
+      "page": 70,
+      "source": "astra",
+      "original_page": 40,
+      "title": "VT의 원리 — 위치를 반영한 검사합",
+      "source_slide_sha256": "18703fce85c4996915f9d95e30ae8326bc0463338ae0656e55f6aff23033b984"
+    },
+    {
+      "page": 71,
+      "source": "fable",
+      "original_page": 41,
+      "title": "VT · 수학 다이어그램",
+      "source_slide_sha256": "6cb5d498cc58904bd71c63d721d26e15a4b6919e736c7d8a804eae5e372e50ad"
+    },
+    {
+      "page": 72,
+      "source": "astra",
+      "original_page": 41,
+      "title": "VT의 수학 — 검사합 차이와 1의 개수",
+      "source_slide_sha256": "a9172e8e660c8503575b1c8b6fbdc9a62de62a6fd4d967941ba7b9ace855ccb4"
+    },
+    {
+      "page": 73,
+      "source": "fable",
+      "original_page": 42,
+      "title": "VT · 논문 그림",
+      "source_slide_sha256": "f144e4dfb2c6a603465399fc256a2ad4b983ca0fe9dc51e81606fd5a1b09a18d"
+    },
+    {
+      "page": 74,
+      "source": "astra",
+      "original_page": 42,
+      "title": "원 논문 그림 — DNA용 VT 구조의 활용",
+      "source_slide_sha256": "d76b54fb2d2d01d55e2d83e4c01b35dbb5576f1d1c9fbd0b9dcfbfd510ed69ea"
+    },
+    {
+      "page": 75,
+      "source": "fable",
+      "original_page": 43,
+      "title": "VT · DNA 저장",
+      "source_slide_sha256": "7671a2b370df7288384e78dab0315f5e830eb4ce67d0b77bbee076e4faa8b678"
+    },
+    {
+      "page": 76,
+      "source": "astra",
+      "original_page": 43,
+      "title": "DNA 저장 관점 — 결실로 밀린 위치에 대응",
+      "source_slide_sha256": "6731541b70b5d87a221903fe5bcf74101897cf0afe1b0446cf2b0c6cb31507d7"
+    },
+    {
+      "page": 77,
+      "source": "fable",
+      "original_page": 44,
+      "title": "수학으로 한 장 정리",
+      "source_slide_sha256": "4282b7886640f3712cb482da8228e2f819f22b61cc13abd65aa7cd46fb237b6f"
+    },
+    {
+      "page": 78,
+      "source": "astra",
+      "original_page": 44,
+      "title": "수학으로 한 장 정리",
+      "source_slide_sha256": "041594d5c9ff46d4ba72d5855dbe88c8a8b5f214beaf1ced8ff17e7e41337dbe"
+    },
+    {
+      "page": 79,
+      "source": "fable",
+      "original_page": 45,
+      "title": "여덟 기술의 역할",
+      "source_slide_sha256": "25650dafeeda4deb3ce4fd40840da74854bb64bed400b023e7d0ceb31fe6a887"
+    },
+    {
+      "page": 80,
+      "source": "astra",
+      "original_page": 45,
+      "title": "역할로 한 장 정리",
+      "source_slide_sha256": "6e301c80324d701c5cf4a2d3bfe14ef08e64d9e35a9e4e7a280e1a029de37690"
+    },
+    {
+      "page": 81,
+      "source": "fable",
+      "original_page": 46,
+      "title": "Q and A",
+      "source_slide_sha256": "72c74cf495d7e90a0706073a510a25712669cc754400734b1884d4826990a9eb"
+    },
+    {
+      "page": 82,
+      "source": "astra",
+      "original_page": 46,
+      "title": "정리 — 오류의 종류에 맞는 도구 선택",
+      "source_slide_sha256": "a7c229da427d71bae36119e2d481bc8d53500cc430ff39bba45b3c8d5cd66d42"
+    }
+  ]
+}
