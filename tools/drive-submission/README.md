@@ -31,3 +31,5 @@ Large downloads concatenate bounded server parts in the student's browser into o
 2026-09-29, MATLAB R2026b:
 - 27-byte text: 6 reads, Global RS 2, XOR 1, original bytes identical.
 - 35,298-byte JPG: 9,195 reads, Global RS 3,065, XOR 52, original bytes identical.
+
+Live deployment validation (version 4, 2026-09-29): existing receipt refreshed into a separate FASTQ folder; downloaded six-read FASTQ and its generated Decoding.m recovered the prior 13-byte text in MATLAB (Global RS 2, XOR 1). A new production submission under the explicit TESTW12 test identifier automatically generated its FASTQ and returned the Week 12 receipt link. A 500,000-byte capacity test produced 41,776,866 FASTQ bytes in 15 parts, each at most 2,889,000 bytes.
