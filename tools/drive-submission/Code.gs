@@ -1,78 +1,114 @@
-// 홈페이지 내 학생 제출 폼. 배포 실행 주체: 소유자 / 접근: 모든 사용자.
-// 폴더는 비공개로 유지합니다. 학생에게 Drive 폴더나 파일 URL을 공개하지 않습니다.
-function doGet() {
+// Deploy as the owner; access: Google-account users (Workspace policy).
+// FASTA and FASTQ folders stay private. A random submission receipt gates access.
+function doGet(e) {
   setup_();
-  return HtmlService.createHtmlOutput(FORM_HTML_)
-    .setTitle('4-3강 DNA 실습 제출')
+  const isWeek12 = e && e.parameter && e.parameter.view === 'week12';
+  const html = isWeek12 ? WEEK12_HTML_.replace('__INITIAL_RECEIPT__', JSON.stringify(e.parameter.receipt ? receipt_(e.parameter.receipt) : '')) : FORM_HTML_;
+  return HtmlService.createHtmlOutput(html)
+    .setTitle(isWeek12 ? '12주차 FASTQ 복호화 실습' : '4-3강 DNA 실습 제출')
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
 }
-
-// 소유자가 편집기에서 한 번 실행합니다. FOLDER_ID가 없을 때만 폴더 생성.
 function setup_() {
-  const props = PropertiesService.getScriptProperties();
-  let id = props.getProperty('FOLDER_ID');
-  if (!id) {
-    id = DriveApp.createFolder('분자정보공학_4주차_DNA_제출').getId();
-    props.setProperty('FOLDER_ID', id);
-  }
-  console.log('제출 폴더: https://drive.google.com/drive/folders/' + id);
-}
-
-// 브라우저에서 google.script.run으로 호출되는 유일한 업로드 함수입니다.
-// 파일 검사를 서버에서도 반복하여 임의 파일과 잘못된 데이터 저장을 막습니다.
-function submitAssignment(form) {
-  const clean = (value, max) => {
-    const s = String(value || '').trim();
-    if (!s || s.length > max || /[\x00-\x1f\/\\]/.test(s)) throw new Error('이름과 학번을 확인하세요.');
-    return s.replace(/[^\p{L}\p{N}_-]/gu, '_');
-  };
-  const name = clean(form.student_name, 60), id = clean(form.student_id, 40);
-  const requestId = String(form.request_id || '');
-  if (!/^[a-zA-Z0-9-]{16,64}$/.test(requestId)) throw new Error('페이지를 새로 열고 다시 제출하세요.');
-  const blob = form.fasta;
-  if (!blob || typeof blob.getBytes !== 'function') throw new Error('FASTA 파일을 선택하세요.');
-  const bytes = blob.getBytes();
-  if (!bytes.length || bytes.length > 20*1024*1024) throw new Error('FASTA 파일은 20 MB 이하여야 합니다.');
-  if (!/\.(fa|fasta|fna)$/i.test(blob.getName())) throw new Error('FASTA 확장자를 확인하세요.');
-  const lines = blob.getDataAsString('UTF-8').replace(/^\uFEFF/,'').split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
-  const sequences = []; let current = null;
-  for (const line of lines) {
-    if (line.startsWith('>')) {
-      if (!line.slice(1).trim()) throw new Error('FASTA 이름 줄이 비었습니다.');
-      if (current !== null) sequences.push(current);
-      current = '';
-    } else {
-      if (current === null) throw new Error('FASTA는 >이름 줄로 시작해야 합니다.');
-      current += line.toUpperCase();
-    }
-  }
-  if (current !== null) sequences.push(current);
-  if (!sequences.length || sequences.length > 65535 || sequences.length%3) throw new Error('완전한 인코딩 결과 FASTA를 제출하세요.');
-  const indices = new Set(); const alphabet = 'ATGC';
-  for (const s of sequences) {
-    if (s.length !== 148 || !/^[ATGC]+$/.test(s)) throw new Error('모든 가닥은 A/T/G/C 148 nt여야 합니다.');
-    if (!s.startsWith('AGCCTTGTGTCCATCAATCC') || !s.endsWith('TGCGCTATGGTTTGGCTAAT')) throw new Error('강의 실습 primer와 다릅니다.');
-    let index=0; for(const c of s.slice(88,96)) index=index*4+alphabet.indexOf(c);
-    if(index<1 || index>sequences.length || indices.has(index)) throw new Error('가닥 index가 중복되었거나 누락되었습니다.');
-    indices.add(index);
-  }
-  const props = PropertiesService.getScriptProperties();
-  const folderId = props.getProperty('FOLDER_ID');
-  if(!folderId) throw new Error('제출 폴더 설정이 아직 완료되지 않았습니다.');
-  const lock=LockService.getScriptLock();lock.waitLock(30000);
+  const lock = LockService.getScriptLock(); lock.waitLock(30000);
   try {
-    const folder=DriveApp.getFolderById(folderId);
-    // 재시도 시 같은 요청을 중복 저장하지 않습니다. Drive description에 접수번호 기록.
-    const filename=id+'_'+name+'_DNA.fasta';
-    const same=folder.getFilesByName(filename);
-    while(same.hasNext()){
-      const file=same.next();
-      if(file.getDescription().includes('request='+requestId+'\n'))return {ok:true,receiptId:requestId,filename:filename};
-    }
-    const file=folder.createFile(Utilities.newBlob(bytes,'text/plain',filename));
-    file.setDescription('request='+requestId+'\n학생 이름: '+name+'\n학번: '+id+'\n가닥 수: '+sequences.length+'\n제출 시각: '+new Date().toISOString());
-    return {ok:true,receiptId:requestId,filename:filename};
-  } finally {lock.releaseLock();}
+    const props = PropertiesService.getScriptProperties();
+    if (!props.getProperty('FOLDER_ID')) props.setProperty('FOLDER_ID', DriveApp.createFolder('분자정보공학_4주차_DNA_제출').getId());
+    if (!props.getProperty('FASTQ_FOLDER_ID')) props.setProperty('FASTQ_FOLDER_ID', DriveApp.createFolder('분자정보공학_12주차_FASTQ').getId());
+  } finally { lock.releaseLock(); }
 }
-
-const FORM_HTML_ = "<!doctype html><html lang=\"ko\"><head><base target=\"_top\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><style>*{box-sizing:border-box}body{margin:0;padding:20px;color:#16324f;font:16px/1.7 system-ui,sans-serif;background:white}h2{font-size:22px;margin:0 0 12px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}label{display:block;font-weight:650}input{width:100%;padding:10px;border:1px solid #9cb1c8;border-radius:7px;font:inherit}.wide{grid-column:1/-1}button{padding:11px 18px;border:0;border-radius:7px;background:#16324f;color:white;font:inherit;cursor:pointer}button:disabled{opacity:.5}#status{white-space:pre-wrap;overflow-wrap:anywhere}.note{color:#56697b;font-size:14px}@media(max-width:560px){.grid{grid-template-columns:1fr}}</style></head><body><h2>이름·학번·FASTA 제출</h2><p>MATLAB에서 복호 결과까지 확인한 FASTA를 올려주세요. 제출 파일은 담당 교수의 Google Drive에 저장됩니다.</p><form id=\"form\"><div class=\"grid\"><div><label for=\"name\">학생 이름</label><input id=\"name\" name=\"student_name\" required maxlength=\"60\" autocomplete=\"name\"></div><div><label for=\"id\">학번</label><input id=\"id\" name=\"student_id\" required maxlength=\"40\"></div><div class=\"wide\"><label for=\"file\">Encoding 결과 FASTA</label><input id=\"file\" name=\"fasta\" type=\"file\" accept=\".fasta,.fa,.fna\" required><span class=\"note\">최대 20 MB · 각 가닥 148 nt</span></div></div><input name=\"request_id\" id=\"request\" type=\"hidden\"><p><button id=\"send\" type=\"submit\">제출</button></p><p id=\"status\" role=\"status\" aria-live=\"polite\"></p></form><p class=\"note\">이름과 학번은 과제 확인용으로 파일명에 기록됩니다. 저장 파일명: 학번_이름_DNA.fasta. 제출 완료와 접수번호가 표시되어야 접수된 것입니다.</p><script>const form=document.getElementById('form'),button=document.getElementById('send'),status=document.getElementById('status');let busy=false;const newRequest=()=>document.getElementById('request').value=crypto.randomUUID();newRequest();form.addEventListener('change',()=>{if(!busy)newRequest();});form.addEventListener('submit',event=>{event.preventDefault();if(busy||!form.reportValidity())return;const file=document.getElementById('file').files[0];if(!file||file.size>20*1024*1024){status.textContent='20 MB 이하 FASTA 파일을 선택하세요.';return;}busy=true;button.disabled=true;status.textContent='Google Drive에 저장 중입니다. 이 페이지를 닫지 마세요.';google.script.run.withSuccessHandler(result=>{busy=false;button.disabled=false;if(!result||result.ok!==true||!result.receiptId){status.textContent='저장 확인을 받지 못했습니다. 다시 시도하세요.';return;}status.textContent='제출 완료\\n파일: '+result.filename+'\\n접수번호: '+result.receiptId;}).withFailureHandler(error=>{busy=false;button.disabled=false;status.textContent='제출 실패: '+error.message;}).submitAssignment(form);});</script></body></html>\n";
+function receipt_(value) {
+  const s=String(value||'');
+  if(!/^[a-zA-Z0-9-]{16,64}$/.test(s)) throw new Error('4주차 제출 접수번호를 입력하세요.');
+  return s;
+}
+function folder_(key) { return DriveApp.getFolderById(PropertiesService.getScriptProperties().getProperty(key)); }
+function clean_(value,max) {
+  const s=String(value||'').trim();
+  if(!s||s.length>max||/[\x00-\x1f\/\\]/.test(s))throw new Error('이름과 학번을 확인하세요.');
+  return s.replace(/[^\p{L}\p{N}_-]/gu,'_');
+}
+function submitAssignment(form) {
+  setup_();
+  const name=clean_(form.student_name,60),id=clean_(form.student_id,40),receipt=receipt_(form.request_id);
+  const blob=form.fasta;
+  if(!blob||typeof blob.getBytes!=='function'||!/\.(fa|fasta|fna)$/i.test(blob.getName()))throw new Error('FASTA 파일을 선택하세요.');
+  const bytes=blob.getBytes();
+  if(!bytes.length||bytes.length>20*1024*1024)throw new Error('FASTA는 20 MB 이하여야 합니다.');
+  const seqs=DNA_NOISE.parseFasta(blob.getDataAsString('UTF-8'));
+  const L=Number(form.original_length),ext=String(form.original_ext||'').trim().toLowerCase();
+  if(!Number.isSafeInteger(L)||L<1||L>17*seqs.length*2/3||!/^[a-z0-9]{1,12}$/.test(ext))throw new Error('인코더 출력의 L과 확장자를 확인하세요.');
+  let file; const lock=LockService.getScriptLock();lock.waitLock(30000);
+  try {
+    const same=folder_('FOLDER_ID').getFilesByName(id+'_'+name+'_DNA.fasta');
+    while(same.hasNext()){const f=same.next();if(f.getDescription().includes('request='+receipt+'\n')){file=f;break;}}
+    if(!file){
+      file=folder_('FOLDER_ID').createFile(Utilities.newBlob(bytes,'text/plain',id+'_'+name+'_DNA.fasta'));
+      file.setDescription('request='+receipt+'\n학생 이름: '+name+'\n학번: '+id+'\nL='+L+'\next='+ext+'\n가닥 수: '+seqs.length+'\n제출 시각: '+new Date().toISOString());
+    }
+    ensureJob_(receipt,file,seqs);
+  }finally{lock.releaseLock();}
+  // Saving FASTA is final even if noise generation fails. Receipt allows resume.
+  let fastq;
+  try {fastq=processJob_(receipt,180000);}catch(error){fastq={status:'pending',error:error.message};}
+  return {ok:true,receiptId:receipt,filename:file.getName(),fastq:fastq};
+}
+function jobFile_(receipt) {
+  const it=folder_('FASTQ_FOLDER_ID').getFilesByName(receipt+'.json');return it.hasNext()?it.next():null;
+}
+function ensureJob_(receipt,source,seqs) {
+  let file=jobFile_(receipt);if(file)return file;
+  const desc=source.getDescription(),lm=desc.match(/\nL=(\d+)\n/),em=desc.match(/\next=([a-z0-9]+)\n/);
+  const job={version:1,receipt:receipt,sourceId:source.getId(),sourceName:source.getName(),N:seqs.length,D:seqs.length*2/3,L:lm?Number(lm[1]):null,ext:em?em[1]:'',seed:20260929,coverage:3,next:0,parts:[],status:'pending',created:new Date().toISOString()};
+  return folder_('FASTQ_FOLDER_ID').createFile(receipt+'.json',JSON.stringify(job),MimeType.PLAIN_TEXT);
+}
+function resolveJob_(receipt) {
+  let file=jobFile_(receipt);if(file)return file;
+  // Older submissions are located by their existing receipt; never guess L or ext.
+  const sources=folder_('FOLDER_ID').getFiles();
+  while(sources.hasNext()){
+    const source=sources.next();
+    if(source.getDescription().includes('request='+receipt+'\n'))return ensureJob_(receipt,source,DNA_NOISE.parseFasta(source.getBlob().getDataAsString('UTF-8')));
+  }
+  throw new Error('접수번호에 해당하는 제출 파일이 없습니다.');
+}
+function summary_(job) {
+  return {status:job.status,filename:job.sourceName,receiptId:job.receipt,L:job.L,D:job.D,ext:job.ext,N:job.N,processed:job.next,partCount:job.parts.length,bytes:job.parts.reduce((s,p)=>s+p.bytes,0),coverage:3,seed:job.seed,error:job.error||''};
+}
+function refreshFastq(receipt) {setup_();return processJob_(receipt_(receipt),180000);}
+function processJob_(receipt,budget) {
+  const started=Date.now(),lock=LockService.getScriptLock();
+  if(!lock.tryLock(1000))return {status:'busy',receiptId:receipt};
+  try {
+    const jf=resolveJob_(receipt),job=JSON.parse(jf.getBlob().getDataAsString());
+    if(job.status==='ready')return summary_(job);
+    const seqs=DNA_NOISE.parseFasta(DriveApp.getFileById(job.sourceId).getBlob().getDataAsString('UTF-8'));
+    const out=folder_('FASTQ_FOLDER_ID');
+    job.status='processing';job.error='';
+    let produced=0;
+    while(job.next<job.N&&Date.now()-started<budget&&produced<1){
+      const end=Math.min(job.next+3000,job.N),partNo=job.parts.length+1;
+      const name=job.sourceName.replace(/\.fasta$/i,'')+'_'+receipt+'_part'+String(partNo).padStart(3,'0')+'.fastq';
+      const generated=DNA_NOISE.generateChunk(seqs,job.next,end,job.seed,3);
+      // Deterministic names make refresh/retry idempotent after interrupted writes.
+      const matches=out.getFilesByName(name);let part=matches.hasNext()?matches.next():out.createFile(name,generated.fastq,MimeType.PLAIN_TEXT);
+      job.parts.push({id:part.getId(),name:name,bytes:part.getSize(),start:job.next,end:end,stats:generated.stats});
+      job.next=end;produced++;jf.setContent(JSON.stringify(job));
+    }
+    job.status=job.next===job.N?'ready':'processing';jf.setContent(JSON.stringify(job));return summary_(job);
+  }finally{lock.releaseLock();}
+}
+function downloadFastqPart(receipt,index) {
+  receipt=receipt_(receipt);index=Number(index);
+  const file=jobFile_(receipt);if(!file)throw new Error('먼저 새로고침해 주세요.');
+  const job=JSON.parse(file.getBlob().getDataAsString());
+  if(job.status!=='ready'||!Number.isInteger(index)||index<0||index>=job.parts.length)throw new Error('FASTQ 생성이 완료되지 않았습니다.');
+  const part=DriveApp.getFileById(job.parts[index].id);
+  return {data:Utilities.base64Encode(part.getBlob().getBytes()),index:index,bytes:part.getSize()};
+}
+function getDecoder(receipt,length,extension) {
+  const file=jobFile_(receipt_(receipt));if(!file)throw new Error('먼저 FASTQ를 생성하세요.');
+  const job=JSON.parse(file.getBlob().getDataAsString());
+  const L=job.L===null?Number(length):job.L,ext=job.ext||String(extension||'').toLowerCase();
+  if(!Number.isSafeInteger(L)||L<1||L>17*job.D||!/^[a-z0-9]{1,12}$/.test(ext))throw new Error('4주차 인코더 로그의 L과 확장자를 입력하세요.');
+  return DECODER_SOURCE_.replace("inFile = 'dnas_sequences.txt';","inFile = 'noisy_reads.fastq';").replace('L = 27;','L = '+L+';').replace('D = 2;','D = '+job.D+';').replace("ext = 'txt';","ext = '"+ext+"';");
+}
