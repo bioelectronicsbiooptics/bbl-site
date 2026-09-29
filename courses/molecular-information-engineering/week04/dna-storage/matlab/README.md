@@ -79,18 +79,23 @@ disp(rep)
 | `../index.html`, `../guide.html` | 오프라인 웹 실습·설명서 |
 
 
-## 13. 헤더 없는 고정 index 실습
+## 13. 헤더 없는 고정 index 실습 — MATLAB 단계별 Encoding/Decoding
 
-이 변형은 앞의 DNAS-1 예제(헤더 포함)를 유지하면서 행 분할→XOR→RS→index→primer 순서를 눈으로 확인하기 위한 추가 실습입니다. 파일 metadata 헤더와 CRC는 생략합니다. 원본 `L`(byte 길이), `D`(짝수 data row 수), 파일 확장자는 실행 결과에서 따로 기록해 복호 설정에 넣습니다.
+번호별 코드가 한 폴더에 들어 있는 `downloads/DNA_data_storage_Encoding.zip`을 사용하세요. MATLAB Online에서 MATLAB Drive로 ZIP을 올려 압축을 푼 다음 `DNA_data_storage_Encoding` 폴더를 현재 폴더로 선택합니다. 각 Encoding 파일은 그 단계까지 필요한 코드를 누적한 독립 실행본입니다. 복사할 때 helper/function 파일을 따로 고를 필요가 없습니다.
 
-MATLAB Editor에서 `dna_encode_noheader.m` 전체를 열고 **Run**을 누르세요. `%%` 구간이 입력 byte → 17 byte 행 → XOR → RS와 index → primer와 FASTA 순서로 한 스크립트에 누적돼 있습니다. 이름은 `textInput`에 입력하고, 사진·파일은 `inputMode = 'image'` 또는 `'file'`로 바꾼 뒤 `inputFile`에 파일 이름을 쓰거나 선택창을 사용합니다. 예제 그림은 `../samples/dna_helix_demo.jpg`입니다.
+명령창에서 아래 순서로 한 줄씩 실행합니다. 단계 로그에 `Block n PASS`가 나타나는지 확인하고 다음 명령을 실행합니다. MATLAB은 파일명에서 하이픈을 빼기 기호로 해석하므로 단계 구분은 밑줄(`1_2`)을 씁니다.
 
 ```matlab
-% 인코더가 출력한 값을 복사해 디코더 설정에 넣기
-% 디코더 파일에서 inFile='dnas_out.fasta', L=13, D=2, ext='txt'
-run('dna_decode_noheader.m')
+run('DNA_data_storage_Encoding_1.m')
+run('DNA_data_storage_Encoding_1_2.m')
+run('DNA_data_storage_Encoding_1_3.m')
+run('DNA_data_storage_Encoding_1_4.m')
+run('DNA_data_storage_Encoding_1_5.m')
+run('DNA_data_storage_Encoding_1_6.m')
 ```
 
-부호화 순서는 `입력 byte → D개의 17 byte 행 → H=D/2 XOR 행 → [17 byte 행 + big-endian 2 byte 고정 index] → RS(27,19) → 108 nt → F(20 nt) + 본문 + R(20 nt) = 148 nt`입니다. index 2 byte는 RS의 19 byte 메시지 안에 들어가며, 이렇게 해야 RS가 index도 함께 보호하면서 본문을 108 nt로 유지합니다. 무오류 read를 파일별로 묶고, consensus와 Global RS, 개별 read Local RS를 차례로 시도한 후 `(j,j+H,D+j)` 중 하나만 없으면 XOR로 보완합니다.
+각 파일은 입력 byte 확인 → 17 byte 행/PAD 분할 → outer XOR → fixed index → inner RS(27,19) → primer/148 nt 순으로 누적됩니다. block 1은 HEX 앞부분만 보여 주므로 큰 사진을 넣어도 명령창이 byte 전체로 가득 차지 않습니다. 입력 모드는 `text`, `image`, `file`입니다. 텍스트는 UTF-8로 변환하고, 사진과 파일은 binary mode로 원본 byte를 읽습니다. 사진 예제 `dna_helix_demo.jpg`를 같은 폴더에 둡니다.
 
-**중요:** 헤더·CRC가 없으므로 `L`, `D`, `ext`가 FASTA 안에서 자동 복구되지 않습니다. FASTQ channel에서 index 자체가 손상되면 올바른 그룹으로 분류되지 않을 수 있습니다. 이 연습은 strand 소실과 RS byte 오류 복원을 보여줍니다.
+마지막 Encoding 실행은 `dnas_out.fasta`와 한 줄에 sequence 하나인 `dnas_sequences.txt`를 만들고, 복호 설정용 `L`, `D`, `ext` 값을 출력합니다. `DNA_data_storage_Decoding_1.m`의 입력 파일·`L`·`D`·확장자를 지정하고 실행하면 현재 MATLAB Drive 폴더에 `decoded.txt` 또는 해당 확장자의 결과 파일을 씁니다. 디코더의 FASTA/FASTQ parser, 방향 검사, DNA byte 변환, Global/Local RS, GF(256) helper도 모두 같은 `.m` 파일 끝에 포함돼 있습니다.
+
+이 연습에는 metadata header와 CRC가 없으므로 `L`, `D`, 파일 확장자를 DNA에서 자동 복구하지 않습니다. 인코더 로그를 따로 기록합니다. 공식 DNAS-1 헤더 포함 버전과 MATLAB 예제는 그 앞 절에 유지됩니다.

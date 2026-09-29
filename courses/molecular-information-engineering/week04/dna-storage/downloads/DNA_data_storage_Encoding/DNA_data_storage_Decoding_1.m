@@ -113,6 +113,7 @@ end
 
 %% 로컬 함수 — FASTA/FASTQ와 RS 복호를 이 파일 하나에서 처리
 function seqs = read_sequences(filename)
+% FASTA, 4-line FASTQ, plain TXT를 판별해 각 read를 한 줄 문자열로 반환합니다.
 t = strrep(fileread(filename), sprintf('\r'), '');
 lines = strsplit(t, sprintf('\n')); lines = cellfun(@strtrim, lines, 'UniformOutput', false);
 lines = lines(~cellfun(@isempty, lines)); seqs = {};
@@ -151,16 +152,19 @@ end
 end
 
 function s = reverse_complement(s)
+% 염기 A↔T, C↔G 치환 후 뒤집어 역상보 서열을 만듭니다.
 s = upper(s); s(s == 'A') = 't'; s(s == 'T') = 'a';
 s(s == 'G') = 'c'; s(s == 'C') = 'g'; s = upper(fliplr(s));
 end
 
 function b = dna_to_bytes(s)
+% ATGC를 00/01/10/11로 되돌리고 4 nt마다 1 byte로 묶습니다.
 v = zeros(1, numel(s)); v(s == 'T') = 1; v(s == 'G') = 2; v(s == 'C') = 3;
 v = reshape(v, 4, []); b = uint8([64 16 4 1] * v);
 end
 
 function index = message_index(msg)
+% RS가 복구한 message의 마지막 두 byte(big-endian)를 strand index로 읽습니다.
 index = double(msg(18)) * 256 + double(msg(19));
 end
 
@@ -220,6 +224,7 @@ msg = uint8(r(1:n - nsym)); ok = true;
 end
 
 function S = syndromes(r, nsym)
+% 수신 codeword를 생성다항식의 근에 대입해 RS syndrome을 계산합니다.
 [E, ~] = gf_table(); S = zeros(1, nsym);
 for j = 1:nsym
     y = 0; x = E(j + 1);
@@ -229,22 +234,26 @@ end
 end
 
 function y = poly_eval_ascending(p, x)
+% 오름차순 계수 다항식을 GF(256) Horner 방식으로 평가합니다.
 y = 0;
 for i = numel(p):-1:1, y = bitxor(gf_mul(y, x), p(i)); end
 end
 
 function c = gf_mul(a, b)
+% GF(256) 곱셈: log/antilog 표로 계산합니다.
 if a == 0 || b == 0, c = 0; return; end
 [E, Lg] = gf_table(); c = E(Lg(a + 1) + Lg(b + 1) + 1);
 end
 
 function c = gf_div(a, b)
+% GF(256) 나눗셈: 지수 차이를 255로 순환시킵니다.
 if b == 0, error('GF(256): zero divisor'); end
 if a == 0, c = 0; return; end
 [E, Lg] = gf_table(); c = E(mod(Lg(a + 1) - Lg(b + 1), 255) + 1);
 end
 
 function [E, Lg] = gf_table()
+% primitive polynomial 0x11D를 이용해 GF(256) lookup table을 한 번 생성합니다.
 persistent e l
 if isempty(e)
     e = zeros(1, 512); l = zeros(1, 256); x = 1;

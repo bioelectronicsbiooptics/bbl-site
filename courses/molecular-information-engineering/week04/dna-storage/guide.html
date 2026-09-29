@@ -1919,22 +1919,33 @@ python3 dnastore.py decode reads.fastq -o out.bin</code></pre></div>
 
 <p class="note"><strong>헤더가 없을 때:</strong> 원본 byte 길이 <code>L</code>, 짝수 데이터 행 수 <code>D</code>, 확장자 <code>ext</code>가 DNA 안에 저장되지 않습니다. 인코더 실행 결과를 기록해 복호 설정에 옮겨 적어야 합니다. 이 복붙 변형은 CRC도 기록하지 않으며, index 오류·삽입/결실을 포함한 noisy FASTQ에는 한계가 있습니다. 공식 DNAS-1 실습은 위의 헤더 포함 버전을 사용합니다.</p>
 
-<h3>한 폴더에서 블록별로 누적 실행</h3>
-<p><a href="downloads/DNA_data_storage_Encoding.zip">DNA_data_storage_Encoding 폴더 ZIP</a>을 MATLAB Drive에 올리고 압축을 풉니다. 각 번호 파일은 앞 블록을 포함한 독립 실행본입니다. 각 파일을 실행해 검증 로그를 확인한 뒤 다음 번호로 이동합니다.</p>
+<h3>MATLAB Online에서 블록을 순서대로 실행</h3>
+<p>아래 ZIP에는 번호별 인코더 파일, 전체 디코더 파일, JPG 예제와 README가 한 폴더로 들어 있습니다. MATLAB Drive에 ZIP을 올려 압축을 풀고 <code>DNA_data_storage_Encoding</code> 폴더로 이동합니다. 각 파일은 해당 단계까지 코드가 누적된 독립 실행본이며, 1단계에서 1_6까지 번호대로 실행합니다. 별도 helper 함수 파일은 필요 없습니다.</p>
 <ol>
-  <li><code>DNA_data_storage_Encoding_1.m</code>: 입력 → byte, HEX 출력 (<code>FF FF</code>처럼 확인)</li>
-  <li><code>DNA_data_storage_Encoding_1_2.m</code>: byte를 17개씩 자르고 PAD 검증</li>
-  <li><code>DNA_data_storage_Encoding_1_3.m</code>: XOR parity 행 생성 및 검증</li>
-  <li><code>DNA_data_storage_Encoding_1_4.m</code>: 2 byte 고정 index 붙이기</li>
-  <li><code>DNA_data_storage_Encoding_1_5.m</code>: inner RS(27,19) 적용</li>
-  <li><code>DNA_data_storage_Encoding_1_6.m</code>: primer 결합, 148 nt 검사, FASTA와 <code>dnas_sequences.txt</code> 생성</li>
+  <li><code>DNA_data_storage_Encoding_1.m</code>: 문자열 UTF-8 또는 파일 byte를 읽고 HEX 앞부분을 보여 줍니다. 큰 사진은 처음 32 byte만 출력합니다.</li>
+  <li><code>DNA_data_storage_Encoding_1_2.m</code>: 17 byte 단위로 행을 만들고 마지막 행을 PAD <code>0x1B</code>로 채웁니다. byte 수와 행 크기를 확인합니다.</li>
+  <li><code>DNA_data_storage_Encoding_1_3.m</code>: 행 <code>j</code>와 <code>j+H</code>를 원소별 XOR해 parity 행을 붙입니다.</li>
+  <li><code>DNA_data_storage_Encoding_1_4.m</code>: 각 행의 끝에 고정 순번 index를 big-endian 2 byte로 붙입니다.</li>
+  <li><code>DNA_data_storage_Encoding_1_5.m</code>: 19 byte 메시지마다 내부 RS(27,19)를 적용해 8 parity byte를 만듭니다. GF(256) 연산 helper 함수가 파일 끝에 포함돼 있습니다.</li>
+  <li><code>DNA_data_storage_Encoding_1_6.m</code>: codeword를 108 nt로 바꾸고 양쪽 20 nt primer를 붙여 148 nt를 검사한 뒤 FASTA와 <code>dnas_sequences.txt</code>를 저장합니다.</li>
 </ol>
-<ul>
-  <li>기본 입력은 이름 예시입니다. 사진 입력은 <code>inputMode = 'image'</code>, 파일 입력은 <code>inputMode = 'file'</code>로 설정합니다. <a href="samples/dna_helix_demo.jpg">DNA 이중나선 JPG 예시</a>를 폴더에 두고 인코딩합니다.</li>
-  <li>기본 입력은 이름 예시입니다. 사진 입력은 <code>inputMode = 'image'</code>, 파일 입력은 <code>inputMode = 'file'</code>로 설정합니다. <a href="samples/dna_helix_demo.jpg">DNA 이중나선 JPG 예시</a>를 MATLAB Drive에 올려 인코딩할 수 있습니다.</li>
-  <li>출력에서 <code>L</code>, <code>D</code>, 확장자를 기록하고 FASTA 파일을 복호기와 같은 현재 폴더에 둡니다.</li>
-  <li><a href="downloads/DNA_data_storage_Encoding/DNA_data_storage_Decoding_1.m">같은 폴더의 디코더</a>에서 sequence TXT 파일명과 인코더의 <code>L</code>, <code>D</code>, 확장자를 입력해 실행합니다. 결과 파일은 작업 폴더에 저장됩니다. FASTA/FASTQ도 읽을 수 있습니다.</li>
-</ul>
+<p>각 단계는 출력에 <code>Block 2 PASS</code>처럼 검증 결과를 남깁니다. MATLAB 명령창에서 직접 실행할 때는 다음 명령을 위에서 아래로 한 줄씩 실행합니다. 파일명에 하이픈 대신 밑줄을 사용한 이유는 MATLAB이 하이픈을 빼기 연산자로 읽기 때문입니다.</p>
+<pre><code class="lang-matlab">run('DNA_data_storage_Encoding_1.m')
+run('DNA_data_storage_Encoding_1_2.m')
+run('DNA_data_storage_Encoding_1_3.m')
+run('DNA_data_storage_Encoding_1_4.m')
+run('DNA_data_storage_Encoding_1_5.m')
+run('DNA_data_storage_Encoding_1_6.m')</code></pre>
+<p>입력을 바꿀 때는 파일 맨 위 설정을 수정합니다. 이름은 <code>inputMode = 'text'</code>와 <code>textInput</code>, 사진은 <code>inputMode = 'image'</code>와 <code>inputFile = 'dna_helix_demo.jpg'</code>, 일반 파일은 <code>inputMode = 'file'</code>과 파일 이름을 사용합니다. <code>fopen(...,'rb')</code>·<code>fread(...,'*uint8')</code>는 이미지 파일을 화면 픽셀값이 아닌 저장된 원본 byte 그대로 읽기 위한 명령입니다.</p>
+<h3>시퀀스 파일을 다시 원본으로 복호</h3>
+<p><code>DNA_data_storage_Decoding_1.m</code>은 sequence TXT, FASTA 또는 FASTQ를 읽습니다. 맨 위에서 입력 sequence 파일과 인코더가 출력한 원본 byte 길이 <code>L</code>, 데이터 행 수 <code>D</code>, 확장자를 지정하고 Run을 누릅니다. 프라이머·역상보 방향 검사 → index 그룹화 → consensus → Global/Local RS → XOR 복원 → 원본 byte 길이로 자르기 순서입니다. 복호 함수들도 같은 파일 안에 포함되어 있습니다.</p>
+<pre><code class="lang-matlab">inFile = 'dnas_sequences.txt';
+L = 13;       % 인코더 로그의 원본 byte 수
+D = 2;        % 인코더 로그의 짝수 data row 수
+ext = 'txt';  % 원래 파일 확장자
+run('DNA_data_storage_Decoding_1.m')</code></pre>
+<p>복호 결과는 같은 MATLAB Drive 폴더에 <code>decoded.txt</code>로 생성됩니다. 사진 예제를 쓸 때는 <code>inFile = 'dna_helix_sequences.txt'</code>, <code>L = 35298</code>, <code>D = 2078</code>, <code>ext = 'jpg'</code>로 바꾸면 <code>decoded.jpg</code>가 저장됩니다. 전체 실행 파일 한 개를 편집기에 붙여넣고 싶으면 <a href="matlab/dna_encode_noheader.m">누적 인코더</a>와 <a href="matlab/dna_decode_noheader.m">누적 디코더</a>를 사용하세요.</p>
+<p class="note"><strong>포맷 주의:</strong> 이 교육용 변형에는 metadata 헤더와 CRC가 없어서 <code>L</code>, <code>D</code>, 확장자를 DNA에서 자동으로 얻을 수 없습니다. 실행 로그를 저장해 두세요. 한 XOR 묶음에서 가닥 하나까지 복원할 수 있고, 같은 묶음에서 두 가닥이 사라지면 복구할 수 없습니다. 공식 DNAS-1 헤더 포함 예제는 이 설명서 앞 절에 유지됩니다.</p>
 <p class="more"><a href="downloads/DNA_data_storage_Encoding.zip">블록별 DNA_data_storage_Encoding 폴더</a> · <a href="downloads/dna-storage-matlab.zip">MATLAB 실습 ZIP (헤더 없는 인코더·디코더·JPG 포함)</a> · <a href="downloads/DNA_storage_encoding_decoding_4week.pptx">4주차 인코딩·복호 PPT</a> · <a href="matlab/README.md">MATLAB 실행 안내</a></p>
 </section>
 

@@ -10,4 +10,6 @@ MATLAB Online에서 이 폴더를 MATLAB Drive로 올린 뒤 `DNA_data_storage_E
 6. `Encoding_1_6.m`: 108 nt 본문 + 20 nt primer 양쪽 → 148 nt, FASTA 및 한 줄당 서열 하나인 `dnas_sequences.txt` 출력
 7. `DNA_data_storage_Decoding_1.m`: `dnas_sequences.txt`를 읽어 `decoded.txt` 또는 설정 확장자의 복원 파일을 같은 현재 폴더에 저장
 
-각 파일 맨 위 설정에서 `inputMode`, `textInput`/`inputFile`, primer, output names를 지정하세요. 디코더에는 인코더가 출력한 `L`, `D`, 확장자 값을 복사합니다. FASTA를 쓰려면 decoder `inFile`을 `dnas_out.fasta`로 바꿔도 됩니다. 이미지 예제 `dna_helix_demo.jpg`가 함께 있습니다.
+명령창 실행 예: `run('DNA_data_storage_Encoding_1_2.m')`. 위 명령을 1 → 1_2 → 1_3 → 1_4 → 1_5 → 1_6 순서로 실행합니다. 각 실행 로그에 `Block n PASS`가 표시되면 다음 파일로 이동하세요.
+
+각 파일 맨 위 설정에서 `inputMode`, `textInput`/`inputFile`, primer, output names를 지정하세요. `inputMode='text'`는 UTF-8로, `image`/`file`은 `fopen(...,'rb')`와 `fread(...,'*uint8')`로 원본 byte 그대로 입력합니다. 디코더에는 인코더가 출력한 `L`, `D`, 확장자 값을 복사합니다. FASTA를 쓰려면 decoder `inFile`을 `dnas_out.fasta`로 바꿔도 됩니다. 이미지 예제 `dna_helix_demo.jpg`가 함께 있습니다.
