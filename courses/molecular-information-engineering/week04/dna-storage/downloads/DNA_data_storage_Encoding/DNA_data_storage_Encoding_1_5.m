@@ -156,7 +156,12 @@ assert(all(cellfun(@numel,seqs)==148));
 fid = fopen(outFasta,'wt');
 if fid < 0, error('FASTA 출력 파일을 열 수 없습니다.'); end
 for index = 1:N
-    fprintf(fid,'>strand_%05d\n%s\n',index,seqs{index});
+    % 복호 정보는 FASTA 이름 줄에 자동 기록합니다. DNA 서열에는 넣지 않습니다.
+    if index == 1
+        fprintf(fid,'>strand_%05d L=%d D=%d ext=%s\n%s\n',index,L,D,ext,seqs{index});
+    else
+        fprintf(fid,'>strand_%05d\n%s\n',index,seqs{index});
+    end
 end
 fclose(fid);
 fid = fopen(outSequencesTxt,'wt');
