@@ -35,7 +35,10 @@ dataBytes = reshape(uint8(dataBytes), 1, []);
 L = numel(dataBytes);
 if L == 0, error('입력 byte가 비어 있습니다.'); end
 fprintf('입력: %s | %d byte | 확장자 .%s\n', sourceName, L, ext);
-fprintf('Block 1 HEX bytes:'); fprintf(' %02X', dataBytes); fprintf('\n');
+nShow = min(32, L);
+fprintf('Block 1 HEX (first %d of %d bytes):', nShow, L); fprintf(' %02X', dataBytes(1:nShow));
+if L > nShow, fprintf(' ... (%d more bytes)', L - nShow); end
+fprintf('\n');
 
 %% 2. 데이터를 17 byte씩 자르고 마지막 행을 PAD(0x1B)로 채우기
 PAD = uint8(27); ROW_BYTES = 17; NSYM = 8;
