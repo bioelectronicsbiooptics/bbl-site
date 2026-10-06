@@ -439,6 +439,13 @@ ol.nl.tight > li::before{inline-size:1.75em;block-size:1.75em;font-size:.86em;li
 
 table.tbl.device-table{font-size:.70em;line-height:1.35}table.tbl.device-table td,table.tbl.device-table th{padding:.28em .48em}
 
+/* Hardware structure and vendor product details. Original images remain unchanged. */
+.hardware-figure{margin:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.3em}.hardware-figure img{width:100%;object-fit:contain}.hardware-figure figcaption,.dmd-board figcaption,.syntax-kit figcaption{font-size:.62em;line-height:1.45;text-align:center;color:var(--gray)}
+.dmd-structure-slide .body,.dmd-optics-slide .body,.kilobaser-hardware-slide .body,.syntax-hardware-slide .body{gap:.55em;padding-top:.8em}.dmd-pixel-image{height:21em}.dmd-parts{gap:.35em}.dmd-parts .kb,.dmd-optics-notes .kb,.syntax-hardware-notes .kb{padding:.35em .6em}.dmd-parts .kb b,.dmd-optics-notes .kb b,.syntax-hardware-notes .kb b{font-size:.79em}.dmd-parts .kb p,.dmd-optics-notes .kb p,.syntax-hardware-notes .kb p{font-size:.77em;line-height:1.43}.dmd-board{margin:0;text-align:center}.dmd-board img{height:5.5em;max-width:100%;object-fit:contain}.dmd-optics-slide .cols{align-items:start}.dmd-optics-slide .proc{width:100%;margin:0}.dmd-optics-slide .proc-stage{padding:.4em}.dmd-optics-slide .proc-head h3{font-size:.85em}.dmd-optics-slide .proc-cap{font-size:.73em;line-height:1.45;min-height:4em}.dmd-rays text{font:13px var(--sans);fill:var(--navy)}.dmd-optics-notes{gap:.55em}.dmd-structure-slide .src,.dmd-optics-slide .src,.kilobaser-hardware-slide .src,.syntax-hardware-slide .src{font-size:.56em}
+.hardware-photo-pair figure{margin:0;text-align:center}.hardware-photo-pair img{display:block;width:100%;height:15em;object-fit:contain;border:1px solid var(--border);border-radius:.3em;background:#fff}.hardware-photo-pair figcaption{font-size:.73em;line-height:1.5;margin-top:.35em;color:var(--gray)}.hardware-photo-pair figcaption b{color:var(--navy)}.hardware-flow{margin:.15em 0}.hardware-flow .fb{padding:.4em .6em}.hardware-flow .fb b{font-size:.83em}.hardware-flow .fb span{font-size:.73em;line-height:1.35}.syntax-main img{height:20em}.syntax-hardware-notes{gap:.45em}.syntax-kit{margin:0}.syntax-kit svg{display:block;width:100%;height:9.2em}.syntax-kit figcaption{font-size:.60em}
+
+.syntax-kit svg{overflow:hidden}.dmd-board img{height:6.8em}
+
 /* contextual lecture videos */
 /* Contextual lecture videos: one inline player, selectable sources and teaching notes. */
 .video-lesson .body{gap:.4em;padding-top:.85em}
@@ -994,10 +1001,56 @@ M  END
   </div><script type="application/json" class="video-data">[{"id": "B7vRpnMkQFM", "title": "Affymetrix Microarray | Affymetrix Genechip | Affymetrix Genechip Oligonucleotide Microarray |", "author": "BMH learning", "label": "포토마스크와 선택적 탈보호", "duration": "2:00", "note": "크롬 마스크 개구부의 선택적 탈보호 순서 · 포토마스크 위젯과 비교"}, {"id": "DjcxE1tdB8c", "title": "DNA Microarray Fabrication", "author": "Support Center for Microsystems Education", "label": "마스크·노광·DNA 어레이 제작", "duration": "10:41", "note": "반도체 마스크·노광·현상 공정과 DNA 어레이 합성의 대응 · SCME 제작"}]</script>
 </section>
 
+
+<section class="slide dmd-structure-slide" data-part="p2" data-title="DMD — 미세거울 픽셀의 구조">
+<header><h2>DMD — 미세거울 픽셀의 구조</h2><p class="sub">Digital Micromirror Device(디지털 미세거울 장치) · MEMS(미세전자기계시스템) 기반 공간 광변조</p></header>
+<div class="body"><div class="cols w64">
+<figure class="hardware-figure"><img class="dmd-pixel-image" src="img/ti-dmd-pixel-structure.png" alt="TI 공식 DMD 픽셀 구조: 미세거울, 비틀림 힌지, 전극, 탄성 접촉부와 연결 기둥"><figcaption>TI 공식 픽셀 구조 · DLPA008B Fig. 2-2 · 원그림의 부품 표기 유지</figcaption></figure>
+<div class="stack dmd-parts">
+<div class="kb"><b>Micromirror(미세거울)</b><p>알루미늄 반사면 · 픽셀별 반사 방향 선택</p></div>
+<div class="kb"><b>Torsion hinge(비틀림 힌지)</b><p>미러의 회전축 · Via(연결 기둥)를 통한 미러 지지</p></div>
+<div class="kb"><b>Electrode(전극) · Spring tip(탄성 접촉부)</b><p>정전기력에 의한 경사 제어 · 종단 위치에서의 접촉</p></div>
+<div class="kb teal"><b>CMOS memory(픽셀 메모리)</b><p>픽셀별 비트 저장 → Mirror clocking pulse(미러 구동 펄스) → 기계적 상태 전환</p></div>
+<figure class="dmd-board"><img src="img/ti-dlp7000uv-board.png" alt="TI DLPLCR70UVEVM 공식 제품 이미지: DLP7000UV 칩과 평가 보드"><figcaption>제품 예시: DLP7000UV · DLPLCR70UVEVM<br>1024 × 768 미러 · 피치 13.68 μm · 경사 ±12° · 363–420 nm</figcaption></figure>
+</div></div></div>
+<p class="src"><a href="https://www.ti.com/lit/an/dlpa008b/dlpa008b.pdf" target="_blank" rel="noopener">TI DMD 101, DLPA008B</a> · <a href="https://www.ti.com/product/DLP7000UV" target="_blank" rel="noopener">DLP7000UV 규격</a> · <a href="https://www.ti.com/tool/DLPLCR70UVEVM" target="_blank" rel="noopener">평가 보드</a> · 도면·사진: Texas Instruments · 규격은 UV 지원 제품 예시 · MAS 논문 장비: TI Discovery 1100.</p>
+</section>
+
+<section class="slide dmd-optics-slide" data-part="p2" data-title="DMD — 반사 광경로와 합성 위치 선택">
+<header><h2>DMD — 반사 광경로와 합성 위치 선택</h2><p class="sub">미러의 경사 전환 → 조사 패턴 형성 → 기판의 선택적 탈보호 · ±12° 미러의 광경로 예시</p></header>
+<div class="body"><div class="cols w64">
+<div class="proc" data-steps="2" data-caps='[&quot;&lt;b&gt;ON 상태&lt;/b&gt;: 미러가 투영 렌즈 방향으로 UV 반사 → 선택 피처 조사 → NPPOC 계열 보호기 제거 → 자유 5′-OH 생성&quot;, &quot;&lt;b&gt;OFF 상태&lt;/b&gt;: 미러가 Light dump(광흡수부) 방향으로 UV 반사 → 해당 피처의 보호기 유지 · 다음 노광 패턴에서 위치 선택&quot;]'>
+<div class="proc-head"><h3>ON / OFF 반사 경로</h3></div>
+<div class="proc-stage"><svg class="dmd-rays" viewBox="0 0 600 290" role="img" aria-label="DMD 미러의 두 경사 상태와 UV의 투영 렌즈 또는 광흡수부 경로">
+<defs><marker id="dmd-ray-head" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect x="92" y="12" width="117" height="25" rx="5" fill="#FFF4D2" stroke="#BD8627"/><text x="150" y="29" text-anchor="middle">UV 365 nm</text>
+<path d="M164 36 L238 200" stroke="#BD8627" stroke-width="3" marker-end="url(#dmd-ray-head)" fill="none"/>
+<path d="M238 202 L238 108" stroke="#9BA9B5" stroke-dasharray="4 4" stroke-width="1.3"/>
+<text x="185" y="171" fill="#708090">기준 법선</text>
+<ellipse cx="238" cy="78" rx="29" ry="8" fill="#DCEFFA" stroke="#529FD9" stroke-width="2"/>
+<text x="282" y="70">Projection lens</text><text x="282" y="87">(투영 렌즈)</text>
+<rect x="206" y="10" width="64" height="14" fill="#DCEFFA" stroke="#529FD9"/><text x="279" y="22">DNA 합성 기판</text>
+<rect x="370" y="66" width="64" height="48" rx="3" fill="#18324E"/><path d="M374 70 l8 12 -8 12 8 12 -8 4" fill="none" stroke="#BFC8D1" stroke-width="1.5"/>
+<text x="444" y="85">Light dump</text><text x="444" y="102">(광흡수부)</text>
+<rect x="178" y="231" width="120" height="18" rx="3" fill="#DCE2E8"/><path d="M238 206 L238 231" stroke="#667584" stroke-width="5"/>
+<text x="238" y="273" text-anchor="middle">회전축에 수직인 단면 · 광경로 개념도</text>
+<g data-at="1"><path d="M238 198 L238 24" fill="none" stroke="#2E7D54" stroke-width="3" marker-end="url(#dmd-ray-head)"/><path d="M169.5 214.6 L306.5 185.4" stroke="#526A80" stroke-width="7"/><circle cx="238" cy="200" r="4" fill="#18324E"/><text x="257" y="153" fill="#2E7D54">ON</text><text x="326" y="201" fill="#2E7D54">+12°</text><circle cx="222" cy="17" r="3" fill="#2E7D54"/><circle cx="237" cy="17" r="3" fill="#2E7D54"/><circle cx="252" cy="17" r="3" fill="#2E7D54"/></g>
+<g data-at="2"><path d="M238 200 L371.8 79.6" fill="none" stroke="#C03B3B" stroke-width="3" marker-end="url(#dmd-ray-head)"/><path d="M169.5 185.4 L306.5 214.6" stroke="#526A80" stroke-width="7"/><circle cx="238" cy="200" r="4" fill="#18324E"/><text x="311" y="145" fill="#C03B3B">OFF</text><text x="327" y="212" fill="#C03B3B">−12°</text></g>
+</svg></div><p class="proc-cap"></p>
+</div>
+<div class="stack dmd-optics-notes">
+<div class="kb"><b>장치의 역할</b><p>DMD: 반사 방향 선택 · 광학계: 패턴의 기판 투영 · 보호기: 조사에 따른 화학 반응</p></div>
+<div class="kb teal"><b>단량체 도입 위치</b><p>선택 피처의 5′-OH 노출 → 칩 전체에 공급한 단량체와 Coupling(커플링)</p></div>
+<div class="kb"><b>미러 피치와 합성 피처</b><p>DMD 자체 피치와 광학계 배율의 조합으로 투영 피처 크기 결정 · 여러 미러로 한 피처 구성 가능</p></div>
+<div class="kb"><b>MAS 연구의 투영 예시</b><p>1:1 투영 · 1 × 1 미러: 약 14 × 14 μm 피처 · 인접 간극 약 0.8–1 μm</p></div>
+</div></div></div>
+<p class="src"><a href="https://www.ti.com/lit/an/dlpa060b/dlpa060b.pdf" target="_blank" rel="noopener">TI UVA 시스템 광학, DLPA060B</a> · Lietard et al., Nucleic Acids Res 49:6687–6701 (2021), Fig. 1 / Materials and Methods · 광경로: 공식 원리에 따른 수업용 벡터 도식.</p>
+</section>
+
 <section class="slide" data-part="p2" data-title="위젯 ② 마스크리스 DMD">
   <header><h2>② 마스크리스 DMD — 한 사이클</h2><p class="sub">NimbleGen MAS · Roche · DMD 패턴 기반 가상 마스크</p></header>
   <div class="body">
-    <div class="proc" data-steps="7" data-caps='[&quot;&lt;b&gt;가상 마스크 로드&lt;/b&gt;: 컴퓨터 패턴의 DMD 전달 · 물리적 마스크 &lt;b&gt;0장&lt;/b&gt; · XGA 1024×768: &lt;b&gt;78만&lt;/b&gt; 주소 · HD 1920×1080: &lt;b&gt;200만&lt;/b&gt; 주소&quot;, &quot;&lt;b&gt;미러 ON / OFF&lt;/b&gt;: 미러별 픽셀 제어 · ON: 광학 릴레이로 UV 전달 · OFF: 흡수면으로 광 경로 전환 · 미러 피치 1 μm·간극 0.8 μm&quot;, &quot;&lt;b&gt;UV 조사&lt;/b&gt;: ON 미러 아래 NPPOC·BzNPPOC의 광분해 · BzNPPOC: &lt;b&gt;3 J/cm²에서 약 95%&lt;/b&gt; 탈보호&quot;, &quot;&lt;b&gt;미탈보호 5%&lt;/b&gt;: 피처 3의 보호기 잔류 → 해당 사이클 미연장 → &lt;span class=\&quot;rx\&quot;&gt;결손(deletion)&lt;/span&gt; · 실측 결손율 4.65%&quot;, &quot;&lt;b&gt;커플링&lt;/b&gt;: 자유 OH 피처 1의 1 nt 신장 · 보호기 잔류 피처 3의 미연장 · 후속 사이클에서 1 nt 짧은 사슬 형성&quot;, &quot;&lt;b&gt;캡핑 · 산화&lt;/b&gt;: 미반응 말단 차단과 인산 골격 안정화 · 캡핑 적용 후 G→T 치환율 0.32%/bp → &lt;b&gt;0.07%/bp&lt;/b&gt;&quot;, &quot;&lt;b&gt;패턴 교체&lt;/b&gt;: 물리적 마스크 교체 시간 0 · 완전 탈보호 기준 &lt;b&gt;12–15 J/cm²&lt;/b&gt; · 적용 조건 &lt;b&gt;4–6 J/cm²&lt;/b&gt; · 불완전 탈보호·광손상·탈퓨린화의 균형&quot;]'>
+    <div class="proc" data-steps="7" data-caps='[&quot;&lt;b&gt;가상 마스크 로드&lt;/b&gt;: 컴퓨터 패턴의 DMD 전달 · 물리적 마스크 &lt;b&gt;0장&lt;/b&gt; · XGA 1024×768: &lt;b&gt;78만&lt;/b&gt; 주소 · HD 1920×1080: &lt;b&gt;200만&lt;/b&gt; 주소&quot;, &quot;&lt;b&gt;미러 ON / OFF&lt;/b&gt;: 미러별 픽셀 제어 · ON: 광학 릴레이로 UV 전달 · OFF: 흡수면으로 광 경로 전환 · MAS 연구의 인접 피처 간극 약 0.8–1 μm · 투영 배율에 따른 피처 크기&quot;, &quot;&lt;b&gt;UV 조사&lt;/b&gt;: ON 미러 아래 NPPOC·BzNPPOC의 광분해 · BzNPPOC: &lt;b&gt;3 J/cm²에서 약 95%&lt;/b&gt; 탈보호&quot;, &quot;&lt;b&gt;미탈보호 5%&lt;/b&gt;: 피처 3의 보호기 잔류 → 해당 사이클 미연장 → &lt;span class=\&quot;rx\&quot;&gt;결손(deletion)&lt;/span&gt; · 실측 결손율 4.65%&quot;, &quot;&lt;b&gt;커플링&lt;/b&gt;: 자유 OH 피처 1의 1 nt 신장 · 보호기 잔류 피처 3의 미연장 · 후속 사이클에서 1 nt 짧은 사슬 형성&quot;, &quot;&lt;b&gt;캡핑 · 산화&lt;/b&gt;: 미반응 말단 차단과 인산 골격 안정화 · 캡핑 적용 후 G→T 치환율 0.32%/bp → &lt;b&gt;0.07%/bp&lt;/b&gt;&quot;, &quot;&lt;b&gt;패턴 교체&lt;/b&gt;: 물리적 마스크 교체 시간 0 · 완전 탈보호 기준 &lt;b&gt;12–15 J/cm²&lt;/b&gt; · 적용 조건 &lt;b&gt;4–6 J/cm²&lt;/b&gt; · 불완전 탈보호·광손상·탈퓨린화의 균형&quot;]'>
       <div class="proc-head"><h3>마스크리스 DMD (NimbleGen MAS · Roche)</h3></div>
       <div class="proc-stage">
         <svg viewBox="0 0 640 250">
@@ -1029,7 +1082,7 @@ M  END
           </g>
           <!-- 기판 -->
           <rect x="52" y="192" width="536" height="20" class="f-lgray"/>
-          <text x="58" y="234" class="lbl sm">유리 기판 · 피처 1 — 4 (1×1 픽셀 = 14×14 μm까지 축소)</text>
+          <text x="58" y="234" class="lbl sm">유리 기판 · 논문 예시: 1×1 미러 → 14×14 μm 피처 (1:1 투영)</text>
           <!-- 피처 1 : 정상 -->
           <g>
             <rect x="105" y="182" width="70" height="10" rx="2" class="f-wash"/>
@@ -1096,7 +1149,7 @@ M  END
       <div class="stack">
         <table class="tbl xs">
           <tr><th>항목</th><th>값</th></tr>
-          <tr><td>미러 피치 · 간극</td><td class="num">1 μm · 0.8 μm</td></tr>
+          <tr><td>인접 피처 간극 (MAS 연구)</td><td class="num">약 0.8–1 μm</td></tr>
           <tr><td>주소 수 (XGA / HD)</td><td class="num">7.8×10<sup>5</sup> / 2×10<sup>6</sup></td></tr>
           <tr><td>염기별 커플링 수율</td><td class="num">dA 99.8 · dC 98.0 · dG 98.6 · dT 99.4%</td></tr>
           <tr><td>미광 배플링 전 → 후 결손율</td><td class="num">0.15 → 0.101</td></tr>
@@ -1902,10 +1955,32 @@ Q 105.4 257.4, 107.2 257.4
 </div>
 <div class="device-card"><h3>LC Sciences · µParaflo 병렬 반응실</h3><img class="device-chip" src="img/lcsciences-microfluidic-platform.png" alt="LC Sciences가 공개한 미세 반응실 SEM과 µParaflo 유로 구조 도식"><p class="device-caption">실제 반응실 SEM과 유로 도식 · 회사 공개 원그림</p>
 <ul class="pts sm"><li><b>유로와 반응실:</b> 실리콘 기판의 분배 채널 · 피코리터 규모 반응 구획</li><li><b>위치 선택:</b> DLP 광패턴 + Photoacid generation(광산 발생) → DMT 제거</li><li><b>병렬 합성:</b> 여러 반응실에서 서로 다른 서열의 동시 합성</li><li><b>제품 형태:</b> OligoMix(올리고 풀) 수탁 합성 · 한 튜브로 회수</li></ul>
-<p class="device-links"><a href="https://lcsciences.com/tech-service-detail?cid=39&amp;id=140" target="_blank" rel="noopener">공식 OligoMix 기술·서비스 ↗</a> · 강의 24쪽의 공정 영상</p>
+<p class="device-links"><a href="https://lcsciences.com/tech-service-detail?cid=39&amp;id=140" target="_blank" rel="noopener">공식 OligoMix 기술·서비스 ↗</a> · 광산 발생 — µParaflo 반응실 영상</p>
 </div></div>
 <div class="kb"><b>장치 설계의 비교 기준</b><p>소형 유로·밸브에 의한 시약 선택 및 교체 · 반응 구획의 형상과 개수 · 단일 서열의 소량 합성과 다종 서열의 병렬 합성 구분</p></div>
 </div><p class="src">Kilobaser, Our Technology / Technical Specifications · LC Sciences, OligoMix Microfluidic Array Platform. 회사 공개 기술·제품 자료 확인: 2026-10-07 · 그림: 각 회사 공식 페이지 원자료.</p>
+</section>
+
+
+<section class="slide kilobaser-hardware-slide" data-part="pdev" data-title="Kilobaser — 칩과 시약 카트리지의 장착 구조">
+<header><h2>Kilobaser — 칩과 시약 카트리지의 장착 구조</h2><p class="sub">실제 장치·소모품 사진 · 상부 칩 장착부와 전면 카트리지 연결부</p></header>
+<div class="body"><div class="device-columns hardware-photo-pair">
+<figure><img src="img/kilobaser-microfluidic-system.webp" alt="Kilobaser 공식 사진: 열린 장치 상부에 미세유체 칩을 장착하는 위치"><figcaption><b>Microfluidic chip(미세유체 칩)</b><br>유로·공압 밸브·미세컬럼의 통합 · 상부 장착부</figcaption></figure>
+<figure><img src="img/kilobaser-cartridge-system.webp" alt="Kilobaser 공식 사진: 전면 시약 카트리지 삽입부와 보라색 시약 카트리지"><figcaption><b>Reagent cartridge(시약 카트리지)</b><br>단량체·보조 시약·용매 저장 · 전면 연결부</figcaption></figure>
+</div><div class="flowx hardware-flow"><div class="fb"><b>시약 저장</b><span>교체형 카트리지</span></div><span class="ar">▶</span><div class="fb"><b>공급·선택</b><span>가스 압력 · 칩 밸브</span></div><span class="ar">▶</span><div class="fb"><b>합성</b><span>고체상 미세컬럼</span></div><span class="ar">▶</span><div class="fb"><b>배출</b><span>세척 · 폐액 회수</span></div></div>
+</div><p class="src">사진·장치 구조: <a href="https://kilobaser.com/technology" target="_blank" rel="noopener">Kilobaser, Our Technology</a> · 원사진 유지 · 시약 전달 경로는 공식 기술 설명에 따른 개념 순서.</p>
+</section>
+
+<section class="slide syntax-hardware-slide" data-part="pdev" data-title="SYNTAX — 본체와 플레이트·시약 키트">
+<header><h2>SYNTAX — 본체와 플레이트·시약 키트</h2><p class="sub">DNA Script STX-200 · 플레이트 기반 효소 합성 · 실제 제품 외형과 소모품 구성</p></header>
+<div class="body"><div class="cols w64">
+<figure class="hardware-figure syntax-main"><img src="img/syntax-stx200.png" alt="DNA Script 공식 SYNTAX STX-200 외형: 전면 콘솔과 두 개의 장치 도어"><figcaption>STX-200 제품 외형 이미지 · 전면 콘솔과 장치 도어</figcaption></figure>
+<div class="stack syntax-hardware-notes">
+<figure class="syntax-kit"><svg viewBox="282 36 454 308" role="img" aria-label="DNA Script 공식 자료의 플레이트와 시약 키트 제품 사진"><defs><clipPath id="syntax-kit-photo-clip"><rect x="282" y="36" width="454" height="308"/></clipPath></defs><image href="img/syntax-standard-kit-sheet.jpg" x="0" y="0" width="736" height="955" clip-path="url(#syntax-kit-photo-clip)"/></svg><figcaption>SYNTAX 96 Standard 플레이트·시약 키트<br>회사 공개 제품 사진</figcaption></figure>
+<div class="kb"><b>플레이트와 반응 단위</b><p>웰별 한 서열 · 고체 지지체에 고정된 개시 DNA · 키트별 서열 수와 길이</p></div>
+<div class="kb teal"><b>EDS(효소적 DNA 합성)</b><p>개조 TdT의 단일 잔기 도입 → 가역적 종결 → 탈보호 → 반복</p></div>
+<div class="kb"><b>장치 운용</b><p>서열 입력 → 플레이트·시약 설정 → 합성·후처리 → 산물 회수 · 자동화 범위는 키트별 사양 참조</p></div>
+</div></div></div><p class="src">제품 이미지: <a href="https://www.dnascript.com/products/" target="_blank" rel="noopener">DNA Script, SYNTAX System</a> · Standard 키트 사진: CUS-27 제품 자료 · <a href="https://www.dnascript.com/syntax-kits/" target="_blank" rel="noopener">현재 키트별 사양</a>.</p>
 </section>
 
 <section class="slide benchtop-devices" data-part="pdev" data-title="벤치탑 합성 장치 — Kilobaser와 SYNTAX">
