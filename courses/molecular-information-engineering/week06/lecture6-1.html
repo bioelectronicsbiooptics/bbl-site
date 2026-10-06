@@ -683,7 +683,7 @@ svg.dia .carbon-base{fill:var(--green)} svg.dia .carbon-phosphate{fill:var(--amb
 .video-choices{display:flex;flex-direction:column;gap:.35em}
 .video-choice{font:inherit;font-size:.73em;line-height:1.45;text-align:left;padding:.45em .6em;border:1px solid var(--border);border-left:.22em solid var(--teal);border-radius:.25em;background:white;cursor:pointer}
 .video-choice[aria-pressed="true"]{background:var(--tealwash);border-color:var(--amber);color:var(--amber);font-weight:700}
-.video-choice .video-time{display:block;font-size:.9em;color:var(--gray);margin-top:.15em}
+.video-choice .video-time{display:inline;font-size:.9em;color:var(--gray);margin-left:.2em;white-space:nowrap}
 .video-explain .kb{padding:.4em .65em}
 .video-explain .kb b{font-size:.75em}
 .video-explain .kb p{font-size:.77em;line-height:1.5}
@@ -2322,11 +2322,11 @@ M  END
   <header><h2>CPG 합성 — 실제 제품과 합성 공정</h2><p class="sub">본문 개념과 영상의 실제 공정·반응 기전 비교 · 재생 버튼 선택</p></header>
   <div class="body">
     <div class="video-layout">
-      <div><div class="video-stage"><img class="video-preview" src="https://i.ytimg.com/vi/1S0x3aRCviM/hqdefault.jpg" alt="Gene Synthesis by GeneArt®"><button class="video-play" type="button"><span class="play-symbol">▶</span><span class="play-label">슬라이드에서 영상 재생</span></button></div><p class="video-caption"><span class="video-credit">Thermo Fisher Scientific · 4:11</span><a class="video-source-link" href="https://www.youtube.com/watch?v=1S0x3aRCviM" target="_blank" rel="noopener">YouTube에서 보기 ↗</a></p></div>
-      <div class="video-explain"><h3>영상 선택</h3><div class="video-choices"><button class="video-choice" type="button" aria-pressed="true">GeneArt · 실제 합성과 유전자 조립<span class="video-time">4:11</span></button><button class="video-choice" type="button" aria-pressed="false">교토대 · 고체상 합성 원리<span class="video-time">8:37</span></button><button class="video-choice" type="button" aria-pressed="false">보호기와 부반응 · 심화 해설<span class="video-time">27:29 · 심화</span></button></div><div class="kb teal"><b>관찰할 내용</b><p class="video-observation">볼 것 — 실제 공장: 필터를 찍어 웰에 넣고 CPG를 채운 뒤 자동 합성 · 하루 13,500 올리고 (Thermo Fisher GeneArt) — 후반 PCR 조립은 7-1에서 다시</p></div><h3>개념 연결</h3><ul class="video-prompts"><li>웰·CPG·사슬 고정점의 대응</li><li>시약 투입·세척·절단의 실제 흐름</li></ul></div>
+      <div><div class="video-stage"><img class="video-preview" src="https://i.ytimg.com/vi/1S0x3aRCviM/hqdefault.jpg" alt="Gene Synthesis by GeneArt®"><button class="video-play" type="button"><span class="play-symbol">▶</span><span class="play-label">슬라이드에서 영상 재생</span></button></div><p class="video-caption"><span class="video-credit">Thermo Fisher Scientific (4:11)</span><a class="video-source-link" href="https://www.youtube.com/watch?v=1S0x3aRCviM" target="_blank" rel="noopener">YouTube에서 보기 ↗</a></p></div>
+      <div class="video-explain"><h3>본문 영상</h3><div class="video-choices"><button class="video-choice" type="button" aria-pressed="true">GeneArt · 실제 합성과 유전자 조립 <span class="video-time">(4:11)</span></button></div><div class="kb teal"><b>관찰할 내용</b><p class="video-observation">볼 것 — 실제 공장: 필터를 찍어 웰에 넣고 CPG를 채운 뒤 자동 합성 · 하루 13,500 올리고 (Thermo Fisher GeneArt) — 후반 PCR 조립은 7-1에서 다시</p></div><h3>개념 연결</h3><ul class="video-prompts"><li>웰·CPG·사슬 고정점의 대응</li><li>시약 투입·세척·절단의 실제 흐름</li></ul></div>
     </div>
-    <p class="src">영상: Thermo Fisher Scientific · Kyoto-U OCW · the bumbling biochemist · YouTube 제목·제작자 확인: 2026-10-07 · 긴 강연은 필요한 구간을 선택하여 시청</p>
-  </div><script type="application/json" class="video-data">[{"id": "1S0x3aRCviM", "title": "Gene Synthesis by GeneArt®", "author": "Thermo Fisher Scientific", "label": "GeneArt · 실제 합성과 유전자 조립", "duration": "4:11", "note": "볼 것 — 실제 공장: 필터를 찍어 웰에 넣고 CPG를 채운 뒤 자동 합성 · 하루 13,500 올리고 (Thermo Fisher GeneArt) — 후반 PCR 조립은 7-1에서 다시"}, {"id": "GXOR09Q_VEA", "title": "Unit 3 Part 3   Synthesizing DNA by Solid Phase Synthesis", "author": "Kyoto-U OCW", "label": "교토대 · 고체상 합성 원리", "duration": "8:37", "note": "복습 — 교토대 공개강의 '생명의 화학' 고상 합성 편"}, {"id": "t29CQywQpMY", "title": "Solid state oligonucleotide synthesis (phosphoramidite method)", "author": "the bumbling biochemist", "label": "보호기와 부반응 · 심화 해설", "duration": "27:29", "note": "과제 시청 — \"프라이머를 주문하면 무슨 일이 일어나나\": 보호기 · 부반응 · 절단까지 긴 해설"}]</script>
+    <p class="src">영상: Thermo Fisher Scientific · YouTube 제목·제작자 확인: 2026-10-07</p>
+  </div><script type="application/json" class="video-data">[{"id": "1S0x3aRCviM", "title": "Gene Synthesis by GeneArt®", "author": "Thermo Fisher Scientific", "label": "GeneArt · 실제 합성과 유전자 조립", "duration": "4:11", "note": "볼 것 — 실제 공장: 필터를 찍어 웰에 넣고 CPG를 채운 뒤 자동 합성 · 하루 13,500 올리고 (Thermo Fisher GeneArt) — 후반 PCR 조립은 7-1에서 다시"}]</script>
 </section>
 
 <!-- ===================== PART 2 ===================== -->
@@ -2402,8 +2402,8 @@ M  END
   <header><h2>4단계 합성 사이클 — 반응 애니메이션</h2><p class="sub">본문 개념과 영상의 실제 공정·반응 기전 비교 · 재생 버튼 선택</p></header>
   <div class="body">
     <div class="video-layout">
-      <div><div class="video-stage"><img class="video-preview" src="https://i.ytimg.com/vi/yw0nrLWZSUw/hqdefault.jpg" alt="Educational video oligo synthesis"><button class="video-play" type="button"><span class="play-symbol">▶</span><span class="play-label">슬라이드에서 영상 재생</span></button></div><p class="video-caption"><span class="video-credit">Cytiva · 1:37</span><a class="video-source-link" href="https://www.youtube.com/watch?v=yw0nrLWZSUw" target="_blank" rel="noopener">YouTube에서 보기 ↗</a></p></div>
-      <div class="video-explain"><h3>영상 선택</h3><div class="video-choices"><button class="video-choice" type="button" aria-pressed="true">Cytiva · 4단계 반응 애니메이션<span class="video-time">1:37</span></button><button class="video-choice" type="button" aria-pressed="false">METTLER TOLEDO · 합성부터 절단까지<span class="video-time">4:09</span></button></div><div class="kb teal"><b>관찰할 내용</b><p class="video-observation">볼 것 — Cytiva 애니메이션의 순서는 Detritylation(탈트리틸화) → Coupling(커플링) → Oxidation(산화) → Capping(캡핑) . 오늘 위젯(캡핑 → 산화)과의 순서 차이 비교</p></div><h3>개념 연결</h3><ul class="video-prompts"><li>탈보호·연결·봉인·산화의 목적</li><li>Cytiva 영상과 강의 위젯의 캡핑·산화 순서 비교</li></ul></div>
+      <div><div class="video-stage"><img class="video-preview" src="https://i.ytimg.com/vi/yw0nrLWZSUw/hqdefault.jpg" alt="Educational video oligo synthesis"><button class="video-play" type="button"><span class="play-symbol">▶</span><span class="play-label">슬라이드에서 영상 재생</span></button></div><p class="video-caption"><span class="video-credit">Cytiva (1:37)</span><a class="video-source-link" href="https://www.youtube.com/watch?v=yw0nrLWZSUw" target="_blank" rel="noopener">YouTube에서 보기 ↗</a></p></div>
+      <div class="video-explain"><h3>영상 선택</h3><div class="video-choices"><button class="video-choice" type="button" aria-pressed="true">Cytiva · 4단계 반응 애니메이션 <span class="video-time">(1:37)</span></button><button class="video-choice" type="button" aria-pressed="false">METTLER TOLEDO · 합성부터 절단까지 <span class="video-time">(4:09)</span></button></div><div class="kb teal"><b>관찰할 내용</b><p class="video-observation">볼 것 — Cytiva 애니메이션의 순서는 Detritylation(탈트리틸화) → Coupling(커플링) → Oxidation(산화) → Capping(캡핑) . 오늘 위젯(캡핑 → 산화)과의 순서 차이 비교</p></div><h3>개념 연결</h3><ul class="video-prompts"><li>탈보호·연결·봉인·산화의 목적</li><li>Cytiva 영상과 강의 위젯의 캡핑·산화 순서 비교</li></ul></div>
     </div>
     <p class="src">영상: Cytiva · METTLER TOLEDO AutoChem · YouTube 제목·제작자 확인: 2026-10-07 · 긴 강연은 필요한 구간을 선택하여 시청</p>
   </div><script type="application/json" class="video-data">[{"id": "yw0nrLWZSUw", "title": "Educational video oligo synthesis", "author": "Cytiva", "label": "Cytiva · 4단계 반응 애니메이션", "duration": "1:37", "note": "볼 것 — Cytiva 애니메이션의 순서는 Detritylation(탈트리틸화) → Coupling(커플링) → Oxidation(산화) → Capping(캡핑) . 오늘 위젯(캡핑 → 산화)과의 순서 차이 비교"}, {"id": "kjSojZWnPQ4", "title": "What is Oligonucleotide Synthesis?", "author": "METTLER TOLEDO AutoChem", "label": "METTLER TOLEDO · 합성부터 절단까지", "duration": "4:09", "note": "볼 것 — Detritylation(탈트리틸화) · 활성화 · Coupling(커플링) · 아세틸 Capping(캡핑) · Oxidation(산화) · 암모니아 절단까지 오늘 PART 1–3 전체를 한 번에 (METTLER TOLEDO)"}]</script>
@@ -5577,6 +5577,19 @@ Q 144.8 217.1, 146.7 217.1
   <p class="small">Q and A(질의응답)</p>
 </section>
 
+
+<!-- Appendix: supplementary videos -->
+<section class="slide video-lesson" data-part="appendix" data-title="참고 영상 — 고체상 합성의 복습과 심화" data-video-lesson>
+  <header><h2>참고 영상 — 고체상 합성의 복습과 심화</h2><p class="sub">첨부 자료 · 교토대 공개강의와 보호기·부반응 심화 해설</p></header>
+  <div class="body">
+    <div class="video-layout">
+      <div><div class="video-stage"><img class="video-preview" src="https://i.ytimg.com/vi/GXOR09Q_VEA/hqdefault.jpg" alt="Unit 3 Part 3   Synthesizing DNA by Solid Phase Synthesis"><button class="video-play" type="button"><span class="play-symbol">▶</span><span class="play-label">슬라이드에서 영상 재생</span></button></div><p class="video-caption"><span class="video-credit">Kyoto-U OCW (8:37)</span><a class="video-source-link" href="https://www.youtube.com/watch?v=GXOR09Q_VEA" target="_blank" rel="noopener">YouTube에서 보기 ↗</a></p></div>
+      <div class="video-explain"><h3>영상 선택</h3><div class="video-choices"><button class="video-choice" type="button" aria-pressed="true">교토대 · 고체상 합성 원리 <span class="video-time">(8:37)</span></button><button class="video-choice" type="button" aria-pressed="false">보호기와 부반응 · 심화 해설 <span class="video-time">(27:29)</span></button></div><div class="kb teal"><b>관찰할 내용</b><p class="video-observation">복습 — 교토대 공개강의 &#x27;생명의 화학&#x27; 고상 합성 편</p></div><h3>개념 연결</h3><ul class="video-prompts"><li>고체상 합성 원리의 복습</li><li>보호기·부반응·절단 과정의 심화 학습</li></ul></div>
+    </div>
+    <p class="src">영상: Kyoto-U OCW · the bumbling biochemist · YouTube 제목·제작자 확인: 2026-10-07</p>
+  </div><script type="application/json" class="video-data">[{"id": "GXOR09Q_VEA", "title": "Unit 3 Part 3   Synthesizing DNA by Solid Phase Synthesis", "author": "Kyoto-U OCW", "label": "교토대 · 고체상 합성 원리", "duration": "8:37", "note": "복습 — 교토대 공개강의 '생명의 화학' 고상 합성 편"}, {"id": "t29CQywQpMY", "title": "Solid state oligonucleotide synthesis (phosphoramidite method)", "author": "the bumbling biochemist", "label": "보호기와 부반응 · 심화 해설", "duration": "27:29", "note": "과제 시청 — \"프라이머를 주문하면 무슨 일이 일어나나\": 보호기 · 부반응 · 절단까지 긴 해설"}]</script>
+</section>
+
   </main></div>
   <div class="ctrl">
     <button class="cb" id="b-side" type="button" aria-pressed="true" title="목차 열고 닫기 (S)">☰ 목차</button>
@@ -5597,7 +5610,7 @@ var root,factory;root=this,factory=()=>(()=>{var __webpack_modules__={546(e,t,i)
 <script>
 (function(){
 'use strict';
-var META = {"label": "DNA Data Storage 6-1", "parts": [{"id": "p0", "name": "Introduction(도입)", "min": 6}, {"id": "p1", "name": "PART 1 · 단량체와 지지체", "min": 12}, {"id": "p2", "name": "PART 2 · 4단계 사이클", "min": 28}, {"id": "q1", "name": "퀴즈 1", "min": 3}, {"id": "p3", "name": "PART 3 · 절단 · 탈보호 · 가수분해", "min": 12}, {"id": "p4", "name": "PART 4 · 수율과 길이 · 환경", "min": 10}, {"id": "p5", "name": "정리", "min": 4}]};
+var META = {"label": "DNA Data Storage 6-1", "parts": [{"id": "p0", "name": "Introduction(도입)", "min": 6}, {"id": "p1", "name": "PART 1 · 단량체와 지지체", "min": 12}, {"id": "p2", "name": "PART 2 · 4단계 사이클", "min": 28}, {"id": "q1", "name": "퀴즈 1", "min": 3}, {"id": "p3", "name": "PART 3 · 절단 · 탈보호 · 가수분해", "min": 12}, {"id": "p4", "name": "PART 4 · 수율과 길이 · 환경", "min": 10}, {"id": "p5", "name": "정리", "min": 4}, {"id": "appendix", "name": "첨부 · 참고 영상", "min": 0}]};
 var $ = function(id){ return document.getElementById(id); };
 var el = function(tag, cls, txt){ var e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
 var app = $('app'), deck = $('deck');
@@ -5897,7 +5910,7 @@ function lectureVideosInit(){
       preview.src='https://i.ytimg.com/vi/'+video.id+'/hqdefault.jpg';
       preview.alt=video.title;
       source.href='https://www.youtube.com/watch?v='+video.id;
-      credit.textContent=video.author+' · '+video.duration;
+      credit.textContent=video.author+' ('+video.duration+')';
       note.textContent=video.note;
       choices.forEach(function(button,j){button.setAttribute('aria-pressed',String(i===j));});
       play.setAttribute('aria-label',video.label+' 재생');
