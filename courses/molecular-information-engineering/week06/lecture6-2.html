@@ -432,6 +432,13 @@ table.tbl td.w{white-space:nowrap}
 ol.nl.tight > li{font-size:.96em;gap:.55em}
 ol.nl.tight > li::before{inline-size:1.75em;block-size:1.75em;font-size:.86em;line-height:1.75em}
 
+/* Commercial microfluidic systems and benchtop instruments: original vendor assets. */
+.cards.six{grid-template-columns:repeat(3,minmax(0,1fr))}.cards.six.map .card{min-height:6.6em;padding:.55em .7em;gap:.2em}.cards.six.map h3{font-size:.88em}.cards.six.map p{font-size:.7em;line-height:1.4}
+.device-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1em}.device-card{display:flex;flex-direction:column;gap:.35em;border:1px solid var(--border);border-top:4px solid var(--teal);border-radius:.3em;padding:.55em .7em}.device-card h3{font-size:.92em}.device-chip{display:block;width:100%;height:10em;object-fit:contain;background:#fff;border-radius:.2em}.device-card .pts.sm{font-size:.77em;line-height:1.45;gap:.25em}.device-caption{font-size:.63em;color:var(--gray);line-height:1.4;text-align:center}.device-links{font-size:.65em;line-height:1.4;margin-top:auto}.microfluidic-devices .body,.benchtop-devices .body{gap:.55em;padding-top:.85em}.microfluidic-devices .kb{padding:.4em .65em}.microfluidic-devices .kb p{font-size:.8em;line-height:1.45}.device-photos figure{margin:0;text-align:center}.device-photos img{display:block;width:100%;height:9em;object-fit:contain;background:#fff}.device-photos figcaption{font-size:.68em;line-height:1.4;color:var(--gray)}.device-table{font-size:.73em;line-height:1.35}.device-table td,.device-table th{padding:.3em .5em}.device-table th:first-child{width:19%}.device-table td:nth-child(2),.device-table td:nth-child(3){width:40.5%}.microfluidic-devices .src,.benchtop-devices .src{font-size:.57em}
+@media(max-width:780px){.app.read .device-columns{grid-template-columns:1fr}.app.read .cards.six{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+table.tbl.device-table{font-size:.70em;line-height:1.35}table.tbl.device-table td,table.tbl.device-table th{padding:.28em .48em}
+
 /* contextual lecture videos */
 /* Contextual lecture videos: one inline player, selectable sources and teaching notes. */
 .video-lesson .body{gap:.4em;padding-top:.85em}
@@ -463,7 +470,7 @@ ol.nl.tight > li::before{inline-size:1.75em;block-size:1.75em;font-size:.86em;li
 <body>
 <div class="app" id="app">
 <aside class="side" id="side" aria-label="슬라이드 목차">
-  <div class="side-head"><span class="k">DNA Data Storage 6-2</span><span class="t">칩 병렬 합성과 올리고 풀</span><span class="s">다종 서열의 병렬 합성 · 합성 방식 · 제품 사양 · 정제 · 75분</span></div>
+  <div class="side-head"><span class="k">DNA Data Storage 6-2</span><span class="t">칩 병렬 합성과 올리고 풀</span><span class="s">병렬 합성 · 제품 사양 · 정제 · 마이크로유체·벤치탑 장치 · 75분</span></div>
   <nav class="side-nav" id="side-nav"></nav>
 </aside>
 <div class="main">
@@ -474,7 +481,7 @@ ol.nl.tight > li::before{inline-size:1.75em;block-size:1.75em;font-size:.86em;li
   <h1>칩 병렬 합성과 올리고 풀</h1>
   <p class="s1">DNA Data Storage 6-2 · 다종 서열의 칩 기반 병렬 합성</p>
   <div class="rule"></div>
-  <p class="s2">포토마스크 · DMD · 잉크젯 · 전기화학  ｜  광화학과 오류율  ｜  공급사 스펙  ｜  정제</p>
+  <p class="s2">포토마스크 · DMD · 잉크젯 · 전기화학 · 미세웰 ｜ 광화학과 오류 ｜ 올리고 풀 · 정제 ｜ 마이크로유체·벤치탑 장치</p>
   <p class="au">송영준  Youngjun Song, Ph.D.   ·   인천대학교</p>
   <p class="keys presentonly"><span><kbd>←</kbd> <kbd>→</kbd> 이동</span><span><kbd>S</kbd> 목차</span><span><kbd>R</kbd> 읽기 모드</span><span><kbd>F</kbd> 전체화면</span></p>
   <div class="art" aria-hidden="true">1 CHIP
@@ -495,7 +502,7 @@ ol.nl.tight > li::before{inline-size:1.75em;block-size:1.75em;font-size:.86em;li
     <div class="cols">
       <ul class="pts">
         <li>칩 합성을 <span class="hl">공간 주소 지정</span>으로 설명 · 컬럼과 비교해 서열 수 · 양 · 단가의 차이를 수치로 제시</li>
-        <li>네 방식(포토마스크 · DMD · 잉크젯 · 전기화학)을 <span class="hl">탈보호 트리거</span> 기준으로 분류</li>
+        <li>다섯 방식(포토마스크 · DMD · 잉크젯 · 전기화학 · 미세웰)의 <span class="hl">위치 선택 원리</span>와 장치 구성 비교</li>
         <li>각 방식의 한 사이클을 실제 순서대로 재현 · 공간 선택성이 걸리는 단계 지목</li>
       </ul>
       <ul class="pts">
@@ -509,14 +516,15 @@ ol.nl.tight > li::before{inline-size:1.75em;block-size:1.75em;font-size:.86em;li
 </section>
 
 <section class="slide" data-part="p0" data-title="강의 구성">
-  <header><h2>강의 구성</h2><p class="sub">5개 파트 · 대화형 위젯 5개 · 표 9개</p></header>
+  <header><h2>강의 구성</h2><p class="sub">6개 파트 · 합성 방식·제품 사양·정제·합성 장치</p></header>
   <div class="body mid">
-    <div class="cards five map">
+    <div class="cards six map">
       <div class="card crim"><span class="pn">PART 1</span><h3>칩 기반 병렬 합성의 필요성</h3><p>컬럼과 칩의 비교 — 종류 · 양 · 단가</p></div>
-      <div class="card"><span class="pn">PART 2</span><h3>칩 합성 네 방식</h3><p>방식별 합성 사이클 비교</p></div>
+      <div class="card"><span class="pn">PART 2</span><h3>칩 합성 다섯 방식</h3><p>방식별 합성 사이클 비교</p></div>
       <div class="card amber"><span class="pn">PART 3</span><h3>광화학과 오류</h3><p>PGA · 광분해 보호기 · 오류율의 근원</p></div>
       <div class="card amber"><span class="pn">PART 4</span><h3>공급사와 올리고 풀</h3><p>스펙 · 동영상 · 실제 저장 논문</p></div>
       <div class="card navy"><span class="pn">PART 5</span><h3>정제</h3><p>합성 산물의 조성 · 정제법 4종 · 선택 기준</p></div>
+      <div class="card green"><span class="pn">PART 6</span><h3>마이크로유체·벤치탑 장치</h3><p>유로·반응 구획 · 실제 장치 · 공식 작동 영상</p></div>
     </div>
     <div class="kb"><b>DNA Data Storage 1–5와의 연결</b><p>DNA Data Storage 3의 2 bit/nt 매핑과 DNA Data Storage 5의 올리고 구조(프라이머 + 인덱스 + 데이터 + ECC)를 이용한 서열 설계 → <span class="hl">물리적 DNA 분자의 합성</span></p></div>
   </div>
@@ -622,12 +630,12 @@ ol.nl.tight > li::before{inline-size:1.75em;block-size:1.75em;font-size:.86em;li
 
 <!-- ===================== PART 2 ===================== -->
 <section class="slide sect" data-part="p2" data-title="PART 2 섹션 표지">
-  <div class="sl"><div class="no">PART 2</div><h2>칩 합성 네 방식</h2><p class="en">Spatial Addressing in Chip-Based DNA Synthesis</p></div>
+  <div class="sl"><div class="no">PART 2</div><h2>칩 합성 다섯 방식</h2><p class="en">Spatial Addressing in Chip-Based DNA Synthesis</p></div>
   <div class="sr"><ul>
     <li>공통 합성 사이클 · 방식별 위치 선택 제어</li>
     <li>포토마스크 광유도 · 마스크리스 DMD — 단계별 위젯</li>
     <li>잉크젯 토출 · 전기화학 탈보호 — 단계별 위젯</li>
-    <li>실리콘 미세웰과 네 방식 숫자 비교</li>
+    <li>실리콘 미세웰과 다른 방식의 성능 비교</li>
   </ul></div>
 </section>
 
@@ -1882,6 +1890,48 @@ Q 105.4 257.4, 107.2 257.4
   <p class="src">칩 풀 규모 · 서열당 양: Twist REV12 (2026-01) · GenScript (2026-09-22) · 용도별 권장은 기존 강의안 보강 자료</p>
 </section>
 
+
+<!-- ===================== PART 6 · 합성 장치 ===================== -->
+<section class="slide microfluidic-devices" data-part="pdev" data-title="마이크로유체 합성 — Kilobaser와 LC Sciences">
+<header><h2>마이크로유체 합성 — Kilobaser와 LC Sciences</h2><p class="sub">PART 6 · Microfluidic synthesis(미세유체 합성) · 시약 전달과 반응 구획의 소형화</p></header>
+<div class="body">
+<div class="device-columns">
+<div class="device-card"><h3>Kilobaser · 단일 미세컬럼</h3><img class="device-chip" src="img/kilobaser-chip.webp" alt="Kilobaser가 공개한 실제 미세유체 칩 사진"><p class="device-caption">일회용 칩 76 × 26 mm · 회사 공개 원사진</p>
+<ul class="pts sm"><li><b>유로와 밸브:</b> 13개 유체 채널 · 외부 공압에 의한 밸브 개폐</li><li><b>반응 구획:</b> 다공성 고체 지지체를 포함한 Microcolumn(미세컬럼) 1개</li><li><b>합성:</b> Phosphoramidite(포스포라미다이트) 4단계 사이클 · 한 번에 한 서열</li><li><b>시약 전달:</b> 카트리지 → 선택 밸브 → 미세컬럼 → 폐액 회수</li></ul>
+<p class="device-links"><a href="https://kilobaser.com/technology" target="_blank" rel="noopener">공식 기술 설명 ↗</a> · <a href="https://kilobaser.com/technical-specifications" target="_blank" rel="noopener">제품 사양 ↗</a></p>
+</div>
+<div class="device-card"><h3>LC Sciences · µParaflo 병렬 반응실</h3><img class="device-chip" src="img/lcsciences-microfluidic-platform.png" alt="LC Sciences가 공개한 미세 반응실 SEM과 µParaflo 유로 구조 도식"><p class="device-caption">실제 반응실 SEM과 유로 도식 · 회사 공개 원그림</p>
+<ul class="pts sm"><li><b>유로와 반응실:</b> 실리콘 기판의 분배 채널 · 피코리터 규모 반응 구획</li><li><b>위치 선택:</b> DLP 광패턴 + Photoacid generation(광산 발생) → DMT 제거</li><li><b>병렬 합성:</b> 여러 반응실에서 서로 다른 서열의 동시 합성</li><li><b>제품 형태:</b> OligoMix(올리고 풀) 수탁 합성 · 한 튜브로 회수</li></ul>
+<p class="device-links"><a href="https://lcsciences.com/tech-service-detail?cid=39&amp;id=140" target="_blank" rel="noopener">공식 OligoMix 기술·서비스 ↗</a> · 강의 24쪽의 공정 영상</p>
+</div></div>
+<div class="kb"><b>장치 설계의 비교 기준</b><p>소형 유로·밸브에 의한 시약 선택 및 교체 · 반응 구획의 형상과 개수 · 단일 서열의 소량 합성과 다종 서열의 병렬 합성 구분</p></div>
+</div><p class="src">Kilobaser, Our Technology / Technical Specifications · LC Sciences, OligoMix Microfluidic Array Platform. 회사 공개 기술·제품 자료 확인: 2026-10-07 · 그림: 각 회사 공식 페이지 원자료.</p>
+</section>
+
+<section class="slide benchtop-devices" data-part="pdev" data-title="벤치탑 합성 장치 — Kilobaser와 SYNTAX">
+<header><h2>벤치탑 합성 장치 — Kilobaser와 SYNTAX</h2><p class="sub">실험실 내 올리고 제조 · 소형 화학 합성 장치와 플레이트 기반 효소 합성 장치의 비교</p></header>
+<div class="body">
+<div class="device-columns device-photos">
+<figure><img src="img/kilobaser-components.webp" alt="Kilobaser 합성 장치와 미세유체 칩·시약 카트리지"><figcaption>Kilobaser One / One-XT · 칩과 시약 카트리지</figcaption></figure>
+<figure><img src="img/syntax-stx200.png" alt="DNA Script 공식 제품 페이지의 SYNTAX STX-200 외형 이미지"><figcaption>DNA Script SYNTAX STX-200 · 플레이트 기반 장치</figcaption></figure>
+</div>
+<table class="tbl device-table"><thead><tr><th>비교 항목</th><th>Kilobaser One / One-XT</th><th>DNA Script SYNTAX STX-200</th></tr></thead><tbody>
+<tr><td>합성 원리</td><td>고체상 phosphoramidite 화학 합성<br>미세컬럼 내 4단계 사이클</td><td>TdT 기반 Enzymatic DNA synthesis(효소적 DNA 합성)<br>가역적 종결기 도입·탈보호</td></tr>
+<tr><td>장치 크기</td><td>27 × 33 × 33 cm</td><td>122 × 66 × 74 cm (W × H × D)<br>별도 진공 캐비닛</td></tr>
+<tr><td>서열 수·길이</td><td>1 oligo/run · 권장 최대 50 nt<br>One-XT: 변형 DNA·RNA 지원</td><td>Hi-Fidelity: 96종 × 최대 120 nt<br>Hi-Plex: 384종 × 최대 60 nt / 288종 × 최대 80 nt</td></tr>
+<tr><td>시약과 운용</td><td>일회용 칩 · 시약 카트리지<br>N₂ 또는 Ar 공급 · 2.5 min/nt</td><td>합성·실행 키트와 플레이트<br>키트별 산출량·정제 자동화 범위의 차이</td></tr>
+<tr><td>공식 공개 자료</td><td><a href="https://kilobaser.com/dna-and-rna-synthesizer" target="_blank" rel="noopener">장치 설명 ↗</a> · <a href="https://kilobaser.com/content/PDFs/Kilobaser-one-and-one-XT_Technical-Specifications.pdf" target="_blank" rel="noopener">사양 PDF ↗</a></td><td><a href="https://www.dnascript.com/products/" target="_blank" rel="noopener">장치 설명 ↗</a> · <a href="https://www.dnascript.com/syntax-kits/" target="_blank" rel="noopener">키트별 사양 ↗</a> · <a href="https://www.dnascript.com/resources/faq/" target="_blank" rel="noopener">설치 조건 ↗</a></td></tr>
+</tbody></table>
+<p class="device-caption">제품 외형은 사진 참조 · 장치 크기·처리량은 표의 개별 사양 참조 · SYNTAX의 효소 반응 원리는 DNA Data Storage 7-1에서 설명</p>
+</div><p class="src">Kilobaser One & One-XT Technical Specifications · DNA Script SYNTAX Kits / System FAQ · Hi-Plex CUS-39 (2026-05). 기업 공개 사양 확인: 2026-10-07 · 제품 이미지: 각 회사 공식 제품·기술 페이지.</p>
+</section>
+
+<section class="slide video-lesson" data-part="pdev" data-title="벤치탑 장치 — 공식 작동 영상" data-video-lesson>
+<header><h2>벤치탑 장치 — 공식 작동 영상</h2><p class="sub">칩·카트리지 장착과 플레이트 기반 운용 · 제조사 공개 영상</p></header>
+<div class="body"><div class="video-layout"><div><div class="video-stage"><img class="video-preview" src="https://i.ytimg.com/vi/whaHojN70G0/hqdefault.jpg" alt="How to make DNA yourself with Kilobaser"><button class="video-play" type="button"><span class="play-symbol">▶</span><span class="play-label">슬라이드에서 영상 재생</span></button></div><p class="video-caption"><span class="video-credit">KILOBASER - PERSONAL DNA & RNA SYNTHESIZER (3:03)</span><a class="video-source-link" href="https://www.youtube.com/watch?v=whaHojN70G0" target="_blank" rel="noopener">YouTube에서 보기 ↗</a></p></div>
+<div class="video-explain"><h3>제조사 영상 선택</h3><div class="video-choices"><button class="video-choice" type="button" aria-pressed="true">Kilobaser · 칩과 카트리지 장착 <span class="video-time">(3:03)</span></button><button class="video-choice" type="button" aria-pressed="false">DNA Script · SYNTAX 장치 운용 <span class="video-time">(2:31)</span></button></div><div class="kb teal"><b>관찰할 내용</b><p class="video-observation">서열 입력 → 시약 카트리지·미세유체 칩 장착 → 합성 시작 → 산물 회수 · 소형 화학 합성 장치의 실제 조작</p></div><h3>장치 구성과의 연결</h3><ul class="video-prompts"><li>일회용 칩의 장착 위치와 시약 카트리지 연결</li><li>단일 미세컬럼과 병렬 플레이트의 처리량 비교</li><li>합성 종료 후 산물 회수와 후처리</li></ul></div></div><p class="src">영상: Kilobaser / DNA Script 공식 채널 · Kilobaser FAQ의 공식 안내 링크 및 YouTube oEmbed 제작자 확인: 2026-10-07 · 필요한 구간 선택 시청.</p></div><script type="application/json" class="video-data">[{"id": "whaHojN70G0", "title": "How to make DNA yourself with Kilobaser", "author": "KILOBASER - PERSONAL DNA & RNA SYNTHESIZER", "label": "Kilobaser · 칩과 카트리지 장착", "duration": "3:03", "note": "서열 입력 → 시약 카트리지·미세유체 칩 장착 → 합성 시작 → 산물 회수 · 소형 화학 합성 장치의 실제 조작"}, {"id": "QxOy9QLdBRA", "title": "DNA Script SYNTAX System Workflow", "author": "DNA Script", "label": "DNA Script · SYNTAX 장치 운용", "duration": "2:31", "note": "플레이트와 시약 준비 → 효소 합성 → 산물 처리 · 영상의 구형 사양과 현재 키트별 사양표의 구분"}]</script>
+</section>
+
 <!-- ===================== 정리 ===================== -->
 <section class="slide" data-part="p6" data-title="칩 합성과 올리고 정제의 핵심 원리">
   <header><h2>칩 합성과 올리고 정제의 핵심 원리</h2><p class="sub">칩 병렬 합성과 정제의 주요 개념 6가지</p></header>
@@ -1942,7 +1992,7 @@ var root,factory;root=this,factory=()=>(()=>{var __webpack_modules__={546(e,t,i)
 <script>
 (function(){
 'use strict';
-var META = {"label": "DNA Data Storage 6-2", "parts": [{"id": "p0", "name": "Introduction", "min": 4}, {"id": "p1", "name": "PART 1 · 칩 기반 병렬 합성의 필요성", "min": 8}, {"id": "p2", "name": "PART 2 · 칩 합성 네 방식", "min": 22}, {"id": "p3", "name": "PART 3 · 광화학과 오류", "min": 12}, {"id": "p4", "name": "PART 4 · 공급사와 올리고 풀", "min": 14}, {"id": "p5", "name": "PART 5 · 정제", "min": 10}, {"id": "p6", "name": "정리", "min": 2}, {"id": "pq", "name": "퀴즈 · 마무리", "min": 3}]};
+var META = {"label": "DNA Data Storage 6-2", "parts": [{"id": "p0", "name": "Introduction", "min": 4}, {"id": "p1", "name": "PART 1 · 칩 기반 병렬 합성의 필요성", "min": 8}, {"id": "p2", "name": "PART 2 · 칩 합성 다섯 방식", "min": 22}, {"id": "p3", "name": "PART 3 · 광화학과 오류", "min": 12}, {"id": "p4", "name": "PART 4 · 공급사와 올리고 풀", "min": 10}, {"id": "p5", "name": "PART 5 · 정제", "min": 8}, {"id": "pdev", "name": "PART 6 · 마이크로유체·벤치탑 장치", "min": 6}, {"id": "p6", "name": "정리", "min": 2}, {"id": "pq", "name": "퀴즈 · 마무리", "min": 3}]};
 var $ = function(id){ return document.getElementById(id); };
 var el = function(tag, cls, txt){ var e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
 var app = $('app'), deck = $('deck');
@@ -2159,14 +2209,32 @@ function mol3dInit(root){
     var fmt = sets[0].dataset.fmt || box.dataset.fmt || 'sdf';
     var v = $3Dmol.createViewer(host, {backgroundColor: 'white', antialias: true});
     v.addModel(sets[0].textContent, fmt);
+    var proteinProfile = box.dataset.protein === 'tdt', proteinView = 'full';
+    function proteinSelection(){
+      if (proteinView === 'cys') return {chain:'A', resi:302};
+      if (proteinView === 'active') return {resn:['D3T','2DT','MG']};
+      return {resn:'HOH', invert:true};
+    }
+    function proteinStyle(){
+      v.setStyle({}, {});
+      v.setStyle({chain:'A', hetflag:false}, {cartoon:{color:'#529FD9'}});
+      v.setStyle({chain:'C'}, {stick:{radius:0.22, color:'#D7972B'}});
+      v.setStyle({resn:'D3T'}, {stick:{radius:0.25, colorscheme:'Jmol'}, sphere:{scale:0.28, colorscheme:'Jmol'}});
+      v.setStyle({resn:'MG'}, {sphere:{radius:1.0, color:'#2E7D54'}});
+      v.addStyle({chain:'A', resi:302}, {stick:{radius:0.22, color:'#C03B73'}});
+      v.addStyle({chain:'A', resi:[343,345,434]}, {stick:{radius:0.16, colorscheme:'Jmol'}});
+    }
     var styles = {
       stick: {stick: {radius: 0.12, colorscheme: 'Jmol'}},
       ball: {stick: {radius: 0.1, colorscheme: 'Jmol'}, sphere: {scale: 0.25, colorscheme: 'Jmol'}},
       space: {sphere: {scale: 1.0, colorscheme: 'Jmol'}}
     };
     function set(k, btn){
-      v.setStyle({}, styles[k]);
-      if (fmt === 'pdb') v.addStyle({}, {cartoon: {color: 'spectrum'}});
+      if (proteinProfile) proteinStyle();
+      else {
+        v.setStyle({}, styles[k]);
+        if (fmt === 'pdb') v.addStyle({}, {cartoon: {color: 'spectrum'}});
+      }
       v.render();
       box.querySelectorAll('[data-style]').forEach(function(b){ b.classList.toggle('on', b === btn); });
     }
@@ -2179,6 +2247,16 @@ function mol3dInit(root){
     function set2(k, btn){ mode = k; set(k, btn); }
     box.querySelectorAll('[data-style]').forEach(function(b){
       b.onclick = function(e){ e.stopPropagation(); set2(b.dataset.style, b); };
+    });
+    box.querySelectorAll('[data-protein-view]').forEach(function(b){
+      b.onclick = function(e){
+        e.stopPropagation(); proteinView = b.dataset.proteinView;
+        v.zoomTo(proteinSelection());
+        if (proteinView !== 'full') v.zoom(0.65);
+        v.render();
+        box.querySelectorAll('[data-protein-view]').forEach(function(button){ button.classList.toggle('on', button === b); });
+      };
+      b.classList.toggle('on', b.dataset.proteinView === 'full');
     });
     var picks = [].slice.call(box.querySelectorAll('[data-pick]'));
     function load(i){
@@ -2197,7 +2275,10 @@ function mol3dInit(root){
     if (picks.length) picks[0].classList.add('on');
     function fit(){
       if (!host.clientWidth || !host.clientHeight) return;
-      v.resize(); v.zoomTo(); v.render();
+      v.resize();
+      if (proteinProfile) { v.zoomTo(proteinSelection()); if (proteinView !== 'full') v.zoom(0.65); }
+      else v.zoomTo();
+      v.render();
     }
     requestAnimationFrame(fit); setTimeout(fit, 200); setTimeout(fit, 700);
     if (window.ResizeObserver) {
