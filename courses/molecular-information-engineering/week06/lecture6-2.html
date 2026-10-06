@@ -463,7 +463,7 @@ ol.nl.tight > li::before{inline-size:1.75em;block-size:1.75em;font-size:.86em;li
 <body>
 <div class="app" id="app">
 <aside class="side" id="side" aria-label="슬라이드 목차">
-  <div class="side-head"><span class="k">DNA Data Storage 6-2</span><span class="t">칩 병렬 합성과 올리고 풀</span><span class="s">100만 서열을 동시에 — 칩 · 회사 · 정제 · 75분</span></div>
+  <div class="side-head"><span class="k">DNA Data Storage 6-2</span><span class="t">칩 병렬 합성과 올리고 풀</span><span class="s">다종 서열의 병렬 합성 · 합성 방식 · 제품 사양 · 정제 · 75분</span></div>
   <nav class="side-nav" id="side-nav"></nav>
 </aside>
 <div class="main">
@@ -472,7 +472,7 @@ ol.nl.tight > li::before{inline-size:1.75em;block-size:1.75em;font-size:.86em;li
 <section class="slide cover" data-part="p0" data-title="표지">
   <div class="en">MOLECULAR INFORMATION STORAGE SYSTEM</div>
   <h1>칩 병렬 합성과 올리고 풀</h1>
-  <p class="s1">제12강 (DNA Data Storage 6-2) · 100만 서열을 동시에 쓰는 기술</p>
+  <p class="s1">DNA Data Storage 6-2 · 다종 서열의 칩 기반 병렬 합성</p>
   <div class="rule"></div>
   <p class="s2">포토마스크 · DMD · 잉크젯 · 전기화학  ｜  광화학과 오류율  ｜  공급사 스펙  ｜  정제</p>
   <p class="au">송영준  Youngjun Song, Ph.D.   ·   인천대학교</p>
@@ -504,7 +504,7 @@ ol.nl.tight > li::before{inline-size:1.75em;block-size:1.75em;font-size:.86em;li
         <li>공급사 스펙(길이 · 오류율 · 균일도)을 읽고 저장 용량으로 환산 · 정제 4종을 용도에서 거꾸로 선택</li>
       </ul>
     </div>
-    <div class="kb teal"><b>오늘의 한 문장</b><p>네 방식은 포스포라미다이트 4단계 사이클을 똑같이 돈다 · 다른 것은 <span class="hl">탈보호를 어디에만 일어나게 하는가</span> 하나뿐</p></div>
+    <div class="kb teal"><b>칩 합성의 공통 원리</b><p>포스포라미다이트 4단계 사이클 기반 · 방식별 <span class="hl">공간 선택성의 부여 단계</span> 비교</p></div>
   </div>
 </section>
 
@@ -512,18 +512,18 @@ ol.nl.tight > li::before{inline-size:1.75em;block-size:1.75em;font-size:.86em;li
   <header><h2>강의 구성</h2><p class="sub">5개 파트 · 대화형 위젯 5개 · 표 9개</p></header>
   <div class="body mid">
     <div class="cards five map">
-      <div class="card crim"><span class="pn">PART 1</span><h3>왜 칩으로 갔는가</h3><p>컬럼과 칩의 비교 — 종류 · 양 · 단가</p></div>
-      <div class="card"><span class="pn">PART 2</span><h3>칩 합성 네 방식</h3><p>사이클을 직접 돌려 보기</p></div>
+      <div class="card crim"><span class="pn">PART 1</span><h3>칩 기반 병렬 합성의 필요성</h3><p>컬럼과 칩의 비교 — 종류 · 양 · 단가</p></div>
+      <div class="card"><span class="pn">PART 2</span><h3>칩 합성 네 방식</h3><p>방식별 합성 사이클 비교</p></div>
       <div class="card amber"><span class="pn">PART 3</span><h3>광화학과 오류</h3><p>PGA · 광분해 보호기 · 오류율의 근원</p></div>
-      <div class="card amber"><span class="pn">PART 4</span><h3>회사와 올리고 풀</h3><p>스펙 · 동영상 · 실제 저장 논문</p></div>
-      <div class="card navy"><span class="pn">PART 5</span><h3>정제</h3><p>튜브 안의 조성 · 정제 4종 · 선택</p></div>
+      <div class="card amber"><span class="pn">PART 4</span><h3>공급사와 올리고 풀</h3><p>스펙 · 동영상 · 실제 저장 논문</p></div>
+      <div class="card navy"><span class="pn">PART 5</span><h3>정제</h3><p>합성 산물의 조성 · 정제법 4종 · 선택 기준</p></div>
     </div>
-    <div class="kb"><b>DNA Data Storage 1–5와의 연결</b><p>DNA Data Storage 3의 2 bit/nt 매핑과 DNA Data Storage 5의 올리고 구조(프라이머 + 인덱스 + 데이터 + ECC)로 설계한 서열을, 오늘 <span class="hl">실제로 합성해 손에 받는다</span></p></div>
+    <div class="kb"><b>DNA Data Storage 1–5와의 연결</b><p>DNA Data Storage 3의 2 bit/nt 매핑과 DNA Data Storage 5의 올리고 구조(프라이머 + 인덱스 + 데이터 + ECC)를 이용한 서열 설계 → <span class="hl">물리적 DNA 분자의 합성</span></p></div>
   </div>
 </section>
 
 <section class="slide" data-part="p0" data-title="컬럼 합성의 서열별 반응 분리">
-  <header><h2>컬럼 합성의 서열별 반응 분리</h2><p class="sub">컬럼은 시간 축으로 서열을 정한다 · DNA 저장은 수백만 종을 요구한다</p></header>
+  <header><h2>컬럼 합성의 서열별 반응 분리</h2><p class="sub">컬럼의 시간별 시약 공급 · DNA 저장용 다종 서열의 병렬 합성</p></header>
   <div class="body">
     <svg viewBox="0 0 640 196" role="img" aria-label="컬럼 1개와 칩 1장의 산출 비교">
       <defs><marker id="tipA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#529FD9"/></marker></defs>
@@ -537,7 +537,7 @@ ol.nl.tight > li::before{inline-size:1.75em;block-size:1.75em;font-size:.86em;li
       <text x="240" y="62" text-anchor="middle" class="s-txt s-navy" font-weight="700">서열 1종</text>
       <text x="240" y="80" text-anchor="middle" class="s-sm s-gray">25 nmol 스케일</text>
       <text x="240" y="95" text-anchor="middle" class="s-sm s-gray">≈ 1.5×10¹⁶ 분자</text>
-      <text x="162" y="150" text-anchor="middle" class="s-txt s-navy" font-weight="700">시간 축 — 시약을 언제 흘릴지로 서열을 정함</text>
+      <text x="162" y="150" text-anchor="middle" class="s-txt s-navy" font-weight="700">시간별 시약 공급 순서에 따른 서열 결정</text>
       <text x="162" y="172" text-anchor="middle" class="s-sm s-gray">96-well 합성기 = 1회 96종 · 길이 ~200 nt</text>
       <line x1="320" y1="10" x2="320" y2="186" class="l-border" stroke-dasharray="5 5"/>
       <!-- 칩 -->
@@ -559,10 +559,10 @@ ol.nl.tight > li::before{inline-size:1.75em;block-size:1.75em;font-size:.86em;li
       <text x="558" y="62" text-anchor="middle" class="s-txt s-navy" font-weight="700">서열 10⁴–10⁶종</text>
       <text x="558" y="80" text-anchor="middle" class="s-sm s-gray">각 0.2–1 fmol</text>
       <text x="558" y="95" text-anchor="middle" class="s-sm s-gray">≈ 10⁸ 분자</text>
-      <text x="480" y="150" text-anchor="middle" class="s-txt s-navy" font-weight="700">공간 축 — 빛 · 방울 · 전압을 어디에 줄지로 서열을 정함</text>
+      <text x="480" y="150" text-anchor="middle" class="s-txt s-navy" font-weight="700">위치별 광조사·시약 토출·전압 인가에 따른 서열 결정</text>
       <text x="480" y="172" text-anchor="middle" class="s-sm s-gray">사이클 수는 그대로 4N번 · 서열 수만 10⁴–10⁶배</text>
     </svg>
-    <div class="kb crim"><b>오늘의 문제의식</b><p>DNA 저장은 <span class="hl">종류는 많이 · 양은 적게</span>를 요구한다 — 컬럼은 정확히 반대의 기계</p></div>
+    <div class="kb crim"><b>DNA 저장용 합성의 요구 조건</b><p>DNA 저장: <span class="hl">다종 서열 · 서열당 소량</span> · 컬럼 합성: 제한된 서열 수 · 서열당 대량</p></div>
   </div>
   <p class="src">Twist Bioscience, <i>Oligo Pools Product Sheet</i> DOC-001054 REV12 (2026-01) · 컬럼 25 nmol 스케일과 분자 수는 아보가드로 수 계산</p>
 </section>
@@ -572,13 +572,13 @@ ol.nl.tight > li::before{inline-size:1.75em;block-size:1.75em;font-size:.86em;li
   <div class="sl"><div class="no">PART 1</div><h2>칩 기반 병렬 합성의 필요성</h2><p class="en">From Columns to Chips</p></div>
   <div class="sr"><ul>
     <li>컬럼과 칩 — 서열 수 · 규모 · 분자 수 · 비용 단위</li>
-    <li>칩은 양이 아니라 종류를 늘리는 기술</li>
-    <li>1 MB를 저장하려면 몇 종이 필요한가</li>
+    <li>칩 기반 병렬 합성에 의한 서열 다양성 확대</li>
+    <li>1 MB 저장에 필요한 서열 수 산출</li>
   </ul></div>
 </section>
 
 <section class="slide" data-part="p1" data-title="컬럼과 칩 비교 표">
-  <header><h2>컬럼과 칩 — 숫자로 비교</h2><p class="sub">같은 포스포라미다이트 화학 · 완전히 다른 산출</p></header>
+  <header><h2>컬럼 합성과 칩 합성의 정량 비교</h2><p class="sub">공통 합성 화학 · 방식별 서열 수와 산출량 비교</p></header>
   <div class="body mid">
     <table class="tbl sm">
       <tr><th>방식</th><th>1회 산출 서열 수</th><th>길이</th><th>서열당 양</th><th>서열당 분자 수</th><th>단가 단위</th></tr>
@@ -587,15 +587,15 @@ ol.nl.tight > li::before{inline-size:1.75em;block-size:1.75em;font-size:.86em;li
       <tr><td>실리콘 미세웰 (Twist)</td><td>1회 약 7×10⁵ 올리고</td><td>최대 350 nt</td><td>&gt;0.2 fmol</td><td class="num">≈1.2×10<sup>8</sup></td><td>비공개 (구간 과금)</td></tr>
     </table>
     <div class="cols w55">
-      <div class="kb"><b>읽는 법</b><p>오른쪽 두 열이 이 표의 핵심 — 칩은 서열당 분자 수가 <span class="hl">컬럼의 10⁷–10⁸배 적고</span>, 대신 염기 단가가 <span class="hl">2–4 자릿수 싸다</span></p></div>
-      <div class="kb crim"><b>여기서 오는 대가</b><p>fmol에서는 HPLC · PAGE 정제가 불가능 → <span class="bad">전장이 아닌 산물도 그대로 출하</span> (PART 5)</p></div>
+      <div class="kb"><b>주요 비교 항목</b><p>칩 합성의 서열당 분자 수: <span class="hl">컬럼 대비 10⁷–10⁸배 감소</span> · 염기 단가: <span class="hl">2–4 자릿수 감소</span></p></div>
+      <div class="kb crim"><b>서열당 소량 합성의 정제 제약</b><p>서열당 fmol 규모의 개별 HPLC·PAGE 정제 제약 → <span class="bad">불완전 합성 산물의 혼입 가능성</span> (PART 5)</p></div>
     </div>
   </div>
   <p class="src">Twist, <i>Oligo Pools Product Sheet</i> REV12 (2026-01) · Kuiper, Prins &amp; Billerbeck, <i>ChemBioChem</i> 23:e202100507 (2022) · Kosuri &amp; Church, <i>Nature Methods</i> 11:499 (2014) · 분자 수는 계산</p>
 </section>
 
 <section class="slide" data-part="p1" data-title="칩 합성의 병렬 처리와 서열 다양성">
-  <header><h2>칩 합성의 병렬 처리와 서열 다양성</h2><p class="sub">DNA 저장의 요구와 칩의 산출이 정확히 맞물리는 지점</p></header>
+  <header><h2>칩 합성의 병렬 처리와 서열 다양성</h2><p class="sub">DNA 저장용 서열 수·분자 수와 칩 합성 산출의 관계</p></header>
   <div class="body mid">
     <div class="cols w64">
       <div class="stack">
@@ -604,16 +604,16 @@ ol.nl.tight > li::before{inline-size:1.75em;block-size:1.75em;font-size:.86em;li
           <div class="metric"><span class="k">염기 단가 격차</span><span class="val">2–4 자릿수</span></div>
           <div class="metric"><span class="k">1회 산출 서열 수</span><span class="val">10⁴–10⁶ 종</span></div>
         </div>
-        <div class="kb teal"><b>1 MB를 저장하려면 몇 종이 필요한가 — 같이 계산</b><div>
+        <div class="kb teal"><b>1 MB 저장에 필요한 서열 수 산출</b><div>
           <p class="small">200 nt 올리고 = 프라이머 20+20 + 인덱스 10 + ECC 20 + 데이터 <span class="hl">130 nt</span></p>
           <p class="small">130 nt × 2 bit/nt = 260 bit ≈ 32.5 byte / 올리고 → 1 MB ÷ 32.5 byte ≈ <span class="hl">약 3.2만 종</span></p>
-          <p class="small gray">코딩 오버헤드 · 중복도를 더하면 수만~수십만 종 — 칩 1장이 담당하는 범위</p>
+          <p class="small gray">코딩 오버헤드·중복도 포함: 수만~수십만 종 · 칩 병렬 합성의 적용 규모</p>
         </div></div>
       </div>
       <div class="stack">
-        <div class="card amber"><h3>DNA 저장이 요구하는 것</h3><p>서열 1종은 시퀀싱에 필요한 최소량만 있으면 충분 — 양은 fmol로 족하다</p></div>
-        <div class="card"><h3>유전자 합성이 요구하는 것</h3><p>조립 · 클로닝에 쓸 양이 필요 — 칩 올리고는 그대로는 부족해 증폭이 전제</p></div>
-        <div class="kb"><b>연결</b><p>DNA Data Storage 3에서 2 bit/nt로 만든 서열, DNA Data Storage 5에서 붙인 프라이머 · 인덱스 · ECC가 <span class="hl">그대로 칩의 주소 하나</span>가 된다</p></div>
+        <div class="card amber"><h3>DNA 저장용 올리고의 요구량</h3><p>시퀀싱에 필요한 서열별 최소 분자 수 확보 · 서열당 fmol 규모</p></div>
+        <div class="card"><h3>유전자 조립용 올리고의 요구량</h3><p>조립·클로닝에 필요한 분자 수 확보 · 칩 합성 올리고의 증폭 필요</p></div>
+        <div class="kb"><b>연결</b><p>DNA Data Storage 3에서 2 bit/nt로 만든 서열, DNA Data Storage 5의 프라이머·인덱스·ECC 포함 설계 → <span class="hl">칩의 위치별 서열 지정</span></p></div>
       </div>
     </div>
   </div>
@@ -622,9 +622,9 @@ ol.nl.tight > li::before{inline-size:1.75em;block-size:1.75em;font-size:.86em;li
 
 <!-- ===================== PART 2 ===================== -->
 <section class="slide sect" data-part="p2" data-title="PART 2 섹션 표지">
-  <div class="sl"><div class="no">PART 2</div><h2>칩 합성 네 방식</h2><p class="en">Four Ways to Address a Chip</p></div>
+  <div class="sl"><div class="no">PART 2</div><h2>칩 합성 네 방식</h2><p class="en">Spatial Addressing in Chip-Based DNA Synthesis</p></div>
   <div class="sr"><ul>
-    <li>사이클은 하나 · 트리거는 넷</li>
+    <li>공통 합성 사이클 · 방식별 위치 선택 제어</li>
     <li>포토마스크 광유도 · 마스크리스 DMD — 단계별 위젯</li>
     <li>잉크젯 토출 · 전기화학 탈보호 — 단계별 위젯</li>
     <li>실리콘 미세웰과 네 방식 숫자 비교</li>
@@ -632,7 +632,7 @@ ol.nl.tight > li::before{inline-size:1.75em;block-size:1.75em;font-size:.86em;li
 </section>
 
 <section class="slide" data-part="p2" data-title="공통 합성 사이클과 탈보호 제어 방식">
-  <header><h2>공통 합성 사이클과 탈보호 제어 방식</h2><p class="sub">DNA Data Storage 6-1의 4단계 사이클은 그대로 · ① 탈보호에만 네 갈래가 생긴다</p></header>
+  <header><h2>공통 합성 사이클과 탈보호 제어 방식</h2><p class="sub">DNA Data Storage 6-1의 공통 사이클 · 탈보호 또는 시약 전달 단계의 공간 선택성</p></header>
   <div class="body">
     <div class="cols w64">
       <svg viewBox="0 0 400 258" role="img" aria-label="4단계 사이클과 탈보호 트리거 4종">
@@ -660,11 +660,11 @@ ol.nl.tight > li::before{inline-size:1.75em;block-size:1.75em;font-size:.86em;li
         <text x="254" y="56" class="s-sm s-navy" font-weight="700">빛 → 산 (PGA)</text>
         <text x="254" y="77" class="s-sm s-navy" font-weight="700">전압 → H⁺</text>
         <text x="254" y="98" class="s-sm s-navy" font-weight="700">격벽 + 표준 산</text>
-        <text x="268" y="170" text-anchor="middle" class="s-sm s-gray">②③④는 네 방식이</text>
-        <text x="268" y="186" text-anchor="middle" class="s-sm s-gray">모두 같다</text>
+        <text x="268" y="170" text-anchor="middle" class="s-sm s-gray">공통 반응 골격:</text>
+        <text x="268" y="186" text-anchor="middle" class="s-sm s-gray">커플링 · 캡핑 · 산화</text>
       </svg>
       <div class="stack">
-        <div class="kb teal"><b>이 위젯들의 사용법</b><p>다음 네 장은 같은 칩 단면 · 같은 4단계를 <span class="hl">같은 자리</span>에 그린다 — 달라지는 곳만 보면 된다</p></div>
+        <div class="kb teal"><b>방식별 도식의 비교 기준</b><p>동일한 칩 단면과 반응 단계 배치 · 방식별 <span class="hl">공간 선택 단계와 시약 전달</span> 비교</p></div>
         <div class="mol3d" data-fmt="sdf"><div class="mol3d-view"></div><div class="mol3d-ctrl"><button type="button" data-style="stick">막대</button><button type="button" data-style="ball">공-막대</button><button type="button" data-style="space">공간채움</button><button type="button" data-spin>회전</button><span class="hint">끌어서 돌리기 · 휠 확대</span></div><script type="text/plain" class="mol3d-data" data-name="phosphoramidite_T" data-fmt="sdf">
      RDKit          3D
 
@@ -887,9 +887,9 @@ M  END
 </section>
 
 <section class="slide" data-part="p2" data-title="위젯 ① 포토마스크 광유도">
-  <header><h2>① 포토마스크 광유도 — 한 사이클</h2><p class="sub">Affymetrix · 크롬 마스크가 열린 자리만 탈보호된다</p></header>
+  <header><h2>① 포토마스크 광유도 — 한 사이클</h2><p class="sub">Affymetrix · 크롬 마스크 개구부 아래 피처의 선택적 탈보호</p></header>
   <div class="body">
-    <div class="proc" data-steps="7" data-caps='["<b>마스크 정렬</b> — 크롬 마스크를 칩 위에 내린다. 열린 창 아래 피처만 빛을 받는다. N-mer에는 <b>4N번</b>의 마스크·노광이 필요해 25-mer = 마스크 약 100장.","<b>UV 조사 (365 nm)</b> — 열린 자리의 5&#8242;-MeNPOC 결합이 광분해로 끊어진다. <b>산은 전혀 쓰지 않는다</b> — 확산원이 없다는 것이 이 방식의 장점.","<b>자유 OH 생성</b> — 조사된 피처 1·3만 OH, 피처 2·4는 여전히 보호기. 여기서 <b>공간 주소 지정</b>이 완성된다.","<b>커플링</b> — dT 아미다이트를 칩 <i>전체</i>에 흘리지만 OH가 있는 자리만 결합한다. MeNPOC 스텝수율 <b>92–94%</b> — 조사된 자리에서도 일부는 결합에 실패한다.","<b>캡핑</b> — 결합하지 못한 5&#8242;-OH를 아세틸로 영구 차단. 그 사슬은 이 길이에서 정지(truncated)하고 다음 사이클에 끼어들지 못한다.","<b>산화 (I₂)</b> — 인산 삼중체 P(III)를 P(V) 인산트리에스터로 안정화. 여기까지는 컬럼 합성과 완전히 동일.","<b>다음 염기 — 마스크 교체</b> — A·C·G·T 4회로 1 nt 신장. 마스크를 바꿔 끼우는 시간과 <b>마스크 제작비</b>가 이 기술을 25-mer급에 묶어 두었다."]'>
+    <div class="proc" data-steps="7" data-caps='[&quot;&lt;b&gt;마스크 정렬&lt;/b&gt;: 개구부와 반응 피처의 정렬 · N-mer의 &lt;b&gt;4N회&lt;/b&gt; 마스크·노광 · 25-mer: 마스크 약 100장&quot;, &quot;&lt;b&gt;UV 조사 (365 nm)&lt;/b&gt;: 개구부 아래 5′-MeNPOC의 직접 광분해 · 산 기반 탈보호와 구분&quot;, &quot;&lt;b&gt;자유 OH 생성&lt;/b&gt;: 피처 1·3의 선택적 OH 노출 · 피처 2·4의 보호기 유지 · &lt;b&gt;공간 주소 지정&lt;/b&gt;&quot;, &quot;&lt;b&gt;커플링&lt;/b&gt;: 칩 전체의 dT 아미다이트 공급 · 자유 OH 피처의 단량체 도입 · MeNPOC 스텝수율 &lt;b&gt;92–94%&lt;/b&gt;&quot;, &quot;&lt;b&gt;캡핑&lt;/b&gt;: 미반응 5′-OH의 아세틸화 · 실패 사슬의 해당 길이 신장 차단 · truncated 산물 형성&quot;, &quot;&lt;b&gt;산화 (I₂)&lt;/b&gt;: P(III) 포스파이트 삼중에스터 → P(V) 포스포트리에스터 · 인산 골격 안정화&quot;, &quot;&lt;b&gt;마스크 교체&lt;/b&gt;: A·C·G·T의 4회 처리에 의한 1 nt 신장 · 마스크 교체 시간과 제작비 · 25-mer급 적용 사례&quot;]'>
       <div class="proc-head"><h3>포토마스크 광유도 (Affymetrix)</h3></div>
       <div class="proc-stage">
         <svg viewBox="0 0 640 250">
@@ -907,7 +907,7 @@ M  END
           <g data-at="1">
             <path class="epath" d="M140,86 q0 13 0 26"/>
             <path class="epath" d="M400,86 q0 13 0 26"/>
-            <text x="320" y="134" text-anchor="middle" class="lbl rx">마스크 정렬 — 열린 창을 피처에 맞춘다</text>
+            <text x="320" y="134" text-anchor="middle" class="lbl rx">마스크 개구부와 반응 피처의 위치 정렬</text>
           </g>
           <!-- UV 조사 -->
           <g data-at="2">
@@ -926,7 +926,7 @@ M  END
             <rect x="565" y="62" width="15" height="18" class="s-navy"/>
             <rect x="66" y="50" width="175" height="8" class="s-navy" opacity=".45"/>
             <rect x="72" y="40" width="175" height="8" class="s-navy" opacity=".25"/>
-            <text x="60" y="32" class="lbl rx">마스크 교체 — 25-mer = 약 100장을 순서대로</text>
+            <text x="60" y="32" class="lbl rx">마스크 순차 교체 · 25-mer 합성에 약 100장</text>
           </g>
           <!-- 기판 -->
           <rect x="52" y="192" width="536" height="20" class="f-lgray"/>
@@ -980,16 +980,16 @@ M  END
   <div class="body">
     <div class="video-layout">
       <div><div class="video-stage"><img class="video-preview" src="https://i.ytimg.com/vi/B7vRpnMkQFM/hqdefault.jpg" alt="Affymetrix Microarray | Affymetrix Genechip | Affymetrix Genechip Oligonucleotide Microarray |"><button class="video-play" type="button"><span class="play-symbol">▶</span><span class="play-label">슬라이드에서 영상 재생</span></button></div><p class="video-caption"><span class="video-credit">BMH learning (2:00)</span><a class="video-source-link" href="https://www.youtube.com/watch?v=B7vRpnMkQFM" target="_blank" rel="noopener">YouTube에서 보기 ↗</a></p></div>
-      <div class="video-explain"><h3>영상 선택</h3><div class="video-choices"><button class="video-choice" type="button" aria-pressed="true">포토마스크와 선택적 탈보호 <span class="video-time">(2:00)</span></button><button class="video-choice" type="button" aria-pressed="false">마스크·노광·DNA 어레이 제작 <span class="video-time">(10:41)</span></button></div><div class="kb teal"><b>관찰할 내용</b><p class="video-observation">볼 것 — 크롬 마스크가 열린 자리만 탈보호되는 포토마스크 광유도의 순서 (위젯 ①과 대조)</p></div><h3>개념 연결</h3><ul class="video-prompts"><li>마스크의 열린 영역과 반응 위치</li><li>노광 패턴 변경과 서열 다양성</li></ul></div>
+      <div class="video-explain"><h3>영상 선택</h3><div class="video-choices"><button class="video-choice" type="button" aria-pressed="true">포토마스크와 선택적 탈보호 <span class="video-time">(2:00)</span></button><button class="video-choice" type="button" aria-pressed="false">마스크·노광·DNA 어레이 제작 <span class="video-time">(10:41)</span></button></div><div class="kb teal"><b>관찰할 내용</b><p class="video-observation">크롬 마스크 개구부의 선택적 탈보호 순서 · 포토마스크 위젯과 비교</p></div><h3>개념 연결</h3><ul class="video-prompts"><li>마스크의 열린 영역과 반응 위치</li><li>노광 패턴 변경과 서열 다양성</li></ul></div>
     </div><p class="src"><a href="https://dnalc.cshl.edu/resources/animations/dnachip.html" target="_blank" rel="noopener">CSHL GeneChips 애니메이션</a> · 포토마스크 방식의 추가 복습</p>
     <p class="src">영상: BMH learning · Support Center for Microsystems Education · YouTube 제목·제작자 확인: 2026-10-07 · 긴 강연은 필요한 구간을 선택하여 시청</p>
-  </div><script type="application/json" class="video-data">[{"id": "B7vRpnMkQFM", "title": "Affymetrix Microarray | Affymetrix Genechip | Affymetrix Genechip Oligonucleotide Microarray |", "author": "BMH learning", "label": "포토마스크와 선택적 탈보호", "duration": "2:00", "note": "볼 것 — 크롬 마스크가 열린 자리만 탈보호되는 포토마스크 광유도의 순서 (위젯 ①과 대조)"}, {"id": "DjcxE1tdB8c", "title": "DNA Microarray Fabrication", "author": "Support Center for Microsystems Education", "label": "마스크·노광·DNA 어레이 제작", "duration": "10:41", "note": "볼 것 — 반도체의 마스크 → 노광 → 현상과 DNA 어레이 합성의 1:1 대응 (SCME 제작)"}]</script>
+  </div><script type="application/json" class="video-data">[{"id": "B7vRpnMkQFM", "title": "Affymetrix Microarray | Affymetrix Genechip | Affymetrix Genechip Oligonucleotide Microarray |", "author": "BMH learning", "label": "포토마스크와 선택적 탈보호", "duration": "2:00", "note": "크롬 마스크 개구부의 선택적 탈보호 순서 · 포토마스크 위젯과 비교"}, {"id": "DjcxE1tdB8c", "title": "DNA Microarray Fabrication", "author": "Support Center for Microsystems Education", "label": "마스크·노광·DNA 어레이 제작", "duration": "10:41", "note": "반도체 마스크·노광·현상 공정과 DNA 어레이 합성의 대응 · SCME 제작"}]</script>
 </section>
 
 <section class="slide" data-part="p2" data-title="위젯 ② 마스크리스 DMD">
-  <header><h2>② 마스크리스 DMD — 한 사이클</h2><p class="sub">NimbleGen MAS · Roche · 크롬 마스크가 가상 마스크로 바뀐다</p></header>
+  <header><h2>② 마스크리스 DMD — 한 사이클</h2><p class="sub">NimbleGen MAS · Roche · DMD 패턴 기반 가상 마스크</p></header>
   <div class="body">
-    <div class="proc" data-steps="7" data-caps='["<b>가상 마스크 로드</b> — 패턴을 컴퓨터에서 만들어 DMD로 보낸다. 물리적 마스크 <b>0장</b>. XGA 1024×768이면 주소 <b>78만</b>개, HD 1920×1080이면 <b>200만</b>개.","<b>미러 ON / OFF</b> — 마이크로미러 하나가 픽셀 하나. ON은 UV를 광학 릴레이로 보내고 OFF는 흡수면으로 버린다. 미러 피치 1 μm · 간극 0.8 μm.","<b>UV 조사</b> — ON 미러 아래에서 NPPOC·BzNPPOC가 광분해된다. BzNPPOC는 <b>3 J/cm²에서 약 95%</b>만 탈보호된다.","<b>미탈보호 5%</b> — 조사된 피처 3에 보호기가 남았다. 이 자리는 이번 사이클을 <span class=\"rx\">건너뛴다 = 결손(deletion)</span>. 실측 결손율 4.65%가 미탈보호 약 5%와 정량적으로 일치한다.","<b>커플링</b> — OH가 있는 피처 1만 1 nt 자란다. 피처 3은 보호기가 남아 있어 아무 일도 일어나지 않는다 — 길이가 1 nt 짧은 사슬이 그대로 이어진다.","<b>캡핑 · 산화</b> — 네 방식 공통 단계. 캡핑을 넣으면 G→T 치환이 0.32%/bp에서 <b>0.07%/bp</b>로 줄어든다.","<b>다음 염기</b> — 패턴만 바꿔 즉시 다음 조사. 마스크 교체 시간 0. 완전 탈보호에는 <b>12–15 J/cm²</b>가 필요하지만 광손상·탈퓨린화를 피해 실무에서는 <b>4–6 J/cm²</b>로 타협한다 — 매 사이클 보호기가 남는 것이 설계상 전제."]'>
+    <div class="proc" data-steps="7" data-caps='[&quot;&lt;b&gt;가상 마스크 로드&lt;/b&gt;: 컴퓨터 패턴의 DMD 전달 · 물리적 마스크 &lt;b&gt;0장&lt;/b&gt; · XGA 1024×768: &lt;b&gt;78만&lt;/b&gt; 주소 · HD 1920×1080: &lt;b&gt;200만&lt;/b&gt; 주소&quot;, &quot;&lt;b&gt;미러 ON / OFF&lt;/b&gt;: 미러별 픽셀 제어 · ON: 광학 릴레이로 UV 전달 · OFF: 흡수면으로 광 경로 전환 · 미러 피치 1 μm·간극 0.8 μm&quot;, &quot;&lt;b&gt;UV 조사&lt;/b&gt;: ON 미러 아래 NPPOC·BzNPPOC의 광분해 · BzNPPOC: &lt;b&gt;3 J/cm²에서 약 95%&lt;/b&gt; 탈보호&quot;, &quot;&lt;b&gt;미탈보호 5%&lt;/b&gt;: 피처 3의 보호기 잔류 → 해당 사이클 미연장 → &lt;span class=\&quot;rx\&quot;&gt;결손(deletion)&lt;/span&gt; · 실측 결손율 4.65%&quot;, &quot;&lt;b&gt;커플링&lt;/b&gt;: 자유 OH 피처 1의 1 nt 신장 · 보호기 잔류 피처 3의 미연장 · 후속 사이클에서 1 nt 짧은 사슬 형성&quot;, &quot;&lt;b&gt;캡핑 · 산화&lt;/b&gt;: 미반응 말단 차단과 인산 골격 안정화 · 캡핑 적용 후 G→T 치환율 0.32%/bp → &lt;b&gt;0.07%/bp&lt;/b&gt;&quot;, &quot;&lt;b&gt;패턴 교체&lt;/b&gt;: 물리적 마스크 교체 시간 0 · 완전 탈보호 기준 &lt;b&gt;12–15 J/cm²&lt;/b&gt; · 적용 조건 &lt;b&gt;4–6 J/cm²&lt;/b&gt; · 불완전 탈보호·광손상·탈퓨린화의 균형&quot;]'>
       <div class="proc-head"><h3>마스크리스 DMD (NimbleGen MAS · Roche)</h3></div>
       <div class="proc-stage">
         <svg viewBox="0 0 640 250">
@@ -1093,7 +1093,7 @@ M  END
           <tr><td>염기별 커플링 수율</td><td class="num">dA 99.8 · dC 98.0 · dG 98.6 · dT 99.4%</td></tr>
           <tr><td>미광 배플링 전 → 후 결손율</td><td class="num">0.15 → 0.101</td></tr>
         </table>
-        <div class="kb crim"><b>무엇이 새는가</b><p>회절 · 산란 · 미광이 인접 피처를 오탈보호 → <span class="bad">삽입(insertion)</span> · 교차오염. 피처를 줄이면 그 확률이 커진다</p></div>
+        <div class="kb crim"><b>인접 피처의 비의도적 탈보호</b><p>회절·산란·미광에 의한 인접 피처 오탈보호 → <span class="bad">삽입(insertion)</span>·교차오염 · 피처 축소에 따른 위치 오류 증가 가능성</p></div>
       </div>
     </div>
   </div>
@@ -1101,9 +1101,9 @@ M  END
 </section>
 
 <section class="slide" data-part="p2" data-title="위젯 ③ 잉크젯 토출">
-  <header><h2>③ 잉크젯 토출 — 한 사이클</h2><p class="sub">Agilent SurePrint · 빛을 쓰지 않는다 · 공간 선택성이 커플링 단계로 옮겨간다</p></header>
+  <header><h2>③ 잉크젯 토출 — 한 사이클</h2><p class="sub">Agilent SurePrint · 위치별 단량체 토출 · 커플링 단계의 공간 선택성</p></header>
   <div class="body">
-    <div class="proc" data-steps="7" data-caps='["<b>무수 프린트 챔버</b> — 프린트헤드가 좌표로 이동한다. 잉크는 <b>5가지</b>: dA·dC·dG·dT 아미다이트 + tetrazole 활성화제.","<b>좌표에 토출</b> — 원하는 피처에만 방울이 떨어진다. <b>빛도 전압도 쓰지 않는다</b> — 앞의 두 방식과 달리 공간 선택성이 <span class=\"rx\">커플링</span> 단계에 걸린다.","<b>커플링</b> — 방울이 닿은 자리에서만 사슬이 1 nt 자란다. 성립 조건은 스텝 커플링 수율 <b>≥99.5%</b>. 고농도·미소 부피 토출이라 별도 캡핑 단계가 필요 없다고 보고된다.","<b>산화 (플로우셀 전체)</b> — 0.02 M I₂ in THF/pyridine/H₂O, 약 30초. 여기서부터는 칩 전체 일괄 처리.","<b>탈트리틸화 (플로우셀 전체)</b> — 3% dichloroacetic acid in toluene, 60초. <b>모든 피처의 DMT를 한꺼번에</b> 제거한다. 세척은 아세토니트릴 2 플로우셀 부피.","<b>탈퓨린화 위험</b> — 배수 후 친수성 DNA 피처 위에 산 용액이 <span class=\"rx\">농축 액적</span>으로 고인다 → 국소 산 농도 급등 → Apurinic/apyrimidinic site(무염기 자리) → 최종 염기성 탈보호에서 사슬 절단. 이것이 산 기반 칩 합성이 ~100 nt에서 막혔던 원인.","<b>FIFO 치환 (해법)</b> — 산화액을 플로우셀 <b>하단 포트</b>로 주입해 산 용액을 밀어낸다 → 액적 형성 차단 → <b>150-mer</b> 라이브러리 도달."]'>
+    <div class="proc" data-steps="7" data-caps='[&quot;&lt;b&gt;무수 프린트 챔버&lt;/b&gt;: 프린트헤드의 좌표별 이동 · &lt;b&gt;5종&lt;/b&gt; 잉크: dA·dC·dG·dT 아미다이트와 tetrazole 활성화제&quot;, &quot;&lt;b&gt;좌표별 토출&lt;/b&gt;: 지정 피처의 단량체 방울 공급 · &lt;span class=\&quot;rx\&quot;&gt;커플링 단계&lt;/span&gt;의 공간 선택성&quot;, &quot;&lt;b&gt;커플링&lt;/b&gt;: 토출 피처의 1 nt 신장 · 요구 단계별 수율 &lt;b&gt;≥99.5%&lt;/b&gt; · 고농도·미소 부피 조건의 별도 캡핑 생략 보고&quot;, &quot;&lt;b&gt;산화 (플로우셀 전체)&lt;/b&gt;: 0.02 M I₂ in THF/pyridine/H₂O · 약 30 s · 칩 전체 일괄 처리&quot;, &quot;&lt;b&gt;탈트리틸화 (플로우셀 전체)&lt;/b&gt;: 3% dichloroacetic acid in toluene · 60 s · &lt;b&gt;전체 피처의 DMT 제거&lt;/b&gt; · 아세토니트릴 2 플로우셀 부피 세척&quot;, &quot;&lt;b&gt;탈퓨린화 부반응&lt;/b&gt;: 배수 후 DNA 피처 위 &lt;span class=\&quot;rx\&quot;&gt;산 농축 액적&lt;/span&gt; 잔류 → 국소 산 농도 증가 → Apurinic/apyrimidinic site(무염기 자리) → 최종 탈보호 시 절단 · 약 100 nt의 기존 제한&quot;, &quot;&lt;b&gt;FIFO 치환&lt;/b&gt;: &lt;b&gt;하단 포트&lt;/b&gt;의 산화액 주입에 의한 산 용액 치환 · 농축 액적 형성 억제 · &lt;b&gt;150-mer&lt;/b&gt; 라이브러리 합성&quot;]'>
       <div class="proc-head"><h3>잉크젯 토출 (Agilent SurePrint)</h3></div>
       <div class="proc-stage">
         <svg viewBox="0 0 640 250">
@@ -1131,7 +1131,7 @@ M  END
             <rect x="105" y="182" width="70" height="10" rx="2" class="f-wash"/>
             <rect x="128" y="164" width="24" height="18" rx="3" class="grp"/><text x="140" y="177" text-anchor="middle" class="lbl">G</text>
             <text x="140" y="156" text-anchor="middle" class="lbl oh">OH</text>
-            <text x="140" y="140" text-anchor="middle" class="lbl sm">방울 없음 → 그대로</text>
+            <text x="140" y="140" text-anchor="middle" class="lbl sm">미토출 피처의 기존 상태 유지</text>
           </g>
           <!-- 피처 2 : 토출 → 커플링 -->
           <g>
@@ -1160,8 +1160,8 @@ M  END
             <text x="530" y="141" text-anchor="middle" class="lbl oh" data-from="5">OH</text>
           </g>
           <!-- 플로우셀 일괄 처리 -->
-          <g data-at="4"><path class="flow on" d="M52,224 L588,224"/><text x="320" y="219" text-anchor="middle" class="lbl rx">0.02 M I₂ / THF·pyridine·H₂O — 약 30초 · 전체</text></g>
-          <g data-at="5"><path class="flow on" d="M52,224 L588,224"/><text x="320" y="219" text-anchor="middle" class="lbl rx">3% DCA in toluene — 60초 · 전체 피처의 DMT 제거</text></g>
+          <g data-at="4"><path class="flow on" d="M52,224 L588,224"/><text x="320" y="219" text-anchor="middle" class="lbl rx">0.02 M I₂ / THF·pyridine·H₂O — 약 30 s · 전체</text></g>
+          <g data-at="5"><path class="flow on" d="M52,224 L588,224"/><text x="320" y="219" text-anchor="middle" class="lbl rx">3% DCA in toluene — 60 s · 전체 피처의 DMT 제거</text></g>
           <g data-at="6">
             <ellipse cx="140" cy="176" rx="26" ry="9" class="acid"/><ellipse cx="270" cy="176" rx="26" ry="9" class="acid"/>
             <ellipse cx="400" cy="176" rx="26" ry="9" class="acid"/><ellipse cx="530" cy="176" rx="26" ry="9" class="acid"/>
@@ -1185,16 +1185,16 @@ M  END
   <div class="body">
     <div class="video-layout">
       <div><div class="video-stage"><img class="video-preview" src="https://i.ytimg.com/vi/s3d6gbtNnrk/hqdefault.jpg" alt="安捷倫晶片技術 Inkjet Printing Technology used for Microarray Print"><button class="video-play" type="button"><span class="play-symbol">▶</span><span class="play-label">슬라이드에서 영상 재생</span></button></div><p class="video-caption"><span class="video-credit">威健生技 Welgene Biotech (3:46)</span><a class="video-source-link" href="https://www.youtube.com/watch?v=s3d6gbtNnrk" target="_blank" rel="noopener">YouTube에서 보기 ↗</a></p></div>
-      <div class="video-explain"><h3>영상 선택</h3><div class="video-choices"><button class="video-choice" type="button" aria-pressed="true">Agilent · 잉크젯 합성 <span class="video-time">(3:46)</span></button></div><div class="kb teal"><b>관찰할 내용</b><p class="video-observation">잉크젯 — Agilent SurePrint 홍보 영상(대만 대리점 업로드). 염기를 좌표에 토출 · 스텝효율 &gt;99% · &quot;캡핑 단계가 필요 없다&quot; (위젯 ③과 대조)</p></div><h3>개념 연결</h3><ul class="video-prompts"><li>노즐의 토출과 좌표 선택</li><li>위젯과 실제 시약 전달 방식의 비교</li></ul></div>
+      <div class="video-explain"><h3>영상 선택</h3><div class="video-choices"><button class="video-choice" type="button" aria-pressed="true">Agilent · 잉크젯 합성 <span class="video-time">(3:46)</span></button></div><div class="kb teal"><b>관찰할 내용</b><p class="video-observation">Agilent SurePrint의 좌표별 잉크젯 토출 · 대만 대리점 영상 · 스텝효율 &gt;99%와 캡핑 생략 설명의 위젯 비교</p></div><h3>개념 연결</h3><ul class="video-prompts"><li>노즐의 토출과 좌표 선택</li><li>위젯과 실제 시약 전달 방식의 비교</li></ul></div>
     </div>
     <p class="src">영상: 威健生技 Welgene Biotech · YouTube 제목·제작자 확인: 2026-10-07 · 긴 강연은 필요한 구간을 선택하여 시청</p>
-  </div><script type="application/json" class="video-data">[{"id": "s3d6gbtNnrk", "title": "安捷倫晶片技術 Inkjet Printing Technology used for Microarray Print", "author": "威健生技 Welgene Biotech", "label": "Agilent · 잉크젯 합성", "duration": "3:46", "note": "잉크젯 — Agilent SurePrint 홍보 영상(대만 대리점 업로드). 염기를 좌표에 토출 · 스텝효율 >99% · \"캡핑 단계가 필요 없다\" (위젯 ③과 대조)"}]</script>
+  </div><script type="application/json" class="video-data">[{"id": "s3d6gbtNnrk", "title": "安捷倫晶片技術 Inkjet Printing Technology used for Microarray Print", "author": "威健生技 Welgene Biotech", "label": "Agilent · 잉크젯 합성", "duration": "3:46", "note": "Agilent SurePrint의 좌표별 잉크젯 토출 · 대만 대리점 영상 · 스텝효율 >99%와 캡핑 생략 설명의 위젯 비교"}]</script>
 </section>
 
 <section class="slide" data-part="p2" data-title="위젯 ④ 전기화학 탈보호">
-  <header><h2>④ 전기화학 탈보호 — 한 사이클</h2><p class="sub">CustomArray → GenScript · 산을 만드는 전극과 산을 지우는 전극을 나란히 둔다</p></header>
+  <header><h2>④ 전기화학 탈보호 — 한 사이클</h2><p class="sub">CustomArray → GenScript · 양극의 산 생성과 인접 음극의 양성자 소모</p></header>
   <div class="body">
-    <div class="proc" data-steps="7" data-caps='["<b>피스톤 전진 (40 μm)</b> — 대향 전극판을 기판 쪽으로 내려 전해액 층을 얇게 만든다. 전해액은 25 mM hydroquinone + 25 mM benzoquinone + 25 mM tetrabutylammonium hexafluorophosphate (무수 아세토니트릴).","<b>선택 전극에 전압 인가 (1.33 V · 8.5–9초)</b> — 그 전극 위에서만 hydroquinone이 산화되어 <b>H⁺</b>가 생긴다. 이리듐 전극 두께 50 nm · 폭 40 μm · 간격 40 μm.","<b>산의 확산 vs 소멸</b> — 양극에서 H⁺가 퍼지지만, 양옆 음극에서의 환원 생성물이 그 양성자를 <span class=\"rx\">소멸</span>시켜 경계를 날카롭게 자른다. 확산을 화학으로 차단하는 것이 이 방식의 핵심.","<b>DMT 제거</b> — 활성 전극 위 피처만 자유 OH. 이웃 피처는 보호기를 유지한다. 음극을 끄면 산이 이웃까지 퍼져 오탈보호 = <span class=\"rx\">삽입(insertion)</span>이 생긴다.","<b>피스톤 후퇴 (800 μm)</b> — 시약이 들어올 공간을 확보한다. 40 μm ↔ 800 μm 왕복이 매 사이클 반복된다.","<b>커플링</b> — 아미다이트 + tetrazole 활성화제 주입. 커플링 수율은 거의 정량적이다.","<b>캡핑 · 산화 (0.1 M I₂) → 다음 염기</b> — 통전 9초에서 탈퓨린화 손실은 스텝당 1% 미만이지만 <b>11초를 넘기면 급증</b>한다. 조사량 트레이드오프와 완전히 같은 형태."]'>
+    <div class="proc" data-steps="7" data-caps='[&quot;&lt;b&gt;피스톤 전진 (40 μm)&lt;/b&gt;: 대향 전극판 간격 축소 · 전해액: 25 mM hydroquinone + 25 mM benzoquinone + 25 mM tetrabutylammonium hexafluorophosphate · 무수 아세토니트릴&quot;, &quot;&lt;b&gt;선택 전극 통전 (1.33 V·8.5–9 s)&lt;/b&gt;: hydroquinone 산화에 의한 &lt;b&gt;H⁺ 생성&lt;/b&gt; · 이리듐 전극 두께 50 nm·폭 40 μm·간격 40 μm&quot;, &quot;&lt;b&gt;산의 확산과 소모&lt;/b&gt;: 양극의 H⁺ 생성·확산 · 인접 음극 환원 생성물의 &lt;span class=\&quot;rx\&quot;&gt;양성자 소모&lt;/span&gt; · 반응 영역의 공간 경계 형성&quot;, &quot;&lt;b&gt;DMT 제거&lt;/b&gt;: 활성 전극 피처의 자유 OH 노출 · 인접 피처의 보호기 유지 · 음극 제어 부재 시 산 확산·오탈보호에 의한 &lt;span class=\&quot;rx\&quot;&gt;삽입(insertion)&lt;/span&gt;&quot;, &quot;&lt;b&gt;피스톤 후퇴 (800 μm)&lt;/b&gt;: 시약 주입 공간 확보 · 사이클별 40 μm ↔ 800 μm 이동&quot;, &quot;&lt;b&gt;커플링&lt;/b&gt;: 아미다이트와 tetrazole 활성화제 주입 · 높은 단계별 도입 수율&quot;, &quot;&lt;b&gt;캡핑 · 산화 (0.1 M I₂)&lt;/b&gt;: 다음 사이클 준비 · 통전 9 s의 탈퓨린화 손실: 스텝당 1% 미만 · &lt;b&gt;11 s 초과 시 손실 증가&lt;/b&gt;&quot;]'>
       <div class="proc-head"><h3>전기화학 탈보호 (CustomArray → GenScript)</h3></div>
       <div class="proc-stage">
         <svg viewBox="0 0 640 250">
@@ -1232,9 +1232,9 @@ M  END
             <path class="epath" d="M238,176 q-24 0 -44 -2"/>
             <path class="epath" d="M302,176 q24 0 44 -2"/>
             <text x="140" y="120" text-anchor="middle" class="lbl gd">음극 생성물이</text>
-            <text x="140" y="134" text-anchor="middle" class="lbl gd">H⁺ 를 소멸시킨다</text>
-            <text x="400" y="120" text-anchor="middle" class="lbl gd">경계가</text>
-            <text x="400" y="134" text-anchor="middle" class="lbl gd">날카롭게 잘림</text>
+            <text x="140" y="134" text-anchor="middle" class="lbl gd">H⁺ 소모</text>
+            <text x="400" y="120" text-anchor="middle" class="lbl gd">반응 영역의</text>
+            <text x="400" y="134" text-anchor="middle" class="lbl gd">공간 경계 형성</text>
           </g>
           <!-- 피처들 -->
           <g>
@@ -1257,7 +1257,7 @@ M  END
             <rect x="515" y="148" width="30" height="16" rx="3" class="grp dmt"/><text x="530" y="160" text-anchor="middle" class="lbl sm rx">DMT</text>
           </g>
           <g data-at="6"><path class="flow on" d="M52,60 L588,60"/><text x="320" y="55" text-anchor="middle" class="lbl rx">아미다이트 + tetrazole 주입</text></g>
-          <g data-at="7"><text x="320" y="142" text-anchor="middle" class="lbl rx">통전 9초 → 탈퓨린화 &lt;1%/step · 11초 초과 시 급증</text></g>
+          <g data-at="7"><text x="320" y="142" text-anchor="middle" class="lbl rx">통전 9 s → 탈퓨린화 &lt;1%/step · 11 s 초과 시 급증</text></g>
         </svg>
       </div>
       <p class="proc-cap"></p>
@@ -1271,19 +1271,19 @@ M  END
   <div class="body">
     <div class="video-layout">
       <div><div class="video-stage"><img class="video-preview" src="https://i.ytimg.com/vi/tHQedUXfSCo/hqdefault.jpg" alt="DNA Synthesis Technology | How synthetic DNA is made"><button class="video-play" type="button"><span class="play-symbol">▶</span><span class="play-label">슬라이드에서 영상 재생</span></button></div><p class="video-caption"><span class="video-credit">GenScript USA Inc. (1:46)</span><a class="video-source-link" href="https://www.youtube.com/watch?v=tHQedUXfSCo" target="_blank" rel="noopener">YouTube에서 보기 ↗</a></p></div>
-      <div class="video-explain"><h3>영상 선택</h3><div class="video-choices"><button class="video-choice" type="button" aria-pressed="true">GenScript · 전기화학 합성 <span class="video-time">(1:46)</span></button></div><div class="kb teal"><b>관찰할 내용</b><p class="video-observation">전압 → H⁺ — GenScript (CustomArray 계보). CMOS 칩의 전극을 켜면 그 자리만 일시적 산성 환경 → DMT 제거 → 한 염기 부가 (위젯 ④)</p></div><h3>개념 연결</h3><ul class="video-prompts"><li>전극 선택과 국소 산성 환경</li><li>DMT 제거 후 단량체 연결</li></ul></div>
+      <div class="video-explain"><h3>영상 선택</h3><div class="video-choices"><button class="video-choice" type="button" aria-pressed="true">GenScript · 전기화학 합성 <span class="video-time">(1:46)</span></button></div><div class="kb teal"><b>관찰할 내용</b><p class="video-observation">GenScript·CustomArray 계열 CMOS 전극의 국소 산 생성 → DMT 제거 → 단량체 도입</p></div><h3>개념 연결</h3><ul class="video-prompts"><li>전극 선택과 국소 산성 환경</li><li>DMT 제거 후 단량체 연결</li></ul></div>
     </div>
     <p class="src">영상: GenScript USA Inc. · YouTube 제목·제작자 확인: 2026-10-07 · 긴 강연은 필요한 구간을 선택하여 시청</p>
-  </div><script type="application/json" class="video-data">[{"id": "tHQedUXfSCo", "title": "DNA Synthesis Technology | How synthetic DNA is made", "author": "GenScript USA Inc.", "label": "GenScript · 전기화학 합성", "duration": "1:46", "note": "전압 → H⁺ — GenScript (CustomArray 계보). CMOS 칩의 전극을 켜면 그 자리만 일시적 산성 환경 → DMT 제거 → 한 염기 부가 (위젯 ④)"}]</script>
+  </div><script type="application/json" class="video-data">[{"id": "tHQedUXfSCo", "title": "DNA Synthesis Technology | How synthetic DNA is made", "author": "GenScript USA Inc.", "label": "GenScript · 전기화학 합성", "duration": "1:46", "note": "GenScript·CustomArray 계열 CMOS 전극의 국소 산 생성 → DMT 제거 → 단량체 도입"}]</script>
 </section>
 
 <section class="slide" data-part="p2" data-title="⑤ 실리콘 미세웰 기반 병렬 합성">
-  <header><h2>⑤ 실리콘 미세웰 기반 병렬 합성</h2><p class="sub">Twist Bioscience · 빛도 전압도 쓰지 않고 웰의 벽으로 격리한다</p></header>
+  <header><h2>⑤ 실리콘 미세웰 기반 병렬 합성</h2><p class="sub">Twist Bioscience · 미세웰 격벽에 의한 반응 구획 분리</p></header>
   <div class="body mid">
     <div class="flowx">
       <div class="fb"><b>① 미세웰 격리</b><span>반도체 공정으로 파낸 웰 자체가 격벽 — 96-well 플레이트 크기에 약 10⁶ 사이트</span></div><span class="ar">▶</span>
       <div class="fb"><b>② 웰별 시약 주입 · 커플링</b><span>96-well 화학을 그대로 축소 — 시약 투입 −99.8% · 처리량 ×10,000</span></div><span class="ar">▶</span>
-      <div class="fb"><b>③ 캡핑 · 산화 · 표준 산 탈보호</b><span>컬럼과 동일한 화학 — 새 광화학이 없다</span></div><span class="ar">▶</span>
+      <div class="fb"><b>③ 캡핑 · 산화 · 표준 산 탈보호</b><span>표준 산 탈보호와 공통 합성 반응의 적용</span></div><span class="ar">▶</span>
       <div class="fb"><b>④ 다음 염기</b><span>최대 350 nt · 오류율 최대 1:3,000 · 1회 약 70만 올리고</span></div>
     </div>
     <div class="cols w55">
@@ -1300,8 +1300,8 @@ M  END
         <text x="170" y="120" text-anchor="middle" class="s-sm s-gray">미세웰 격벽에 의한 인접 반응 구획 간 시약 혼합 억제</text>
       </svg>
       <div class="stack">
-        <div class="kb teal"><b>왜 오류율이 가장 낮은가</b><p>새 탈보호 화학을 도입하지 않았다 — 광탈보호의 유한한 양자수율도, 산의 측방 확산도 <span class="hl">구조로 회피</span></p></div>
-        <div class="kb crim"><b>대신 잃은 것</b><p>웰 하나에 하나의 서열 → 밀도는 광·전기화학 방식보다 낮다 (1회 약 7×10⁵ vs 전기화학 칩 최대 8×10⁶)</p></div>
+        <div class="kb teal"><b>미세웰의 반응 구획 분리</b><p>새 탈보호 화학을 도입하지 않았다 — 광탈보호의 유한한 양자수율도, 산의 측방 확산도 <span class="hl">구조로 회피</span></p></div>
+        <div class="kb crim"><b>피처 밀도와 구획 크기의 관계</b><p>웰별 서열 1종 지정 → 광·전기화학 방식 대비 낮은 피처 밀도 (1회 약 7×10⁵ vs 전기화학 칩 최대 8×10⁶)</p></div>
       </div>
     </div>
   </div>
@@ -1313,14 +1313,14 @@ M  END
   <div class="body">
     <div class="video-layout">
       <div><div class="video-stage"><img class="video-preview" src="https://i.ytimg.com/vi/OQtXgyvptA4/hqdefault.jpg" alt="Twist Bioscience mass produces synthetic #DNA  using silicon wafer manufacturing techniques #mercnew"><button class="video-play" type="button"><span class="play-symbol">▶</span><span class="play-label">슬라이드에서 영상 재생</span></button></div><p class="video-caption"><span class="video-credit">Mercury News (0:41)</span><a class="video-source-link" href="https://www.youtube.com/watch?v=OQtXgyvptA4" target="_blank" rel="noopener">YouTube에서 보기 ↗</a></p></div>
-      <div class="video-explain"><h3>영상 선택</h3><div class="video-choices"><button class="video-choice" type="button" aria-pressed="true">실리콘 웨이퍼의 실제 생산 공정 <span class="video-time">(0:41)</span></button><button class="video-choice" type="button" aria-pressed="false">Twist · 미세웰의 소형화 <span class="video-time">(1:16)</span></button></div><div class="kb teal"><b>관찰할 내용</b><p class="video-observation">볼 것 — 실제 실리콘 웨이퍼 공정 장면 (Mercury News 취재) · 96-well을 반도체 칩으로 축소한다는 말의 실물</p></div><h3>개념 연결</h3><ul class="video-prompts"><li>미세웰과 반응 구획의 역할</li><li>화학 합성의 소형화와 병렬화</li></ul></div>
+      <div class="video-explain"><h3>영상 선택</h3><div class="video-choices"><button class="video-choice" type="button" aria-pressed="true">실리콘 웨이퍼의 실제 생산 공정 <span class="video-time">(0:41)</span></button><button class="video-choice" type="button" aria-pressed="false">Twist · 미세웰의 소형화 <span class="video-time">(1:16)</span></button></div><div class="kb teal"><b>관찰할 내용</b><p class="video-observation">실리콘 웨이퍼의 생산 공정 · Mercury News 취재 · 96-well 규모와 칩 소형화의 비교</p></div><h3>개념 연결</h3><ul class="video-prompts"><li>미세웰과 반응 구획의 역할</li><li>화학 합성의 소형화와 병렬화</li></ul></div>
     </div>
     <p class="src">영상: Mercury News · Twist Bioscience · YouTube 제목·제작자 확인: 2026-10-07 · 긴 강연은 필요한 구간을 선택하여 시청</p>
-  </div><script type="application/json" class="video-data">[{"id": "OQtXgyvptA4", "title": "Twist Bioscience mass produces synthetic #DNA  using silicon wafer manufacturing techniques #mercnew", "author": "Mercury News", "label": "실리콘 웨이퍼의 실제 생산 공정", "duration": "0:41", "note": "볼 것 — 실제 실리콘 웨이퍼 공정 장면 (Mercury News 취재) · 96-well을 반도체 칩으로 축소한다는 말의 실물"}, {"id": "KUm173PZJBQ", "title": "Twist Bioscience: Writing the Future with Synthetic DNA", "author": "Twist Bioscience", "label": "Twist · 미세웰의 소형화", "duration": "1:16", "note": "격벽 + 표준 산 — Twist. 96-well 플레이트 면적에 9,600 유전자 · \"conventional chemistry on a miniaturized scale\" (실리콘 미세웰)"}]</script>
+  </div><script type="application/json" class="video-data">[{"id": "OQtXgyvptA4", "title": "Twist Bioscience mass produces synthetic #DNA  using silicon wafer manufacturing techniques #mercnew", "author": "Mercury News", "label": "실리콘 웨이퍼의 실제 생산 공정", "duration": "0:41", "note": "실리콘 웨이퍼의 생산 공정 · Mercury News 취재 · 96-well 규모와 칩 소형화의 비교"}, {"id": "KUm173PZJBQ", "title": "Twist Bioscience: Writing the Future with Synthetic DNA", "author": "Twist Bioscience", "label": "Twist · 미세웰의 소형화", "duration": "1:16", "note": "격벽과 표준 산을 이용한 Twist 미세웰 합성 · 96-well 면적에 9,600 유전자 · 소형화된 표준 화학"}]</script>
 </section>
 
 <section class="slide" data-part="p2" data-title="칩 합성 방식별 성능 비교">
-  <header><h2>칩 합성 방식별 성능 비교</h2><p class="sub">회사 이름이 아니라 탈보호 트리거로 분류한다</p></header>
+  <header><h2>칩 합성 방식별 성능 비교</h2><p class="sub">공간 선택 제어와 탈보호 트리거에 따른 분류</p></header>
   <div class="body mid">
     <table class="tbl xs">
       <tr><th>방식</th><th>주소 지정</th><th>탈보호 트리거</th><th>어레이당 서열 수</th><th>길이</th><th>오류율 · 수율</th><th>대표</th></tr>
@@ -1330,7 +1330,7 @@ M  END
       <tr><td>전기화학</td><td>전극별 전압</td><td class="w">전기화학적 H⁺</td><td class="num">9.2×10<sup>4</sup> · 8×10<sup>6</sup> (HD 칩)</td><td class="num">20–170 nt</td><td class="num">≤1 fmol · 커버리지 &gt;99%</td><td>CustomArray → GenScript</td></tr>
       <tr><td>실리콘 미세웰</td><td>웰 격벽</td><td class="w">표준 산 (웰 내부)</td><td class="num">1회 ~7×10<sup>5</sup> 올리고</td><td class="num">~350 nt</td><td class="num">최대 1:3,000 · &gt;0.2 fmol</td><td>Twist Bioscience</td></tr>
     </table>
-    <div class="kb"><b>2026년 현재의 최전선</b><p>전기화학 방식은 반도체로 넘어갔다 — 나노전극 웰(전극 650 nm · 피치 2 μm)이 <span class="hl">cm²당 2,500만 서열</span>, imec×Atlas는 CMOS ASIC 위에 <span class="hl">1억 2,800만 사이트</span>를 집적. 병목은 이제 화학이 아니라 백금 초미세 식각과 누설전류 차단</p></div>
+    <div class="kb"><b>반도체 집적 기반 합성 플랫폼</b><p>나노전극 웰(전극 650 nm · 피치 2 μm): <span class="hl">cm²당 2,500만 서열</span>, imec×Atlas는 CMOS ASIC 위에 <span class="hl">1억 2,800만 사이트</span>집적 · 주요 제조 과제: 백금 초미세 식각과 누설전류 억제</p></div>
   </div>
   <p class="src">Lietard et al., <i>Nucleic Acids Res</i> 49:6687 (2021) · LeProust et al., <i>Nucleic Acids Res</i> 38:2522 (2010) · Nguyen et al., <i>Science Advances</i> 7:eabi6714 (2021) · 피처 밀도: <i>Expert Rev Mol Diagn</i> 6:145 (2006) · HiFi 1:2,265: Agilent SurePrint 제품 문서 (2차 자료) · imec 보도자료 (2026-03-05) · Twist REV12 (2026-01) · GenScript (2026-09-22)</p>
 </section>
@@ -1340,25 +1340,25 @@ M  END
   <div class="body">
     <div class="video-layout">
       <div><div class="video-stage"><img class="video-preview" src="https://i.ytimg.com/vi/2r4Ejsu5c_U/hqdefault.jpg" alt="Evonetix DNA synthesis on silicon arrays"><button class="video-play" type="button"><span class="play-symbol">▶</span><span class="play-label">슬라이드에서 영상 재생</span></button></div><p class="video-caption"><span class="video-credit">Evonetix (1:11)</span><a class="video-source-link" href="https://www.youtube.com/watch?v=2r4Ejsu5c_U" target="_blank" rel="noopener">YouTube에서 보기 ↗</a></p></div>
-      <div class="video-explain"><h3>영상 선택</h3><div class="video-choices"><button class="video-choice" type="button" aria-pressed="true">Evonetix · 열 제어 합성과 조립 <span class="video-time">(1:11)</span></button></div><div class="kb teal"><b>관찰할 내용</b><p class="video-observation">보너스 · 다섯 번째 트리거 — Evonetix는 5′ 탈보호를 열(thermal)로 켠다 · 칩 위에서 조립까지 (7-1 기업 지도와 연결)</p></div><h3>개념 연결</h3><ul class="video-prompts"><li>열에 의한 위치별 반응 제어</li><li>전기화학·광유도 방식과의 구분</li></ul></div>
+      <div class="video-explain"><h3>영상 선택</h3><div class="video-choices"><button class="video-choice" type="button" aria-pressed="true">Evonetix · 열 제어 합성과 조립 <span class="video-time">(1:11)</span></button></div><div class="kb teal"><b>관찰할 내용</b><p class="video-observation">Evonetix의 열 제어 기반 5′ 탈보호와 칩 위 조립 · DNA Data Storage 7-1의 플랫폼 비교</p></div><h3>개념 연결</h3><ul class="video-prompts"><li>열에 의한 위치별 반응 제어</li><li>전기화학·광유도 방식과의 구분</li></ul></div>
     </div>
     <p class="src">영상: Evonetix · YouTube 제목·제작자 확인: 2026-10-07 · 긴 강연은 필요한 구간을 선택하여 시청</p>
-  </div><script type="application/json" class="video-data">[{"id": "2r4Ejsu5c_U", "title": "Evonetix DNA synthesis on silicon arrays", "author": "Evonetix", "label": "Evonetix · 열 제어 합성과 조립", "duration": "1:11", "note": "보너스 · 다섯 번째 트리거 — Evonetix는 5′ 탈보호를 열(thermal)로 켠다 · 칩 위에서 조립까지 (7-1 기업 지도와 연결)"}]</script>
+  </div><script type="application/json" class="video-data">[{"id": "2r4Ejsu5c_U", "title": "Evonetix DNA synthesis on silicon arrays", "author": "Evonetix", "label": "Evonetix · 열 제어 합성과 조립", "duration": "1:11", "note": "Evonetix의 열 제어 기반 5′ 탈보호와 칩 위 조립 · DNA Data Storage 7-1의 플랫폼 비교"}]</script>
 </section>
 
 <!-- ===================== PART 3 ===================== -->
 <section class="slide sect" data-part="p3" data-title="PART 3 섹션 표지">
-  <div class="sl"><div class="no">PART 3</div><h2>광화학과 오류</h2><p class="en">Photochemistry and Where Errors Come From</p></div>
+  <div class="sl"><div class="no">PART 3</div><h2>광화학과 오류</h2><p class="en">Photochemistry and Error Mechanisms</p></div>
   <div class="sr"><ul>
-    <li>PGA와 광분해 보호기 — 산이 확산하는가</li>
-    <li>공간 해상도를 광학으로 얻는가 구조로 얻는가</li>
+    <li>PGA와 광분해성 보호기의 산 확산 특성</li>
+    <li>광학적·구조적 공간 제어 방식 비교</li>
     <li>스텝수율의 지수 법칙 — 길이 한계의 수학적 근거</li>
     <li>칩 올리고의 오류율이 더 높은 물리적 이유 5가지</li>
   </ul></div>
 </section>
 
 <section class="slide" data-part="p3" data-title="광산 발생과 광분해성 보호기의 비교">
-  <header><h2>광산 발생과 광분해성 보호기의 비교</h2><p class="sub">(A) 광생성 산 PGA — 빛이 산을 만든다 ｜ (B) 광분해 보호기 — 빛이 결합을 끊는다</p></header>
+  <header><h2>광산 발생과 광분해성 보호기의 비교</h2><p class="sub">(A) 광조사에 의한 산 생성 ｜ (B) 광조사에 의한 보호기 결합의 광분해</p></header>
   <div class="body">
     <div class="cols">
       <div class="card crim">
@@ -1491,18 +1491,18 @@ Q 105.4 257.4, 107.2 257.4
 ' fill='#BF3A3A'/>
 </svg>
 </figure>
-        <p class="tiny gray">산이 떼어낸 DMT는 트리틸 양이온으로 빠져나간다 — 보호기는 기존 화학과 같은 DMT</p>
+        <p class="tiny gray">산 유도 DMT 제거 → 트리틸 양이온 생성 · 표준 DMT 보호기의 적용</p>
         <ul class="pts sm">
           <li>광산발생제 diaryl iodonium 염 + thioxanthenone 광증감제</li>
-          <li>탈트리틸화 <span class="hl">15초 미만</span> (기존 화학 60초 이상) · 평균 스텝수율 <span class="hl">&gt;98%</span></li>
-          <li>약점 — 생성된 산이 액상에서 <span class="bad">옆으로 샌다</span></li>
-          <li>해법은 광학이 아니라 구조 — 깊이 <span class="hl">30 μm</span> 마이크로웰에 산을 가둔다 (Xeotron · LC Sciences, 투영 픽셀 30×30 μm)</li>
+          <li>탈트리틸화 <span class="hl">15 s 미만</span> (기존 화학 60 s 이상) · 평균 스텝수율 <span class="hl">&gt;98%</span></li>
+          <li>제한 요인: 생성된 산의 액상 <span class="bad">측방 확산</span></li>
+          <li>산 확산 제어: 깊이 <span class="hl">30 μm</span> 마이크로웰의 반응 구획 제한 (Xeotron · LC Sciences, 투영 픽셀 30×30 μm)</li>
         </ul>
       </div>
       <div class="card">
         <h3>(B) 광분해 보호기 — MeNPOC · NPPOC · BzNPPOC</h3>
-        <svg viewBox="0 0 320 96" role="img" aria-label="광자가 닿은 분자에서만 결합이 끊어진다">
-          <text x="10" y="14" class="s-sm s-gray">광자가 닿은 분자에서만 결합이 끊어진다 — 확산원 없음</text>
+        <svg viewBox="0 0 320 96" role="img" aria-label="광조사에 의한 선택적 보호기 결합 분해">
+          <text x="10" y="14" class="s-sm s-gray">광조사 영역의 선택적 보호기 결합 분해</text>
           <line x1="40" y1="24" x2="40" y2="48" class="l-teal" stroke-width="2" stroke-dasharray="5 3"/>
           <line x1="150" y1="24" x2="150" y2="48" class="l-teal" stroke-width="2" stroke-dasharray="5 3"/>
           <rect x="26" y="50" width="28" height="18" rx="3" class="f-crim" stroke-dasharray="4 3"/>
@@ -1519,13 +1519,13 @@ Q 105.4 257.4, 107.2 257.4
           <text x="160" y="92" text-anchor="middle" class="s-sm s-gray">회절 한계 2.4 μm까지 공간 해상도 우위</text>
         </svg>
         <ul class="pts sm">
-          <li>보호기 자체가 빛에 끊어지도록 설계 — 산을 만들지 않는다</li>
-          <li>MeNPOC 스텝수율 92–94% → NPPOC <span class="hl">96–99%</span>로 개선되며 100-mer 이상이 열렸다</li>
-          <li>약점 — 양자수율이 유한하다: 3 J/cm²에서 <span class="bad">약 95%</span>만 탈보호</li>
+          <li>광분해성 보호기의 직접 탈보호 · 산 생성 방식과 구분</li>
+          <li>MeNPOC 스텝수율 92–94% → NPPOC <span class="hl">96–99%</span>로 개선 · 100-mer 이상 합성의 기반</li>
+          <li>제한 요인: 유한한 양자수율 · 3 J/cm²에서 <span class="bad">약 95%</span>탈보호</li>
         </ul>
       </div>
     </div>
-    <div class="kb"><b>한 줄 결론</b><p>PGA는 <span class="hl">확산</span>이 문제, 광분해 보호기는 <span class="hl">완결성</span>이 문제 — 두 문제는 바꿔치기된 것이지 사라진 것이 아니다</p></div>
+    <div class="kb"><b>광탈보호 방식의 제한 요인</b><p>PGA: 산의 <span class="hl">확산 제어</span> · 광분해성 보호기: <span class="hl">탈보호 완결성</span> 확보</p></div>
   </div>
   <p class="src">Gao et al., <i>Nucleic Acids Res</i> 29:4744 (2001) · <i>Nucleic Acids Res</i> (2016) PMC4776362 · Lietard et al., <i>Nucleic Acids Res</i> 49:6687 (2021)</p>
 </section>
@@ -1535,18 +1535,18 @@ Q 105.4 257.4, 107.2 257.4
   <div class="body">
     <div class="video-layout">
       <div><div class="video-stage"><img class="video-preview" src="https://i.ytimg.com/vi/hYGnJpytUlg/hqdefault.jpg" alt="µParaflo® Technology"><button class="video-play" type="button"><span class="play-symbol">▶</span><span class="play-label">슬라이드에서 영상 재생</span></button></div><p class="video-caption"><span class="video-credit">LC Sciences (3:46)</span><a class="video-source-link" href="https://www.youtube.com/watch?v=hYGnJpytUlg" target="_blank" rel="noopener">YouTube에서 보기 ↗</a></p></div>
-      <div class="video-explain"><h3>영상 선택</h3><div class="video-choices"><button class="video-choice" type="button" aria-pressed="true">µParaflo · 빛으로 생성한 산 <span class="video-time">(3:46)</span></button></div><div class="kb teal"><b>관찰할 내용</b><p class="video-observation">빛 → 산 (PGA) — LC Sciences. 디지털 광학으로 빛을 쏘면 PGA 전구체가 산을 만들어 DMT를 벗긴다 · 산이 새지 않게 미세유체 반응실에 가둔다</p></div><h3>개념 연결</h3><ul class="video-prompts"><li>빛 → 산 생성 → DMT 제거</li><li>미세유체 구획과 산 확산 제어</li></ul></div>
+      <div class="video-explain"><h3>영상 선택</h3><div class="video-choices"><button class="video-choice" type="button" aria-pressed="true">µParaflo · 빛으로 생성한 산 <span class="video-time">(3:46)</span></button></div><div class="kb teal"><b>관찰할 내용</b><p class="video-observation">LC Sciences의 광산 발생: 광조사 → PGA 전구체의 산 생성 → DMT 제거 · 미세유체 구획의 산 확산 제어</p></div><h3>개념 연결</h3><ul class="video-prompts"><li>빛 → 산 생성 → DMT 제거</li><li>미세유체 구획과 산 확산 제어</li></ul></div>
     </div>
     <p class="src">영상: LC Sciences · YouTube 제목·제작자 확인: 2026-10-07 · 긴 강연은 필요한 구간을 선택하여 시청</p>
-  </div><script type="application/json" class="video-data">[{"id": "hYGnJpytUlg", "title": "µParaflo® Technology", "author": "LC Sciences", "label": "µParaflo · 빛으로 생성한 산", "duration": "3:46", "note": "빛 → 산 (PGA) — LC Sciences. 디지털 광학으로 빛을 쏘면 PGA 전구체가 산을 만들어 DMT를 벗긴다 · 산이 새지 않게 미세유체 반응실에 가둔다"}]</script>
+  </div><script type="application/json" class="video-data">[{"id": "hYGnJpytUlg", "title": "µParaflo® Technology", "author": "LC Sciences", "label": "µParaflo · 빛으로 생성한 산", "duration": "3:46", "note": "LC Sciences의 광산 발생: 광조사 → PGA 전구체의 산 생성 → DMT 제거 · 미세유체 구획의 산 확산 제어"}]</script>
 </section>
 
 <section class="slide" data-part="p3" data-title="스텝수율의 지수 법칙">
-  <header><h2>스텝수율의 지수 법칙</h2><p class="sub">칩 올리고가 150–350 nt에 머무는 수학적 이유</p></header>
+  <header><h2>스텝수율의 지수 법칙</h2><p class="sub">단계별 수율과 사슬 길이에 따른 전장 수율의 변화</p></header>
   <div class="body mid">
     <div class="cols w55">
       <div class="stack">
-        <div class="eq">전장 수율 = (스텝수율)<sup>사이클 수</sup><span class="why">한 사이클의 실패는 전부 누적된다</span></div>
+        <div class="eq">전장 수율 = (스텝수율)<sup>사이클 수</sup><span class="why">반복 사이클에 따른 실패 확률의 누적</span></div>
         <table class="tbl sm">
           <tr><th>스텝수율</th><th class="num">100 사이클</th><th class="num">200 사이클</th><th>대응</th></tr>
           <tr><td>99.9%</td><td class="num">90%</td><td class="num">82%</td><td>컬럼 + 정제</td></tr>
@@ -1557,8 +1557,8 @@ Q 105.4 257.4, 107.2 257.4
         </table>
       </div>
       <div class="stack">
-        <div class="kb crim"><b>이 표의 결론</b><p>광탈보호 95%는 200-mer를 <span class="bad">원리적으로 불가능</span>하게 만든다 — 노광을 늘리면 되지만 광손상 · 탈퓨린화가 따라온다</p></div>
-        <div class="kb teal"><b>그래서 실무의 선택</b><p>완전 탈보호 12–15 J/cm² 대신 <span class="hl">4–6 J/cm²</span> — 매 사이클 보호기 일부가 남는 것을 <span class="hl">받아들이고</span> 길이를 줄인다</p></div>
+        <div class="kb crim"><b>탈보호 수율과 전장 수율</b><p>광탈보호 수율 95% 조건의 200-mer 전장 수율: <span class="bad">매우 낮은 수준</span> · 노광량 증가에 따른 광손상·탈퓨린화 위험</p></div>
+        <div class="kb teal"><b>노광량과 손상의 균형</b><p>완전 탈보호 기준 12–15 J/cm² · 적용 조건 <span class="hl">4–6 J/cm²</span> · <span class="hl">불완전 탈보호와 손상</span>을 고려한 길이·노광량 선택</p></div>
         <div class="kb"><b>연결</b><p>DNA Data Storage 6-1에서 컬럼 합성의 전장 수율을 계산할 때 쓴 같은 식 — 바뀐 것은 스텝수율의 출처(산 대신 빛 · 전압)뿐</p></div>
       </div>
     </div>
@@ -1567,18 +1567,18 @@ Q 105.4 257.4, 107.2 257.4
 </section>
 
 <section class="slide" data-part="p3" data-title="칩 합성의 주요 오류 발생 요인">
-  <header><h2>칩 합성의 주요 오류 발생 요인</h2><p class="sub">물리적 이유 5가지 · 각각 숫자 하나</p></header>
+  <header><h2>칩 합성의 주요 오류 발생 요인</h2><p class="sub">주요 오류 발생 요인 5종과 정량적 근거</p></header>
   <div class="body mid">
     <ol class="nl tight">
-      <li><span><b>불완전 탈보호</b> — 광 · 전기화학 탈보호는 양자수율 · 전류효율이 유한하다. 미탈보호는 그 사이클을 건너뛰어 곧 <span class="bad">결손</span>이 된다. <span class="mono hl">미탈보호 ~5% ↔ 실측 결손 4.65%</span></span></li>
+      <li><span><b>불완전 탈보호</b> — 광·전기화학 탈보호의 유한한 양자수율·전류효율 · 미탈보호 피처의 해당 사이클 미연장 → <span class="bad">결손</span> 형성 · <span class="mono hl">미탈보호 ~5% ↔ 실측 결손 4.65%</span></span></li>
       <li><span><b>빛과 산의 측방 누출</b> — 회절 · 산란 · 미광, 그리고 H⁺의 확산이 인접 피처를 오탈보호 → <span class="bad">삽입 · 교차오염</span>. <span class="mono hl">배플링으로 결손 0.15 → 0.101</span></span></li>
-      <li><span><b>완결성과 손상의 트레이드오프</b> — 노광 · 통전을 늘려 탈보호를 완결하려 하면 광손상 · 탈퓨린화가 증가한다. <span class="mono hl">필요 12–15 J/cm² vs 실사용 4–6</span></span></li>
-      <li><span><b>산에 의한 사슬 절단</b> — 산 기반 방식은 피처 위 산 농축으로 Apurinic/apyrimidinic site(무염기 자리)가 생겨 최종 염기성 탈보호에서 끊어진다. <span class="mono hl">한계 ~100 nt → FIFO로 150 nt</span></span></li>
-      <li><span><b>정제 불가</b> — 피처당 0.2–1 fmol(분자 10⁸개)은 HPLC · PAGE로 정제할 양이 아니다. 불완전 산물이 그대로 풀에 남는다. <span class="mono hl">컬럼 대비 서열당 10⁷–10⁸배 적음</span></span></li>
+      <li><span><b>탈보호 완결성과 DNA 손상</b> — 노광량·통전 시간 증가 → 탈보호율 개선과 광손상·탈퓨린화 증가 가능성 · <span class="mono hl">필요 12–15 J/cm² vs 실사용 4–6</span></span></li>
+      <li><span><b>산에 의한 사슬 절단</b> — 피처 위 산 농축 → Apurinic/apyrimidinic site(무염기 자리) 형성 → 최종 염기성 탈보호 시 사슬 절단 · <span class="mono hl">한계 ~100 nt → FIFO로 150 nt</span></span></li>
+      <li><span><b>정제 불가</b> — 피처당 0.2–1 fmol(분자 10⁸개)의 개별 HPLC·PAGE 정제 제약 · 불완전 산물의 풀 내 잔류 · <span class="mono hl">컬럼 대비 서열당 10⁷–10⁸배 적음</span></span></li>
     </ol>
     <div class="cols w55">
-      <div class="kb crim"><b>그래서 칩 올리고는</b><p>정확도로 감당하지 않고 <span class="hl">오류정정 부호</span>로 감당한다 — DNA Data Storage 4 RS · XOR가 여기서 필요해진다</p></div>
-      <div class="kb teal"><b>지금도 개선 중 (2025)</b><p>구아닌 O6-phosphitylation이 분지 · 단편화를 일으킨다는 새 오류원 — 짧은 debranching 단계로 형광신호 6배 · 시퀀싱 read 약 100배</p></div>
+      <div class="kb crim"><b>칩 합성 오류의 정정</b><p>잔류 서열 오류에 대한 <span class="hl">오류정정 부호</span> 적용 · DNA Data Storage 4의 RS·XOR와 연계</p></div>
+      <div class="kb teal"><b>분지 부반응의 제어 사례 (2025)</b><p>구아닌 O6-phosphitylation에 의한 분지·단편화 · debranching 단계 적용 결과: 형광신호 6배 · 시퀀싱 read 약 100배</p></div>
     </div>
   </div>
   <p class="src">Lietard et al., <i>Nucleic Acids Res</i> 49:6687 (2021) · Agbavwe et al., <i>J Nanobiotechnology</i> 9:57 (2011) · LeProust et al., <i>Nucleic Acids Res</i> 38:2522 (2010) · <i>Communications Chemistry</i> (2025) s42004-025-01755-0</p>
@@ -1586,12 +1586,12 @@ Q 105.4 257.4, 107.2 257.4
 
 <!-- ===================== PART 4 ===================== -->
 <section class="slide sect" data-part="p4" data-title="PART 4 섹션 표지">
-  <div class="sl"><div class="no">PART 4</div><h2>회사와 올리고 풀</h2><p class="en">Who Sells What, in 2026</p></div>
+  <div class="sl"><div class="no">PART 4</div><h2>공급사와 올리고 풀</h2><p class="en">Suppliers and Oligonucleotide Pool Specifications</p></div>
   <div class="sr"><ul>
     <li>2026년 공급사 지도 — 칩 풀 · 컬럼 풀 · 효소 합성</li>
     <li>스펙 비교표와 주문 시 읽어야 할 세 가지</li>
-    <li>수업 중 볼 동영상</li>
-    <li>DNA 저장 논문이 실제로 쓴 풀</li>
+    <li>관련 공정 영상</li>
+    <li>DNA 데이터 저장 연구의 올리고 풀 적용 사례</li>
   </ul></div>
 </section>
 
@@ -1607,18 +1607,18 @@ Q 105.4 257.4, 107.2 257.4
         <p class="tiny gray">종류 10²–10⁴ · 서열당 pmol · 프라이머 · 소규모 라이브러리</p></div>
       <div class="card green"><h3>③ 효소 합성 (DNA Data Storage 7)</h3>
         <ul class="pts sm"><li><b>DNA Script</b> — 벤치탑 SYNTAX</li><li><b>Ansa Biotechnologies</b> — 2026-01 IDT 포트폴리오 편입</li></ul>
-        <p class="tiny gray">화학 합성의 길이 한계를 넘는 쪽 — 다음 주 주제</p></div>
+        <p class="tiny gray">화학 합성과 다른 단일 잔기 도입 제어 · DNA Data Storage 7의 효소 합성</p></div>
     </div>
     <div class="cols w55">
-      <div class="kb crim"><b>회사는 사라지고 기술은 남는다</b><p>2017 GenScript ← CustomArray · 2025-01 Maravai/TriLink ← Molecular Assemblies · 2026-03 Biomemory ← Catalog · 2026-03 imec, Atlas 지분 참여</p></div>
-      <div class="kb"><b>수업 전 재확인 필요</b><p>Evonetix · Roswell은 2026-09-22 기준 자사 사이트 접속 확인 실패 — 이 표에 넣지 않았다</p></div>
+      <div class="kb crim"><b>합성 기술의 인수와 사업 이전</b><p>2017 GenScript ← CustomArray · 2025-01 Maravai/TriLink ← Molecular Assemblies · 2026-03 Biomemory ← Catalog · 2026-03 imec, Atlas 지분 참여</p></div>
+      <div class="kb"><b>공급사 자료의 확인 범위</b><p>2026-09-22 기준 확인된 공급사 자료 반영 · 미확인 공급사의 표 제외</p></div>
     </div>
   </div>
   <p class="src">각 사 제품 페이지 2026-09-22 직접 확인 · GenScript/CustomArray 인수 발표 (2017) · TriLink 보도자료 (2025-01) · Biomemory 보도자료 (2026-03) · imec 보도자료 (2026-03-05)</p>
 </section>
 
 <section class="slide" data-part="p4" data-title="공급사 스펙 비교표">
-  <header><h2>공급사 스펙 비교</h2><p class="sub">이 표 한 장이 PART 4의 핵심 · 가격은 전 사 비공개</p></header>
+  <header><h2>공급사 스펙 비교</h2><p class="sub">공급사별 길이·풀 크기·오류율·납기·산출량 비교 · 가격 비공개</p></header>
   <div class="body mid">
     <table class="tbl xs">
       <tr><th>공급사</th><th>합성 원리</th><th>길이</th><th>풀 크기</th><th>오류율</th><th>납기</th><th>올리고당 양</th></tr>
@@ -1629,27 +1629,27 @@ Q 105.4 257.4, 107.2 257.4
       <tr><td>Eurofins ePools</td><td>컬럼</td><td class="num">40–200 base</td><td class="num">10–2,000종 (10 pmol)</td><td>미공개</td><td>미공개</td><td class="num">10 / 50 pmol</td></tr>
     </table>
     <div class="cols w55">
-      <div class="kb teal"><b>스펙은 움직인다</b><p>Twist 구 제품시트 300 nt · 1:2,000 · 균일도 &lt;2.5배 → 현행 <span class="hl">350 nt · 1:3,000 · &lt;2.0배</span>. 교재와 논문의 숫자는 조사 시점의 스냅샷</p></div>
-      <div class="kb crim"><b><sup>*</sup> 각주</b><p>Agilent 행은 2차 자료 (벤더 비교표, 2026-04 확인) — agilent.com이 자동 접속을 차단한다. 수업 전 브라우저로 원본 재확인</p></div>
+      <div class="kb teal"><b>제품 사양의 개정 이력</b><p>Twist 구 제품시트 300 nt · 1:2,000 · 균일도 &lt;2.5배 → 현행 <span class="hl">350 nt · 1:3,000 · &lt;2.0배</span>. 제품 사양의 조사일과 문서 개정 번호 확인</p></div>
+      <div class="kb crim"><b><sup>*</sup> 각주</b><p>Agilent 행은 2차 자료 (벤더 비교표, 2026-04 확인) — 원본 제품 문서 확인 범위의 제한 · 인용 시 출처 등급과 조사일 확인</p></div>
     </div>
   </div>
   <p class="src">Twist <i>Oligo Pools Product Sheet</i> REV12 (2026-01) · GenScript GenTitan · IDT oPools · Eurofins ePools (모두 2026-09-22 확인) · Agilent 행은 oligopool.com 벤더 비교 (2026-04)</p>
 </section>
 
 <section class="slide" data-part="p4" data-title="올리고 풀의 주요 제품 사양">
-  <header><h2>올리고 풀의 주요 제품 사양</h2><p class="sub">카탈로그의 숫자를 저장 용량과 데이터 손실로 번역하기</p></header>
+  <header><h2>올리고 풀의 주요 제품 사양</h2><p class="sub">제품 사양과 저장 용량·오류율·서열 손실의 관계</p></header>
   <div class="body mid">
     <div class="cards">
-      <div class="speccard"><b>① 길이 (nt)</b><span class="num">최대 350 nt (Twist)</span><span>페이로드 크기를 결정 — DNA Data Storage 5 올리고 구조에서 프라이머 · 인덱스 · ECC를 뺀 나머지가 데이터</span></div>
-      <div class="speccard"><b>② 오류율</b><span class="num">최대 1:3,000 nt</span><span>오류정정 부호의 여유분을 결정 — 염기 1개 기준 표기임에 주의</span></div>
-      <div class="speccard"><b>③ 균일도</b><span class="num">&gt;90%가 평균의 &lt;2.0배</span><span>DNA 저장에서 가장 중요 — 특정 서열만 적게 만들어지면 그 조각은 읽히지 않는다</span></div>
+      <div class="speccard"><b>① 길이 (nt)</b><span class="num">최대 350 nt (Twist)</span><span>페이로드 길이의 제한 · 전체 길이에서 프라이머·인덱스·ECC를 제외한 데이터 영역</span></div>
+      <div class="speccard"><b>② 오류율</b><span class="num">최대 1:3,000 nt</span><span>오류정정 부호의 여유분 설정 기준 · 염기당 오류율 표기</span></div>
+      <div class="speccard"><b>③ 균일도</b><span class="num">&gt;90%가 평균의 &lt;2.0배</span><span>서열별 분자 수의 편차와 dropout 위험 · 낮은 산출량 서열의 판독 누락 가능성</span></div>
     </div>
     <div class="cols w55">
-      <div class="kb"><b>1:3,000을 손으로 번역하기</b><div>
-        <p class="small">200 nt 올리고 하나가 완벽할 확률 = (1 − 1/3,000)<sup>200</sup> ≈ <span class="hl">93.6%</span></p>
-        <p class="small">→ 약 15개 중 1개는 어딘가 틀린 올리고. 풀에 10⁵종이 있으면 <span class="bad">약 6,400종</span>이 오류를 가진다</p>
+      <div class="kb"><b>염기당 오류율과 올리고의 무오류 확률</b><div>
+        <p class="small">200 nt 올리고의 무오류 확률 = (1 − 1/3,000)<sup>200</sup> ≈ <span class="hl">93.6%</span></p>
+        <p class="small">→ 약 15개 중 1개의 오류 포함 확률 · 10⁵종 풀에서 <span class="bad">약 6,400종</span>의 오류 포함 가능성</p>
       </div></div>
-      <div class="kb crim"><b>균일도가 없으면 무슨 일이 생기나</b><p>IDT oPools는 개별 QC · 정량을 하지 않는다 — 90만 종 시험에서 평균 <span class="bad">dropout 0.8%</span>. 빠진 서열은 인덱스와 ECC로 복구해야 한다 (DNA Data Storage 4)</p></div>
+      <div class="kb crim"><b>서열별 산출량 편차와 dropout</b><p>IDT oPools의 서열별 QC·정량 미제공 — 90만 종 시험에서 평균 <span class="bad">dropout 0.8%</span>. 누락 서열에 대한 인덱스·ECC 기반 복구 (DNA Data Storage 4)</p></div>
     </div>
   </div>
   <p class="src">Twist <i>Oligo Pools Product Sheet</i> REV12 (2026-01) · IDT oPools 제품 페이지 (2026-09-22) · 93.6%는 계산</p>
@@ -1660,10 +1660,10 @@ Q 105.4 257.4, 107.2 257.4
   <div class="body">
     <div class="video-layout">
       <div><div class="video-stage"><img class="video-preview" src="https://i.ytimg.com/vi/gAH2kwvc7vM/hqdefault.jpg" alt="2018 -12 13 Webinar: Oligo pools  design, synthesis, and research applications"><button class="video-play" type="button"><span class="play-symbol">▶</span><span class="play-label">슬라이드에서 영상 재생</span></button></div><p class="video-caption"><span class="video-credit">GenScript USA Inc. (37:02)</span><a class="video-source-link" href="https://www.youtube.com/watch?v=gAH2kwvc7vM" target="_blank" rel="noopener">YouTube에서 보기 ↗</a></p></div>
-      <div class="video-explain"><h3>영상 선택</h3><div class="video-choices"><button class="video-choice" type="button" aria-pressed="true">CustomArray · 올리고 풀 설계 강연 <span class="video-time">(37:02) · 심화</span></button><button class="video-choice" type="button" aria-pressed="false">칩 합성과 저장 비용 · 심화 강연 <span class="video-time">(15:39) · 심화</span></button></div><div class="kb teal"><b>관찰할 내용</b><p class="video-observation">과제 시청 — 연사는 CustomArray의 Marcelo Caraballo. &quot;CustomArray가 개발했고 GenScript가 인수했다&quot;는 당사자 설명 · 앞 10분이 합성 원리</p></div><h3>개념 연결</h3><ul class="video-prompts"><li>풀 크기·길이·오류율의 구분</li><li>긴 강연의 합성 원리 부분 선택 시청</li></ul></div>
+      <div class="video-explain"><h3>영상 선택</h3><div class="video-choices"><button class="video-choice" type="button" aria-pressed="true">CustomArray · 올리고 풀 설계 강연 <span class="video-time">(37:02) · 심화</span></button><button class="video-choice" type="button" aria-pressed="false">칩 합성과 저장 비용 · 심화 강연 <span class="video-time">(15:39) · 심화</span></button></div><div class="kb teal"><b>관찰할 내용</b><p class="video-observation">CustomArray의 Marcelo Caraballo 강연 · 합성 원리·풀 설계·연구 적용 · 초기 10 min의 합성 원리 설명</p></div><h3>개념 연결</h3><ul class="video-prompts"><li>풀 크기·길이·오류율의 구분</li><li>긴 강연의 합성 원리 부분 선택 시청</li></ul></div>
     </div>
     <p class="src">영상: GenScript USA Inc. · SNIAVideo · YouTube 제목·제작자 확인: 2026-10-07 · 긴 강연은 필요한 구간을 선택하여 시청</p>
-  </div><script type="application/json" class="video-data">[{"id": "gAH2kwvc7vM", "title": "2018 -12 13 Webinar: Oligo pools  design, synthesis, and research applications", "author": "GenScript USA Inc.", "label": "CustomArray · 올리고 풀 설계 강연", "duration": "37:02", "note": "과제 시청 — 연사는 CustomArray의 Marcelo Caraballo. \"CustomArray가 개발했고 GenScript가 인수했다\"는 당사자 설명 · 앞 10분이 합성 원리"}, {"id": "UbH9xPVlmeQ", "title": "SDC2021: From DNA Synthesis on Chips to DNA Data Storage", "author": "SNIAVideo", "label": "칩 합성과 저장 비용 · 심화 강연", "duration": "15:39", "note": "과제 시청 — 반도체 공정과 저장 비용을 직접 연결하는 Twist 엔지니어 강연 (SNIA)"}]</script>
+  </div><script type="application/json" class="video-data">[{"id": "gAH2kwvc7vM", "title": "2018 -12 13 Webinar: Oligo pools  design, synthesis, and research applications", "author": "GenScript USA Inc.", "label": "CustomArray · 올리고 풀 설계 강연", "duration": "37:02", "note": "CustomArray의 Marcelo Caraballo 강연 · 합성 원리·풀 설계·연구 적용 · 초기 10 min의 합성 원리 설명"}, {"id": "UbH9xPVlmeQ", "title": "SDC2021: From DNA Synthesis on Chips to DNA Data Storage", "author": "SNIAVideo", "label": "칩 합성과 저장 비용 · 심화 강연", "duration": "15:39", "note": "Twist 엔지니어의 반도체 공정과 DNA 저장 비용 연계 · SNIA 강연의 관련 구간 선택 시청"}]</script>
 </section>
 
 
@@ -1672,17 +1672,17 @@ Q 105.4 257.4, 107.2 257.4
 
 
 <section class="slide" data-part="p4" data-title="DNA 데이터 저장 연구의 올리고 풀 적용 사례">
-  <header><h2>DNA 데이터 저장 연구의 올리고 풀 적용 사례</h2><p class="sub">어느 회사의 칩에서 나온 올리고였는가</p></header>
+  <header><h2>DNA 데이터 저장 연구의 올리고 풀 적용 사례</h2><p class="sub">연구별 합성 공급사·풀 규모·저장 용량 비교</p></header>
   <div class="body mid">
     <table class="tbl sm">
-      <tr><th>논문</th><th>합성 공급</th><th>풀 규모</th><th>저장 용량 · 특징</th><th>지금 그 회사는</th></tr>
+      <tr><th>논문</th><th>합성 공급</th><th>풀 규모</th><th>저장 용량 · 특징</th><th>공급사 현황</th></tr>
       <tr><td>Grass 2015</td><td>CustomArray Inc.</td><td class="num">158 nt × 4,991 조각</td><td>83 kB · 실리카 캡슐화, 70℃ 1주 = 중부유럽 보관 2,000년 등가</td><td>GenScript (2017 인수)</td></tr>
       <tr><td>Erlich &amp; Zielinski 2017</td><td>Twist Bioscience</td><td class="num">200 base × 72,000 올리고</td><td>2.14 MB · 밀도 215 PB/g (DNA Fountain)</td><td>현존</td></tr>
       <tr><td>Organick 2018</td><td>Twist Bioscience</td><td class="num">&gt;1,300만 올리고</td><td>35개 파일 200 MB 이상 · PCR 프라이머 기반 random access 최초 대규모 시연</td><td>현존</td></tr>
     </table>
     <div class="cols w55">
-      <div class="kb teal"><b>읽는 법</b><p>세 논문의 풀 규모가 곧 PART 4 표의 <span class="hl">풀 크기 스펙</span>이다 — 4,991종은 지금의 92K 칩 한 장에 들어가고, 1,300만종은 8M 칩 두 장 규모</p></div>
-      <div class="kb"><b>연결</b><p>Grass 2015가 쓴 <span class="hl">오류정정 부호</span>가 DNA Data Storage 4의 Reed–Solomon — 칩이 만든 오류를 부호가 받아낸다는 구조는 2015년에 이미 완성되어 있었다</p></div>
+      <div class="kb teal"><b>주요 비교 항목</b><p>연구별 풀 규모와 공급사의 <span class="hl">생산 용량</span> 비교 · 4,991종: 92K 칩 1장 이내 · 1,300만종: 8M 칩 약 2장 규모</p></div>
+      <div class="kb"><b>연결</b><p>Grass 2015가 쓴 <span class="hl">오류정정 부호</span>와 DNA Data Storage 4의 Reed–Solomon 연계 · 합성 오류에 대한 부호 기반 정정</p></div>
     </div>
   </div>
   <p class="src">Grass et al., <i>Angew Chem Int Ed</i> 54:2552 (2015) · Erlich &amp; Zielinski, <i>Science</i> 355:950 (2017) · Organick et al., <i>Nature Biotechnology</i> 36:242 (2018)</p>
@@ -1693,48 +1693,48 @@ Q 105.4 257.4, 107.2 257.4
   <div class="body">
     <div class="video-layout">
       <div><div class="video-stage"><img class="video-preview" src="https://i.ytimg.com/vi/LTnJWxCO3M4/hqdefault.jpg" alt="DNA Data Storage by Twist Bioscience"><button class="video-play" type="button"><span class="play-symbol">▶</span><span class="play-label">슬라이드에서 영상 재생</span></button></div><p class="video-caption"><span class="video-credit">Twist Bioscience (0:35)</span><a class="video-source-link" href="https://www.youtube.com/watch?v=LTnJWxCO3M4" target="_blank" rel="noopener">YouTube에서 보기 ↗</a></p></div>
-      <div class="video-explain"><h3>영상 선택</h3><div class="video-choices"><button class="video-choice" type="button" aria-pressed="true">Twist · 올리고 풀과 DNA 저장 <span class="video-time">(0:35)</span></button></div><div class="kb teal"><b>관찰할 내용</b><p class="video-observation">볼 것 — 올리고 풀 하나가 데이터가 되는 흐름 (PART 5 직전 전환용)</p></div><h3>개념 연결</h3><ul class="video-prompts"><li>디지털 데이터와 합성된 서열의 연결</li><li>합성 이후 정제·보관·판독으로의 흐름</li></ul></div>
+      <div class="video-explain"><h3>영상 선택</h3><div class="video-choices"><button class="video-choice" type="button" aria-pressed="true">Twist · 올리고 풀과 DNA 저장 <span class="video-time">(0:35)</span></button></div><div class="kb teal"><b>관찰할 내용</b><p class="video-observation">합성된 올리고 풀과 디지털 데이터의 연결 · 정제·보관·판독 단계와 연계</p></div><h3>개념 연결</h3><ul class="video-prompts"><li>디지털 데이터와 합성된 서열의 연결</li><li>합성 이후 정제·보관·판독으로의 흐름</li></ul></div>
     </div>
     <p class="src">영상: Twist Bioscience · YouTube 제목·제작자 확인: 2026-10-07 · 긴 강연은 필요한 구간을 선택하여 시청</p>
-  </div><script type="application/json" class="video-data">[{"id": "LTnJWxCO3M4", "title": "DNA Data Storage by Twist Bioscience", "author": "Twist Bioscience", "label": "Twist · 올리고 풀과 DNA 저장", "duration": "0:35", "note": "볼 것 — 올리고 풀 하나가 데이터가 되는 흐름 (PART 5 직전 전환용)"}]</script>
+  </div><script type="application/json" class="video-data">[{"id": "LTnJWxCO3M4", "title": "DNA Data Storage by Twist Bioscience", "author": "Twist Bioscience", "label": "Twist · 올리고 풀과 DNA 저장", "duration": "0:35", "note": "합성된 올리고 풀과 디지털 데이터의 연결 · 정제·보관·판독 단계와 연계"}]</script>
 </section>
 
 <!-- ===================== PART 5 ===================== -->
 <section class="slide sect" data-part="p5" data-title="PART 5 섹션 표지">
-  <div class="sl"><div class="no">PART 5</div><h2>정제</h2><p class="en">What to Filter Out, and What You Cannot</p></div>
+  <div class="sl"><div class="no">PART 5</div><h2>정제</h2><p class="en">Separation Principles and Purification Limits</p></div>
   <div class="sr"><ul>
     <li>합성 직후 튜브 안의 조성</li>
     <li>DMT-on 카트리지 정제 — 단계별 위젯</li>
     <li>정제 4종 비교와 용도별 선택</li>
-    <li>HPLC는 한 장으로 요약 · 상세는 보충 강의록</li>
+    <li>HPLC의 기본 원리 · 상세 이론은 보충 강의록 참조</li>
   </ul></div>
 </section>
 
 <section class="slide" data-part="p5" data-title="합성 산물의 조성과 불순물">
-  <header><h2>합성 산물의 조성과 불순물</h2><p class="sub">원하는 것은 소수 · 60-mer · 스텝수율 99% 가정</p></header>
+  <header><h2>합성 산물의 조성과 불순물</h2><p class="sub">60-mer · 단계별 수율 99% 조건의 산물 조성</p></header>
   <div class="body mid">
     <div class="stack">
       <div class="barx prop">
         <span class="seg fl" style="flex:55">전장 산물 55%</span>
         <span class="seg tr" style="flex:45">절단 서열 n−1 · n−2 … 45%</span>
       </div>
-      <p class="tiny gray">0.99<sup>60</sup> = 0.547 → 전장 약 55% · 나머지 약 45%는 캡핑으로 그 길이에서 멈춘 사슬 · 여기에 탈보호 부산물(벤즈아미드 등)과 염이 함께 들어 있다</p>
+      <p class="tiny gray">0.99<sup>60</sup> = 0.547 → 전장 약 55% · 나머지 약 45%: 캡핑된 짧은 사슬 · 탈보호 부산물(벤즈아미드 등)과 염의 동반 혼입</p>
     </div>
     <div class="cols">
       <div class="card amber"><h3>정제가 필요한 이유</h3>
-        <ul class="pts sm"><li><b>순도</b> — 절단 서열이 PCR · 라이게이션 같은 후속 반응을 방해</li><li><b>정량</b> — 흡광도로 농도를 재면 실패 사슬까지 함께 센다</li></ul></div>
-      <div class="card crim"><h3>정제로 걸러지는 것 / 안 걸러지는 것</h3>
-        <ul class="pts sm"><li>걸러짐 — <b>길이가 다른 것</b> (절단 · 결손)</li><li>안 걸러짐 — <b>길이는 같고 염기만 바뀐 것</b> (치환)</li><li>캡핑이 실패 사슬을 그 길이에서 멈춰 세우는 이유가 바로 이것 — 길이 차이를 만들어야 분리된다</li></ul></div>
+        <ul class="pts sm"><li><b>순도</b> — 짧은 불완전 사슬에 의한 PCR·라이게이션 등 후속 반응 방해 가능성</li><li><b>정량</b> — 흡광도 기반 정량에 불완전 사슬의 기여 포함</li></ul></div>
+      <div class="card crim"><h3>정제 가능한 불순물과 분리 제약</h3>
+        <ul class="pts sm"><li>분리 가능: <b>길이가 다른 것</b> (절단 · 결손)</li><li>안 분리 가능: <b>길이는 같고 염기만 바뀐 것</b> (치환)</li><li>캡핑에 의한 실패 사슬의 신장 차단 → 길이·말단 보호기 차이를 이용한 분리</li></ul></div>
     </div>
-    <div class="kb"><b>연결</b><p>치환 변이는 정제로 사라지지 않는다 → <span class="hl">DNA Data Storage 4 RS · XOR</span>가 감당할 몫이 여기서 정해진다</p></div>
+    <div class="kb"><b>연결</b><p>치환 변이의 길이 기반 분리 제약 → <span class="hl">DNA Data Storage 4 RS·XOR</span> 기반 오류정정</p></div>
   </div>
   <p class="src">전장 비율은 계산 (0.99<sup>60</sup>) · 캡핑과 DMT-ON의 분리 논리: Glen Research, <i>Glen Report</i> 21.211</p>
 </section>
 
 <section class="slide" data-part="p5" data-title="위젯 ⑤ DMT-on 카트리지 정제">
-  <header><h2>⑤ DMT-on 카트리지 정제 — 단계별</h2><p class="sub">캡핑으로 길이 차이를, DMT-on으로 소수성 차이를 만들어 둔 뒤 분리한다</p></header>
+  <header><h2>⑤ DMT-on 카트리지 정제 — 단계별</h2><p class="sub">캡핑에 의한 길이 차이 · DMT-on에 의한 소수성 차이 · 카트리지 흡착 분리</p></header>
   <div class="body">
-    <div class="proc" data-steps="5" data-caps='["<b>조(crude) 로딩</b> — 카트리지에 합성 혼합물을 통과시킨다. 전장 사슬만 마지막 탈트리틸화를 <b>일부러 건너뛰어</b> 5&#8242;-DMT를 달고 있다(DMT-on). 절단 사슬은 캡핑으로 멈춘 상태라 DMT가 없다.","<b>세척</b> — DMT는 매우 소수성이라 C18 수지에 강하게 붙는다. DMT가 없는 절단 사슬과 염 · 탈보호 부산물은 <span class=\"rx\">먼저 씻겨 나간다</span>.","<b>온-컬럼 탈트리틸화</b> — 수지에 붙은 전장 사슬에 산을 통과시켜 DMT만 떼어낸다. 사슬은 아직 수지 위에 있다.","<b>용출</b> — DMT를 잃어 소수성이 낮아진 전장 사슬이 용출된다. 튜브에 남는 것은 전장 산물.","<b>걸러지지 않는 것</b> — 길이가 같고 염기만 바뀐 <span class=\"rx\">치환 변이</span>는 DMT도 길이도 같아 그대로 통과한다. 칩 올리고 풀은 서열당 fmol이라 이 정제 자체가 불가능하다 → 오류정정 부호의 몫."]'>
+    <div class="proc" data-steps="5" data-caps='[&quot;&lt;b&gt;Crude(조산물) 로딩&lt;/b&gt;: 합성 혼합물의 카트리지 공급 · 전장 사슬의 최종 DMT 유지(DMT-on) · 캡핑된 짧은 사슬의 DMT 부재&quot;, &quot;&lt;b&gt;세척&lt;/b&gt;: 소수성 DMT-on 사슬의 C18 수지 흡착 · DMT-off 짧은 사슬·염·탈보호 부산물의 &lt;span class=\&quot;rx\&quot;&gt;세척 제거&lt;/span&gt;&quot;, &quot;&lt;b&gt;온-컬럼 탈트리틸화&lt;/b&gt;: 흡착된 전장 사슬의 산 처리 · DMT 제거 · 용출 전 수지 흡착 상태 유지&quot;, &quot;&lt;b&gt;용출&lt;/b&gt;: DMT 제거에 따른 소수성 감소 · 용출 조건에서 전장 산물 회수&quot;, &quot;&lt;b&gt;치환 변이의 분리 제약&lt;/b&gt;: 동일 길이·말단 보호기의 &lt;span class=\&quot;rx\&quot;&gt;치환 변이&lt;/span&gt; 혼입 가능성 · 서열당 fmol 칩 풀의 개별 정제 제약 · 오류정정 부호 적용&quot;]'>
       <div class="proc-head"><h3>카트리지 (OPC · Glen-Pak 계열) 정제</h3></div>
       <div class="proc-stage">
         <svg viewBox="0 0 640 250">
@@ -1760,7 +1760,7 @@ Q 105.4 257.4, 107.2 257.4
           <g data-from="2" data-until="3">
             <rect x="256" y="98" width="30" height="14" rx="2" class="grp dmt"/><text x="271" y="109" text-anchor="middle" class="lbl sm rx">DMT</text>
             <rect x="296" y="98" width="30" height="14" rx="2" class="grp dmt"/><text x="311" y="109" text-anchor="middle" class="lbl sm rx">DMT</text>
-            <text x="300" y="130" text-anchor="middle" class="lbl sm">전장 사슬만 수지에 붙어 있음</text>
+            <text x="300" y="130" text-anchor="middle" class="lbl sm">DMT-on 전장 사슬의 수지 흡착</text>
           </g>
           <!-- 2단계: 세척 -->
           <g data-at="2">
@@ -1773,7 +1773,7 @@ Q 105.4 257.4, 107.2 257.4
           </g>
           <!-- 3단계: 온컬럼 탈트리틸화 -->
           <g data-at="3">
-            <text x="40" y="44" class="lbl rx">산 통과 — DMT만 제거</text>
+            <text x="40" y="44" class="lbl rx">산 처리에 의한 DMT 제거</text>
             <path class="epath" d="M190,50 q26 0 44 0"/>
             <g data-at="3" data-leave="1" style="--lx:70px;--ly:-34px"><rect x="330" y="98" width="30" height="14" rx="2" class="grp dmt"/><text x="345" y="109" text-anchor="middle" class="lbl sm rx">DMT</text></g>
           </g>
@@ -1782,7 +1782,7 @@ Q 105.4 257.4, 107.2 257.4
             <rect x="256" y="98" width="30" height="14" rx="2" class="grp act"/>
             <rect x="296" y="98" width="30" height="14" rx="2" class="grp act"/>
             <path class="flow on" d="M300,150 L300,196"/>
-            <text x="376" y="150" class="lbl gd">용출액 통과 — 소수성이 낮아진 전장 사슬</text>
+            <text x="376" y="150" class="lbl gd">용출액 공급 · 전장 사슬의 소수성 감소</text>
             <rect x="248" y="210" width="130" height="30" rx="3" class="f-wash"/>
             <text x="313" y="230" text-anchor="middle" class="lbl">전장 산물 회수</text>
           </g>
@@ -1795,7 +1795,7 @@ Q 105.4 257.4, 107.2 257.4
             <path class="epath" d="M206,126 q24 -6 44 -22"/>
             <rect x="248" y="210" width="130" height="30" rx="3" class="f-wash"/>
             <text x="313" y="230" text-anchor="middle" class="lbl">전장 + 치환 변이</text>
-            <text x="396" y="216" class="lbl rx">칩 풀(fmol)은 이 정제도 불가</text>
+            <text x="396" y="216" class="lbl rx">서열당 fmol 칩 풀의 개별 정제 제약</text>
             <text x="396" y="234" class="lbl rx">→ 오류정정 부호로 (DNA Data Storage 4)</text>
           </g>
         </svg>
@@ -1807,25 +1807,25 @@ Q 105.4 257.4, 107.2 257.4
 </section>
 
 <section class="slide" data-part="p5" data-title="올리고뉴클레오타이드 정제법의 비교">
-  <header><h2>올리고뉴클레오타이드 정제법의 비교</h2><p class="sub">순도와 회수율은 맞바꾸는 관계 · 공개 수치가 없어 정성 등급으로만 비교</p></header>
+  <header><h2>올리고뉴클레오타이드 정제법의 비교</h2><p class="sub">정제법별 순도·회수율·적용 규모의 정성 비교</p></header>
   <div class="body mid">
     <table class="tbl sm">
-      <tr><th>방법</th><th>분리 원리</th><th>얻는 순도</th><th>규모</th><th>주 적용</th><th>DNA 저장 풀에</th></tr>
+      <tr><th>방법</th><th>분리 원리</th><th>정제 후 순도</th><th>규모</th><th>주 적용</th><th>저장용 풀 적용</th></tr>
       <tr><td>탈염 (desalting)</td><td>크기 배제 — 염만 제거</td><td>낮음</td><td>전 범위</td><td>짧은 프라이머</td><td class="good">가능 (풀 단위)</td></tr>
       <tr><td>카트리지 (OPC · Glen-Pak)</td><td>DMT-on 소수성 흡착</td><td>중간</td><td>nmol–μmol</td><td>일반 프라이머 · 프로브</td><td class="bad">불가</td></tr>
       <tr><td>HPLC (RP · IE)</td><td>소수성 또는 총 음전하</td><td>높음</td><td>nmol–μmol</td><td>긴 올리고 · 치료용</td><td class="bad">불가</td></tr>
       <tr><td>변성 PAGE</td><td>겔 전기영동 — 길이 분해능 최고</td><td>매우 높음</td><td>μg 급</td><td>긴 올리고 · 형광 표지</td><td class="bad">불가</td></tr>
     </table>
     <div class="cols w55">
-      <div class="kb crim"><b>왜 저장용 풀은 전부 불가인가</b><p>서열당 <span class="hl">0.2–1 fmol</span>(분자 10⁸개)에 종류가 10⁴–10⁶ — 개별 정제는 물리적으로 불가능하다. 풀 단위 탈염만 남는다</p></div>
-      <div class="kb"><b>학생 단골 질문</b><p>그냥 항상 PAGE를 쓰면 안 되는가 — 회수율이 가장 낮다. 양이 필요한 용도에서는 쓸 수 없다</p></div>
+      <div class="kb crim"><b>저장용 풀의 개별 정제 제약</b><p>서열당 <span class="hl">0.2–1 fmol</span>(분자 10⁸개)에 종류가 10⁴–10⁶ — 서열별 분리·회수의 제약 · 풀 단위 탈염의 적용</p></div>
+      <div class="kb"><b>PAGE의 회수율과 적용 범위</b><p>높은 길이 분해능과 낮은 회수율 · 요구량·순도에 따른 선택 필요</p></div>
     </div>
   </div>
   <p class="src">칩 올리고 양 · 정제 불가 근거: Twist REV12 (2026-01) · GenScript (2026-09-22) · 분자 수 계산 · 분리 원리는 기존 강의안 보강 자료</p>
 </section>
 
 <section class="slide" data-part="p5" data-title="HPLC 한 장 요약">
-  <header><h2>HPLC — 한 장 요약</h2><p class="sub">이동상과 정지상 사이의 분배 차이로 분리한다 · 상세는 보충 강의록</p></header>
+  <header><h2>HPLC의 분리 원리와 장치 구성</h2><p class="sub">이동상·정지상 간 분배 차이에 의한 분리 · 상세 이론은 보충 강의록 참조</p></header>
   <div class="body">
     <svg viewBox="0 0 640 142" role="img" aria-label="HPLC 기기 구성과 크로마토그램">
       <defs><marker id="tipC" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#529FD9"/></marker></defs>
@@ -1852,14 +1852,14 @@ Q 105.4 257.4, 107.2 257.4
     </svg>
     <div class="cols w55">
       <table class="tbl xs">
-        <tr><th>모드</th><th>정지상</th><th>분리 기준</th><th>올리고에서 보는 것</th></tr>
+        <tr><th>모드</th><th>정지상</th><th>분리 기준</th><th>올리고 분리 기준</th></tr>
         <tr><td>역상 RP</td><td>C18 알킬 사슬</td><td>소수성 차이</td><td>5′-DMT의 유무</td></tr>
         <tr><td>이온교환 IE</td><td>양전하 작용기</td><td>인산 골격의 총 음전하</td><td>길이 차이 — n−1까지</td></tr>
         <tr><td>크기배제 SEC</td><td>다공성 겔</td><td>분자 크기</td><td>주로 탈염 · 완충액 교환</td></tr>
       </table>
       <div class="stack">
-        <div class="kb teal"><b>DMT-on 전략이 영리한 이유</b><p>캡핑이 <span class="hl">길이 차이</span>를, 마지막 탈트리틸화를 건너뛰는 것이 <span class="hl">소수성 차이</span>를 만든다 — 둘 다 분리를 쉽게 하려는 사전 설계</p></div>
-        <div class="kb"><b>보충 강의록</b><p>HPLC의 이론 · 구배 설정 · 크로마토그램 판독은 <span class="hl">별도 HPLC 강의록</span>에서 다룬다 (이 강의에서는 원리 한 장까지)</p></div>
+        <div class="kb teal"><b>DMT-on의 분리 선택성</b><p>캡핑: <span class="hl">길이 차이</span> 형성 · 최종 DMT 유지: <span class="hl">소수성 차이</span> 형성 · 두 특성에 의한 분리 선택성 확보</p></div>
+        <div class="kb"><b>보충 강의록</b><p>HPLC의 이론 · 구배 설정 · 크로마토그램 판독은 <span class="hl">별도 HPLC 강의록</span>참조 · 본 강의의 범위: 분리 원리</p></div>
       </div>
     </div>
   </div>
@@ -1867,50 +1867,50 @@ Q 105.4 257.4, 107.2 257.4
 </section>
 
 <section class="slide" data-part="p5" data-title="용도별 정제법 선택 기준">
-  <header><h2>용도별 정제법 선택 기준</h2><p class="sub">순도를 먼저 정하지 않는다 · 쓸 곳을 먼저 정한다</p></header>
+  <header><h2>용도별 정제법 선택 기준</h2><p class="sub">후속 반응의 요구량·순도·변형 특성에 따른 정제법 선택</p></header>
   <div class="body mid">
     <table class="tbl sm">
       <tr><th>용도</th><th>요구 순도</th><th>권장 정제</th><th>이유</th></tr>
-      <tr><td>일반 PCR 프라이머 (&lt;35 nt)</td><td>보통</td><td>탈염</td><td>짧아서 실패 사슬 비율이 낮다</td></tr>
-      <tr><td>시퀀싱 프라이머 · qPCR 프로브</td><td>높음</td><td>카트리지 (DMT-on)</td><td>전장만 필요 · 비용 대비 효율이 좋다</td></tr>
-      <tr><td>긴 올리고 (&gt;60 nt) · 유전자 조립용</td><td>높음</td><td>HPLC 또는 PAGE</td><td>실패 사슬이 조립을 방해한다</td></tr>
-      <tr><td>형광 · 변형 올리고</td><td>매우 높음</td><td>HPLC (RP)</td><td>미표지 사슬을 반드시 제거해야 한다</td></tr>
-      <tr><td>DNA 저장용 올리고 풀</td><td>풀 단위</td><td>탈염 (개별 정제 없음)</td><td>종류 10⁴–10⁶ · 서열당 fmol — 개별 정제가 불가능하다</td></tr>
+      <tr><td>일반 PCR 프라이머 (&lt;35 nt)</td><td>보통</td><td>탈염</td><td>짧은 길이에 따른 낮은 불완전 사슬 비율</td></tr>
+      <tr><td>시퀀싱 프라이머 · qPCR 프로브</td><td>높음</td><td>카트리지 (DMT-on)</td><td>전장 산물 확보 · 비용과 회수율의 균형</td></tr>
+      <tr><td>긴 올리고 (&gt;60 nt) · 유전자 조립용</td><td>높음</td><td>HPLC 또는 PAGE</td><td>불완전 사슬의 조립 반응 방해 가능성</td></tr>
+      <tr><td>형광 · 변형 올리고</td><td>매우 높음</td><td>HPLC (RP)</td><td>미표지·미변형 사슬의 제거 필요</td></tr>
+      <tr><td>DNA 저장용 올리고 풀</td><td>풀 단위</td><td>탈염 (개별 정제 없음)</td><td>종류 10⁴–10⁶ · 서열당 fmol — 서열별 정제의 제약</td></tr>
     </table>
-    <div class="kb crim"><b>오늘 가장 중요한 대비</b><p>유전자 합성은 오류를 <span class="hl">물리적으로 정제</span>하고, DNA 저장은 <span class="hl">수학적으로 정정</span>한다 — 같은 오류 문제를 완전히 다른 층위에서 푼다</p></div>
+    <div class="kb crim"><b>유전자 조립과 데이터 저장의 오류 처리</b><p>유전자 합성: <span class="hl">정제·선발·서열 확인</span> · DNA 저장: <span class="hl">오류정정 부호</span> 적용 · 용도별 오류 처리 전략</p></div>
   </div>
   <p class="src">칩 풀 규모 · 서열당 양: Twist REV12 (2026-01) · GenScript (2026-09-22) · 용도별 권장은 기존 강의안 보강 자료</p>
 </section>
 
 <!-- ===================== 정리 ===================== -->
 <section class="slide" data-part="p6" data-title="칩 합성과 올리고 정제의 핵심 원리">
-  <header><h2>칩 합성과 올리고 정제의 핵심 원리</h2><p class="sub">DNA Data Storage 6-2강 · 여섯 줄</p></header>
+  <header><h2>칩 합성과 올리고 정제의 핵심 원리</h2><p class="sub">칩 병렬 합성과 정제의 주요 개념 6가지</p></header>
   <div class="body mid">
     <ol class="nl tight">
-      <li><span>칩 합성은 컬럼의 <b>시간 축</b>을 <b>공간 축</b>으로 바꾼 것 — 사이클 수는 그대로 4N번, 서열 수만 10⁴–10⁶배</span></li>
-      <li><span>네 방식은 4단계 사이클을 공유하고 <b>탈보호 트리거</b>만 다르다 — 빛(광분해 보호기) · 빛(산) · 전압 · 격벽</span></li>
-      <li><span>잉크젯만 예외적으로 <b>커플링</b> 단계에 공간 선택성이 걸린다 — 탈보호는 칩 전체 일괄</span></li>
-      <li><span>칩 올리고의 오류율이 높은 근본 원인은 <b>탈보호가 100%가 되지 않는다</b>는 것 — 미탈보호 5%가 결손 4.65%</span></li>
-      <li><span>공급사 스펙에서 읽을 것은 길이 · 오류율 · <b>균일도</b> — 1:3,000이면 200 nt 올리고의 93.6%만 완벽</span></li>
-      <li><span>서열당 fmol · 종류 10⁵ 이상이면 정제가 불가능하다 → 오류는 <b>부호</b>로 감당한다 (DNA Data Storage 4로 되돌아가는 지점)</span></li>
+      <li><span>컬럼의 <b>시간별 시약 공급</b>과 칩의 <b>위치별 반응 제어</b> · 4N 사이클과 다종 서열의 병렬 합성</span></li>
+      <li><span>공통 4단계 반응 골격 · <b>탈보호·시약 전달의 공간 선택</b>: 광분해 보호기·광산·전압·격벽</span></li>
+      <li><span>잉크젯의 <b>커플링</b> 단계 공간 선택성 · 칩 전체의 일괄 탈보호</span></li>
+      <li><span><b>불완전 탈보호</b>에 의한 결손 발생 · 미탈보호 약 5%와 실측 결손 4.65%의 관계</span></li>
+      <li><span>주요 제품 사양: 길이·오류율·<b>균일도</b> · 1:3,000 조건의 200 nt 무오류 확률 93.6%</span></li>
+      <li><span>서열당 fmol·10⁵종 이상 풀의 개별 정제 제약 → <b>오류정정 부호</b> 적용 · DNA Data Storage 4와 연계</span></li>
     </ol>
-    <div class="kb teal"><b>다음 시간 (DNA Data Storage 7)</b><p>화학 합성의 길이 · 오류 · 환경 한계를 <span class="hl">효소</span>로 넘으려는 시도 — TdT와 가역적 종결기, 그리고 CMOS 위의 효소 합성</p></div>
+    <div class="kb teal"><b>효소 합성과의 연계 (DNA Data Storage 7)</b><p>화학 합성의 길이·오류·공정 제한과 <span class="hl">효소 합성</span>의 비교 · TdT·가역적 종결기·CMOS 병렬 합성</p></div>
   </div>
 </section>
 
 <!-- ===================== 퀴즈 ===================== -->
 <section class="slide quiz" data-part="pq" data-title="퀴즈 — 학습 내용 확인">
-  <header><h2>퀴즈 — 학습 내용 확인</h2><p class="sub">클릭하면 답이 열린다</p></header>
+  <header><h2>퀴즈 — 학습 내용 확인</h2><p class="sub">문항 선택 후 해설 확인</p></header>
   <div class="body mid">
     <div class="qcard">
-      <details class="q"><summary data-n="1"><span>네 방식에서 <b>공간 선택성이 걸리는 단계</b>는 각각 무엇인가?</span></summary>
-        <div class="ans"><span>포토마스크 · DMD · 전기화학 = <b>① 탈보호</b> (빛 또는 전압이 닿은 자리만 탈보호)</span><span>잉크젯 = <b>② 커플링</b> (방울이 닿은 자리만 커플링, 탈보호는 칩 전체 일괄)</span><span>실리콘 미세웰 = 단계가 아니라 <b>웰의 벽</b>이 격리한다</span></div></details>
-      <details class="q"><summary data-n="2"><span>BzNPPOC가 3 J/cm²에서 <b>약 95%</b>만 탈보호된다면 남은 5%는 어떤 오류가 되는가?</span></summary>
-        <div class="ans"><span>그 자리는 이번 사이클에 아무 염기도 붙지 못하고 다음 사이클로 넘어간다 → <b>결손(deletion)</b></span><span>실측 결손율 4.65%가 미탈보호 약 5%와 정량적으로 일치한다 (Lietard 2021)</span></div></details>
-      <details class="q"><summary data-n="3"><span>스텝수율 95%로 200-mer를 만들면 전장 수율은 얼마인가? 이 숫자가 뜻하는 것은?</span></summary>
-        <div class="ans"><span>0.95<sup>200</sup> ≈ <b>0.0035%</b> — 사실상 불가능</span><span>이것이 칩 올리고의 길이가 150–350 nt에 머무는 수학적 근거. 길이를 늘리려면 스텝수율을 올리는 수밖에 없다</span></div></details>
-      <details class="q"><summary data-n="4"><span>DNA 저장용 올리고 풀은 왜 HPLC · PAGE 정제를 하지 않는가?</span></summary>
-        <div class="ans"><span>서열당 0.2–1 fmol(분자 10⁸개)에 종류가 10⁴–10⁶ — <b>정제할 양도, 개별로 다룰 수도 없다</b></span><span>그래서 오류를 정제가 아니라 <b>오류정정 부호</b>로 처리한다 (DNA Data Storage 4 RS · XOR)</span></div></details>
+      <details class="q"><summary data-n="1"><span>합성 방식별 <b>공간 선택 단계</b>의 구분</span></summary>
+        <div class="ans"><span>포토마스크 · DMD · 전기화학 = <b>① 탈보호</b> (빛 또는 전압이 닿은 자리탈보호)</span><span>잉크젯 = <b>② 커플링</b> (방울이 닿은 자리만 커플링, 탈보호는 칩 전체 일괄)</span><span>실리콘 미세웰: <b>격벽</b>에 의한 반응 구획 분리</span></div></details>
+      <details class="q"><summary data-n="2"><span>BzNPPOC·3 J/cm²·<b>약 95% 탈보호</b> 조건의 미탈보호 피처와 오류 유형</span></summary>
+        <div class="ans"><span>미탈보호 피처의 해당 사이클 미연장 → <b>결손(deletion)</b></span><span>실측 결손율 4.65%와 미탈보호 약 5%의 정량적 대응 (Lietard 2021)</span></div></details>
+      <details class="q"><summary data-n="3"><span>스텝수율 95%·200-mer의 전장 수율 계산과 해석</span></summary>
+        <div class="ans"><span>0.95<sup>200</sup> ≈ <b>0.0035%</b> — 사실상 불가능</span><span>반복 사이클에 따른 전장 수율 감소 · 긴 사슬 합성을 위한 단계별 수율 개선 필요</span></div></details>
+      <details class="q"><summary data-n="4"><span>DNA 저장용 올리고 풀의 개별 HPLC·PAGE 정제 제약</span></summary>
+        <div class="ans"><span>서열당 0.2–1 fmol(분자 10⁸개)에 종류가 10⁴–10⁶ — <b>개별 분리·회수에 필요한 양과 처리 규모의 제약</b></span><span>잔류 오류에 대한 <b>오류정정 부호</b> 적용 (DNA Data Storage 4 RS · XOR)</span></div></details>
     </div>
   </div>
 </section>
@@ -1918,7 +1918,7 @@ Q 105.4 257.4, 107.2 257.4
 <section class="slide ending" data-part="pq" data-title="질의응답">
   <h2>질의응답</h2>
   <div class="rule"></div>
-  <p>"칩은 양을 늘리는 기계가 아니라 주소를 늘리는 기계다 — 그래서 정제 대신 부호가 필요해졌다."</p>
+  <p>칩 기반 다종 서열의 병렬 합성 · 서열당 소량 산출 · 정제 제약과 오류정정 부호의 적용</p>
   <p class="au">송영준  Youngjun Song, Ph.D.   ·   인천대학교</p>
 </section>
 
@@ -1942,7 +1942,7 @@ var root,factory;root=this,factory=()=>(()=>{var __webpack_modules__={546(e,t,i)
 <script>
 (function(){
 'use strict';
-var META = {"label": "DNA Data Storage 6-2", "parts": [{"id": "p0", "name": "Introduction", "min": 4}, {"id": "p1", "name": "PART 1 · 왜 칩으로 갔는가", "min": 8}, {"id": "p2", "name": "PART 2 · 칩 합성 네 방식", "min": 22}, {"id": "p3", "name": "PART 3 · 광화학과 오류", "min": 12}, {"id": "p4", "name": "PART 4 · 회사와 올리고 풀", "min": 14}, {"id": "p5", "name": "PART 5 · 정제", "min": 10}, {"id": "p6", "name": "정리", "min": 2}, {"id": "pq", "name": "퀴즈 · 마무리", "min": 3}]};
+var META = {"label": "DNA Data Storage 6-2", "parts": [{"id": "p0", "name": "Introduction", "min": 4}, {"id": "p1", "name": "PART 1 · 칩 기반 병렬 합성의 필요성", "min": 8}, {"id": "p2", "name": "PART 2 · 칩 합성 네 방식", "min": 22}, {"id": "p3", "name": "PART 3 · 광화학과 오류", "min": 12}, {"id": "p4", "name": "PART 4 · 공급사와 올리고 풀", "min": 14}, {"id": "p5", "name": "PART 5 · 정제", "min": 10}, {"id": "p6", "name": "정리", "min": 2}, {"id": "pq", "name": "퀴즈 · 마무리", "min": 3}]};
 var $ = function(id){ return document.getElementById(id); };
 var el = function(tag, cls, txt){ var e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
 var app = $('app'), deck = $('deck');
