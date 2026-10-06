@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>6-2강 칩 병렬 합성과 올리고 풀</title>
+<title>DNA Data Storage 6-2 — 칩 병렬 합성과 올리고 풀</title>
 <style>
 /* BLUE 포맷 (bluelib.py) 을 HTML 로 옮긴 단일 테마 — 1em = 15pt, 1in = 4.8em (슬라이드 폭 64em) */
 :root{
@@ -463,7 +463,7 @@ ol.nl.tight > li::before{inline-size:1.75em;block-size:1.75em;font-size:.86em;li
 <body>
 <div class="app" id="app">
 <aside class="side" id="side" aria-label="슬라이드 목차">
-  <div class="side-head"><span class="k">Week 06 · Lecture 6-2</span><span class="t">칩 병렬 합성과 올리고 풀</span><span class="s">100만 서열을 동시에 — 칩 · 회사 · 정제 · 75분</span></div>
+  <div class="side-head"><span class="k">DNA Data Storage 6-2</span><span class="t">칩 병렬 합성과 올리고 풀</span><span class="s">100만 서열을 동시에 — 칩 · 회사 · 정제 · 75분</span></div>
   <nav class="side-nav" id="side-nav"></nav>
 </aside>
 <div class="main">
@@ -472,7 +472,7 @@ ol.nl.tight > li::before{inline-size:1.75em;block-size:1.75em;font-size:.86em;li
 <section class="slide cover" data-part="p0" data-title="표지">
   <div class="en">MOLECULAR INFORMATION STORAGE SYSTEM</div>
   <h1>칩 병렬 합성과 올리고 풀</h1>
-  <p class="s1">제12강 (6주차-2) · 100만 서열을 동시에 쓰는 기술</p>
+  <p class="s1">제12강 (DNA Data Storage 6-2) · 100만 서열을 동시에 쓰는 기술</p>
   <div class="rule"></div>
   <p class="s2">포토마스크 · DMD · 잉크젯 · 전기화학  ｜  광화학과 오류율  ｜  공급사 스펙  ｜  정제</p>
   <p class="au">송영준  Youngjun Song, Ph.D.   ·   인천대학교</p>
@@ -518,7 +518,7 @@ ol.nl.tight > li::before{inline-size:1.75em;block-size:1.75em;font-size:.86em;li
       <div class="card amber"><span class="pn">PART 4</span><h3>회사와 올리고 풀</h3><p>스펙 · 동영상 · 실제 저장 논문</p></div>
       <div class="card navy"><span class="pn">PART 5</span><h3>정제</h3><p>튜브 안의 조성 · 정제 4종 · 선택</p></div>
     </div>
-    <div class="kb"><b>1–5주차와의 연결</b><p>3주차의 2 bit/nt 매핑과 5주차의 올리고 구조(프라이머 + 인덱스 + 데이터 + ECC)로 설계한 서열을, 오늘 <span class="hl">실제로 합성해 손에 받는다</span></p></div>
+    <div class="kb"><b>DNA Data Storage 1–5와의 연결</b><p>DNA Data Storage 3의 2 bit/nt 매핑과 DNA Data Storage 5의 올리고 구조(프라이머 + 인덱스 + 데이터 + ECC)로 설계한 서열을, 오늘 <span class="hl">실제로 합성해 손에 받는다</span></p></div>
   </div>
 </section>
 
@@ -613,11 +613,11 @@ ol.nl.tight > li::before{inline-size:1.75em;block-size:1.75em;font-size:.86em;li
       <div class="stack">
         <div class="card amber"><h3>DNA 저장이 요구하는 것</h3><p>서열 1종은 시퀀싱에 필요한 최소량만 있으면 충분 — 양은 fmol로 족하다</p></div>
         <div class="card"><h3>유전자 합성이 요구하는 것</h3><p>조립 · 클로닝에 쓸 양이 필요 — 칩 올리고는 그대로는 부족해 증폭이 전제</p></div>
-        <div class="kb"><b>연결</b><p>3주차에서 2 bit/nt로 만든 서열, 5주차에서 붙인 프라이머 · 인덱스 · ECC가 <span class="hl">그대로 칩의 주소 하나</span>가 된다</p></div>
+        <div class="kb"><b>연결</b><p>DNA Data Storage 3에서 2 bit/nt로 만든 서열, DNA Data Storage 5에서 붙인 프라이머 · 인덱스 · ECC가 <span class="hl">그대로 칩의 주소 하나</span>가 된다</p></div>
       </div>
     </div>
   </div>
-  <p class="src">칩 규모 · 분자 수는 Twist REV12 (2026-01) 및 Kuiper et al., <i>ChemBioChem</i> 23:e202100507 (2022) · 필요 서열 수는 3주차 2 bit/nt와 5주차 올리고 구조로 계산</p>
+  <p class="src">칩 규모 · 분자 수는 Twist REV12 (2026-01) 및 Kuiper et al., <i>ChemBioChem</i> 23:e202100507 (2022) · 필요 서열 수는 DNA Data Storage 3 2 bit/nt와 DNA Data Storage 5 올리고 구조로 계산</p>
 </section>
 
 <!-- ===================== PART 2 ===================== -->
@@ -632,7 +632,7 @@ ol.nl.tight > li::before{inline-size:1.75em;block-size:1.75em;font-size:.86em;li
 </section>
 
 <section class="slide" data-part="p2" data-title="공통 합성 사이클과 탈보호 제어 방식">
-  <header><h2>공통 합성 사이클과 탈보호 제어 방식</h2><p class="sub">6-1강의 4단계 사이클은 그대로 · ① 탈보호에만 네 갈래가 생긴다</p></header>
+  <header><h2>공통 합성 사이클과 탈보호 제어 방식</h2><p class="sub">DNA Data Storage 6-1의 4단계 사이클은 그대로 · ① 탈보호에만 네 갈래가 생긴다</p></header>
   <div class="body">
     <div class="cols w64">
       <svg viewBox="0 0 400 258" role="img" aria-label="4단계 사이클과 탈보호 트리거 4종">
@@ -879,7 +879,7 @@ ol.nl.tight > li::before{inline-size:1.75em;block-size:1.75em;font-size:.86em;li
  51102  1  0
 M  END
 </script></div>
-        <p class="tiny gray">6-1강의 포스포라미다이트 단량체 — 칩에서도 같은 분자 · 같은 커플링</p>
+        <p class="tiny gray">DNA Data Storage 6-1의 포스포라미다이트 단량체 — 칩에서도 같은 분자 · 같은 커플링</p>
       </div>
     </div>
   </div>
@@ -1103,7 +1103,7 @@ M  END
 <section class="slide" data-part="p2" data-title="위젯 ③ 잉크젯 토출">
   <header><h2>③ 잉크젯 토출 — 한 사이클</h2><p class="sub">Agilent SurePrint · 빛을 쓰지 않는다 · 공간 선택성이 커플링 단계로 옮겨간다</p></header>
   <div class="body">
-    <div class="proc" data-steps="7" data-caps='["<b>무수 프린트 챔버</b> — 프린트헤드가 좌표로 이동한다. 잉크는 <b>5가지</b>: dA·dC·dG·dT 아미다이트 + tetrazole 활성화제.","<b>좌표에 토출</b> — 원하는 피처에만 방울이 떨어진다. <b>빛도 전압도 쓰지 않는다</b> — 앞의 두 방식과 달리 공간 선택성이 <span class=\"rx\">커플링</span> 단계에 걸린다.","<b>커플링</b> — 방울이 닿은 자리에서만 사슬이 1 nt 자란다. 성립 조건은 스텝 커플링 수율 <b>≥99.5%</b>. 고농도·미소 부피 토출이라 별도 캡핑 단계가 필요 없다고 보고된다.","<b>산화 (플로우셀 전체)</b> — 0.02 M I₂ in THF/pyridine/H₂O, 약 30초. 여기서부터는 칩 전체 일괄 처리.","<b>탈트리틸화 (플로우셀 전체)</b> — 3% dichloroacetic acid in toluene, 60초. <b>모든 피처의 DMT를 한꺼번에</b> 제거한다. 세척은 아세토니트릴 2 플로우셀 부피.","<b>탈퓨린화 위험</b> — 배수 후 친수성 DNA 피처 위에 산 용액이 <span class=\"rx\">농축 액적</span>으로 고인다 → 국소 산 농도 급등 → abasic site → 최종 염기성 탈보호에서 사슬 절단. 이것이 산 기반 칩 합성이 ~100 nt에서 막혔던 원인.","<b>FIFO 치환 (해법)</b> — 산화액을 플로우셀 <b>하단 포트</b>로 주입해 산 용액을 밀어낸다 → 액적 형성 차단 → <b>150-mer</b> 라이브러리 도달."]'>
+    <div class="proc" data-steps="7" data-caps='["<b>무수 프린트 챔버</b> — 프린트헤드가 좌표로 이동한다. 잉크는 <b>5가지</b>: dA·dC·dG·dT 아미다이트 + tetrazole 활성화제.","<b>좌표에 토출</b> — 원하는 피처에만 방울이 떨어진다. <b>빛도 전압도 쓰지 않는다</b> — 앞의 두 방식과 달리 공간 선택성이 <span class=\"rx\">커플링</span> 단계에 걸린다.","<b>커플링</b> — 방울이 닿은 자리에서만 사슬이 1 nt 자란다. 성립 조건은 스텝 커플링 수율 <b>≥99.5%</b>. 고농도·미소 부피 토출이라 별도 캡핑 단계가 필요 없다고 보고된다.","<b>산화 (플로우셀 전체)</b> — 0.02 M I₂ in THF/pyridine/H₂O, 약 30초. 여기서부터는 칩 전체 일괄 처리.","<b>탈트리틸화 (플로우셀 전체)</b> — 3% dichloroacetic acid in toluene, 60초. <b>모든 피처의 DMT를 한꺼번에</b> 제거한다. 세척은 아세토니트릴 2 플로우셀 부피.","<b>탈퓨린화 위험</b> — 배수 후 친수성 DNA 피처 위에 산 용액이 <span class=\"rx\">농축 액적</span>으로 고인다 → 국소 산 농도 급등 → Apurinic/apyrimidinic site(무염기 자리) → 최종 염기성 탈보호에서 사슬 절단. 이것이 산 기반 칩 합성이 ~100 nt에서 막혔던 원인.","<b>FIFO 치환 (해법)</b> — 산화액을 플로우셀 <b>하단 포트</b>로 주입해 산 용액을 밀어낸다 → 액적 형성 차단 → <b>150-mer</b> 라이브러리 도달."]'>
       <div class="proc-head"><h3>잉크젯 토출 (Agilent SurePrint)</h3></div>
       <div class="proc-stage">
         <svg viewBox="0 0 640 250">
@@ -1147,7 +1147,7 @@ M  END
             <rect x="365" y="182" width="70" height="10" rx="2" class="f-wash"/>
             <rect x="388" y="164" width="24" height="18" rx="3" class="grp"/><text x="400" y="177" text-anchor="middle" class="lbl">C</text>
             <text x="400" y="156" text-anchor="middle" class="lbl oh">OH</text>
-            <g data-at="6"><circle cx="400" cy="172" r="6" class="acid"/><text x="400" y="112" text-anchor="middle" class="lbl rx">abasic site</text><path class="epath" d="M400,136 q0 12 0 22"/></g>
+            <g data-at="6"><circle cx="400" cy="172" r="6" class="acid"/><text x="400" y="112" text-anchor="middle" class="lbl rx">Apurinic/apyrimidinic site(무염기 자리)</text><path class="epath" d="M400,136 q0 12 0 22"/></g>
             <text x="400" y="128" text-anchor="middle" class="lbl rx" data-at="6">→ 최종 염기성 탈보호에서 절단</text>
           </g>
           <!-- 피처 4 : 토출 → 커플링 -->
@@ -1297,7 +1297,7 @@ M  END
         <text x="130" y="82" text-anchor="middle" class="s-sm s-navy" font-weight="700">웰</text>
         <text x="208" y="82" text-anchor="middle" class="s-sm s-navy" font-weight="700">웰</text>
         <text x="286" y="82" text-anchor="middle" class="s-sm s-navy" font-weight="700">웰</text>
-        <text x="170" y="120" text-anchor="middle" class="s-sm s-gray">벽이 시약을 가둔다 = 확산 문제 자체가 없음</text>
+        <text x="170" y="120" text-anchor="middle" class="s-sm s-gray">미세웰 격벽에 의한 인접 반응 구획 간 시약 혼합 억제</text>
       </svg>
       <div class="stack">
         <div class="kb teal"><b>왜 오류율이 가장 낮은가</b><p>새 탈보호 화학을 도입하지 않았다 — 광탈보호의 유한한 양자수율도, 산의 측방 확산도 <span class="hl">구조로 회피</span></p></div>
@@ -1559,7 +1559,7 @@ Q 105.4 257.4, 107.2 257.4
       <div class="stack">
         <div class="kb crim"><b>이 표의 결론</b><p>광탈보호 95%는 200-mer를 <span class="bad">원리적으로 불가능</span>하게 만든다 — 노광을 늘리면 되지만 광손상 · 탈퓨린화가 따라온다</p></div>
         <div class="kb teal"><b>그래서 실무의 선택</b><p>완전 탈보호 12–15 J/cm² 대신 <span class="hl">4–6 J/cm²</span> — 매 사이클 보호기 일부가 남는 것을 <span class="hl">받아들이고</span> 길이를 줄인다</p></div>
-        <div class="kb"><b>연결</b><p>6-1강에서 컬럼 합성의 전장 수율을 계산할 때 쓴 같은 식 — 바뀐 것은 스텝수율의 출처(산 대신 빛 · 전압)뿐</p></div>
+        <div class="kb"><b>연결</b><p>DNA Data Storage 6-1에서 컬럼 합성의 전장 수율을 계산할 때 쓴 같은 식 — 바뀐 것은 스텝수율의 출처(산 대신 빛 · 전압)뿐</p></div>
       </div>
     </div>
   </div>
@@ -1573,11 +1573,11 @@ Q 105.4 257.4, 107.2 257.4
       <li><span><b>불완전 탈보호</b> — 광 · 전기화학 탈보호는 양자수율 · 전류효율이 유한하다. 미탈보호는 그 사이클을 건너뛰어 곧 <span class="bad">결손</span>이 된다. <span class="mono hl">미탈보호 ~5% ↔ 실측 결손 4.65%</span></span></li>
       <li><span><b>빛과 산의 측방 누출</b> — 회절 · 산란 · 미광, 그리고 H⁺의 확산이 인접 피처를 오탈보호 → <span class="bad">삽입 · 교차오염</span>. <span class="mono hl">배플링으로 결손 0.15 → 0.101</span></span></li>
       <li><span><b>완결성과 손상의 트레이드오프</b> — 노광 · 통전을 늘려 탈보호를 완결하려 하면 광손상 · 탈퓨린화가 증가한다. <span class="mono hl">필요 12–15 J/cm² vs 실사용 4–6</span></span></li>
-      <li><span><b>산에 의한 사슬 절단</b> — 산 기반 방식은 피처 위 산 농축으로 abasic site가 생겨 최종 염기성 탈보호에서 끊어진다. <span class="mono hl">한계 ~100 nt → FIFO로 150 nt</span></span></li>
+      <li><span><b>산에 의한 사슬 절단</b> — 산 기반 방식은 피처 위 산 농축으로 Apurinic/apyrimidinic site(무염기 자리)가 생겨 최종 염기성 탈보호에서 끊어진다. <span class="mono hl">한계 ~100 nt → FIFO로 150 nt</span></span></li>
       <li><span><b>정제 불가</b> — 피처당 0.2–1 fmol(분자 10⁸개)은 HPLC · PAGE로 정제할 양이 아니다. 불완전 산물이 그대로 풀에 남는다. <span class="mono hl">컬럼 대비 서열당 10⁷–10⁸배 적음</span></span></li>
     </ol>
     <div class="cols w55">
-      <div class="kb crim"><b>그래서 칩 올리고는</b><p>정확도로 감당하지 않고 <span class="hl">오류정정 부호</span>로 감당한다 — 4주차 RS · XOR가 여기서 필요해진다</p></div>
+      <div class="kb crim"><b>그래서 칩 올리고는</b><p>정확도로 감당하지 않고 <span class="hl">오류정정 부호</span>로 감당한다 — DNA Data Storage 4 RS · XOR가 여기서 필요해진다</p></div>
       <div class="kb teal"><b>지금도 개선 중 (2025)</b><p>구아닌 O6-phosphitylation이 분지 · 단편화를 일으킨다는 새 오류원 — 짧은 debranching 단계로 형광신호 6배 · 시퀀싱 read 약 100배</p></div>
     </div>
   </div>
@@ -1605,7 +1605,7 @@ Q 105.4 257.4, 107.2 257.4
       <div class="card"><h3>② 컬럼 기반 풀</h3>
         <ul class="pts sm"><li><b>IDT oPools</b> — 40–350 base</li><li><b>Eurofins ePools</b> — 40–200 base</li></ul>
         <p class="tiny gray">종류 10²–10⁴ · 서열당 pmol · 프라이머 · 소규모 라이브러리</p></div>
-      <div class="card green"><h3>③ 효소 합성 (7주차)</h3>
+      <div class="card green"><h3>③ 효소 합성 (DNA Data Storage 7)</h3>
         <ul class="pts sm"><li><b>DNA Script</b> — 벤치탑 SYNTAX</li><li><b>Ansa Biotechnologies</b> — 2026-01 IDT 포트폴리오 편입</li></ul>
         <p class="tiny gray">화학 합성의 길이 한계를 넘는 쪽 — 다음 주 주제</p></div>
     </div>
@@ -1640,7 +1640,7 @@ Q 105.4 257.4, 107.2 257.4
   <header><h2>올리고 풀의 주요 제품 사양</h2><p class="sub">카탈로그의 숫자를 저장 용량과 데이터 손실로 번역하기</p></header>
   <div class="body mid">
     <div class="cards">
-      <div class="speccard"><b>① 길이 (nt)</b><span class="num">최대 350 nt (Twist)</span><span>페이로드 크기를 결정 — 5주차 올리고 구조에서 프라이머 · 인덱스 · ECC를 뺀 나머지가 데이터</span></div>
+      <div class="speccard"><b>① 길이 (nt)</b><span class="num">최대 350 nt (Twist)</span><span>페이로드 크기를 결정 — DNA Data Storage 5 올리고 구조에서 프라이머 · 인덱스 · ECC를 뺀 나머지가 데이터</span></div>
       <div class="speccard"><b>② 오류율</b><span class="num">최대 1:3,000 nt</span><span>오류정정 부호의 여유분을 결정 — 염기 1개 기준 표기임에 주의</span></div>
       <div class="speccard"><b>③ 균일도</b><span class="num">&gt;90%가 평균의 &lt;2.0배</span><span>DNA 저장에서 가장 중요 — 특정 서열만 적게 만들어지면 그 조각은 읽히지 않는다</span></div>
     </div>
@@ -1649,7 +1649,7 @@ Q 105.4 257.4, 107.2 257.4
         <p class="small">200 nt 올리고 하나가 완벽할 확률 = (1 − 1/3,000)<sup>200</sup> ≈ <span class="hl">93.6%</span></p>
         <p class="small">→ 약 15개 중 1개는 어딘가 틀린 올리고. 풀에 10⁵종이 있으면 <span class="bad">약 6,400종</span>이 오류를 가진다</p>
       </div></div>
-      <div class="kb crim"><b>균일도가 없으면 무슨 일이 생기나</b><p>IDT oPools는 개별 QC · 정량을 하지 않는다 — 90만 종 시험에서 평균 <span class="bad">dropout 0.8%</span>. 빠진 서열은 인덱스와 ECC로 복구해야 한다 (4주차)</p></div>
+      <div class="kb crim"><b>균일도가 없으면 무슨 일이 생기나</b><p>IDT oPools는 개별 QC · 정량을 하지 않는다 — 90만 종 시험에서 평균 <span class="bad">dropout 0.8%</span>. 빠진 서열은 인덱스와 ECC로 복구해야 한다 (DNA Data Storage 4)</p></div>
     </div>
   </div>
   <p class="src">Twist <i>Oligo Pools Product Sheet</i> REV12 (2026-01) · IDT oPools 제품 페이지 (2026-09-22) · 93.6%는 계산</p>
@@ -1682,7 +1682,7 @@ Q 105.4 257.4, 107.2 257.4
     </table>
     <div class="cols w55">
       <div class="kb teal"><b>읽는 법</b><p>세 논문의 풀 규모가 곧 PART 4 표의 <span class="hl">풀 크기 스펙</span>이다 — 4,991종은 지금의 92K 칩 한 장에 들어가고, 1,300만종은 8M 칩 두 장 규모</p></div>
-      <div class="kb"><b>연결</b><p>Grass 2015가 쓴 <span class="hl">오류정정 부호</span>가 4주차의 Reed–Solomon — 칩이 만든 오류를 부호가 받아낸다는 구조는 2015년에 이미 완성되어 있었다</p></div>
+      <div class="kb"><b>연결</b><p>Grass 2015가 쓴 <span class="hl">오류정정 부호</span>가 DNA Data Storage 4의 Reed–Solomon — 칩이 만든 오류를 부호가 받아낸다는 구조는 2015년에 이미 완성되어 있었다</p></div>
     </div>
   </div>
   <p class="src">Grass et al., <i>Angew Chem Int Ed</i> 54:2552 (2015) · Erlich &amp; Zielinski, <i>Science</i> 355:950 (2017) · Organick et al., <i>Nature Biotechnology</i> 36:242 (2018)</p>
@@ -1726,7 +1726,7 @@ Q 105.4 257.4, 107.2 257.4
       <div class="card crim"><h3>정제로 걸러지는 것 / 안 걸러지는 것</h3>
         <ul class="pts sm"><li>걸러짐 — <b>길이가 다른 것</b> (절단 · 결손)</li><li>안 걸러짐 — <b>길이는 같고 염기만 바뀐 것</b> (치환)</li><li>캡핑이 실패 사슬을 그 길이에서 멈춰 세우는 이유가 바로 이것 — 길이 차이를 만들어야 분리된다</li></ul></div>
     </div>
-    <div class="kb"><b>연결</b><p>치환 변이는 정제로 사라지지 않는다 → <span class="hl">4주차 RS · XOR</span>가 감당할 몫이 여기서 정해진다</p></div>
+    <div class="kb"><b>연결</b><p>치환 변이는 정제로 사라지지 않는다 → <span class="hl">DNA Data Storage 4 RS · XOR</span>가 감당할 몫이 여기서 정해진다</p></div>
   </div>
   <p class="src">전장 비율은 계산 (0.99<sup>60</sup>) · 캡핑과 DMT-ON의 분리 논리: Glen Research, <i>Glen Report</i> 21.211</p>
 </section>
@@ -1796,7 +1796,7 @@ Q 105.4 257.4, 107.2 257.4
             <rect x="248" y="210" width="130" height="30" rx="3" class="f-wash"/>
             <text x="313" y="230" text-anchor="middle" class="lbl">전장 + 치환 변이</text>
             <text x="396" y="216" class="lbl rx">칩 풀(fmol)은 이 정제도 불가</text>
-            <text x="396" y="234" class="lbl rx">→ 오류정정 부호로 (4주차)</text>
+            <text x="396" y="234" class="lbl rx">→ 오류정정 부호로 (DNA Data Storage 4)</text>
           </g>
         </svg>
       </div>
@@ -1884,7 +1884,7 @@ Q 105.4 257.4, 107.2 257.4
 
 <!-- ===================== 정리 ===================== -->
 <section class="slide" data-part="p6" data-title="칩 합성과 올리고 정제의 핵심 원리">
-  <header><h2>칩 합성과 올리고 정제의 핵심 원리</h2><p class="sub">6주차-2강 · 여섯 줄</p></header>
+  <header><h2>칩 합성과 올리고 정제의 핵심 원리</h2><p class="sub">DNA Data Storage 6-2강 · 여섯 줄</p></header>
   <div class="body mid">
     <ol class="nl tight">
       <li><span>칩 합성은 컬럼의 <b>시간 축</b>을 <b>공간 축</b>으로 바꾼 것 — 사이클 수는 그대로 4N번, 서열 수만 10⁴–10⁶배</span></li>
@@ -1892,9 +1892,9 @@ Q 105.4 257.4, 107.2 257.4
       <li><span>잉크젯만 예외적으로 <b>커플링</b> 단계에 공간 선택성이 걸린다 — 탈보호는 칩 전체 일괄</span></li>
       <li><span>칩 올리고의 오류율이 높은 근본 원인은 <b>탈보호가 100%가 되지 않는다</b>는 것 — 미탈보호 5%가 결손 4.65%</span></li>
       <li><span>공급사 스펙에서 읽을 것은 길이 · 오류율 · <b>균일도</b> — 1:3,000이면 200 nt 올리고의 93.6%만 완벽</span></li>
-      <li><span>서열당 fmol · 종류 10⁵ 이상이면 정제가 불가능하다 → 오류는 <b>부호</b>로 감당한다 (4주차로 되돌아가는 지점)</span></li>
+      <li><span>서열당 fmol · 종류 10⁵ 이상이면 정제가 불가능하다 → 오류는 <b>부호</b>로 감당한다 (DNA Data Storage 4로 되돌아가는 지점)</span></li>
     </ol>
-    <div class="kb teal"><b>다음 시간 (7주차)</b><p>화학 합성의 길이 · 오류 · 환경 한계를 <span class="hl">효소</span>로 넘으려는 시도 — TdT와 가역적 종결기, 그리고 CMOS 위의 효소 합성</p></div>
+    <div class="kb teal"><b>다음 시간 (DNA Data Storage 7)</b><p>화학 합성의 길이 · 오류 · 환경 한계를 <span class="hl">효소</span>로 넘으려는 시도 — TdT와 가역적 종결기, 그리고 CMOS 위의 효소 합성</p></div>
   </div>
 </section>
 
@@ -1910,7 +1910,7 @@ Q 105.4 257.4, 107.2 257.4
       <details class="q"><summary data-n="3"><span>스텝수율 95%로 200-mer를 만들면 전장 수율은 얼마인가? 이 숫자가 뜻하는 것은?</span></summary>
         <div class="ans"><span>0.95<sup>200</sup> ≈ <b>0.0035%</b> — 사실상 불가능</span><span>이것이 칩 올리고의 길이가 150–350 nt에 머무는 수학적 근거. 길이를 늘리려면 스텝수율을 올리는 수밖에 없다</span></div></details>
       <details class="q"><summary data-n="4"><span>DNA 저장용 올리고 풀은 왜 HPLC · PAGE 정제를 하지 않는가?</span></summary>
-        <div class="ans"><span>서열당 0.2–1 fmol(분자 10⁸개)에 종류가 10⁴–10⁶ — <b>정제할 양도, 개별로 다룰 수도 없다</b></span><span>그래서 오류를 정제가 아니라 <b>오류정정 부호</b>로 처리한다 (4주차 RS · XOR)</span></div></details>
+        <div class="ans"><span>서열당 0.2–1 fmol(분자 10⁸개)에 종류가 10⁴–10⁶ — <b>정제할 양도, 개별로 다룰 수도 없다</b></span><span>그래서 오류를 정제가 아니라 <b>오류정정 부호</b>로 처리한다 (DNA Data Storage 4 RS · XOR)</span></div></details>
     </div>
   </div>
 </section>
@@ -1942,7 +1942,7 @@ var root,factory;root=this,factory=()=>(()=>{var __webpack_modules__={546(e,t,i)
 <script>
 (function(){
 'use strict';
-var META = {"label": "6-2강", "parts": [{"id": "p0", "name": "Introduction", "min": 4}, {"id": "p1", "name": "PART 1 · 왜 칩으로 갔는가", "min": 8}, {"id": "p2", "name": "PART 2 · 칩 합성 네 방식", "min": 22}, {"id": "p3", "name": "PART 3 · 광화학과 오류", "min": 12}, {"id": "p4", "name": "PART 4 · 회사와 올리고 풀", "min": 14}, {"id": "p5", "name": "PART 5 · 정제", "min": 10}, {"id": "p6", "name": "정리", "min": 2}, {"id": "pq", "name": "퀴즈 · 마무리", "min": 3}]};
+var META = {"label": "DNA Data Storage 6-2", "parts": [{"id": "p0", "name": "Introduction", "min": 4}, {"id": "p1", "name": "PART 1 · 왜 칩으로 갔는가", "min": 8}, {"id": "p2", "name": "PART 2 · 칩 합성 네 방식", "min": 22}, {"id": "p3", "name": "PART 3 · 광화학과 오류", "min": 12}, {"id": "p4", "name": "PART 4 · 회사와 올리고 풀", "min": 14}, {"id": "p5", "name": "PART 5 · 정제", "min": 10}, {"id": "p6", "name": "정리", "min": 2}, {"id": "pq", "name": "퀴즈 · 마무리", "min": 3}]};
 var $ = function(id){ return document.getElementById(id); };
 var el = function(tag, cls, txt){ var e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
 var app = $('app'), deck = $('deck');
