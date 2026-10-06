@@ -666,6 +666,25 @@ svg.dia .carbon-base{fill:var(--green)} svg.dia .carbon-phosphate{fill:var(--amb
 .acid-reaction-step p{font-size:.76em}
 .acid-formula{font-size:.82em;line-height:1.45}
 
+/* Clarify the origin and subsequent reaction of the deprotection byproduct. */
+.cleavage-formation h2{font-size:1.57em;line-height:1.25}
+.acrylonitrile-explained .body{gap:.55em;padding-top:.85em}
+.acrylonitrile-explained .cols{gap:1em}
+.acrylonitrile-explained .kb{padding:.4em .65em}
+.acrylonitrile-explained .kb p{font-size:.85em;line-height:1.45}
+.acryl-elimination{display:flex;flex-direction:column;gap:.2em;text-align:center;padding:.4em .5em;font:600 .92em/1.5 var(--math);background:white;border:1px solid var(--border);border-radius:.3em}
+.acryl-elimination b{font:600 .82em var(--sans);color:var(--gray)}
+.acryl-elimination em{font-style:normal;color:var(--crim)}
+.acryl-steps{list-style:none;padding:0;display:flex;flex-direction:column;gap:.55em}
+.acryl-steps li{padding:.45em .65em;background:var(--lgray);border-left:.2em solid var(--teal)}
+.acryl-steps b{font-size:.9em;color:var(--navy)}
+.acryl-steps p{font-size:.84em;line-height:1.5;margin-top:.15em}
+.acryl-result{font-size:.78em;line-height:1.45;color:var(--gray)}
+.acryl-prevention{gap:.45em;grid-template-columns:repeat(3,minmax(0,1fr))}
+.acryl-prevention .card{padding:.4em .55em}
+.acryl-prevention .card h3{font-size:.85em}
+.acryl-prevention .card p{font-size:.75em;line-height:1.4}
+
 /* contextual lecture videos */
 /* Contextual lecture videos: one inline player, selectable sources and teaching notes. */
 .video-lesson .body{gap:.4em;padding-top:.85em}
@@ -5106,10 +5125,10 @@ Q 144.8 217.1, 146.7 217.1
   <div class="sr"><ul><li>conc. NH₄OH — 숙시닐 에스터 가수분해</li><li>2-시아노에틸의 β-제거와 아크릴로니트릴</li><li>염기 보호기 — 교과서 조건과 실무 조건의 불일치</li><li>물 — 아미다이트 분해 · 완성된 DNA 골격의 높은 안정성</li></ul></div>
 </section>
 
-<section class="slide" data-part="p3" data-title="절단과 β-제거 메커니즘">
-  <header><h2>절단과 탈보호 — 포스포디에스터 완성</h2><p class="sub">conc. NH₄OH 한 시약이 에스터 가수분해와 β-제거를 동시에 수행</p></header>
+<section class="slide cleavage-formation" data-part="p3" data-title="Cleavage and Deprotection — Phosphodiester Formation">
+  <header><h2>Cleavage and Deprotection — Formation of the Phosphodiester Backbone</h2><p class="sub">암모니아 처리: 숙시닐 에스터 절단과 인산 보호기의 β-제거</p></header>
   <div class="body">
-    <div class="proc" data-steps="5" data-caps='["출발 — 지지체에 붙은 완성 사슬 · conc. NH₄OH(28~33% NH₃) 실온 1시간 · 인은 아직 <b>2-시아노에틸로 보호된 P(V)</b>","① 암모니아 질소가 <b>숙시닐 에스터</b>의 카보닐을 공격 → 에스터 가수분해 → 올리고가 지지체에서 분리","② 나이트릴(C≡N)의 강한 전자끌기로 <b>β 위치 CH₂의 수소</b>가 산성 형성 · 암모니아가 이 양성자를 떼어감","③ 생긴 카바니온의 전자쌍이 C–C로 밀려 인산 산소를 밀어냄 → <b>아크릴로니트릴</b>(CH₂=CH–CN) 방출 · E2 / E1cb형 β-제거","④ <b>포스포디에스터 음이온</b> 완성 — 자연의 DNA 골격과 동일한 결합 형성"]'>
+    <div class="proc" data-steps="5" data-caps='["출발 — 지지체에 붙은 완성 사슬 · conc. NH₄OH(28~33% NH₃) 실온 1시간 · 인은 아직 <b>2-시아노에틸로 보호된 P(V)</b>","① 암모니아 처리에 의한 <b>숙시닐 에스터 절단</b> → 올리고가 지지체에서 분리","② 나이트릴(C≡N)의 전자끌기 효과 → <b>β 위치 CH₂의 수소 제거</b>와 카바니온 중간체 형성","③ 생긴 카바니온의 전자쌍이 C–C로 밀려 인산 산소를 밀어냄 → <b>아크릴로니트릴</b>(CH₂=CH–CN) 방출 · E2 / E1cb형 β-제거","④ <b>포스포디에스터 음이온</b> 완성 — 자연의 DNA 골격과 동일한 결합 형성"]'>
       <div class="proc-head"><h3>conc. NH₄OH · 실온 1시간</h3></div>
       <div class="proc-stage">
         <svg viewBox="0 0 640 300">
@@ -5170,12 +5189,14 @@ Q 144.8 217.1, 146.7 217.1
   </div>
 </section>
 
-<section class="slide" data-part="p3" data-title="아크릴로니트릴에 의한 염기 알킬화">
-  <header><h2>아크릴로니트릴에 의한 염기 알킬화</h2><p class="sub">β-제거의 부산물이 Michael(마이클) 수용체로 작동</p></header>
+<section class="slide acrylonitrile-explained" data-part="p3" data-title="아크릴로니트릴에 의한 염기 알킬화">
+  <header><h2>아크릴로니트릴에 의한 염기 알킬화</h2><p class="sub">인산 보호기 탈보호의 부산물 → 티민 N3의 시아노에틸화</p></header>
   <div class="body">
     <div class="cols w46">
       <div class="stack">
-        <div class="molbox h8"><figure class="molfig"><svg class="molsvg" preserveAspectRatio="xMidYMid meet" version='1.1' baseProfile='full'
+        <div class="kb teal"><b>생성 시점: 인산 보호기의 탈보호</b><p>2-시아노에틸 보호기를 β-제거로 떼는 과정에서 <b>아크릴로니트릴</b> 생성</p></div>
+        <div class="acryl-elimination"><span>인산–O–CH₂–CH₂–CN</span><b>↓ β-Elimination(β-제거)</b><span>인산–O⁻ + <em>CH₂=CH–CN</em></span></div>
+        <div class="molbox h6"><figure class="molfig"><svg class="molsvg" preserveAspectRatio="xMidYMid meet" version='1.1' baseProfile='full'
               xmlns='http://www.w3.org/2000/svg'
                       xmlns:rdkit='http://www.rdkit.org/xml'
                       xmlns:xlink='http://www.w3.org/1999/xlink'
@@ -5210,22 +5231,23 @@ L 35.7 78.0
 ' fill='#214FBC'/>
 </svg>
 </figure></div>
-        <p class="small gray">CH₂=CH–CN — 나이트릴이 붙은 이중결합 = <b>Michael(마이클) 수용체</b></p>
+        <div class="kb"><b>Michael acceptor(마이클 수용체)</b><p>다른 분자의 친핵성 원자가 결합할 수 있는 <b>활성화된 이중결합</b>을 가진 분자 · 여기서는 아크릴로니트릴</p></div>
       </div>
       <div class="stack">
-        <ul class="pts sm">
-          <li>티미딘의 <b>N3</b>가 이 이중결합에 Michael(마이클) 부가 → 알킬화 부가물</li>
-          <li>질량이 <b>+53 Da</b> 증가 → RP-HPLC에서 <b>n+1처럼</b> 보임 · 즉 정제 단계에서 오판을 유발</li>
-          <li>사슬이 길수록 시아노에틸의 개수가 많아 방출량이 늘어남 → 장쇄에서 더 심각</li>
-        </ul>
-        <div class="cards">
-          <div class="card green"><h3>대책 ①</h3><p>암모니아 <b>부피를 늘려</b> 아크릴로니트릴을 희석</p></div>
-          <div class="card green"><h3>대책 ②</h3><p><b>AMA</b> 사용 — 메틸아민이 스캐빈저로 작동</p></div>
-          <div class="card green"><h3>대책 ③</h3><p>절단 전에 <b>10% 다이에틸아민 in ACN</b>을 약 5분간 컬럼에 통과시켜 시아노에틸을 먼저 제거</p></div>
+        <ol class="acryl-steps">
+          <li><b>① β-제거: 보호기 제거</b><p>염기성 탈보호 조건에서 인산의 2-시아노에틸 보호기 제거 → 아크릴로니트릴(CH₂=CH–CN) 방출</p></li>
+          <li><b>② Michael 부가: 부산물의 결합</b><p>–CN의 전자끌기 효과로 이중결합의 말단 탄소가 친핵성 질소와 반응하기 쉬워짐</p></li>
+          <li><b>③ 티민 N3의 알킬화</b><p>티민의 N3에 <b>–CH₂–CH₂–CN</b>이 결합 → N3-cyanoethyl-dT 생성 · 염기 수는 유지되지만 티민의 구조가 변형되는 불순물</p></li>
+        </ol>
+        <p class="acryl-result"><b>결과:</b> 질량 약 +53 Da · 장쇄 올리고에서 더 많은 보호기 제거와 부산물 방출</p>
+        <div class="cards acryl-prevention">
+          <div class="card green"><h3>희석</h3><p>암모니아 부피 증가 → 아크릴로니트릴 농도 감소</p></div>
+          <div class="card green"><h3>포획</h3><p>AMA의 메틸아민을 부산물 포획제로 이용</p></div>
+          <div class="card green"><h3>사전 제거</h3><p>절단 전 다이에틸아민 처리 → 시아노에틸 보호기 제거와 세척</p></div>
         </div>
       </div>
     </div>
-    <p class="src">Glen Research, Glen Report 21.211, <i>Synthesis of Long Oligonucleotides</i> · 구조식은 RDKit 생성</p>
+    <p class="src"><a href="https://www.glenresearch.com/reports/gr21-211" target="_blank" rel="noopener">Glen Research, Glen Report 21.211: Synthesis of Long Oligonucleotides</a> · 구조식: RDKit · 반응식은 인산 골격의 다른 치환기를 생략한 개념도</p>
   </div>
 </section>
 
