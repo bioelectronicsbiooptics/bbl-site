@@ -472,6 +472,32 @@ ul.vids li b a{text-decoration:none;border-bottom:1px solid var(--teal)}
 ul.vids li span{font-size:.76em;color:var(--gray);line-height:1.4}
 ul.vids li em{font-style:normal;font-family:var(--mono);font-size:.72em;color:var(--amber);font-weight:700}
 
+/* contextual lecture videos */
+/* Contextual lecture videos: one inline player, selectable sources and teaching notes. */
+.video-lesson .body{gap:.4em;padding-top:.85em}
+.video-layout{display:grid;grid-template-columns:2.1fr 1fr;gap:1em;align-items:start}
+.video-stage{position:relative;aspect-ratio:16/9;background:#10263E;overflow:hidden;border-radius:.35em;border:1px solid var(--border)}
+.video-stage iframe,.video-preview{position:absolute;inset:0;width:100%;height:100%;border:0}
+.video-preview{object-fit:contain;background:#10263E}
+.video-play{position:absolute;inset:0;border:0;background:linear-gradient(transparent 45%,rgba(0,0,0,.7));color:white;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.65em}
+.video-play .play-symbol{display:grid;place-items:center;background:#C03B3B;border-radius:50%;width:2.2em;height:2.2em;font-size:1.3em;padding-left:.12em}
+.video-play .play-label{font-size:.8em;font-weight:700;background:rgba(16,38,62,.85);padding:.4em .7em;border-radius:.3em}
+.video-caption{display:flex;gap:.6em;align-items:baseline;margin-top:.45em;font-size:.68em;line-height:1.4;color:var(--gray)}
+.video-caption .video-source-link{margin-left:auto;white-space:nowrap}
+.video-explain{display:flex;flex-direction:column;gap:.65em}
+.video-explain h3{font-size:.87em;color:var(--navy)}
+.video-choices{display:flex;flex-direction:column;gap:.35em}
+.video-choice{font:inherit;font-size:.73em;line-height:1.45;text-align:left;padding:.45em .6em;border:1px solid var(--border);border-left:.22em solid var(--teal);border-radius:.25em;background:white;cursor:pointer}
+.video-choice[aria-pressed="true"]{background:var(--tealwash);border-color:var(--amber);color:var(--amber);font-weight:700}
+.video-choice .video-time{display:block;font-size:.9em;color:var(--gray);margin-top:.15em}
+.video-explain .kb{padding:.4em .65em}
+.video-explain .kb b{font-size:.75em}
+.video-explain .kb p{font-size:.77em;line-height:1.5}
+.video-prompts{font-size:.76em;line-height:1.5;padding-left:1.1em;display:flex;flex-direction:column;gap:.35em}
+.video-prompts li::marker{color:var(--teal)}
+.video-lesson .src{font-size:.58em}
+@media(max-width:780px){.app.read .video-layout{grid-template-columns:1fr}.app.read .video-stage{min-height:0}.app.read .video-choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}}
+
 </style>
 </head>
 <body>
@@ -501,8 +527,8 @@ ul.vids li em{font-style:normal;font-family:var(--mono);font-size:.72em;color:va
 </div>
 </section>
 
-<section class="slide" data-part="p0" data-title="오늘의 학습 성과">
-  <header><h2>오늘의 학습 성과</h2><p class="sub">학습 목표 6가지 — 효소 합성의 원리에서 유전자 조립까지</p></header>
+<section class="slide" data-part="p0" data-title="학습 목표">
+  <header><h2>학습 목표</h2><p class="sub">학습 목표 6가지 — 효소 합성의 원리에서 유전자 조립까지</p></header>
   <div class="body">
     <div class="cols">
       <ul class="pts b13">
@@ -525,8 +551,8 @@ ul.vids li em{font-style:normal;font-family:var(--mono);font-size:.72em;color:va
   </div>
 </section>
 
-<section class="slide" data-part="p0" data-title="오늘의 지도">
-  <header><h2>오늘의 지도</h2><p class="sub">75분 · 5개 파트 · 퀴즈 2회 · 대화형 위젯 5개</p></header>
+<section class="slide" data-part="p0" data-title="강의 구성">
+  <header><h2>강의 구성</h2><p class="sub">75분 · 5개 파트 · 퀴즈 2회 · 대화형 위젯 5개</p></header>
   <div class="body">
     <div class="cards">
       <div class="card ctr"><div class="pk teal">PART 1</div><h3>주형 없이 붙이는 효소</h3><p class="gray">TdT의 본래 역할 · 무작위성 문제</p></div>
@@ -565,8 +591,8 @@ ul.vids li em{font-style:normal;font-family:var(--mono);font-size:.72em;color:va
 </section>
 
 <!-- ===================== PART 1 ===================== -->
-<section class="slide sect" data-part="p1" data-title="PART 1 섹션 표지">
-  <div class="sl"><div class="no">PART 1</div><h2>주형 없이 붙이는 효소</h2><p class="en">Template-independent polymerase — TdT</p></div>
+<section class="slide sect" data-part="p1" data-title="주형 비의존적 뉴클레오타이드 도입">
+  <div class="sl"><div class="no">PART 1</div><h2>주형 비의존적 뉴클레오타이드 도입</h2><p class="en">Template-independent polymerase — TdT</p></div>
   <div class="sr"><ul><li>TdT의 본래 역할 — 항체 다양성을 만드는 무작위 삽입</li><li>같은 효소에 dNTP를 그냥 주면 결과는 homopolymer</li><li>무작위성을 제어로 바꾸는 것이 효소 합성의 전부</li><li>제어의 두 갈래 — 화학적 마개 vs 입체 마개</li></ul></div>
 </section>
 
@@ -692,8 +718,8 @@ M  END
   <p class="src">Delarue M et al., <i>EMBO J</i> 21(3):427–439 (2002) · Motea EA &amp; Berdis AJ, <i>BBA</i> 1804:1151 (2010) · Palluk S et al., <i>Nat Biotechnol</i> 36:645–650 (2018), Methods · 좌표: RDKit · 3Dmol.js</p>
 </section>
 
-<section class="slide" data-part="p1" data-title="제어의 두 갈래 — 오늘의 기준틀">
-  <header><h2>제어의 두 갈래 — 무엇이 다음 부가를 막는가</h2><p class="sub">이 물음 하나가 7-1강 전체의 기준틀 — 답이 다르면 시약 · 장비 · 회사가 달라진다</p></header>
+<section class="slide" data-part="p1" data-title="단일 잔기 도입을 위한 종결 제어">
+  <header><h2>단일 잔기 도입을 위한 종결 제어</h2><p class="sub">이 물음 하나가 7-1강 전체의 기준틀 — 답이 다르면 시약 · 장비 · 회사가 달라진다</p></header>
   <div class="body">
     <svg viewBox="0 0 640 196" role="img" aria-label="화학적 마개 방식과 입체 마개 방식의 비교 도식">
       <text class="tit" x="16" y="16">(A) 화학적 마개 — 3′-O에 차단기</text>
@@ -743,13 +769,13 @@ M  END
 </section>
 
 <!-- ===================== PART 2 ===================== -->
-<section class="slide sect" data-part="p2" data-title="PART 2 섹션 표지">
-  <div class="sl"><div class="no">PART 2</div><h2>2018년의 해법 — 효소를 마개로 쓴다</h2><p class="en">Palluk et al., Nature Biotechnology 36:645–650 (2018)</p></div>
+<section class="slide sect" data-part="p2" data-title="효소–뉴클레오타이드 결합체에 의한 도입 제어">
+  <div class="sl"><div class="no">PART 2</div><h2>효소–뉴클레오타이드 결합체에 의한 도입 제어</h2><p class="en">Palluk et al., Nature Biotechnology 36:645–650 (2018)</p></div>
   <div class="sr"><ul><li>TdT 한 분자에 dNTP 한 개만 매달아 놓는다</li><li>부가되면 primer가 그 효소에 공유결합된 채 남는다 → 자동 정지</li><li>사이클 위젯으로 6단계를 직접 넘겨 본다</li><li>10-mer 실증 · 단계별 수율 · 세 가지 부작용 · 남은 과제 4개</li></ul></div>
 </section>
 
-<section class="slide" data-part="p2" data-title="Palluk 2018 — 서지와 핵심 아이디어">
-  <header><h2>Palluk et al. (2018) — 한 문장으로 요약되는 아이디어</h2><p class="sub">De novo DNA synthesis using polymerase–nucleotide conjugates</p></header>
+<section class="slide" data-part="p2" data-title="Palluk et al. (2018)의 효소 합성 원리">
+  <header><h2>Palluk et al. (2018)의 효소 합성 원리</h2><p class="sub">De novo DNA synthesis using polymerase–nucleotide conjugates</p></header>
   <div class="body">
     <div class="cols w64">
       <div class="stack">
@@ -919,8 +945,19 @@ M  END
   <p class="src">Palluk S et al., <i>Nat Biotechnol</i> 36:645–650 (2018), Fig. 1 · Fig. 2c · Supplementary Figs. S2 · S5 · S9</p>
 </section>
 
-<section class="slide" data-part="p2" data-title="conjugate의 해부 — 어디를 매달고 어디를 끊는가">
-  <header><h2>conjugate의 해부 — 어디를 매달고 어디를 끊는가</h2><p class="sub">Cys302에 붙인 절단성 linker · 천연형 3′-unblocked dNTP · 두 종류의 절단 화학</p></header>
+<section class="slide video-lesson" data-part="p2" data-title="Conjugate(결합체) — 단일 잔기 도입 제어" data-video-lesson>
+  <header><h2>Conjugate(결합체) — 단일 잔기 도입 제어</h2><p class="sub">본문 개념과 영상의 실제 공정·반응 기전 비교 · 재생 버튼 선택</p></header>
+  <div class="body">
+    <div class="video-layout">
+      <div><div class="video-stage"><img class="video-preview" src="https://i.ytimg.com/vi/tFumRX1fbPg/hqdefault.jpg" alt="Faster, Cheaper, Better: A New Way to Synthesize DNA"><button class="video-play" type="button"><span class="play-symbol">▶</span><span class="play-label">슬라이드에서 영상 재생</span></button></div><p class="video-caption"><span class="video-credit">JointBioenergyInst · 2:03</span><a class="video-source-link" href="https://www.youtube.com/watch?v=tFumRX1fbPg" target="_blank" rel="noopener">YouTube에서 보기 ↗</a></p></div>
+      <div class="video-explain"><h3>영상 선택</h3><div class="video-choices"><button class="video-choice" type="button" aria-pressed="true">Palluk 연구진 · 효소–뉴클레오타이드 결합<span class="video-time">2:03</span></button><button class="video-choice" type="button" aria-pressed="false">Ansa · 단일 잔기 도입 제어<span class="video-time">1:43</span></button></div><div class="kb teal"><b>관찰할 내용</b><p class="video-observation">볼 것 — Palluk 2018의 두 대학원생이 직접 설명하는 polymerase–nucleotide conjugate (JBEI · Berkeley Lab)</p></div><h3>개념 연결</h3><ul class="video-prompts"><li>효소–뉴클레오타이드 결합체의 역할</li><li>두 번째 도입 차단과 링커 절단</li></ul></div>
+    </div>
+    <p class="src">영상: JointBioenergyInst · Ansa Biotechnologies · YouTube 제목·제작자 확인: 2026-10-07 · 긴 강연은 필요한 구간을 선택하여 시청</p>
+  </div><script type="application/json" class="video-data">[{"id": "tFumRX1fbPg", "title": "Faster, Cheaper, Better: A New Way to Synthesize DNA", "author": "JointBioenergyInst", "label": "Palluk 연구진 · 효소–뉴클레오타이드 결합", "duration": "2:03", "note": "볼 것 — Palluk 2018의 두 대학원생이 직접 설명하는 polymerase–nucleotide conjugate (JBEI · Berkeley Lab)"}, {"id": "bkkhsUXAKGk", "title": "Enzymatic DNA Synthesis Technology | Ansa Bio", "author": "Ansa Biotechnologies", "label": "Ansa · 단일 잔기 도입 제어", "duration": "1:43", "note": "볼 것 — TdT에 뉴클레오타이드 하나를 매단다 → 붙인 뒤 효소가 떨어지지 않아 두 번째 부가를 막는다 → 다른 효소로 링커 절단 (conjugate 위젯의 실물)"}]</script>
+</section>
+
+<section class="slide" data-part="p2" data-title="Conjugate(결합체)의 연결 구조와 절단 부위">
+  <header><h2>Conjugate(결합체)의 연결 구조와 절단 부위</h2><p class="sub">Cys302에 붙인 절단성 linker · 천연형 3′-unblocked dNTP · 두 종류의 절단 화학</p></header>
   <div class="body">
     <div class="cols w55">
       <div class="stack">
@@ -1523,8 +1560,8 @@ Q 259.4 180.6, 260.9 180.6
   <p class="src">Palluk S et al., <i>Nat Biotechnol</i> 36:645–650 (2018), Fig. 1a caption · Fig. 2c · Methods · Discussion(Stupi et al. 2012 인용) · 구조식: RDKit</p>
 </section>
 
-<section class="slide" data-part="p2" data-title="숫자로 보는 2018년 성과">
-  <header><h2>숫자로 보는 2018년 성과 — 10-mer 실증</h2><p class="sub">359 bp 이중나선의 3′ overhang을 starter로 5′-CTAGTCAGCT-3′ 10 사이클 합성</p></header>
+<section class="slide" data-part="p2" data-title="결합체 기반 10-mer 합성의 실험 결과">
+  <header><h2>결합체 기반 10-mer 합성의 실험 결과</h2><p class="sub">359 bp 이중나선의 3′ overhang을 starter로 5′-CTAGTCAGCT-3′ 10 사이클 합성</p></header>
   <div class="body">
     <div class="cols w64">
       <div class="stack">
@@ -1589,8 +1626,8 @@ Q 259.4 180.6, 260.9 180.6
   <p class="src">Palluk S et al., <i>Nat Biotechnol</i> 36:645–650 (2018), Results · Supplementary Figs. S10a · S12 · Supplementary Note 2</p>
 </section>
 
-<section class="slide" data-part="p2" data-title="2018년이 남긴 과제 4개">
-  <header><h2>2018년이 남긴 과제 4개 — 그리고 그 후 8년</h2><p class="sub">논문 Discussion이 직접 적은 네 줄이 곧 로드맵이었다 · <span class="pap">진한 파랑 = 논문 실측</span>, <span class="gray">회색 = 벤더 공개 스펙</span></p></header>
+<section class="slide" data-part="p2" data-title="결합체 기반 합성의 개선 과제">
+  <header><h2>결합체 기반 합성의 개선 과제</h2><p class="sub">논문 Discussion이 직접 적은 네 줄이 곧 로드맵이었다 · <span class="pap">진한 파랑 = 논문 실측</span>, <span class="gray">회색 = 벤더 공개 스펙</span></p></header>
   <div class="body">
     <div class="scroll"><table class="tbl">
       <thead><tr><th>2018년 논문이 적은 과제</th><th>2026년 현재</th><th>누가 · 어디까지</th></tr></thead>
@@ -1729,8 +1766,19 @@ Q 259.4 180.6, 260.9 180.6
   <p class="src">DNA Script Technical Note TN900100 v1.1 (June 2021), Enzymatic DNA Synthesis — 3 core components</p>
 </section>
 
-<section class="slide" data-part="p3" data-title="제3의 길 — 종결기를 쓰지 않는다">
-  <header><h2>제3의 길 — 종결기를 아예 쓰지 않는다</h2><p class="sub">Lee, Kalhor, Goela, Bolot &amp; Church (2019) · terminator-free template-independent enzymatic DNA synthesis</p></header>
+<section class="slide video-lesson" data-part="p3" data-title="가역적 종결기 — 효소 합성 사이클" data-video-lesson>
+  <header><h2>가역적 종결기 — 효소 합성 사이클</h2><p class="sub">본문 개념과 영상의 실제 공정·반응 기전 비교 · 재생 버튼 선택</p></header>
+  <div class="body">
+    <div class="video-layout">
+      <div><div class="video-stage"><img class="video-preview" src="https://i.ytimg.com/vi/J9hRNsAnAl0/hqdefault.jpg" alt="DNA Script - Enzymatic DNA Synthesis (EDS) Technology"><button class="video-play" type="button"><span class="play-symbol">▶</span><span class="play-label">슬라이드에서 영상 재생</span></button></div><p class="video-caption"><span class="video-credit">DNA Script · 1:41</span><a class="video-source-link" href="https://www.youtube.com/watch?v=J9hRNsAnAl0" target="_blank" rel="noopener">YouTube에서 보기 ↗</a></p></div>
+      <div class="video-explain"><h3>영상 선택</h3><div class="video-choices"><button class="video-choice" type="button" aria-pressed="true">DNA Script · 가역적 종결기<span class="video-time">1:41</span></button></div><div class="kb teal"><b>관찰할 내용</b><p class="video-observation">볼 것 — 레진의 iDNA → 공학 TdT가 가역 종결기 dNTP 부가 → 산성 시약으로 종결기 해제 → 반복 → 효소로 절단 (가역적 종결기 위젯)</p></div><h3>개념 연결</h3><ul class="video-prompts"><li>변형 TdT와 차단된 기질의 연결</li><li>종결기 제거와 반복 도입</li></ul></div>
+    </div>
+    <p class="src">영상: DNA Script · YouTube 제목·제작자 확인: 2026-10-07 · 긴 강연은 필요한 구간을 선택하여 시청</p>
+  </div><script type="application/json" class="video-data">[{"id": "J9hRNsAnAl0", "title": "DNA Script - Enzymatic DNA Synthesis (EDS) Technology", "author": "DNA Script", "label": "DNA Script · 가역적 종결기", "duration": "1:41", "note": "볼 것 — 레진의 iDNA → 공학 TdT가 가역 종결기 dNTP 부가 → 산성 시약으로 종결기 해제 → 반복 → 효소로 절단 (가역적 종결기 위젯)"}]</script>
+</section>
+
+<section class="slide" data-part="p3" data-title="비종결기 기반 효소 합성의 제어 원리">
+  <header><h2>비종결기 기반 효소 합성의 제어 원리</h2><p class="sub">Lee, Kalhor, Goela, Bolot &amp; Church (2019) · terminator-free template-independent enzymatic DNA synthesis</p></header>
   <div class="body">
     <div class="cols w55">
       <div class="stack">
@@ -1772,8 +1820,19 @@ Q 259.4 180.6, 260.9 180.6
   <p class="src">Lee HH, Kalhor R, Goela N, Bolot J, Church GM, <i>Nat Commun</i> 10:2383 (2019), doi:10.1038/s41467-019-10258-1</p>
 </section>
 
-<section class="slide" data-part="p3" data-title="종결 제어 세 방식 비교">
-  <header><h2>종결 제어 세 방식 — 무엇을 포기하고 무엇을 얻었는가</h2><p class="sub">PART 1의 기준틀로 세 방식을 한 표에 놓는다</p></header>
+<section class="slide video-lesson" data-part="p3" data-title="DNA 저장용 효소 합성 — 종결기 없는 제어" data-video-lesson>
+  <header><h2>DNA 저장용 효소 합성 — 종결기 없는 제어</h2><p class="sub">본문 개념과 영상의 실제 공정·반응 기전 비교 · 재생 버튼 선택</p></header>
+  <div class="body">
+    <div class="video-layout">
+      <div><div class="video-stage"><img class="video-preview" src="https://i.ytimg.com/vi/BSMmF_aXUCA/hqdefault.jpg" alt="Enzymatic DNA Synthesis EDS for Data Storage"><button class="video-play" type="button"><span class="play-symbol">▶</span><span class="play-label">슬라이드에서 영상 재생</span></button></div><p class="video-caption"><span class="video-credit">Wyss Institute · 4:23</span><a class="video-source-link" href="https://www.youtube.com/watch?v=BSMmF_aXUCA" target="_blank" rel="noopener">YouTube에서 보기 ↗</a></p></div>
+      <div class="video-explain"><h3>영상 선택</h3><div class="video-choices"><button class="video-choice" type="button" aria-pressed="true">Wyss · 저장용 효소 합성<span class="video-time">4:23</span></button></div><div class="kb teal"><b>관찰할 내용</b><p class="video-observation">볼 것 — &#x27;제3의 길&#x27; Lee et al. 2019의 제1저자 Henry Lee가 설명하는 저장용 저비용 효소 쓰기 (Wyss Institute)</p></div><h3>개념 연결</h3><ul class="video-prompts"><li>제어 방식과 데이터 표현의 관계</li><li>일반 서열 합성과 저장용 쓰기의 차이</li></ul></div>
+    </div>
+    <p class="src">영상: Wyss Institute · YouTube 제목·제작자 확인: 2026-10-07 · 긴 강연은 필요한 구간을 선택하여 시청</p>
+  </div><script type="application/json" class="video-data">[{"id": "BSMmF_aXUCA", "title": "Enzymatic DNA Synthesis EDS for Data Storage", "author": "Wyss Institute", "label": "Wyss · 저장용 효소 합성", "duration": "4:23", "note": "볼 것 — '제3의 길' Lee et al. 2019의 제1저자 Henry Lee가 설명하는 저장용 저비용 효소 쓰기 (Wyss Institute)"}]</script>
+</section>
+
+<section class="slide" data-part="p3" data-title="효소 합성의 종결 제어 방식 비교">
+  <header><h2>효소 합성의 종결 제어 방식 비교</h2><p class="sub">PART 1의 기준틀로 세 방식을 한 표에 놓는다</p></header>
   <div class="body">
     <div class="scroll"><table class="tbl sm">
       <thead><tr><th>방식</th><th>두 번째 부가를 막는 것</th><th>떼는 방법</th><th>scar</th><th>실증 수치 · 대표</th></tr></thead>
@@ -1821,8 +1880,8 @@ Q 259.4 180.6, 260.9 180.6
   <div class="sr"><ul><li>2026년 기업 지도 — 기술이 좋아도 회사는 사라진다</li><li>Ansa — 논문에서 50 kb 제품까지 8년</li><li>2026-06 Nature Electronics — CMOS 칩 위의 병렬 효소 합성</li><li>화학 대비 강약점 — 아직 지는 항목까지 정직하게</li></ul></div>
 </section>
 
-<section class="slide" data-part="p4" data-title="2026년 기업 지도">
-  <header><h2>2026년 기업 지도 — 원리로 분류한다</h2><p class="sub">같은 목표, 다른 종결 제어 방식 · <span class="pap">진한 파랑 = 논문 실측</span>, <span class="gray">회색 = 벤더 공개 스펙</span></p></header>
+<section class="slide" data-part="p4" data-title="효소 합성 플랫폼의 기술별 분류">
+  <header><h2>효소 합성 플랫폼의 기술별 분류</h2><p class="sub">같은 목표, 다른 종결 제어 방식 · <span class="pap">진한 파랑 = 논문 실측</span>, <span class="gray">회색 = 벤더 공개 스펙</span></p></header>
   <div class="body">
     <div class="scroll"><table class="tbl sm">
       <colgroup><col style="width:15%"><col style="width:20%"><col style="width:44%"><col style="width:21%"></colgroup>
@@ -1842,8 +1901,19 @@ Q 259.4 180.6, 260.9 180.6
   <p class="src">DNA Script, SYNTAX Kits(수율 ≥500 / ≥200 / ≥80 pmol) · SYNTAX System FAQ (2026) · Ansa Biotechnologies, Technology page (2026) · Maravai LifeSciences / TriLink 보도자료 2025-01-28 · GenomeWeb · Camena Bioscience 제품 페이지 · Tracxn, Evonetix profile (2026) · Molecular Assemblies 기술 자료 · SynBioBeta</p>
 </section>
 
-<section class="slide" data-part="p4" data-title="Ansa — 논문에서 50 kb까지">
-  <header><h2>Ansa Biotechnologies — 논문에서 50 kb까지 8년</h2><p class="sub">2018년 논문의 제1 · 공동제1 저자가 창업해 같은 conjugate 원리를 상업화</p></header>
+<section class="slide video-lesson" data-part="p4" data-title="벤치탑 효소 합성 — 장비 워크플로" data-video-lesson>
+  <header><h2>벤치탑 효소 합성 — 장비 워크플로</h2><p class="sub">본문 개념과 영상의 실제 공정·반응 기전 비교 · 재생 버튼 선택</p></header>
+  <div class="body">
+    <div class="video-layout">
+      <div><div class="video-stage"><img class="video-preview" src="https://i.ytimg.com/vi/QxOy9QLdBRA/hqdefault.jpg" alt="DNA Script SYNTAX System Workflow"><button class="video-play" type="button"><span class="play-symbol">▶</span><span class="play-label">슬라이드에서 영상 재생</span></button></div><p class="video-caption"><span class="video-credit">DNA Script · 2:31</span><a class="video-source-link" href="https://www.youtube.com/watch?v=QxOy9QLdBRA" target="_blank" rel="noopener">YouTube에서 보기 ↗</a></p></div>
+      <div class="video-explain"><h3>영상 선택</h3><div class="video-choices"><button class="video-choice" type="button" aria-pressed="true">SYNTAX · 장비와 워크플로<span class="video-time">2:31</span></button></div><div class="kb teal"><b>관찰할 내용</b><p class="video-observation">볼 것 — 벤치탑 장비 실물과 15분 설정. 영상 속 &quot;60 nt&quot;는 2021년 스펙 — 현행 키트는 기업 지도 표가 최신</p></div><h3>개념 연결</h3><ul class="video-prompts"><li>시약·지지체·장비의 역할</li><li>영상의 과거 스펙과 현재 강의 자료의 구분</li></ul></div>
+    </div>
+    <p class="src">영상: DNA Script · YouTube 제목·제작자 확인: 2026-10-07 · 긴 강연은 필요한 구간을 선택하여 시청</p>
+  </div><script type="application/json" class="video-data">[{"id": "QxOy9QLdBRA", "title": "DNA Script SYNTAX System Workflow", "author": "DNA Script", "label": "SYNTAX · 장비와 워크플로", "duration": "2:31", "note": "볼 것 — 벤치탑 장비 실물과 15분 설정. 영상 속 \"60 nt\"는 2021년 스펙 — 현행 키트는 기업 지도 표가 최신"}]</script>
+</section>
+
+<section class="slide" data-part="p4" data-title="Ansa Biotechnologies의 합성 플랫폼 발전">
+  <header><h2>Ansa Biotechnologies의 합성 플랫폼 발전</h2><p class="sub">2018년 논문의 제1 · 공동제1 저자가 창업해 같은 conjugate 원리를 상업화</p></header>
   <div class="body">
     <div class="flowx">
       <div class="fb navy"><b>2018-06</b><span>Palluk &amp; Arlow<br><i>Nat Biotechnol</i> 36:645–650<br>10-mer · 평균 97.7%</span></div><span class="ar navy">▶</span>
@@ -1869,8 +1939,8 @@ Q 259.4 180.6, 260.9 180.6
   <p class="src">Ansa Biotechnologies 보도자료 (Businesswire 2023-03-09 · 2025-10-01 · 2025-10-22) · GEN, World&apos;s Longest Oligo Produced Using de novo Synthesis · Ansa Biotechnologies, Technology page (2026)</p>
 </section>
 
-<section class="slide" data-part="p4" data-title="위젯 · 반도체 칩 위의 효소 합성">
-  <header><h2>2026년 최전선 — 반도체 칩 위의 병렬 효소 합성</h2><p class="sub">Jung WB, Jung HS et al., <i>Nature Electronics</i> (2026-06-17) · Harvard SEAS · Broad Institute · DNA Script · POSTECH</p></header>
+<section class="slide" data-part="p4" data-title="반도체 칩 기반 병렬 효소 합성">
+  <header><h2>반도체 칩 기반 병렬 효소 합성</h2><p class="sub">Jung WB, Jung HS et al., <i>Nature Electronics</i> (2026-06-17) · Harvard SEAS · Broad Institute · DNA Script · POSTECH</p></header>
   <div class="body">
     <div class="proc" data-steps="5" data-caps='["① 칩 표면 — CMOS 칩이 256개 ring-electrode pair를 개별 제어한다. 각 사이트에는 3′가 차단된 사슬이 붙어 있다(그림은 12개만 표시).","② 양성자 생성 — 선택한 사이트의 내측 링에서 양성자를 만들어 그 자리만 국소적으로 산성이 된다. 임의의 패턴을 전기로 작성할 수 있다.","③ 경계 억제 — 외측 링에서 양성자를 소비해 산성 영역을 사이트 안에 가둔다. 동심 이중 링 구조의 이유가 여기에 있다.","④ 사이트별 탈보호 · 부가 — 낮은 pH가 된 사이트만 탈보호되어, 물 속에서 흘려 준 한 종류의 dNTP가 그 자리에만 붙는다. 사이트마다 서로 다른 서열이 자란다.","⑤ 결과와 한계 — 38–39 nt 서열 최대 64개를 물 속에서 병렬 합성하고 169 byte 텍스트를 인코딩했다. 저자들이 밝힌 확장성의 병목은 전자회로가 아니라 탈보호 화학이다 — 낮은 pH가 만든 중간체가 확산해 인접 사이트의 경계를 흐린다."]'>
       <div class="proc-head"><h3>전기로 산성 패턴을 쓴다 → 그 자리만 탈보호</h3></div>
@@ -1969,8 +2039,19 @@ Q 259.4 180.6, 260.9 180.6
   <p class="src">Jung WB, Jung HS et al., Parallel enzymatic DNA synthesis using a semiconductor chip, <i>Nature Electronics</i> (2026-06-17), doi:10.1038/s41928-026-01662-9 · phys.org (2026-06) · Harvard SEAS news</p>
 </section>
 
-<section class="slide" data-part="p4" data-title="화학 vs 효소 — 정직한 비교">
-  <header><h2>화학 vs 효소 — 아직 지는 항목까지</h2><p class="sub">강의를 광고로 만들지 않으려면 마지막 두 행이 반드시 있어야 한다</p></header>
+<section class="slide video-lesson" data-part="p4" data-title="칩 플랫폼 비교 — 열 제어 합성과 조립" data-video-lesson>
+  <header><h2>칩 플랫폼 비교 — 열 제어 합성과 조립</h2><p class="sub">본문 개념과 영상의 실제 공정·반응 기전 비교 · 재생 버튼 선택</p></header>
+  <div class="body">
+    <div class="video-layout">
+      <div><div class="video-stage"><img class="video-preview" src="https://i.ytimg.com/vi/2r4Ejsu5c_U/hqdefault.jpg" alt="Evonetix DNA synthesis on silicon arrays"><button class="video-play" type="button"><span class="play-symbol">▶</span><span class="play-label">슬라이드에서 영상 재생</span></button></div><p class="video-caption"><span class="video-credit">Evonetix · 1:11</span><a class="video-source-link" href="https://www.youtube.com/watch?v=2r4Ejsu5c_U" target="_blank" rel="noopener">YouTube에서 보기 ↗</a></p></div>
+      <div class="video-explain"><h3>영상 선택</h3><div class="video-choices"><button class="video-choice" type="button" aria-pressed="true">Evonetix · 열 제어 합성과 조립<span class="video-time">1:11</span></button></div><div class="kb teal"><b>관찰할 내용</b><p class="video-observation">볼 것 — 칩 위 열 제어 합성 + 오류 검출 조립: 기업 지도의 &#x27;반도체 × 합성&#x27; 축 (6-2 트리거와 연결)</p></div><h3>개념 연결</h3><ul class="video-prompts"><li>화학적 열 제어와 효소적 합성의 구분</li><li>칩 위 합성과 오류 검출 조립의 연결</li></ul></div>
+    </div>
+    <p class="src">영상: Evonetix · YouTube 제목·제작자 확인: 2026-10-07 · 긴 강연은 필요한 구간을 선택하여 시청</p>
+  </div><script type="application/json" class="video-data">[{"id": "2r4Ejsu5c_U", "title": "Evonetix DNA synthesis on silicon arrays", "author": "Evonetix", "label": "Evonetix · 열 제어 합성과 조립", "duration": "1:11", "note": "볼 것 — 칩 위 열 제어 합성 + 오류 검출 조립: 기업 지도의 '반도체 × 합성' 축 (6-2 트리거와 연결)"}]</script>
+</section>
+
+<section class="slide" data-part="p4" data-title="화학 합성과 효소 합성의 성능 비교">
+  <header><h2>화학 합성과 효소 합성의 성능 비교</h2><p class="sub">강의를 광고로 만들지 않으려면 마지막 두 행이 반드시 있어야 한다</p></header>
   <div class="body">
     <div class="scroll"><table class="tbl sm">
       <thead><tr><th>항목</th><th>화학 합성 (phosphoramidite)</th><th>효소 합성 (TdT)</th></tr></thead>
@@ -1992,32 +2073,7 @@ Q 259.4 180.6, 260.9 180.6
   <p class="src">Assessment of enzymatically synthesized DNA for gene assembly, <i>Front Bioeng Biotechnol</i> 11:1208784 (2023) · Palluk S et al., <i>Nat Biotechnol</i> 36:645–650 (2018) · Arlow DH PhD thesis, UC Berkeley (2018) · Glen Report 37-26 · <i>Biotechnol Adv</i> (2025), doi:10.1016/j.biotechadv.2025.108604 · Forget SM et al., <i>Nucleic Acids Res</i> 53(4):gkaf115 (2025)</p>
 </section>
 
-<section class="slide" data-part="p4" data-title="수업 중 볼 동영상">
-  <header><h2>수업 중 볼 동영상 — 효소 합성 회사</h2><p class="sub">오늘 위젯 두 개를 회사가 그린 애니메이션으로 다시 · 접속 확인된 공식 영상만</p></header>
-  <div class="body mid">
-    <ul class="vids">
-      <li><span class="pl">▶</span><span>
-        <b><a href="https://www.youtube.com/watch?v=tFumRX1fbPg" target="_blank" rel="noopener">Faster, Cheaper, Better: A New Way to Synthesize DNA</a> <em>2:03</em></b>
-        <span>볼 것 — Palluk 2018의 두 대학원생이 직접 설명하는 polymerase–nucleotide conjugate (JBEI · Berkeley Lab)</span></span></li>
-      <li><span class="pl">▶</span><span>
-        <b><a href="https://www.youtube.com/watch?v=bkkhsUXAKGk" target="_blank" rel="noopener">Enzymatic DNA Synthesis Technology | Ansa Bio</a> <em>1:43</em></b>
-        <span>볼 것 — TdT에 뉴클레오타이드 하나를 매단다 → 붙인 뒤 효소가 떨어지지 않아 두 번째 부가를 막는다 → 다른 효소로 링커 절단 (conjugate 위젯의 실물)</span></span></li>
-      <li><span class="pl">▶</span><span>
-        <b><a href="https://www.youtube.com/watch?v=J9hRNsAnAl0" target="_blank" rel="noopener">DNA Script - Enzymatic DNA Synthesis (EDS) Technology</a> <em>1:41</em></b>
-        <span>볼 것 — 레진의 iDNA → 공학 TdT가 가역 종결기 dNTP 부가 → 산성 시약으로 종결기 해제 → 반복 → 효소로 절단 (가역적 종결기 위젯)</span></span></li>
-      <li><span class="pl">▶</span><span>
-        <b><a href="https://www.youtube.com/watch?v=QxOy9QLdBRA" target="_blank" rel="noopener">DNA Script SYNTAX System Workflow</a> <em>2:31</em></b>
-        <span>볼 것 — 벤치탑 장비 실물과 15분 설정. 영상 속 "60 nt"는 2021년 스펙 — 현행 키트는 기업 지도 표가 최신</span></span></li>
-      <li><span class="pl">▶</span><span>
-        <b><a href="https://www.youtube.com/watch?v=BSMmF_aXUCA" target="_blank" rel="noopener">Enzymatic DNA Synthesis EDS for Data Storage</a> <em>4:23</em></b>
-        <span>볼 것 — '제3의 길' Lee et al. 2019의 제1저자 Henry Lee가 설명하는 저장용 저비용 효소 쓰기 (Wyss Institute)</span></span></li>
-      <li><span class="pl">▶</span><span>
-        <b><a href="https://www.youtube.com/watch?v=2r4Ejsu5c_U" target="_blank" rel="noopener">Evonetix DNA synthesis on silicon arrays</a> <em>1:11</em></b>
-        <span>볼 것 — 칩 위 열 제어 합성 + 오류 검출 조립: 기업 지도의 '반도체 × 합성' 축 (6-2 트리거와 연결)</span></span></li>
-    </ul>
-  </div>
-  <p class="src">YouTube · 2026-09-29 접속 확인</p>
-</section>
+
 
 
 <!-- ===================== PART 5 ===================== -->
@@ -2026,8 +2082,8 @@ Q 259.4 180.6, 260.9 180.6
   <div class="sr"><ul><li>길이가 같은 오류는 정제로 걸러지지 않는다</li><li>혼성화 선발 — 서열로 고른다</li><li>MutS — PCR이 고정시킨 오류를 다시 드러낸다</li><li>PCA 2단계 조립 · 정확도 로드맵 159 → 20,000</li></ul></div>
 </section>
 
-<section class="slide" data-part="p5" data-title="정제로 못 잡는 오류">
-  <header><h2>정제로 못 잡는 오류 — 길이가 같으면 못 걸러낸다</h2><p class="sub">합성 방식이 화학이든 효소든 오류의 분류는 같다</p></header>
+<section class="slide" data-part="p5" data-title="동일 길이 올리고의 서열 오류와 정제 한계">
+  <header><h2>동일 길이 올리고의 서열 오류와 정제 한계</h2><p class="sub">합성 방식이 화학이든 효소든 오류의 분류는 같다</p></header>
   <div class="body">
     <div class="cols w64">
       <div class="stack">
@@ -3004,8 +3060,8 @@ END
   <p class="src">김영창 · 노동현 · 김용대 · 김양훈, 《합성생물학》, 충북대학교 출판부, 8.2 · Palluk S et al., <i>Nat Biotechnol</i> 36:645–650 (2018), Results · 좌표: PDB 1BNA · 3Dmol.js</p>
 </section>
 
-<section class="slide" data-part="p5" data-title="혼성화 선발">
-  <header><h2>혼성화 선발 — 정확한 올리고만 골라낸다</h2><p class="sub">교재 8.2.1 · 길이가 아니라 서열로 고르는 첫 번째 방법</p></header>
+<section class="slide" data-part="p5" data-title="혼성화에 의한 올리고 서열 선발">
+  <header><h2>혼성화에 의한 올리고 서열 선발</h2><p class="sub">교재 8.2.1 · 길이가 아니라 서열로 고르는 첫 번째 방법</p></header>
   <div class="body">
     <div class="cols w55">
       <div class="stack">
@@ -3058,8 +3114,8 @@ END
   <p class="src">김영창 · 노동현 · 김용대 · 김양훈, 《합성생물학》, 충북대학교 출판부, 8.2.1 (그림 8.7 · 8.8)</p>
 </section>
 
-<section class="slide" data-part="p5" data-title="위젯 · MutS 오류 제거">
-  <header><h2>MutS — PCR이 고정시킨 오류를 다시 드러낸다</h2><p class="sub">교재 8.2.2 · 변성 · 재혼성화로 오결합을 인위적으로 만든 뒤 잡는다</p></header>
+<section class="slide" data-part="p5" data-title="MutS에 의한 불일치 염기쌍 인식과 오류 제거">
+  <header><h2>MutS에 의한 불일치 염기쌍 인식과 오류 제거</h2><p class="sub">교재 8.2.2 · 변성 · 재혼성화로 오결합을 인위적으로 만든 뒤 잡는다</p></header>
   <div class="body">
     <div class="proc" data-steps="5" data-caps='["① 문제 — PCR이 오류를 고정시킨다. 한쪽 가닥에만 있던 변이가 증폭되면 양쪽 가닥이 모두 변이인 완전 상보 이중가닥이 되어, 오결합 감지 단백질 MutS가 볼 수 있는 mismatch가 없다.","② 변성 — 열로 모든 이중가닥을 풀어 단일가닥으로 만든다. 정상 가닥과 변이 가닥이 함께 섞인다.","③ 재혼성화 — 다시 붙이면 변이 가닥이 정상 가닥과 짝을 이루는 경우가 생긴다. 즉 인위적으로 mismatch를 만들어 낸다.","④ MutS 결합 — MutS가 이 오결합 자리에 결합한다. 오류를 가진 분자에만 단백질이 얹힌다.","⑤ 분리 — 전기영동에서 느리게 이동시키거나(A), MBP-MutS를 아밀로스 컬럼으로 회수하는 동시여과(B)로 제거한다. 오류가 너무 많아 모든 분자에 하나씩 있으면 전부 버려지므로, 그때는 절단 · 침전 · 재조립을 하는 컨센서스 셔플링(C)을 쓴다. 성과는 MutS 약 10,000 bp당 오류 1개, 컨센서스 셔플링 약 20,000 bp당 1개."]'>
       <div class="proc-head"><h3>변성 → 재혼성화 → MutS 결합 → 분리</h3></div>
@@ -3239,23 +3295,18 @@ END
   <p class="src">김영창 · 노동현 · 김용대 · 김양훈, 《합성생물학》, 충북대학교 출판부, 8.3 (그림 8.11 · 8.12 · 8.13 · 8.15)</p>
 </section>
 
-<section class="slide" data-part="p5" data-title="수업 중 볼 동영상 · 조립">
-  <header><h2>수업 중 볼 동영상 — 올리고에서 유전자로</h2><p class="sub">PCA 위젯의 공장판과 다음 단계</p></header>
-  <div class="body mid">
-    <ul class="vids">
-      <li><span class="pl">▶</span><span>
-        <b><a href="https://www.youtube.com/watch?v=1S0x3aRCviM" target="_blank" rel="noopener">Gene Synthesis by GeneArt®</a> <em>4:11</em></b>
-        <span>볼 것 — 후반부: 중첩 올리고를 PCR로 조립하는 자동 스테이션(하루 약 400개 · 약 1 kb) → 클로닝 → 서열 확인 (Thermo Fisher GeneArt)</span></span></li>
-      <li><span class="pl">▶</span><span>
-        <b><a href="https://www.youtube.com/watch?v=RliAX4oJGvc" target="_blank" rel="noopener">Wyss Insitute: Low-cost gene synthesis</a> <em>3:17</em></b>
-        <span>볼 것 — 칩 한 장의 수십만 올리고를 골라 증폭해 유전자로 (Sriram Kosuri) — 6-2 칩 풀과 오늘 조립의 연결</span></span></li>
-      <li><span class="pl">▶</span><span>
-        <b><a href="https://www.youtube.com/watch?v=tlVbf5fXhp4" target="_blank" rel="noopener">Introduction to Gibson Assembly</a> <em>2:06</em></b>
-        <span>볼 것 — 엑소뉴클레이스 · 어닐링 · 중합효소 · 리가아제 한 튜브 등온 조립 — PCA 조각을 더 길게 잇는 다음 단계 (NEB)</span></span></li>
-    </ul>
-  </div>
-  <p class="src">YouTube · 2026-09-29 접속 확인</p>
+<section class="slide video-lesson" data-part="p5" data-title="유전자 조립 — 중첩 올리고와 효소적 연결" data-video-lesson>
+  <header><h2>유전자 조립 — 중첩 올리고와 효소적 연결</h2><p class="sub">본문 개념과 영상의 실제 공정·반응 기전 비교 · 재생 버튼 선택</p></header>
+  <div class="body">
+    <div class="video-layout">
+      <div><div class="video-stage"><img class="video-preview" src="https://i.ytimg.com/vi/1S0x3aRCviM/hqdefault.jpg" alt="Gene Synthesis by GeneArt®"><button class="video-play" type="button"><span class="play-symbol">▶</span><span class="play-label">슬라이드에서 영상 재생</span></button></div><p class="video-caption"><span class="video-credit">Thermo Fisher Scientific · 4:11</span><a class="video-source-link" href="https://www.youtube.com/watch?v=1S0x3aRCviM" target="_blank" rel="noopener">YouTube에서 보기 ↗</a></p></div>
+      <div class="video-explain"><h3>영상 선택</h3><div class="video-choices"><button class="video-choice" type="button" aria-pressed="true">GeneArt · 실제 합성과 유전자 조립<span class="video-time">4:11</span></button><button class="video-choice" type="button" aria-pressed="false">Wyss · 칩 올리고에서 유전자로<span class="video-time">3:17</span></button><button class="video-choice" type="button" aria-pressed="false">NEB · Gibson Assembly<span class="video-time">2:06</span></button></div><div class="kb teal"><b>관찰할 내용</b><p class="video-observation">볼 것 — 후반부: 중첩 올리고를 PCR로 조립하는 자동 스테이션(하루 약 400개 · 약 1 kb) → 클로닝 → 서열 확인 (Thermo Fisher GeneArt)</p></div><h3>개념 연결</h3><ul class="video-prompts"><li>중첩 올리고의 증폭과 조립</li><li>PCA와 Gibson Assembly의 반응 원리 구분</li></ul></div>
+    </div>
+    <p class="src">영상: Thermo Fisher Scientific · Wyss Institute · New England Biolabs · YouTube 제목·제작자 확인: 2026-10-07 · 긴 강연은 필요한 구간을 선택하여 시청</p>
+  </div><script type="application/json" class="video-data">[{"id": "1S0x3aRCviM", "title": "Gene Synthesis by GeneArt®", "author": "Thermo Fisher Scientific", "label": "GeneArt · 실제 합성과 유전자 조립", "duration": "4:11", "note": "볼 것 — 후반부: 중첩 올리고를 PCR로 조립하는 자동 스테이션(하루 약 400개 · 약 1 kb) → 클로닝 → 서열 확인 (Thermo Fisher GeneArt)"}, {"id": "RliAX4oJGvc", "title": "Wyss Insitute: Low-cost gene synthesis", "author": "Wyss Institute", "label": "Wyss · 칩 올리고에서 유전자로", "duration": "3:17", "note": "볼 것 — 칩 한 장의 수십만 올리고를 골라 증폭해 유전자로 (Sriram Kosuri) — 6-2 칩 풀과 오늘 조립의 연결"}, {"id": "tlVbf5fXhp4", "title": "Introduction to Gibson Assembly", "author": "New England Biolabs", "label": "NEB · Gibson Assembly", "duration": "2:06", "note": "볼 것 — 엑소뉴클레이스 · 어닐링 · 중합효소 · 리가아제 한 튜브 등온 조립 — PCA 조각을 더 길게 잇는 다음 단계 (NEB)"}]</script>
 </section>
+
+
 
 
 <section class="slide" data-part="p5" data-title="정확도 로드맵">
@@ -3305,8 +3356,8 @@ END
   </div>
 </section>
 
-<section class="slide" data-part="p6" data-title="오늘의 정리">
-  <header><h2>오늘의 정리</h2><p class="sub">효소 합성은 "붙이는 기술"이 아니라 "멈추게 하는 기술"이다</p></header>
+<section class="slide" data-part="p6" data-title="효소 합성과 유전자 조립의 핵심 원리">
+  <header><h2>효소 합성과 유전자 조립의 핵심 원리</h2><p class="sub">효소 합성은 "붙이는 기술"이 아니라 "멈추게 하는 기술"이다</p></header>
   <div class="body">
     <div class="scroll"><table class="tbl sm">
       <thead><tr><th>파트</th><th>핵심</th><th>기억할 숫자 · 사실</th></tr></thead>
@@ -3321,8 +3372,8 @@ END
   </div>
 </section>
 
-<section class="slide ending" data-part="p6" data-title="Q and A">
-  <h2>Q and A</h2>
+<section class="slide ending" data-part="p6" data-title="질의응답">
+  <h2>질의응답</h2>
   <div class="rule"></div>
   <p>"효소 합성의 어려움은 붙이는 데 있지 않았다 — 한 번만 붙게 멈추는 데 있었다."</p>
   <p class="who">송영준  Youngjun Song, Ph.D.   ·   인천대학교</p>
@@ -3655,6 +3706,58 @@ setTimeout(function(){ mol3dInit(document); }, 60);
   setTimeout(plainify, 1200);
   setTimeout(plainify, 2500);
 })();
+
+/* Stop a lecture video when changing slides or selecting another source. */
+function lectureVideosInit(){
+  var lessons=[].slice.call(document.querySelectorAll('[data-video-lesson]'));
+  var playing=null;
+  lessons.forEach(function(lesson){
+    if(lesson.dataset.videoReady)return;
+    lesson.dataset.videoReady='1';
+    var videos=JSON.parse(lesson.querySelector('.video-data').textContent);
+    var stage=lesson.querySelector('.video-stage');
+    var preview=lesson.querySelector('.video-preview');
+    var play=lesson.querySelector('.video-play');
+    var source=lesson.querySelector('.video-source-link');
+    var credit=lesson.querySelector('.video-credit');
+    var note=lesson.querySelector('.video-observation');
+    var choices=[].slice.call(lesson.querySelectorAll('.video-choice'));
+    var selected=0;
+    function stop(){
+      var frame=stage.querySelector('iframe');
+      if(frame)frame.remove();
+      preview.hidden=false;play.hidden=false;
+      if(playing===stop)playing=null;
+    }
+    function select(i){
+      stop();selected=i;
+      var video=videos[i];
+      preview.src='https://i.ytimg.com/vi/'+video.id+'/hqdefault.jpg';
+      preview.alt=video.title;
+      source.href='https://www.youtube.com/watch?v='+video.id;
+      credit.textContent=video.author+' · '+video.duration;
+      note.textContent=video.note;
+      choices.forEach(function(button,j){button.setAttribute('aria-pressed',String(i===j));});
+      play.setAttribute('aria-label',video.label+' 재생');
+    }
+    choices.forEach(function(button,i){button.addEventListener('click',function(){select(i);});});
+    play.addEventListener('click',function(){
+      if(playing)playing();
+      var video=videos[selected];
+      var frame=document.createElement('iframe');
+      frame.title=video.title;
+      frame.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      frame.allowFullscreen=true;
+      frame.referrerPolicy='strict-origin-when-cross-origin';
+      frame.src='https://www.youtube-nocookie.com/embed/'+video.id+'?autoplay=1&rel=0&playsinline=1';
+      preview.hidden=true;play.hidden=true;stage.appendChild(frame);playing=stop;
+    });
+    new MutationObserver(function(){if(lesson.hidden)stop();}).observe(lesson,{attributes:true,attributeFilter:['hidden']});
+    select(0);
+  });
+}
+document.addEventListener('DOMContentLoaded',lectureVideosInit);
+setTimeout(lectureVideosInit,60);
 
 /* ---------- start ---------- */
 if (window.innerWidth < 1180 && window.innerWidth >= 900) app.classList.add('noside');

@@ -1,0 +1,32 @@
+[
+  {
+    "file": "cpg-etching-sem-2019-fig2.jpg",
+    "source": "https://link.springer.com/article/10.1007/s10717-019-00089-3/figures/2",
+    "doi": "10.1007/s10717-019-00089-3",
+    "figure": "2",
+    "title": "Nanoporous Glass with Controlled Pore Size for High-Efficiency Synthesis of Oligonucleotides",
+    "authors": "Shakhgildyan et al.",
+    "year": 2019,
+    "captions": "Electron-microscopic images of NPG powder particles with alkali etching times from 0 to 48 h.",
+    "panels_used": [
+      "d: 8 h, scale bar 0.2 micrometers",
+      "e: 24 h, scale bar 0.2 micrometers",
+      "f: 48 h, scale bar 0.5 micrometers"
+    ],
+    "presentation": "Original full image preserved; CSS viewports isolate panels d/e/f and preserve time labels and scale bars; no recoloring, retouching or AI generation. No quantitative mean pore size is inferred from the displayed image."
+  },
+  {
+    "file": "cpg-1000-sem-2024.jpg",
+    "source": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11027042/",
+    "doi": "10.1039/D4RA01283F",
+    "supplement": "RA-014-D4RA01283F-s001.pdf, Figure 1, page 2",
+    "title": "Confined microemulsions: pore diameter induced change of the phase behavior",
+    "authors": "Haverkamp et al.",
+    "year": 2024,
+    "caption": "SEM Micrograph of CPG1000",
+    "nominal_pore_size": "1000 angstroms (100 nm), confirmed in main article materials section",
+    "scale_bar": "100 nm",
+    "presentation": "Original 1024 x 768 JPEG extracted losslessly from the supplementary PDF with pdfimages -j. CPG pore morphology, not a DNA synthesis batch.",
+    "retrieval": "Europe PMC supplementaryFiles?includeInlineImage=false"
+  }
+]

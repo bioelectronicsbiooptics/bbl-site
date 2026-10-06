@@ -432,6 +432,32 @@ table.tbl td.w{white-space:nowrap}
 ol.nl.tight > li{font-size:.96em;gap:.55em}
 ol.nl.tight > li::before{inline-size:1.75em;block-size:1.75em;font-size:.86em;line-height:1.75em}
 
+/* contextual lecture videos */
+/* Contextual lecture videos: one inline player, selectable sources and teaching notes. */
+.video-lesson .body{gap:.4em;padding-top:.85em}
+.video-layout{display:grid;grid-template-columns:2.1fr 1fr;gap:1em;align-items:start}
+.video-stage{position:relative;aspect-ratio:16/9;background:#10263E;overflow:hidden;border-radius:.35em;border:1px solid var(--border)}
+.video-stage iframe,.video-preview{position:absolute;inset:0;width:100%;height:100%;border:0}
+.video-preview{object-fit:contain;background:#10263E}
+.video-play{position:absolute;inset:0;border:0;background:linear-gradient(transparent 45%,rgba(0,0,0,.7));color:white;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.65em}
+.video-play .play-symbol{display:grid;place-items:center;background:#C03B3B;border-radius:50%;width:2.2em;height:2.2em;font-size:1.3em;padding-left:.12em}
+.video-play .play-label{font-size:.8em;font-weight:700;background:rgba(16,38,62,.85);padding:.4em .7em;border-radius:.3em}
+.video-caption{display:flex;gap:.6em;align-items:baseline;margin-top:.45em;font-size:.68em;line-height:1.4;color:var(--gray)}
+.video-caption .video-source-link{margin-left:auto;white-space:nowrap}
+.video-explain{display:flex;flex-direction:column;gap:.65em}
+.video-explain h3{font-size:.87em;color:var(--navy)}
+.video-choices{display:flex;flex-direction:column;gap:.35em}
+.video-choice{font:inherit;font-size:.73em;line-height:1.45;text-align:left;padding:.45em .6em;border:1px solid var(--border);border-left:.22em solid var(--teal);border-radius:.25em;background:white;cursor:pointer}
+.video-choice[aria-pressed="true"]{background:var(--tealwash);border-color:var(--amber);color:var(--amber);font-weight:700}
+.video-choice .video-time{display:block;font-size:.9em;color:var(--gray);margin-top:.15em}
+.video-explain .kb{padding:.4em .65em}
+.video-explain .kb b{font-size:.75em}
+.video-explain .kb p{font-size:.77em;line-height:1.5}
+.video-prompts{font-size:.76em;line-height:1.5;padding-left:1.1em;display:flex;flex-direction:column;gap:.35em}
+.video-prompts li::marker{color:var(--teal)}
+.video-lesson .src{font-size:.58em}
+@media(max-width:780px){.app.read .video-layout{grid-template-columns:1fr}.app.read .video-stage{min-height:0}.app.read .video-choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}}
+
 </style>
 </head>
 <body>
@@ -463,8 +489,8 @@ ol.nl.tight > li::before{inline-size:1.75em;block-size:1.75em;font-size:.86em;li
 <span>each</span></div>
 </section>
 
-<section class="slide" data-part="p0" data-title="학습 성과">
-  <header><h2>오늘의 학습 성과</h2><p class="sub">Learning Outcomes · 6가지</p></header>
+<section class="slide" data-part="p0" data-title="학습 목표">
+  <header><h2>학습 목표</h2><p class="sub">Learning Outcomes · 6가지</p></header>
   <div class="body mid">
     <div class="cols">
       <ul class="pts">
@@ -482,8 +508,8 @@ ol.nl.tight > li::before{inline-size:1.75em;block-size:1.75em;font-size:.86em;li
   </div>
 </section>
 
-<section class="slide" data-part="p0" data-title="오늘의 지도">
-  <header><h2>오늘의 지도</h2><p class="sub">5개 파트 · 대화형 위젯 5개 · 표 9개</p></header>
+<section class="slide" data-part="p0" data-title="강의 구성">
+  <header><h2>강의 구성</h2><p class="sub">5개 파트 · 대화형 위젯 5개 · 표 9개</p></header>
   <div class="body mid">
     <div class="cards five map">
       <div class="card crim"><span class="pn">PART 1</span><h3>왜 칩으로 갔는가</h3><p>컬럼과 칩의 비교 — 종류 · 양 · 단가</p></div>
@@ -496,8 +522,8 @@ ol.nl.tight > li::before{inline-size:1.75em;block-size:1.75em;font-size:.86em;li
   </div>
 </section>
 
-<section class="slide" data-part="p0" data-title="복습 · 컬럼 1개 = 서열 1종">
-  <header><h2>복습 — 컬럼 1개는 서열 1종만 만든다</h2><p class="sub">컬럼은 시간 축으로 서열을 정한다 · DNA 저장은 수백만 종을 요구한다</p></header>
+<section class="slide" data-part="p0" data-title="컬럼 합성의 서열별 반응 분리">
+  <header><h2>컬럼 합성의 서열별 반응 분리</h2><p class="sub">컬럼은 시간 축으로 서열을 정한다 · DNA 저장은 수백만 종을 요구한다</p></header>
   <div class="body">
     <svg viewBox="0 0 640 196" role="img" aria-label="컬럼 1개와 칩 1장의 산출 비교">
       <defs><marker id="tipA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#529FD9"/></marker></defs>
@@ -542,8 +568,8 @@ ol.nl.tight > li::before{inline-size:1.75em;block-size:1.75em;font-size:.86em;li
 </section>
 
 <!-- ===================== PART 1 ===================== -->
-<section class="slide sect" data-part="p1" data-title="PART 1 섹션 표지">
-  <div class="sl"><div class="no">PART 1</div><h2>왜 칩으로 갔는가</h2><p class="en">From Columns to Chips</p></div>
+<section class="slide sect" data-part="p1" data-title="칩 기반 병렬 합성의 필요성">
+  <div class="sl"><div class="no">PART 1</div><h2>칩 기반 병렬 합성의 필요성</h2><p class="en">From Columns to Chips</p></div>
   <div class="sr"><ul>
     <li>컬럼과 칩 — 서열 수 · 규모 · 분자 수 · 비용 단위</li>
     <li>칩은 양이 아니라 종류를 늘리는 기술</li>
@@ -568,8 +594,8 @@ ol.nl.tight > li::before{inline-size:1.75em;block-size:1.75em;font-size:.86em;li
   <p class="src">Twist, <i>Oligo Pools Product Sheet</i> REV12 (2026-01) · Kuiper, Prins &amp; Billerbeck, <i>ChemBioChem</i> 23:e202100507 (2022) · Kosuri &amp; Church, <i>Nature Methods</i> 11:499 (2014) · 분자 수는 계산</p>
 </section>
 
-<section class="slide" data-part="p1" data-title="종류를 늘리는 기술">
-  <header><h2>칩은 양이 아니라 종류를 늘린다</h2><p class="sub">DNA 저장의 요구와 칩의 산출이 정확히 맞물리는 지점</p></header>
+<section class="slide" data-part="p1" data-title="칩 합성의 병렬 처리와 서열 다양성">
+  <header><h2>칩 합성의 병렬 처리와 서열 다양성</h2><p class="sub">DNA 저장의 요구와 칩의 산출이 정확히 맞물리는 지점</p></header>
   <div class="body mid">
     <div class="cols w64">
       <div class="stack">
@@ -605,8 +631,8 @@ ol.nl.tight > li::before{inline-size:1.75em;block-size:1.75em;font-size:.86em;li
   </ul></div>
 </section>
 
-<section class="slide" data-part="p2" data-title="사이클은 하나, 트리거는 넷">
-  <header><h2>사이클은 하나, 트리거는 넷</h2><p class="sub">6-1강의 4단계 사이클은 그대로 · ① 탈보호에만 네 갈래가 생긴다</p></header>
+<section class="slide" data-part="p2" data-title="공통 합성 사이클과 탈보호 제어 방식">
+  <header><h2>공통 합성 사이클과 탈보호 제어 방식</h2><p class="sub">6-1강의 4단계 사이클은 그대로 · ① 탈보호에만 네 갈래가 생긴다</p></header>
   <div class="body">
     <div class="cols w64">
       <svg viewBox="0 0 400 258" role="img" aria-label="4단계 사이클과 탈보호 트리거 4종">
@@ -949,6 +975,17 @@ M  END
   <p class="src">Fodor et al., <i>Science</i> 251:767 (1991) · <i>Nature Biotechnology</i> 17:953 (1999) · <i>Nucleic Acids Res</i> (2016) PMC4776362</p>
 </section>
 
+<section class="slide video-lesson" data-part="p2" data-title="광유도 합성 — 마스크와 선택적 탈보호" data-video-lesson>
+  <header><h2>광유도 합성 — 마스크와 선택적 탈보호</h2><p class="sub">본문 개념과 영상의 실제 공정·반응 기전 비교 · 재생 버튼 선택</p></header>
+  <div class="body">
+    <div class="video-layout">
+      <div><div class="video-stage"><img class="video-preview" src="https://i.ytimg.com/vi/B7vRpnMkQFM/hqdefault.jpg" alt="Affymetrix Microarray | Affymetrix Genechip | Affymetrix Genechip Oligonucleotide Microarray |"><button class="video-play" type="button"><span class="play-symbol">▶</span><span class="play-label">슬라이드에서 영상 재생</span></button></div><p class="video-caption"><span class="video-credit">BMH learning · 2:00</span><a class="video-source-link" href="https://www.youtube.com/watch?v=B7vRpnMkQFM" target="_blank" rel="noopener">YouTube에서 보기 ↗</a></p></div>
+      <div class="video-explain"><h3>영상 선택</h3><div class="video-choices"><button class="video-choice" type="button" aria-pressed="true">포토마스크와 선택적 탈보호<span class="video-time">2:00</span></button><button class="video-choice" type="button" aria-pressed="false">마스크·노광·DNA 어레이 제작<span class="video-time">10:41</span></button></div><div class="kb teal"><b>관찰할 내용</b><p class="video-observation">볼 것 — 크롬 마스크가 열린 자리만 탈보호되는 포토마스크 광유도의 순서 (위젯 ①과 대조)</p></div><h3>개념 연결</h3><ul class="video-prompts"><li>마스크의 열린 영역과 반응 위치</li><li>노광 패턴 변경과 서열 다양성</li></ul></div>
+    </div><p class="src"><a href="https://dnalc.cshl.edu/resources/animations/dnachip.html" target="_blank" rel="noopener">CSHL GeneChips 애니메이션</a> · 포토마스크 방식의 추가 복습</p>
+    <p class="src">영상: BMH learning · Support Center for Microsystems Education · YouTube 제목·제작자 확인: 2026-10-07 · 긴 강연은 필요한 구간을 선택하여 시청</p>
+  </div><script type="application/json" class="video-data">[{"id": "B7vRpnMkQFM", "title": "Affymetrix Microarray | Affymetrix Genechip | Affymetrix Genechip Oligonucleotide Microarray |", "author": "BMH learning", "label": "포토마스크와 선택적 탈보호", "duration": "2:00", "note": "볼 것 — 크롬 마스크가 열린 자리만 탈보호되는 포토마스크 광유도의 순서 (위젯 ①과 대조)"}, {"id": "DjcxE1tdB8c", "title": "DNA Microarray Fabrication", "author": "Support Center for Microsystems Education", "label": "마스크·노광·DNA 어레이 제작", "duration": "10:41", "note": "볼 것 — 반도체의 마스크 → 노광 → 현상과 DNA 어레이 합성의 1:1 대응 (SCME 제작)"}]</script>
+</section>
+
 <section class="slide" data-part="p2" data-title="위젯 ② 마스크리스 DMD">
   <header><h2>② 마스크리스 DMD — 한 사이클</h2><p class="sub">NimbleGen MAS · Roche · 크롬 마스크가 가상 마스크로 바뀐다</p></header>
   <div class="body">
@@ -1026,8 +1063,8 @@ M  END
   <p class="src">Lietard et al., <i>Nucleic Acids Res</i> 49:6687 (2021) · Agbavwe et al., <i>J Nanobiotechnology</i> 9:57 (2011) · Nuwaysir et al., <i>Genome Research</i> 12:1749 (2002)</p>
 </section>
 
-<section class="slide" data-part="p2" data-title="DMD 해상도와 용량">
-  <header><h2>해상도를 올리면 오류율이 올라간다</h2><p class="sub">미러 → 픽셀 → 피처 · 광학 한계와 실측 오류율</p></header>
+<section class="slide" data-part="p2" data-title="공간 해상도와 합성 오류의 관계">
+  <header><h2>공간 해상도와 합성 오류의 관계</h2><p class="sub">미러 → 픽셀 → 피처 · 광학 한계와 실측 오류율</p></header>
   <div class="body mid">
     <div class="cols w64">
       <svg viewBox="0 0 400 190" role="img" aria-label="피처 크기 축소와 오류율 증가">
@@ -1143,6 +1180,17 @@ M  END
   <p class="src">LeProust et al., <i>Nucleic Acids Res</i> 38:2522 (2010)</p>
 </section>
 
+<section class="slide video-lesson" data-part="p2" data-title="잉크젯 합성 — 좌표별 단량체 전달" data-video-lesson>
+  <header><h2>잉크젯 합성 — 좌표별 단량체 전달</h2><p class="sub">본문 개념과 영상의 실제 공정·반응 기전 비교 · 재생 버튼 선택</p></header>
+  <div class="body">
+    <div class="video-layout">
+      <div><div class="video-stage"><img class="video-preview" src="https://i.ytimg.com/vi/s3d6gbtNnrk/hqdefault.jpg" alt="安捷倫晶片技術 Inkjet Printing Technology used for Microarray Print"><button class="video-play" type="button"><span class="play-symbol">▶</span><span class="play-label">슬라이드에서 영상 재생</span></button></div><p class="video-caption"><span class="video-credit">威健生技 Welgene Biotech · 3:46</span><a class="video-source-link" href="https://www.youtube.com/watch?v=s3d6gbtNnrk" target="_blank" rel="noopener">YouTube에서 보기 ↗</a></p></div>
+      <div class="video-explain"><h3>영상 선택</h3><div class="video-choices"><button class="video-choice" type="button" aria-pressed="true">Agilent · 잉크젯 합성<span class="video-time">3:46</span></button></div><div class="kb teal"><b>관찰할 내용</b><p class="video-observation">잉크젯 — Agilent SurePrint 홍보 영상(대만 대리점 업로드). 염기를 좌표에 토출 · 스텝효율 &gt;99% · &quot;캡핑 단계가 필요 없다&quot; (위젯 ③과 대조)</p></div><h3>개념 연결</h3><ul class="video-prompts"><li>노즐의 토출과 좌표 선택</li><li>위젯과 실제 시약 전달 방식의 비교</li></ul></div>
+    </div>
+    <p class="src">영상: 威健生技 Welgene Biotech · YouTube 제목·제작자 확인: 2026-10-07 · 긴 강연은 필요한 구간을 선택하여 시청</p>
+  </div><script type="application/json" class="video-data">[{"id": "s3d6gbtNnrk", "title": "安捷倫晶片技術 Inkjet Printing Technology used for Microarray Print", "author": "威健生技 Welgene Biotech", "label": "Agilent · 잉크젯 합성", "duration": "3:46", "note": "잉크젯 — Agilent SurePrint 홍보 영상(대만 대리점 업로드). 염기를 좌표에 토출 · 스텝효율 >99% · \"캡핑 단계가 필요 없다\" (위젯 ③과 대조)"}]</script>
+</section>
+
 <section class="slide" data-part="p2" data-title="위젯 ④ 전기화학 탈보호">
   <header><h2>④ 전기화학 탈보호 — 한 사이클</h2><p class="sub">CustomArray → GenScript · 산을 만드는 전극과 산을 지우는 전극을 나란히 둔다</p></header>
   <div class="body">
@@ -1218,8 +1266,19 @@ M  END
   <p class="src">Egeland &amp; Southern, <i>Nucleic Acids Res</i> 33:e125 (2005)</p>
 </section>
 
-<section class="slide" data-part="p2" data-title="실리콘 미세웰">
-  <header><h2>⑤ 실리콘 미세웰 — 가장 재미없는 방식</h2><p class="sub">Twist Bioscience · 빛도 전압도 쓰지 않고 웰의 벽으로 격리한다</p></header>
+<section class="slide video-lesson" data-part="p2" data-title="전기화학 합성 — 전극과 국소 산 생성" data-video-lesson>
+  <header><h2>전기화학 합성 — 전극과 국소 산 생성</h2><p class="sub">본문 개념과 영상의 실제 공정·반응 기전 비교 · 재생 버튼 선택</p></header>
+  <div class="body">
+    <div class="video-layout">
+      <div><div class="video-stage"><img class="video-preview" src="https://i.ytimg.com/vi/tHQedUXfSCo/hqdefault.jpg" alt="DNA Synthesis Technology | How synthetic DNA is made"><button class="video-play" type="button"><span class="play-symbol">▶</span><span class="play-label">슬라이드에서 영상 재생</span></button></div><p class="video-caption"><span class="video-credit">GenScript USA Inc. · 1:46</span><a class="video-source-link" href="https://www.youtube.com/watch?v=tHQedUXfSCo" target="_blank" rel="noopener">YouTube에서 보기 ↗</a></p></div>
+      <div class="video-explain"><h3>영상 선택</h3><div class="video-choices"><button class="video-choice" type="button" aria-pressed="true">GenScript · 전기화학 합성<span class="video-time">1:46</span></button></div><div class="kb teal"><b>관찰할 내용</b><p class="video-observation">전압 → H⁺ — GenScript (CustomArray 계보). CMOS 칩의 전극을 켜면 그 자리만 일시적 산성 환경 → DMT 제거 → 한 염기 부가 (위젯 ④)</p></div><h3>개념 연결</h3><ul class="video-prompts"><li>전극 선택과 국소 산성 환경</li><li>DMT 제거 후 단량체 연결</li></ul></div>
+    </div>
+    <p class="src">영상: GenScript USA Inc. · YouTube 제목·제작자 확인: 2026-10-07 · 긴 강연은 필요한 구간을 선택하여 시청</p>
+  </div><script type="application/json" class="video-data">[{"id": "tHQedUXfSCo", "title": "DNA Synthesis Technology | How synthetic DNA is made", "author": "GenScript USA Inc.", "label": "GenScript · 전기화학 합성", "duration": "1:46", "note": "전압 → H⁺ — GenScript (CustomArray 계보). CMOS 칩의 전극을 켜면 그 자리만 일시적 산성 환경 → DMT 제거 → 한 염기 부가 (위젯 ④)"}]</script>
+</section>
+
+<section class="slide" data-part="p2" data-title="⑤ 실리콘 미세웰 기반 병렬 합성">
+  <header><h2>⑤ 실리콘 미세웰 기반 병렬 합성</h2><p class="sub">Twist Bioscience · 빛도 전압도 쓰지 않고 웰의 벽으로 격리한다</p></header>
   <div class="body mid">
     <div class="flowx">
       <div class="fb"><b>① 미세웰 격리</b><span>반도체 공정으로 파낸 웰 자체가 격벽 — 96-well 플레이트 크기에 약 10⁶ 사이트</span></div><span class="ar">▶</span>
@@ -1249,8 +1308,19 @@ M  END
   <p class="src">Twist Bioscience, <i>Oligo Pools Product Sheet</i> REV12 (2026-01) · <i>C&amp;EN</i> 93(43) (2015) · GenScript GenTitan Oligo Pools (2026-09-22 확인)</p>
 </section>
 
-<section class="slide" data-part="p2" data-title="네 방식 숫자 비교">
-  <header><h2>숫자로 보는 네 방식</h2><p class="sub">회사 이름이 아니라 탈보호 트리거로 분류한다</p></header>
+<section class="slide video-lesson" data-part="p2" data-title="실리콘 미세웰 — 실제 웨이퍼 제조" data-video-lesson>
+  <header><h2>실리콘 미세웰 — 실제 웨이퍼 제조</h2><p class="sub">본문 개념과 영상의 실제 공정·반응 기전 비교 · 재생 버튼 선택</p></header>
+  <div class="body">
+    <div class="video-layout">
+      <div><div class="video-stage"><img class="video-preview" src="https://i.ytimg.com/vi/OQtXgyvptA4/hqdefault.jpg" alt="Twist Bioscience mass produces synthetic #DNA  using silicon wafer manufacturing techniques #mercnew"><button class="video-play" type="button"><span class="play-symbol">▶</span><span class="play-label">슬라이드에서 영상 재생</span></button></div><p class="video-caption"><span class="video-credit">Mercury News · 0:41</span><a class="video-source-link" href="https://www.youtube.com/watch?v=OQtXgyvptA4" target="_blank" rel="noopener">YouTube에서 보기 ↗</a></p></div>
+      <div class="video-explain"><h3>영상 선택</h3><div class="video-choices"><button class="video-choice" type="button" aria-pressed="true">실리콘 웨이퍼의 실제 생산 공정<span class="video-time">0:41</span></button><button class="video-choice" type="button" aria-pressed="false">Twist · 미세웰의 소형화<span class="video-time">1:16</span></button></div><div class="kb teal"><b>관찰할 내용</b><p class="video-observation">볼 것 — 실제 실리콘 웨이퍼 공정 장면 (Mercury News 취재) · 96-well을 반도체 칩으로 축소한다는 말의 실물</p></div><h3>개념 연결</h3><ul class="video-prompts"><li>미세웰과 반응 구획의 역할</li><li>화학 합성의 소형화와 병렬화</li></ul></div>
+    </div>
+    <p class="src">영상: Mercury News · Twist Bioscience · YouTube 제목·제작자 확인: 2026-10-07 · 긴 강연은 필요한 구간을 선택하여 시청</p>
+  </div><script type="application/json" class="video-data">[{"id": "OQtXgyvptA4", "title": "Twist Bioscience mass produces synthetic #DNA  using silicon wafer manufacturing techniques #mercnew", "author": "Mercury News", "label": "실리콘 웨이퍼의 실제 생산 공정", "duration": "0:41", "note": "볼 것 — 실제 실리콘 웨이퍼 공정 장면 (Mercury News 취재) · 96-well을 반도체 칩으로 축소한다는 말의 실물"}, {"id": "KUm173PZJBQ", "title": "Twist Bioscience: Writing the Future with Synthetic DNA", "author": "Twist Bioscience", "label": "Twist · 미세웰의 소형화", "duration": "1:16", "note": "격벽 + 표준 산 — Twist. 96-well 플레이트 면적에 9,600 유전자 · \"conventional chemistry on a miniaturized scale\" (실리콘 미세웰)"}]</script>
+</section>
+
+<section class="slide" data-part="p2" data-title="칩 합성 방식별 성능 비교">
+  <header><h2>칩 합성 방식별 성능 비교</h2><p class="sub">회사 이름이 아니라 탈보호 트리거로 분류한다</p></header>
   <div class="body mid">
     <table class="tbl xs">
       <tr><th>방식</th><th>주소 지정</th><th>탈보호 트리거</th><th>어레이당 서열 수</th><th>길이</th><th>오류율 · 수율</th><th>대표</th></tr>
@@ -1265,6 +1335,17 @@ M  END
   <p class="src">Lietard et al., <i>Nucleic Acids Res</i> 49:6687 (2021) · LeProust et al., <i>Nucleic Acids Res</i> 38:2522 (2010) · Nguyen et al., <i>Science Advances</i> 7:eabi6714 (2021) · 피처 밀도: <i>Expert Rev Mol Diagn</i> 6:145 (2006) · HiFi 1:2,265: Agilent SurePrint 제품 문서 (2차 자료) · imec 보도자료 (2026-03-05) · Twist REV12 (2026-01) · GenScript (2026-09-22)</p>
 </section>
 
+<section class="slide video-lesson" data-part="p2" data-title="열 제어 합성 — 칩 위의 추가 접근" data-video-lesson>
+  <header><h2>열 제어 합성 — 칩 위의 추가 접근</h2><p class="sub">본문 개념과 영상의 실제 공정·반응 기전 비교 · 재생 버튼 선택</p></header>
+  <div class="body">
+    <div class="video-layout">
+      <div><div class="video-stage"><img class="video-preview" src="https://i.ytimg.com/vi/2r4Ejsu5c_U/hqdefault.jpg" alt="Evonetix DNA synthesis on silicon arrays"><button class="video-play" type="button"><span class="play-symbol">▶</span><span class="play-label">슬라이드에서 영상 재생</span></button></div><p class="video-caption"><span class="video-credit">Evonetix · 1:11</span><a class="video-source-link" href="https://www.youtube.com/watch?v=2r4Ejsu5c_U" target="_blank" rel="noopener">YouTube에서 보기 ↗</a></p></div>
+      <div class="video-explain"><h3>영상 선택</h3><div class="video-choices"><button class="video-choice" type="button" aria-pressed="true">Evonetix · 열 제어 합성과 조립<span class="video-time">1:11</span></button></div><div class="kb teal"><b>관찰할 내용</b><p class="video-observation">보너스 · 다섯 번째 트리거 — Evonetix는 5′ 탈보호를 열(thermal)로 켠다 · 칩 위에서 조립까지 (7-1 기업 지도와 연결)</p></div><h3>개념 연결</h3><ul class="video-prompts"><li>열에 의한 위치별 반응 제어</li><li>전기화학·광유도 방식과의 구분</li></ul></div>
+    </div>
+    <p class="src">영상: Evonetix · YouTube 제목·제작자 확인: 2026-10-07 · 긴 강연은 필요한 구간을 선택하여 시청</p>
+  </div><script type="application/json" class="video-data">[{"id": "2r4Ejsu5c_U", "title": "Evonetix DNA synthesis on silicon arrays", "author": "Evonetix", "label": "Evonetix · 열 제어 합성과 조립", "duration": "1:11", "note": "보너스 · 다섯 번째 트리거 — Evonetix는 5′ 탈보호를 열(thermal)로 켠다 · 칩 위에서 조립까지 (7-1 기업 지도와 연결)"}]</script>
+</section>
+
 <!-- ===================== PART 3 ===================== -->
 <section class="slide sect" data-part="p3" data-title="PART 3 섹션 표지">
   <div class="sl"><div class="no">PART 3</div><h2>광화학과 오류</h2><p class="en">Photochemistry and Where Errors Come From</p></div>
@@ -1276,8 +1357,8 @@ M  END
   </ul></div>
 </section>
 
-<section class="slide" data-part="p3" data-title="PGA와 광분해 보호기">
-  <header><h2>빛으로 무엇을 만들 것인가</h2><p class="sub">(A) 광생성 산 PGA — 빛이 산을 만든다 ｜ (B) 광분해 보호기 — 빛이 결합을 끊는다</p></header>
+<section class="slide" data-part="p3" data-title="광산 발생과 광분해성 보호기의 비교">
+  <header><h2>광산 발생과 광분해성 보호기의 비교</h2><p class="sub">(A) 광생성 산 PGA — 빛이 산을 만든다 ｜ (B) 광분해 보호기 — 빛이 결합을 끊는다</p></header>
   <div class="body">
     <div class="cols">
       <div class="card crim">
@@ -1449,6 +1530,17 @@ Q 105.4 257.4, 107.2 257.4
   <p class="src">Gao et al., <i>Nucleic Acids Res</i> 29:4744 (2001) · <i>Nucleic Acids Res</i> (2016) PMC4776362 · Lietard et al., <i>Nucleic Acids Res</i> 49:6687 (2021)</p>
 </section>
 
+<section class="slide video-lesson" data-part="p3" data-title="광산 발생 — µParaflo 반응실" data-video-lesson>
+  <header><h2>광산 발생 — µParaflo 반응실</h2><p class="sub">본문 개념과 영상의 실제 공정·반응 기전 비교 · 재생 버튼 선택</p></header>
+  <div class="body">
+    <div class="video-layout">
+      <div><div class="video-stage"><img class="video-preview" src="https://i.ytimg.com/vi/hYGnJpytUlg/hqdefault.jpg" alt="µParaflo® Technology"><button class="video-play" type="button"><span class="play-symbol">▶</span><span class="play-label">슬라이드에서 영상 재생</span></button></div><p class="video-caption"><span class="video-credit">LC Sciences · 3:46</span><a class="video-source-link" href="https://www.youtube.com/watch?v=hYGnJpytUlg" target="_blank" rel="noopener">YouTube에서 보기 ↗</a></p></div>
+      <div class="video-explain"><h3>영상 선택</h3><div class="video-choices"><button class="video-choice" type="button" aria-pressed="true">µParaflo · 빛으로 생성한 산<span class="video-time">3:46</span></button></div><div class="kb teal"><b>관찰할 내용</b><p class="video-observation">빛 → 산 (PGA) — LC Sciences. 디지털 광학으로 빛을 쏘면 PGA 전구체가 산을 만들어 DMT를 벗긴다 · 산이 새지 않게 미세유체 반응실에 가둔다</p></div><h3>개념 연결</h3><ul class="video-prompts"><li>빛 → 산 생성 → DMT 제거</li><li>미세유체 구획과 산 확산 제어</li></ul></div>
+    </div>
+    <p class="src">영상: LC Sciences · YouTube 제목·제작자 확인: 2026-10-07 · 긴 강연은 필요한 구간을 선택하여 시청</p>
+  </div><script type="application/json" class="video-data">[{"id": "hYGnJpytUlg", "title": "µParaflo® Technology", "author": "LC Sciences", "label": "µParaflo · 빛으로 생성한 산", "duration": "3:46", "note": "빛 → 산 (PGA) — LC Sciences. 디지털 광학으로 빛을 쏘면 PGA 전구체가 산을 만들어 DMT를 벗긴다 · 산이 새지 않게 미세유체 반응실에 가둔다"}]</script>
+</section>
+
 <section class="slide" data-part="p3" data-title="스텝수율의 지수 법칙">
   <header><h2>스텝수율의 지수 법칙</h2><p class="sub">칩 올리고가 150–350 nt에 머무는 수학적 이유</p></header>
   <div class="body mid">
@@ -1474,8 +1566,8 @@ Q 105.4 257.4, 107.2 257.4
   <p class="src">계산 (수율^사이클 수) · 입력값은 Agbavwe et al., <i>J Nanobiotechnology</i> 9:57 (2011) · Lietard et al., <i>Nucleic Acids Res</i> 49:6687 (2021) · LeProust et al., <i>Nucleic Acids Res</i> 38:2522 (2010)</p>
 </section>
 
-<section class="slide" data-part="p3" data-title="왜 칩 오류율이 더 높은가">
-  <header><h2>왜 칩 올리고의 오류율이 더 높은가</h2><p class="sub">물리적 이유 5가지 · 각각 숫자 하나</p></header>
+<section class="slide" data-part="p3" data-title="칩 합성의 주요 오류 발생 요인">
+  <header><h2>칩 합성의 주요 오류 발생 요인</h2><p class="sub">물리적 이유 5가지 · 각각 숫자 하나</p></header>
   <div class="body mid">
     <ol class="nl tight">
       <li><span><b>불완전 탈보호</b> — 광 · 전기화학 탈보호는 양자수율 · 전류효율이 유한하다. 미탈보호는 그 사이클을 건너뛰어 곧 <span class="bad">결손</span>이 된다. <span class="mono hl">미탈보호 ~5% ↔ 실측 결손 4.65%</span></span></li>
@@ -1544,8 +1636,8 @@ Q 105.4 257.4, 107.2 257.4
   <p class="src">Twist <i>Oligo Pools Product Sheet</i> REV12 (2026-01) · GenScript GenTitan · IDT oPools · Eurofins ePools (모두 2026-09-22 확인) · Agilent 행은 oligopool.com 벤더 비교 (2026-04)</p>
 </section>
 
-<section class="slide" data-part="p4" data-title="주문 시 읽어야 할 스펙 3개">
-  <header><h2>주문할 때 읽어야 할 스펙 세 개</h2><p class="sub">카탈로그의 숫자를 저장 용량과 데이터 손실로 번역하기</p></header>
+<section class="slide" data-part="p4" data-title="올리고 풀의 주요 제품 사양">
+  <header><h2>올리고 풀의 주요 제품 사양</h2><p class="sub">카탈로그의 숫자를 저장 용량과 데이터 손실로 번역하기</p></header>
   <div class="body mid">
     <div class="cards">
       <div class="speccard"><b>① 길이 (nt)</b><span class="num">최대 350 nt (Twist)</span><span>페이로드 크기를 결정 — 5주차 올리고 구조에서 프라이머 · 인덱스 · ECC를 뺀 나머지가 데이터</span></div>
@@ -1563,63 +1655,24 @@ Q 105.4 257.4, 107.2 257.4
   <p class="src">Twist <i>Oligo Pools Product Sheet</i> REV12 (2026-01) · IDT oPools 제품 페이지 (2026-09-22) · 93.6%는 계산</p>
 </section>
 
-<section class="slide" data-part="p4" data-title="수업 중 볼 동영상">
-  <header><h2>수업 중 볼 동영상</h2><p class="sub">접속 확인된 링크만 · 무엇을 볼지 한 줄</p></header>
-  <div class="body mid">
-    <ul class="vids">
-      <li><span class="pl">▶</span><span>
-        <b><a href="https://www.youtube.com/watch?v=B7vRpnMkQFM" target="_blank" rel="noopener">Affymetrix Microarray | Affymetrix Genechip | Affymetrix Genechip Oligonucleotide Microarray</a> <em>2:00</em></b>
-        <span>볼 것 — 크롬 마스크가 열린 자리만 탈보호되는 포토마스크 광유도의 순서 (위젯 ①과 대조)</span></span></li>
-      <li><span class="pl">▶</span><span>
-        <b><a href="https://www.youtube.com/watch?v=DjcxE1tdB8c" target="_blank" rel="noopener">DNA Microarray Fabrication</a> <em>10:41</em></b>
-        <span>볼 것 — 반도체의 마스크 → 노광 → 현상과 DNA 어레이 합성의 1:1 대응 (SCME 제작)</span></span></li>
-      <li><span class="pl">▶</span><span>
-        <b><a href="https://www.youtube.com/watch?v=OQtXgyvptA4" target="_blank" rel="noopener">Twist Bioscience mass produces synthetic #DNA using silicon wafer manufacturing techniques #mercnew</a> <em>0:41</em></b>
-        <span>볼 것 — 실제 실리콘 웨이퍼 공정 장면 (Mercury News 취재) · 96-well을 반도체 칩으로 축소한다는 말의 실물</span></span></li>
-      <li><span class="pl">▶</span><span>
-        <b><a href="https://www.youtube.com/watch?v=LTnJWxCO3M4" target="_blank" rel="noopener">DNA Data Storage by Twist Bioscience</a> <em>0:35</em></b>
-        <span>볼 것 — 올리고 풀 하나가 데이터가 되는 흐름 (PART 5 직전 전환용)</span></span></li>
-      <li><span class="pl">▶</span><span>
-        <b><a href="https://www.youtube.com/watch?v=UbH9xPVlmeQ" target="_blank" rel="noopener">SDC2021: From DNA Synthesis on Chips to DNA Data Storage</a> <em>15:39</em></b>
-        <span>과제 시청 — 반도체 공정과 저장 비용을 직접 연결하는 Twist 엔지니어 강연 (SNIA)</span></span></li>
-      <li><span class="pl">▶</span><span>
-        <b><a href="https://dnalc.cshl.edu/resources/animations/dnachip.html" target="_blank" rel="noopener">"GeneChips®" Biology Animation Library - CSHL DNA Learning Center</a></b>
-        <span>보충 — 전체화면 애니메이션판이 있어 위젯 ①을 복습할 때 학생이 혼자 돌려볼 수 있다</span></span></li>
-    </ul>
-  </div>
-  <p class="src">링크 접속 · 제목 확인: 2026-09-22 · YouTube oEmbed 및 페이지 메타데이터</p>
-</section>
-
-<section class="slide" data-part="p4" data-title="수업 중 볼 동영상 ② 트리거별 실물">
-  <header><h2>수업 중 볼 동영상 ② — 네 트리거의 실물</h2><p class="sub">PART 2 위젯과 같은 순서 · 접속 확인된 공식 영상만 · 무엇을 볼지 한 줄</p></header>
-  <div class="body mid">
-    <ul class="vids">
-      <li><span class="pl">▶</span><span>
-        <b><a href="https://www.youtube.com/watch?v=hYGnJpytUlg" target="_blank" rel="noopener">µParaflo® Technology</a> <em>3:46</em></b>
-        <span>빛 → 산 (PGA) — LC Sciences. 디지털 광학으로 빛을 쏘면 PGA 전구체가 산을 만들어 DMT를 벗긴다 · 산이 새지 않게 미세유체 반응실에 가둔다</span></span></li>
-      <li><span class="pl">▶</span><span>
-        <b><a href="https://www.youtube.com/watch?v=s3d6gbtNnrk" target="_blank" rel="noopener">安捷倫晶片技術 Inkjet Printing Technology used for Microarray Print</a> <em>3:46</em></b>
-        <span>잉크젯 — Agilent SurePrint 홍보 영상(대만 대리점 업로드). 염기를 좌표에 토출 · 스텝효율 &gt;99% · "캡핑 단계가 필요 없다" (위젯 ③과 대조)</span></span></li>
-      <li><span class="pl">▶</span><span>
-        <b><a href="https://www.youtube.com/watch?v=tHQedUXfSCo" target="_blank" rel="noopener">DNA Synthesis Technology | How synthetic DNA is made</a> <em>1:46</em></b>
-        <span>전압 → H⁺ — GenScript (CustomArray 계보). CMOS 칩의 전극을 켜면 그 자리만 일시적 산성 환경 → DMT 제거 → 한 염기 부가 (위젯 ④)</span></span></li>
-      <li><span class="pl">▶</span><span>
-        <b><a href="https://www.youtube.com/watch?v=KUm173PZJBQ" target="_blank" rel="noopener">Twist Bioscience: Writing the Future with Synthetic DNA</a> <em>1:16</em></b>
-        <span>격벽 + 표준 산 — Twist. 96-well 플레이트 면적에 9,600 유전자 · "conventional chemistry on a miniaturized scale" (실리콘 미세웰)</span></span></li>
-      <li><span class="pl">▶</span><span>
-        <b><a href="https://www.youtube.com/watch?v=2r4Ejsu5c_U" target="_blank" rel="noopener">Evonetix DNA synthesis on silicon arrays</a> <em>1:11</em></b>
-        <span>보너스 · 다섯 번째 트리거 — Evonetix는 5′ 탈보호를 열(thermal)로 켠다 · 칩 위에서 조립까지 (7-1 기업 지도와 연결)</span></span></li>
-      <li><span class="pl">▶</span><span>
-        <b><a href="https://www.youtube.com/watch?v=gAH2kwvc7vM" target="_blank" rel="noopener">2018 -12 13 Webinar: Oligo pools  design, synthesis, and research applications</a> <em>37:02</em></b>
-        <span>과제 시청 — 연사는 CustomArray의 Marcelo Caraballo. "CustomArray가 개발했고 GenScript가 인수했다"는 당사자 설명 · 앞 10분이 합성 원리</span></span></li>
-    </ul>
-  </div>
-  <p class="src">YouTube · 2026-09-29 접속 확인</p>
+<section class="slide video-lesson" data-part="p4" data-title="올리고 풀 — 설계·생산·저장 비용" data-video-lesson>
+  <header><h2>올리고 풀 — 설계·생산·저장 비용</h2><p class="sub">본문 개념과 영상의 실제 공정·반응 기전 비교 · 재생 버튼 선택</p></header>
+  <div class="body">
+    <div class="video-layout">
+      <div><div class="video-stage"><img class="video-preview" src="https://i.ytimg.com/vi/gAH2kwvc7vM/hqdefault.jpg" alt="2018 -12 13 Webinar: Oligo pools  design, synthesis, and research applications"><button class="video-play" type="button"><span class="play-symbol">▶</span><span class="play-label">슬라이드에서 영상 재생</span></button></div><p class="video-caption"><span class="video-credit">GenScript USA Inc. · 37:02</span><a class="video-source-link" href="https://www.youtube.com/watch?v=gAH2kwvc7vM" target="_blank" rel="noopener">YouTube에서 보기 ↗</a></p></div>
+      <div class="video-explain"><h3>영상 선택</h3><div class="video-choices"><button class="video-choice" type="button" aria-pressed="true">CustomArray · 올리고 풀 설계 강연<span class="video-time">37:02 · 심화</span></button><button class="video-choice" type="button" aria-pressed="false">칩 합성과 저장 비용 · 심화 강연<span class="video-time">15:39 · 심화</span></button></div><div class="kb teal"><b>관찰할 내용</b><p class="video-observation">과제 시청 — 연사는 CustomArray의 Marcelo Caraballo. &quot;CustomArray가 개발했고 GenScript가 인수했다&quot;는 당사자 설명 · 앞 10분이 합성 원리</p></div><h3>개념 연결</h3><ul class="video-prompts"><li>풀 크기·길이·오류율의 구분</li><li>긴 강연의 합성 원리 부분 선택 시청</li></ul></div>
+    </div>
+    <p class="src">영상: GenScript USA Inc. · SNIAVideo · YouTube 제목·제작자 확인: 2026-10-07 · 긴 강연은 필요한 구간을 선택하여 시청</p>
+  </div><script type="application/json" class="video-data">[{"id": "gAH2kwvc7vM", "title": "2018 -12 13 Webinar: Oligo pools  design, synthesis, and research applications", "author": "GenScript USA Inc.", "label": "CustomArray · 올리고 풀 설계 강연", "duration": "37:02", "note": "과제 시청 — 연사는 CustomArray의 Marcelo Caraballo. \"CustomArray가 개발했고 GenScript가 인수했다\"는 당사자 설명 · 앞 10분이 합성 원리"}, {"id": "UbH9xPVlmeQ", "title": "SDC2021: From DNA Synthesis on Chips to DNA Data Storage", "author": "SNIAVideo", "label": "칩 합성과 저장 비용 · 심화 강연", "duration": "15:39", "note": "과제 시청 — 반도체 공정과 저장 비용을 직접 연결하는 Twist 엔지니어 강연 (SNIA)"}]</script>
 </section>
 
 
-<section class="slide" data-part="p4" data-title="실제 저장 논문이 쓴 풀">
-  <header><h2>DNA 저장 논문이 실제로 쓴 풀</h2><p class="sub">어느 회사의 칩에서 나온 올리고였는가</p></header>
+
+
+
+
+<section class="slide" data-part="p4" data-title="DNA 데이터 저장 연구의 올리고 풀 적용 사례">
+  <header><h2>DNA 데이터 저장 연구의 올리고 풀 적용 사례</h2><p class="sub">어느 회사의 칩에서 나온 올리고였는가</p></header>
   <div class="body mid">
     <table class="tbl sm">
       <tr><th>논문</th><th>합성 공급</th><th>풀 규모</th><th>저장 용량 · 특징</th><th>지금 그 회사는</th></tr>
@@ -1635,6 +1688,17 @@ Q 105.4 257.4, 107.2 257.4
   <p class="src">Grass et al., <i>Angew Chem Int Ed</i> 54:2552 (2015) · Erlich &amp; Zielinski, <i>Science</i> 355:950 (2017) · Organick et al., <i>Nature Biotechnology</i> 36:242 (2018)</p>
 </section>
 
+<section class="slide video-lesson" data-part="p4" data-title="DNA 저장 — 올리고 풀의 활용" data-video-lesson>
+  <header><h2>DNA 저장 — 올리고 풀의 활용</h2><p class="sub">본문 개념과 영상의 실제 공정·반응 기전 비교 · 재생 버튼 선택</p></header>
+  <div class="body">
+    <div class="video-layout">
+      <div><div class="video-stage"><img class="video-preview" src="https://i.ytimg.com/vi/LTnJWxCO3M4/hqdefault.jpg" alt="DNA Data Storage by Twist Bioscience"><button class="video-play" type="button"><span class="play-symbol">▶</span><span class="play-label">슬라이드에서 영상 재생</span></button></div><p class="video-caption"><span class="video-credit">Twist Bioscience · 0:35</span><a class="video-source-link" href="https://www.youtube.com/watch?v=LTnJWxCO3M4" target="_blank" rel="noopener">YouTube에서 보기 ↗</a></p></div>
+      <div class="video-explain"><h3>영상 선택</h3><div class="video-choices"><button class="video-choice" type="button" aria-pressed="true">Twist · 올리고 풀과 DNA 저장<span class="video-time">0:35</span></button></div><div class="kb teal"><b>관찰할 내용</b><p class="video-observation">볼 것 — 올리고 풀 하나가 데이터가 되는 흐름 (PART 5 직전 전환용)</p></div><h3>개념 연결</h3><ul class="video-prompts"><li>디지털 데이터와 합성된 서열의 연결</li><li>합성 이후 정제·보관·판독으로의 흐름</li></ul></div>
+    </div>
+    <p class="src">영상: Twist Bioscience · YouTube 제목·제작자 확인: 2026-10-07 · 긴 강연은 필요한 구간을 선택하여 시청</p>
+  </div><script type="application/json" class="video-data">[{"id": "LTnJWxCO3M4", "title": "DNA Data Storage by Twist Bioscience", "author": "Twist Bioscience", "label": "Twist · 올리고 풀과 DNA 저장", "duration": "0:35", "note": "볼 것 — 올리고 풀 하나가 데이터가 되는 흐름 (PART 5 직전 전환용)"}]</script>
+</section>
+
 <!-- ===================== PART 5 ===================== -->
 <section class="slide sect" data-part="p5" data-title="PART 5 섹션 표지">
   <div class="sl"><div class="no">PART 5</div><h2>정제</h2><p class="en">What to Filter Out, and What You Cannot</p></div>
@@ -1646,8 +1710,8 @@ Q 105.4 257.4, 107.2 257.4
   </ul></div>
 </section>
 
-<section class="slide" data-part="p5" data-title="합성 직후 튜브 안">
-  <header><h2>합성이 끝난 튜브 안에는 무엇이 있는가</h2><p class="sub">원하는 것은 소수 · 60-mer · 스텝수율 99% 가정</p></header>
+<section class="slide" data-part="p5" data-title="합성 산물의 조성과 불순물">
+  <header><h2>합성 산물의 조성과 불순물</h2><p class="sub">원하는 것은 소수 · 60-mer · 스텝수율 99% 가정</p></header>
   <div class="body mid">
     <div class="stack">
       <div class="barx prop">
@@ -1742,8 +1806,8 @@ Q 105.4 257.4, 107.2 257.4
   <p class="src">Glen Research, <i>Glen Report</i> 21.211 · 칩 풀의 정제 불가 근거: Twist REV12 (2026-01) 및 분자 수 계산</p>
 </section>
 
-<section class="slide" data-part="p5" data-title="정제 4종 비교">
-  <header><h2>정제 4종 — 무엇을 언제 쓰는가</h2><p class="sub">순도와 회수율은 맞바꾸는 관계 · 공개 수치가 없어 정성 등급으로만 비교</p></header>
+<section class="slide" data-part="p5" data-title="올리고뉴클레오타이드 정제법의 비교">
+  <header><h2>올리고뉴클레오타이드 정제법의 비교</h2><p class="sub">순도와 회수율은 맞바꾸는 관계 · 공개 수치가 없어 정성 등급으로만 비교</p></header>
   <div class="body mid">
     <table class="tbl sm">
       <tr><th>방법</th><th>분리 원리</th><th>얻는 순도</th><th>규모</th><th>주 적용</th><th>DNA 저장 풀에</th></tr>
@@ -1802,8 +1866,8 @@ Q 105.4 257.4, 107.2 257.4
   <p class="src">분리 원리와 DMT-on 전략: Glen Research, <i>Glen Report</i> 21.211 · 기존 강의안 보강 자료 (상세는 별도 HPLC 강의록)</p>
 </section>
 
-<section class="slide" data-part="p5" data-title="용도별 선택 가이드">
-  <header><h2>정제 선택 가이드 — 용도에서 거꾸로</h2><p class="sub">순도를 먼저 정하지 않는다 · 쓸 곳을 먼저 정한다</p></header>
+<section class="slide" data-part="p5" data-title="용도별 정제법 선택 기준">
+  <header><h2>용도별 정제법 선택 기준</h2><p class="sub">순도를 먼저 정하지 않는다 · 쓸 곳을 먼저 정한다</p></header>
   <div class="body mid">
     <table class="tbl sm">
       <tr><th>용도</th><th>요구 순도</th><th>권장 정제</th><th>이유</th></tr>
@@ -1819,8 +1883,8 @@ Q 105.4 257.4, 107.2 257.4
 </section>
 
 <!-- ===================== 정리 ===================== -->
-<section class="slide" data-part="p6" data-title="정리">
-  <header><h2>오늘의 정리</h2><p class="sub">6주차-2강 · 여섯 줄</p></header>
+<section class="slide" data-part="p6" data-title="칩 합성과 올리고 정제의 핵심 원리">
+  <header><h2>칩 합성과 올리고 정제의 핵심 원리</h2><p class="sub">6주차-2강 · 여섯 줄</p></header>
   <div class="body mid">
     <ol class="nl tight">
       <li><span>칩 합성은 컬럼의 <b>시간 축</b>을 <b>공간 축</b>으로 바꾼 것 — 사이클 수는 그대로 4N번, 서열 수만 10⁴–10⁶배</span></li>
@@ -1835,8 +1899,8 @@ Q 105.4 257.4, 107.2 257.4
 </section>
 
 <!-- ===================== 퀴즈 ===================== -->
-<section class="slide quiz" data-part="pq" data-title="퀴즈">
-  <header><h2>퀴즈 — 오늘의 확인</h2><p class="sub">클릭하면 답이 열린다</p></header>
+<section class="slide quiz" data-part="pq" data-title="퀴즈 — 학습 내용 확인">
+  <header><h2>퀴즈 — 학습 내용 확인</h2><p class="sub">클릭하면 답이 열린다</p></header>
   <div class="body mid">
     <div class="qcard">
       <details class="q"><summary data-n="1"><span>네 방식에서 <b>공간 선택성이 걸리는 단계</b>는 각각 무엇인가?</span></summary>
@@ -1851,8 +1915,8 @@ Q 105.4 257.4, 107.2 257.4
   </div>
 </section>
 
-<section class="slide ending" data-part="pq" data-title="Q and A">
-  <h2>Q and A</h2>
+<section class="slide ending" data-part="pq" data-title="질의응답">
+  <h2>질의응답</h2>
   <div class="rule"></div>
   <p>"칩은 양을 늘리는 기계가 아니라 주소를 늘리는 기계다 — 그래서 정제 대신 부호가 필요해졌다."</p>
   <p class="au">송영준  Youngjun Song, Ph.D.   ·   인천대학교</p>
@@ -2149,6 +2213,58 @@ function mol3dInit(root){
 }
 document.addEventListener('DOMContentLoaded', function(){ mol3dInit(document); });
 setTimeout(function(){ mol3dInit(document); }, 60);
+
+/* Stop a lecture video when changing slides or selecting another source. */
+function lectureVideosInit(){
+  var lessons=[].slice.call(document.querySelectorAll('[data-video-lesson]'));
+  var playing=null;
+  lessons.forEach(function(lesson){
+    if(lesson.dataset.videoReady)return;
+    lesson.dataset.videoReady='1';
+    var videos=JSON.parse(lesson.querySelector('.video-data').textContent);
+    var stage=lesson.querySelector('.video-stage');
+    var preview=lesson.querySelector('.video-preview');
+    var play=lesson.querySelector('.video-play');
+    var source=lesson.querySelector('.video-source-link');
+    var credit=lesson.querySelector('.video-credit');
+    var note=lesson.querySelector('.video-observation');
+    var choices=[].slice.call(lesson.querySelectorAll('.video-choice'));
+    var selected=0;
+    function stop(){
+      var frame=stage.querySelector('iframe');
+      if(frame)frame.remove();
+      preview.hidden=false;play.hidden=false;
+      if(playing===stop)playing=null;
+    }
+    function select(i){
+      stop();selected=i;
+      var video=videos[i];
+      preview.src='https://i.ytimg.com/vi/'+video.id+'/hqdefault.jpg';
+      preview.alt=video.title;
+      source.href='https://www.youtube.com/watch?v='+video.id;
+      credit.textContent=video.author+' · '+video.duration;
+      note.textContent=video.note;
+      choices.forEach(function(button,j){button.setAttribute('aria-pressed',String(i===j));});
+      play.setAttribute('aria-label',video.label+' 재생');
+    }
+    choices.forEach(function(button,i){button.addEventListener('click',function(){select(i);});});
+    play.addEventListener('click',function(){
+      if(playing)playing();
+      var video=videos[selected];
+      var frame=document.createElement('iframe');
+      frame.title=video.title;
+      frame.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      frame.allowFullscreen=true;
+      frame.referrerPolicy='strict-origin-when-cross-origin';
+      frame.src='https://www.youtube-nocookie.com/embed/'+video.id+'?autoplay=1&rel=0&playsinline=1';
+      preview.hidden=true;play.hidden=true;stage.appendChild(frame);playing=stop;
+    });
+    new MutationObserver(function(){if(lesson.hidden)stop();}).observe(lesson,{attributes:true,attributeFilter:['hidden']});
+    select(0);
+  });
+}
+document.addEventListener('DOMContentLoaded',lectureVideosInit);
+setTimeout(lectureVideosInit,60);
 
 /* ---------- start ---------- */
 if (window.innerWidth < 1180 && window.innerWidth >= 900) app.classList.add('noside');

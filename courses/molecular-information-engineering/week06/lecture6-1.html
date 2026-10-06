@@ -511,6 +511,123 @@ svg.dia .carbon-base{fill:var(--green)} svg.dia .carbon-phosphate{fill:var(--amb
 .length-limit .cols{gap:.75em}
 .length-limit .pts.sm{gap:.16em}
 
+/* Two-stage CPG teaching sequence: physical pores first, molecular chemistry second. */
+.cpg-intro .body,.cpg-chemistry .body{gap:.45em;padding-top:.85em}
+.cpg-intro-top{display:grid;grid-template-columns:.95fr 1.65fr;gap:1.1em;align-items:center}
+.cpg-overview-photo img{display:block;height:9.2em;max-width:100%;width:100%;object-fit:contain;background:white}
+.cpg-overview-photo figcaption{font-size:.6em;line-height:1.35;text-align:center;color:var(--gray)}
+.cpg-intro-top .pts.sm{font-size:.92em;gap:.3em}
+.cpg-principle{display:flex;gap:.35em;align-items:center;margin-top:.2em}
+.cpg-principle span{flex:1;text-align:center;padding:.35em .2em;border-radius:.2em;background:var(--tealwash);color:var(--navy);font-size:.8em;font-weight:700}
+.cpg-principle b{color:var(--amber)}
+.pore-gallery-head{display:flex;align-items:baseline;gap:1em;margin-top:.35em}
+.pore-gallery-head h3{font-size:.9em;color:var(--navy)}
+.pore-gallery-head span{font-size:.65em;color:var(--gray)}
+.pore-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1em}
+.pore-example{border:1px solid var(--border);background:white;padding:.35em;border-radius:.3em}
+.pore-example h3{font-size:.78em;text-align:center;color:var(--navy);margin-bottom:.25em}
+.sem-window{position:relative;overflow:hidden;width:10em;max-width:100%;aspect-ratio:380/309;margin-inline:auto}
+.sem-window img{position:absolute;max-width:none;width:207.1053%;height:auto;display:block}
+.sem-8h img{left:-105.2632%;top:-108.0906%}
+.sem-24h img{left:-3.6842%;top:-213.5922%}
+.sem-48h img{left:-105.2632%;top:-213.5922%}
+.pore-example figcaption{font-size:.6em;text-align:center;color:var(--gray);line-height:1.35;margin-top:.25em}
+.pore-takeaway{font-size:.7em}
+.cpg-chemistry-layout{display:grid;grid-template-columns:.78fr 1.6fr;gap:1.15em;align-items:start}
+.cpg-chemistry .cpg-tether h3{font-size:.9em;margin-bottom:.4em}
+.cpg-chemistry .cpg-tether svg{max-height:22.2em}
+.cpg-chemistry .cpg-tether figcaption{font-size:.58em}
+.cpg-chemistry-details{display:flex;flex-direction:column;gap:.5em}
+.cpg-chemistry-details .kb{padding:.4em .7em}
+.cpg-chemistry-details .kb b{font-size:.79em}
+.cpg-chemistry-details .kb p{font-size:.85em;line-height:1.45}
+.cpg-link-formula{padding:.45em .6em;border:1px solid var(--border);border-radius:.3em;background:white;font-size:.85em;line-height:1.55;white-space:nowrap}
+.cpg-link-formula .succinyl{color:var(--amber);font-weight:700}.cpg-link-formula .ester{color:var(--crim);font-weight:700}
+.cpg-link-formula small{font-size:.78em;color:var(--gray)}
+.cpg-pore-choice{display:grid;grid-template-columns:.75fr 1.25fr;gap:.7em;align-items:center}
+.cpg-pore-choice img{display:block;width:100%;max-height:7.8em;object-fit:contain}
+.cpg-pore-choice figcaption{font-size:.58em;line-height:1.4;color:var(--gray);text-align:center}
+.cpg-pore-choice h3{font-size:.84em;color:var(--navy);margin-bottom:.25em}
+.cpg-pore-choice p{font-size:.77em;line-height:1.5;margin-bottom:.25em}
+@media(max-width:780px){.app.read .cpg-intro-top,.app.read .cpg-chemistry-layout{grid-template-columns:1fr}.app.read .pore-gallery{grid-template-columns:1fr}.app.read .sem-window{width:100%;max-width:360px}.app.read .cpg-link-formula{white-space:normal}.app.read .pore-gallery-head{display:block}}
+
+/* Restore the original pore-and-chain diagram before the SEM/chemistry pages. */
+.cpg-restored .body{gap:.6em;padding-top:.85em}
+.cpg-restored-layout{display:grid;grid-template-columns:.95fr 1.25fr;gap:1.3em;align-items:start}
+.cpg-restored-layout h3{font-size:.92em;color:var(--navy);margin-bottom:.45em}
+.cpg-product-view > img{display:block;max-height:16em;width:100%;object-fit:contain;background:white;border:1px solid var(--border);border-radius:.3em}
+.cpg-product-view figcaption{font-size:.63em;color:var(--gray);line-height:1.45;margin-top:.35em}
+.cpg-product-view .kb{margin-top:.7em;padding:.45em .7em}
+.cpg-product-view .kb p{font-size:.85em}
+.cpg-restored-diagram svg{max-height:16em;margin-top:1em;margin-bottom:1em;background:white;border-radius:.3em}
+.cpg-restored-diagram .pts.sm{font-size:.88em}
+@media(max-width:780px){.app.read .cpg-restored-layout{grid-template-columns:1fr}}
+
+/* Flow-through CPG support: liquid passes, support remains. */
+.cpg-restored .cpg-product-view > img{max-height:13.4em}
+.cpg-through-flow{display:flex;gap:.25em;align-items:center;margin-top:.55em}
+.cpg-through-flow span{font-size:.73em;background:var(--tealwash);padding:.3em .35em;border-radius:.25em;color:var(--navy)}
+.cpg-through-flow b{color:var(--amber);font-size:.85em}
+.cpg-restored .cpg-product-view .kb{margin-top:.45em}
+.cpg-restored .cpg-product-view .kb p{font-size:.78em;line-height:1.45}
+.cpg-restored .cpg-restored-diagram .pts.sm{font-size:.85em}
+/* Fit source lines and pore-size notes in the 16:9 canvas. */
+.cpg-intro .body{gap:.3em;padding-top:.75em}
+.cpg-intro-top .pts.sm{font-size:.83em;gap:.22em}
+.cpg-intro-top .stack{gap:.4em}
+.cpg-intro-top .small{font-size:.7em}
+.cpg-overview-photo img{height:8.3em}
+.sem-window{width:8.8em}
+.pore-takeaway{font-size:.64em}
+.cpg-chemistry-details{gap:.35em}
+.cpg-chemistry-details .kb{padding:.32em .6em}
+.cpg-chemistry-details .kb b{font-size:.73em}
+.cpg-chemistry-details .kb p{font-size:.77em;line-height:1.4}
+.cpg-link-formula{font-size:.8em;padding:.3em .5em}
+.cpg-pore-choice img{max-height:6.2em}
+.cpg-pore-choice p{font-size:.7em;line-height:1.4}
+.cpg-chemistry .cpg-tether svg{max-height:20.7em}
+
+/* Professional English terms with Korean explanations in the cycle table. */
+.cycle-conditions .body{gap:.5em;padding-top:.8em}
+.cycle-conditions .cycle-table{font-size:.72em;line-height:1.35;table-layout:fixed}
+.cycle-table th,.cycle-table td{padding:.4em .5em!important;overflow-wrap:anywhere}
+.cycle-table .ko{font-size:.92em;color:var(--gray);font-weight:400}
+.cycle-footnote{font-size:.7em;line-height:1.45;color:var(--gray)}
+
+.cycle-conditions .cycle-table{font-size:.69em}
+.slide[data-title="DMT 양이온의 흡광 특성과 합성 효율 측정"] .body{gap:.5em}
+.slide[data-title="DMT 양이온의 흡광 특성과 합성 효율 측정"] .kb{padding:.4em .75em}
+.slide[data-title="DMT 양이온의 흡광 특성과 합성 효율 측정"] .kb p{font-size:.88em}
+
+.cycle-conditions .cycle-table td,.cycle-conditions .cycle-table th{padding:.3em .5em!important}
+
+/* contextual lecture videos */
+/* Contextual lecture videos: one inline player, selectable sources and teaching notes. */
+.video-lesson .body{gap:.4em;padding-top:.85em}
+.video-layout{display:grid;grid-template-columns:2.1fr 1fr;gap:1em;align-items:start}
+.video-stage{position:relative;aspect-ratio:16/9;background:#10263E;overflow:hidden;border-radius:.35em;border:1px solid var(--border)}
+.video-stage iframe,.video-preview{position:absolute;inset:0;width:100%;height:100%;border:0}
+.video-preview{object-fit:contain;background:#10263E}
+.video-play{position:absolute;inset:0;border:0;background:linear-gradient(transparent 45%,rgba(0,0,0,.7));color:white;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.65em}
+.video-play .play-symbol{display:grid;place-items:center;background:#C03B3B;border-radius:50%;width:2.2em;height:2.2em;font-size:1.3em;padding-left:.12em}
+.video-play .play-label{font-size:.8em;font-weight:700;background:rgba(16,38,62,.85);padding:.4em .7em;border-radius:.3em}
+.video-caption{display:flex;gap:.6em;align-items:baseline;margin-top:.45em;font-size:.68em;line-height:1.4;color:var(--gray)}
+.video-caption .video-source-link{margin-left:auto;white-space:nowrap}
+.video-explain{display:flex;flex-direction:column;gap:.65em}
+.video-explain h3{font-size:.87em;color:var(--navy)}
+.video-choices{display:flex;flex-direction:column;gap:.35em}
+.video-choice{font:inherit;font-size:.73em;line-height:1.45;text-align:left;padding:.45em .6em;border:1px solid var(--border);border-left:.22em solid var(--teal);border-radius:.25em;background:white;cursor:pointer}
+.video-choice[aria-pressed="true"]{background:var(--tealwash);border-color:var(--amber);color:var(--amber);font-weight:700}
+.video-choice .video-time{display:block;font-size:.9em;color:var(--gray);margin-top:.15em}
+.video-explain .kb{padding:.4em .65em}
+.video-explain .kb b{font-size:.75em}
+.video-explain .kb p{font-size:.77em;line-height:1.5}
+.video-prompts{font-size:.76em;line-height:1.5;padding-left:1.1em;display:flex;flex-direction:column;gap:.35em}
+.video-prompts li::marker{color:var(--teal)}
+.video-lesson .src{font-size:.58em}
+@media(max-width:780px){.app.read .video-layout{grid-template-columns:1fr}.app.read .video-stage{min-height:0}.app.read .video-choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}}
+
 </style>
 </head>
 <body>
@@ -582,8 +699,8 @@ svg.dia .carbon-base{fill:var(--green)} svg.dia .carbon-phosphate{fill:var(--amb
   </div>
 </section>
 
-<section class="slide" data-part="p0" data-title="복습 — 쓰기가 병목">
-  <header><h2>복습 — Write(쓰기)의 병목</h2><p class="sub">2강 워크플로 6단계 중 <b>첫 칸</b> · 오늘은 그 첫 칸의 화학만 봄</p></header>
+<section class="slide" data-part="p0" data-title="DNA 데이터 저장에서 합성 단계의 제한">
+  <header><h2>DNA 데이터 저장에서 합성 단계의 제한</h2><p class="sub">2강 워크플로 6단계 중 <b>첫 칸</b> · 오늘은 그 첫 칸의 화학만 봄</p></header>
   <div class="body">
     <div class="flowx">
       <div class="fb"><b>① 인코딩</b><span>디지털 → 염기서열<br>3주차</span></div><span class="ar">▶</span>
@@ -1344,8 +1461,8 @@ L 355.9 295.5
   <div class="sr"><ul><li>합성 방향이 생체와 반대인 이유 — 3′→5′</li><li>포스포라미다이트의 보호기 3개와 반응점 1개</li><li>CPG 고체 지지체 — 세척에 의한 정제 구조</li><li>단량체의 3차원 형태 — 입체장애와 Coupling(커플링) 속도</li></ul></div>
 </section>
 
-<section class="slide" data-part="p1" data-title="합성 방향 — 3′→5′">
-  <header><h2>생체 합성과 반대 방향 — 3′→5′</h2><p class="sub">보호기 도입의 편의에 따른 합성 방향 선택 · 주요 혼동 지점</p></header>
+<section class="slide" data-part="p1" data-title="화학 합성과 생체 합성의 신장 방향">
+  <header><h2>화학 합성과 생체 합성의 신장 방향</h2><p class="sub">보호기 도입의 편의에 따른 합성 방향 선택 · 주요 혼동 지점</p></header>
   <div class="body">
     <div class="cols">
       <div class="card"><h3>생체 내 — DNA 중합효소</h3>
@@ -1366,7 +1483,7 @@ L 355.9 295.5
 </section>
 
 <section class="slide monomer-map" data-part="p1" data-title="단량체 — 보호기 3개, 반응점 1개">
-  <header><h2>포스포라미다이트 — 보호기 3개, 반응점 1개</h2><p class="sub">화학 합성 — 반응점 1개 유지 · 나머지 작용기 보호</p></header>
+  <header><h2>Phosphoramidite(포스포라미다이트)</h2><p class="sub">화학 합성(보호기 3개, 반응점 1개)</p></header>
   <div class="body">
     <div class="cols">
       <figure class="molfig sugar-numbering"><svg class="molsvg carbon-numbered" role="img" aria-label="포스포라미다이트 당의 탄소 번호 1′–5′" preserveAspectRatio="xMidYMid meet" version='1.1' baseProfile='full'
@@ -1779,7 +1896,7 @@ Q 127.9 96.8, 129.7 96.8
           <text class="lbl carbon-dmt" x="126" y="78">5′</text>
         </svg>
         <p class="tiny gray">번호 색상 — 1′ 초록: 염기 연결 · 3′ 파랑: 인 연결 · 5′ 빨강: DMT 보호<br>2′·4′ 남색: 당 골격 · 밝은 파랑: 인의 아미노기 · 붉은 점: P(III) 비공유전자쌍</p>
-        <div class="kb crim"><b>기존 설명 수정</b><p>DMT 보호기 <b>자체는 무색</b> · 산 처리로 분리된 <b>DMT 양이온</b>의 주황색(λ<sub>max</sub> 495 nm)</p></div>
+        <div class="kb crim"><b>DMT 보호기와 양이온의 색상</b><p>DMT 보호기 <b>자체는 무색</b> · 산 처리로 분리된 <b>DMT 양이온</b>의 주황색(λ<sub>max</sub> 495 nm)</p></div>
       </div>
     </div>
     <p class="src">ATDBio <i>Nucleic Acids Book</i> · Biotage white paper PPS676 (2022) Fig. 2 · 9 · 10 · 구조식은 RDKit 생성</p>
@@ -2009,7 +2126,7 @@ M  END
           <li>P 주변에 <b>세 개의 큰 치환기</b>가 모여 있음 — 3′-O(뉴클레오사이드) · O-시아노에틸 · N(<i>i</i>Pr)₂</li>
           <li>Coupling(커플링)은 이 붐비는 P를 <b>5′-O가 정면에서 공격</b>하는 반응 → 입체장애가 크면 Coupling(커플링) 시간이 길어짐</li>
           <li>실측 예: 2′-TBDMS RNA 아미다이트는 입체장애가 커서 활성화제에 따라 Coupling(커플링) 시간이 <b>BTT 약 3분 vs 테트라졸 10~15분</b></li>
-          <li>DNA 아미다이트는 상대적으로 덜 붐빔 → 표준 Coupling(커플링) <b>30초</b></li>
+          <li>DNA 아미다이트는 상대적으로 덜 붐빔 → 표준 Coupling(커플링) <b>30 s</b></li>
         </ul>
         <div class="kb teal"><b>원소 색상</b><div class="element-legend"><span><i style="--element:#FF8000"></i>인(P) · 주황</span><span><i style="--element:#FF0D0D"></i>산소(O) · 빨강</span><span><i style="--element:#3050F8"></i>질소(N) · 파랑</span><span><i style="--element:#909090"></i>탄소(C) · 회색</span><span><i style="--element:#FFFFFF"></i>수소(H) · 흰색</span></div></div>
       </div>
@@ -2018,16 +2135,69 @@ M  END
   </div>
 </section>
 
-<section class="slide cpg-real" data-part="p1" data-title="고체 지지체 — CPG">
-  <header><h2>고체 지지체 CPG — 다공성 구조와 표면 고정화</h2><p class="sub">액상이 아닌 고체 위에서 합성하는 이유 — 표면 결합 유지 · 미반응 시약의 세척 제거</p></header>
+<section class="slide cpg-restored" data-part="p1" data-title="고체 지지체 — 제품과 세공 도식">
+  <header><h2>고체 지지체 CPG — 제품과 세공 도식</h2><p class="sub">고체 지지체의 사용 이유 — 넓은 비표면적 · 시약 침투 · 하부 배출과 세척</p></header>
   <div class="body">
-    <div class="cpg-layout">
-      <div class="cpg-micrograph">
-        <h3>CPG의 실제 세공 구조</h3>
-        <figure><a href="https://www.nist.gov/document/september2012-spotlight-2-4pdf#page=2" target="_blank" rel="noopener"><img src="img/cpg-sem-nist-2012.jpg" alt="NIST에서 공개한 실제 CPG SEM 사진 — 서로 연결된 다공성 유리 구조"/></a><figcaption>SEM(에스이엠·주사전자현미경) · NIST SRM 2206/2207<br>CPG 세공 형태 예시 · 합성용 배치와 별개의 표준물질</figcaption></figure>
-        <div class="kb teal"><b>Controlled pore glass(컨트롤드 포어 글라스)</b><p>연결된 세공 내부의 넓은 표면적 · 시약 침투와 세척 경로 · 고정된 사슬의 반복 반응</p></div>
+    <div class="cpg-restored-layout">
+      <figure class="cpg-product-view"><h3>판매되는 CPG 합성 플레이트</h3><img src="img/cpg-biocomma-96-plate.jpg" alt="흰색 96웰 올리고 합성 플레이트와 Embed CPG 프릿 제품 사진"/><figcaption>Biocomma · 96웰 합성 플레이트 · Embed™ CPG 프릿</figcaption><div class="cpg-through-flow"><span>상부 시약 투입</span><b>↓</b><span>웰 내 CPG 지지체</span><b>↓</b><span>하부 프릿 · 액체 배출</span></div><div class="kb teal"><b>지지체 유지 · 액체 교체</b><p>프릿: CPG 유지 · 시약과 세척 용매의 통과<br>미반응 시약과 부산물의 배출 → 다음 반응 준비</p></div></figure>
+      <div class="cpg-restored-diagram"><h3>세공과 표면 연결 사슬 — 기존 도식</h3><svg viewBox="0 0 520 260" class="dia" role="img" aria-label="기존 CPG 입자의 세공과 표면 연결 사슬 도식">
+        <circle class="bead" cx="96" cy="130" r="74"/>
+        <circle cx="70" cy="100" r="11" style="fill:#fff;stroke:var(--navy);stroke-width:1"/>
+        <circle cx="116" cy="88" r="9" style="fill:#fff;stroke:var(--navy);stroke-width:1"/>
+        <circle cx="132" cy="140" r="12" style="fill:#fff;stroke:var(--navy);stroke-width:1"/>
+        <circle cx="78" cy="160" r="10" style="fill:#fff;stroke:var(--navy);stroke-width:1"/>
+        <circle cx="104" cy="170" r="7" style="fill:#fff;stroke:var(--navy);stroke-width:1"/>
+        <text class="lbl" x="96" y="222" text-anchor="middle">CPG 비드</text>
+        <text class="lbl sm" x="96" y="238" text-anchor="middle">controlled pore glass · 세공 크기 균일</text>
+        <path class="bond" d="M160 92 L214 44"/><path class="bond" d="M166 150 L214 196"/>
+        <rect x="214" y="30" width="298" height="182" rx="6" style="fill:#fff;stroke:var(--border);stroke-width:1.4"/>
+        <text class="lbl sm" x="363" y="48" text-anchor="middle">세공 표면 확대</text>
+        <rect x="228" y="60" width="66" height="26" rx="3" class="grp"/><text class="lbl sm" x="261" y="77" text-anchor="middle">유리 –O–Si–</text>
+        <path class="bond" d="M294 73 L316 73"/>
+        <rect x="316" y="60" width="78" height="26" rx="3" class="grp"/><text class="lbl sm" x="355" y="77" text-anchor="middle">LCAA 스페이서</text>
+        <path class="bond" d="M394 73 L416 73"/>
+        <rect x="416" y="60" width="82" height="26" rx="3" class="grp"/><text class="lbl sm" x="457" y="77" text-anchor="middle">–NH₂ (반응점)</text>
+        <path class="bond" d="M457 86 L457 106"/>
+        <rect x="380" y="106" width="118" height="28" rx="3" class="grp" style="fill:var(--crimwash);stroke:var(--crim)"/>
+        <text class="lbl rx" x="439" y="124" text-anchor="middle">숙시닐 에스터</text>
+        <path class="bond" d="M380 120 L344 120"/>
+        <rect x="248" y="106" width="96" height="28" rx="3" class="grp"/><text class="lbl sm" x="296" y="124" text-anchor="middle">첫 뉴클레오사이드 3′-O</text>
+        <path class="bond" d="M296 134 L296 154"/>
+        <rect x="236" y="154" width="120" height="26" rx="3" class="grp dmt"/><text class="lbl rx" x="296" y="171" text-anchor="middle">5′-O–DMT (출발)</text>
+        <path class="epath on" d="M439 140 q0 24 -18 30" style="--len:60"/>
+        <text class="lbl rx" x="494" y="198" text-anchor="end">마지막에 이 에스터만 가수분해</text>
+      </svg><ul class="pts sm"><li><b>비표면적 확대</b> — 연결된 세공 내부의 넓은 표면 → 사슬을 고정할 반응점 확보</li><li><b>시약 접근성과 물질전달</b> — 세공을 통한 시약 침투 · 고정된 사슬의 반응점 접근</li><li><b>원활한 유동과 세척</b> — 하부 배출구를 통한 액체 흐름 · CPG를 유지한 채 과잉 시약·부산물 제거</li></ul></div>
+    </div>
+    <p class="src">제품 사진: <a href="https://www.biocomma.com/products/life-science-consumables/oligo-synthesis-solution/synthesis-plates/" target="_blank" rel="noopener">Biocomma, Oligo Synthesis Plates with Embed™ CPG Frits</a> · 기존 도식: 김영창 외, 《합성생물학》 7.1.2 · 다음 페이지: 실제 세공 구조 비교</p>
+  </div>
+</section>
+
+<section class="slide cpg-intro" data-part="p1" data-title="CPG ① — 세공 구조와 고체상 합성">
+  <header><h2>CPG ① — 세공 구조와 고체상 합성</h2><p class="sub">액상이 아닌 고체 위에서 합성하는 이유 — 넓은 내부 표면 · 사슬 고정 · 반복 세척</p></header>
+  <div class="body">
+    <div class="cpg-intro-top">
+      <figure class="cpg-overview-photo"><img src="img/cpg-sem-nist-2012.jpg" alt="NIST 실제 CPG SEM 사진 — 서로 연결된 다공성 유리 구조"/><figcaption>CPG의 연결된 세공 구조 · SEM · NIST<br>표준물질의 형태 예시</figcaption></figure>
+      <div class="stack">
+        <ul class="pts sm">
+          <li><b>CPG · Controlled pore glass(컨트롤드 포어 글라스)</b> — 세공 크기를 제어한 다공성 유리 · 단단한 골격과 넓은 내부 표면</li>
+          <li><b>표면의 분자 고정</b> — LCAA 스페이서와 숙시닐 연결기를 통한 첫 뉴클레오사이드의 3′ 말단 고정</li>
+          <li><b>넓은 비표면적과 세척 경로</b> — 많은 표면 반응점 · 시약의 침투와 물질전달 · 하부 배출에 의한 미반응 시약·부산물 제거</li>
+        </ul>
+        <div class="cpg-principle"><span>표면 고정</span><b>→</b><span>시약 투입</span><b>→</b><span>세척</span><b>→</b><span>다음 사이클</span></div>
+        <p class="small gray">입자 크기와 세공 크기의 구분 · 너무 작은 세공은 시약 확산과 사슬 신장을 제한</p>
       </div>
-      <figure class="cpg-tether">
+    </div>
+    <div class="pore-gallery-head"><h3>제조 조건에 따른 실제 세공 구조 변화</h3><span>알칼리 식각 시간 8 → 24 → 48 h · 원그림의 축척 유지</span></div>
+    <div class="pore-gallery"><figure class="pore-example"><h3>8 h — 미세 세공 형성</h3><div class="sem-window sem-8h"><img src="img/cpg-etching-sem-2019-fig2.jpg" alt="8 h — 미세 세공 형성 나노다공성 유리의 실제 전자현미경 사진"/></div><figcaption>원그림 d · 축척 막대 0.2 µm</figcaption></figure><figure class="pore-example"><h3>24 h — 연결된 세공</h3><div class="sem-window sem-24h"><img src="img/cpg-etching-sem-2019-fig2.jpg" alt="24 h — 연결된 세공 나노다공성 유리의 실제 전자현미경 사진"/></div><figcaption>원그림 e · 축척 막대 0.2 µm</figcaption></figure><figure class="pore-example"><h3>48 h — 확대된 세공</h3><div class="sem-window sem-48h"><img src="img/cpg-etching-sem-2019-fig2.jpg" alt="48 h — 확대된 세공 나노다공성 유리의 실제 전자현미경 사진"/></div><figcaption>원그림 f · 축척 막대 0.5 µm</figcaption></figure></div>
+    <p class="small gray pore-takeaway">사진의 표시 크기와 실제 세공 크기의 구분 — 서로 다른 축척 막대 확인 · 다음 페이지: 표면 고정화의 결합 화학</p>
+    <p class="src">상단 SEM: <a href="https://www.nist.gov/document/september2012-spotlight-2-4pdf#page=2" target="_blank" rel="noopener">NIST, SRM Spotlight (2012), p.2</a> · 하단 SEM: <a href="https://link.springer.com/article/10.1007/s10717-019-00089-3/figures/2" target="_blank" rel="noopener">Shakhgil’dyan et al., Glass Ceram. 75, 377–382 (2019), Fig. 2d–f</a> · 김영창 외, 《합성생물학》 7.1.2</p>
+  </div>
+</section>
+
+<section class="slide cpg-chemistry" data-part="p1" data-title="CPG ② — 표면 고정화와 절단 화학">
+  <header><h2>CPG ② — 표면 고정화와 절단 화학</h2><p class="sub">한 표면 반응점의 분자 연결 — 3′ 말단 고정 · 5′ 방향 신장 · 최종 에스터 절단</p></header>
+  <div class="body">
+    <div class="cpg-chemistry-layout"><figure class="cpg-tether">
         <h3>한 표면 반응점의 분자 연결</h3>
         <svg viewBox="0 0 330 514" role="img" aria-label="CPG 표면에서 LCAA와 숙시닐 연결기를 거쳐 3′ 말단에 고정되고 5′ 방향으로 신장하는 올리고 사슬">
           <defs><marker id="cpg-grow-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 1 L9 5 L0 9Z" fill="#224EBD"/></marker></defs>
@@ -2068,28 +2238,42 @@ M  END
         </svg>
         <figcaption>B: 염기 · CE: 2-시아노에틸 · LCAA 길이 축약<br>컬럼 내 다수 사슬 중 한 반응점의 확대</figcaption>
       </figure>
-      <div class="cpg-notes">
-        <div class="kb"><b>표면 고정화</b><p>CPG → LCAA(롱 체인 알킬아민) → 숙시닐 연결기 → 첫 뉴클레오사이드의 3′-O</p></div>
-        <div class="kb green"><b>고체상 합성의 이점</b><p>사슬의 지지체 결합 유지 · 과잉 시약과 부산물의 세척 제거 · 반복 반응의 자동화</p></div>
-        <div class="kb crim"><b>합성 후 회수</b><p>숙시닐 에스터의 가수분해 → 3′-OH 회복 · 지지체에서 올리고 분리</p></div>
-        <div class="kb teal"><b>세공 크기와 사슬 길이</b><p>40~50 nt 초과: 1000 Å<br>100 nt 초과: 2000 Å<br>대세공 지지체의 낮은 로딩과 취약성</p></div>
-        <p class="small gray">한 컬럼의 다수 반응점에서 동일 설계 서열의 병렬 신장</p>
+      <div class="cpg-chemistry-details">
+        <div class="kb"><b>① Spacer(스페이서) — 표면과 사슬 사이의 거리 확보</b><p>LCAA · Long chain alkylamine(롱 체인 알킬아민) · 말단 일차아민의 연결 반응 · 유리 표면으로부터 사슬 분리와 입체장애 완화</p></div>
+        <div class="cpg-link-formula"><span>CPG–LCAA–NH–</span><span class="succinyl">C(=O)–CH₂–CH₂–C(=O)–</span><span class="ester">O–3′-dN</span><br><small>아미드 결합 ← 숙시닐 연결기 → 에스터 결합</small></div>
+        <div class="kb teal"><b>② Linker(링커) — 숙시닐 연결기의 양쪽 결합</b><p>LCAA 아민 쪽: Amide(아미드) 결합 · 뉴클레오사이드 3′-OH 쪽: Ester(에스터) 결합 · 5′-DMT 제거 후 5′ 말단에서 다음 단량체 도입</p></div>
+        <div class="kb crim"><b>③ Cleavage(절단) — 최종 올리고 회수</b><p>암모니아 처리에 의한 숙시닐 에스터의 절단 → 3′-OH 회복 · 고체 지지체에서 사슬 분리 · 염기·인산 보호기 제거의 병행</p></div>
+        <div class="cpg-pore-choice">
+          <figure><img src="img/cpg-1000-sem-2024.jpg" alt="CPG 1000 Å의 실제 SEM 사진 — 원본의 100 nm 축척 막대 포함"/><figcaption>CPG 1000 Å = 100 nm · SEM<br>원그림 축척 막대: 100 nm</figcaption></figure>
+          <div><h3>세공 크기와 올리고 길이</h3><p>500 Å = 50 nm · 짧은 올리고<br>1000 Å = 100 nm · 약 100 nt까지<br>2000 Å = 200 nm · 더 긴 올리고</p><p class="gray">사슬 신장에 따른 시약 확산 제한 · 대세공 지지체의 낮은 로딩과 취약성</p></div>
+        </div>
       </div>
     </div>
-    <p class="src">SEM: <a href="https://www.nist.gov/document/september2012-spotlight-2-4pdf#page=2" target="_blank" rel="noopener">NIST, SRM Spotlight (Sep. 2012), p.2</a> · 연결 구조: <a href="https://atdbio.com/nucleic-acids-book/Solid-phase-oligonucleotide-synthesis" target="_blank" rel="noopener">ATDBio, Solid-phase oligonucleotide synthesis, Figs. 7, 24</a> · 김영창 외, 《합성생물학》 7.1.2 · Glen Research, Glen Report 21.211</p>
+    <p class="src">연결·절단: <a href="https://atdbio.com/nucleic-acids-book/Solid-phase-oligonucleotide-synthesis" target="_blank" rel="noopener">ATDBio, Solid-phase oligonucleotide synthesis, Figs. 7, 24</a> · SEM: <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11027042/" target="_blank" rel="noopener">Haverkamp et al., RSC Adv. 14, 12735–12741 (2024), ESI Fig. 1</a> · CPG 내부 사슬 중 한 반응점의 확대</p>
   </div>
+</section>
+
+<section class="slide video-lesson" data-part="p1" data-title="CPG 합성 — 실제 제품과 합성 공정" data-video-lesson>
+  <header><h2>CPG 합성 — 실제 제품과 합성 공정</h2><p class="sub">본문 개념과 영상의 실제 공정·반응 기전 비교 · 재생 버튼 선택</p></header>
+  <div class="body">
+    <div class="video-layout">
+      <div><div class="video-stage"><img class="video-preview" src="https://i.ytimg.com/vi/1S0x3aRCviM/hqdefault.jpg" alt="Gene Synthesis by GeneArt®"><button class="video-play" type="button"><span class="play-symbol">▶</span><span class="play-label">슬라이드에서 영상 재생</span></button></div><p class="video-caption"><span class="video-credit">Thermo Fisher Scientific · 4:11</span><a class="video-source-link" href="https://www.youtube.com/watch?v=1S0x3aRCviM" target="_blank" rel="noopener">YouTube에서 보기 ↗</a></p></div>
+      <div class="video-explain"><h3>영상 선택</h3><div class="video-choices"><button class="video-choice" type="button" aria-pressed="true">GeneArt · 실제 합성과 유전자 조립<span class="video-time">4:11</span></button><button class="video-choice" type="button" aria-pressed="false">교토대 · 고체상 합성 원리<span class="video-time">8:37</span></button><button class="video-choice" type="button" aria-pressed="false">보호기와 부반응 · 심화 해설<span class="video-time">27:29 · 심화</span></button></div><div class="kb teal"><b>관찰할 내용</b><p class="video-observation">볼 것 — 실제 공장: 필터를 찍어 웰에 넣고 CPG를 채운 뒤 자동 합성 · 하루 13,500 올리고 (Thermo Fisher GeneArt) — 후반 PCR 조립은 7-1에서 다시</p></div><h3>개념 연결</h3><ul class="video-prompts"><li>웰·CPG·사슬 고정점의 대응</li><li>시약 투입·세척·절단의 실제 흐름</li></ul></div>
+    </div>
+    <p class="src">영상: Thermo Fisher Scientific · Kyoto-U OCW · the bumbling biochemist · YouTube 제목·제작자 확인: 2026-10-07 · 긴 강연은 필요한 구간을 선택하여 시청</p>
+  </div><script type="application/json" class="video-data">[{"id": "1S0x3aRCviM", "title": "Gene Synthesis by GeneArt®", "author": "Thermo Fisher Scientific", "label": "GeneArt · 실제 합성과 유전자 조립", "duration": "4:11", "note": "볼 것 — 실제 공장: 필터를 찍어 웰에 넣고 CPG를 채운 뒤 자동 합성 · 하루 13,500 올리고 (Thermo Fisher GeneArt) — 후반 PCR 조립은 7-1에서 다시"}, {"id": "GXOR09Q_VEA", "title": "Unit 3 Part 3   Synthesizing DNA by Solid Phase Synthesis", "author": "Kyoto-U OCW", "label": "교토대 · 고체상 합성 원리", "duration": "8:37", "note": "복습 — 교토대 공개강의 '생명의 화학' 고상 합성 편"}, {"id": "t29CQywQpMY", "title": "Solid state oligonucleotide synthesis (phosphoramidite method)", "author": "the bumbling biochemist", "label": "보호기와 부반응 · 심화 해설", "duration": "27:29", "note": "과제 시청 — \"프라이머를 주문하면 무슨 일이 일어나나\": 보호기 · 부반응 · 절단까지 긴 해설"}]</script>
 </section>
 
 <!-- ===================== PART 2 ===================== -->
 <section class="slide sect" data-part="p2" data-title="PART 2 섹션 표지">
   <div class="sl"><div class="no">PART 2</div><h2>4단계 사이클</h2><p class="en">Detritylation(탈트리틸화) · Coupling(커플링) · Capping(캡핑) · Oxidation(산화)</p></div>
-  <div class="sr"><ul><li>사이클 전체 — 시약 · 농도 · 시간</li><li>각 단계의 분자 수준 메커니즘 — 전자쌍의 이동 경로</li><li>각 단계가 만드는 부반응과 그 부산물의 정제 가능성</li><li>기존 설명의 두 가지 오류 수정</li></ul></div>
+  <div class="sr"><ul><li>사이클 전체 — 시약 · 농도 · 시간</li><li>각 단계의 분자 수준 메커니즘 — 전자쌍의 이동 경로</li><li>각 단계가 만드는 부반응과 그 부산물의 정제 가능성</li><li>DMT 양이온의 색상 · 산화 후 인산 골격의 구분</li></ul></div>
 </section>
 
 <section class="slide" data-part="p2" data-title="사이클 위젯 — 4단계 전체">
   <header><h2>4단계 합성 사이클 — 뉴클레오타이드의 순차적 도입</h2><p class="sub">사이클 <var>n</var>−1회 반복 → <var>n</var>-mer 완성</p></header>
   <div class="body">
-    <div class="proc" data-steps="5" data-caps='["출발 — 지지체 위 사슬의 5′ 말단이 <b>DMT</b>로 보호 상태 · 반응성 0 · 사이클 시작","<b>① Detritylation(탈트리틸화)</b> — 3% 트리클로로아세트산 / 디클로로메탄 50초 · DMT가 <span class=\"rx\">양이온</span>으로 떨어져 나가고 자유 5′-OH가 노출됨","<b>② Coupling(커플링)</b> — 0.1 M 포스포라미다이트 + 0.5 M 테트라졸(아세토니트릴) 30초 · 5′-OH가 인을 공격 → <b>포스파이트 삼중에스터 P(III)</b>","<b>③ Capping(캡핑)</b> — 무수아세트산/피리딘/THF 1:1:8 + N-메틸이미다졸 30초 · Coupling(커플링)에 <span class=\"rx\">실패한</span> 5′-OH를 아세틸로 영구 봉인","<b>④ Oxidation(산화)</b> — 0.015 M 요오드(물/피리딘/THF 2:20:78) 45초 · P(III) → <b>P(V) 포스포트리에스터</b> · 산에 안정해져 다음 사이클로 복귀"]'>
+    <div class="proc" data-steps="5" data-caps='["출발 — 지지체 위 사슬의 5′ 말단이 <b>DMT</b>로 보호 상태 · 반응성 0 · 사이클 시작","<b>① Detritylation(탈트리틸화)</b> — 3% 트리클로로아세트산 / 디클로로메탄 50 s · DMT가 <span class=\"rx\">양이온</span>으로 떨어져 나가고 자유 5′-OH가 노출됨","<b>② Coupling(커플링)</b> — 0.1 M 포스포라미다이트 + 0.5 M 테트라졸(아세토니트릴) 30 s · 5′-OH가 인을 공격 → <b>포스파이트 삼중에스터 P(III)</b>","<b>③ Capping(캡핑)</b> — 무수아세트산/피리딘/THF 1:1:8 + N-메틸이미다졸 30 s · Coupling(커플링)에 <span class=\"rx\">실패한</span> 5′-OH를 아세틸로 영구 봉인","<b>④ Oxidation(산화)</b> — 0.015 M 요오드(물/피리딘/THF 2:20:78) 45 s · P(III) → <b>P(V) 포스포트리에스터</b> · 산에 안정해져 다음 사이클로 복귀"]'>
       <div class="proc-head"><h3>Detritylation(탈트리틸화) → Coupling(커플링) → Capping(캡핑) → Oxidation(산화)</h3></div>
       <div class="proc-stage">
         <svg viewBox="0 0 640 300">
@@ -2104,16 +2288,16 @@ M  END
           <path class="bond" d="M101 232 L101 72" marker-end="url(#cyArrow)" stroke-width="1.4"/>
           <g><rect class="grp dmt" x="16" y="18" width="170" height="46" rx="5"/>
             <text class="lbl rx" x="101" y="38" text-anchor="middle">① Detritylation(탈트리틸화)</text>
-            <text class="lbl sm" x="101" y="54" text-anchor="middle">3% TCA / DCM · 50초</text></g>
+            <text class="lbl sm" x="101" y="54" text-anchor="middle">3% TCA / DCM · 50 s</text></g>
           <g><rect class="grp act" x="454" y="18" width="170" height="46" rx="5"/>
             <text class="lbl" x="539" y="38" text-anchor="middle" style="fill:#2F7FBE">② Coupling(커플링)</text>
-            <text class="lbl sm" x="539" y="54" text-anchor="middle">0.1 M 아미다이트 + 0.5 M 테트라졸 · 30초</text></g>
+            <text class="lbl sm" x="539" y="54" text-anchor="middle">0.1 M 아미다이트 + 0.5 M 테트라졸 · 30 s</text></g>
           <g><rect class="grp cap" x="454" y="236" width="170" height="46" rx="5"/>
             <text class="lbl" x="539" y="256" text-anchor="middle" style="fill:var(--green)">③ Capping(캡핑)</text>
-            <text class="lbl sm" x="539" y="272" text-anchor="middle">Ac₂O/피리딘/THF + NMI · 30초</text></g>
+            <text class="lbl sm" x="539" y="272" text-anchor="middle">Ac₂O/피리딘/THF + NMI · 30 s</text></g>
           <g><rect class="grp" x="16" y="236" width="170" height="46" rx="5"/>
             <text class="lbl" x="101" y="256" text-anchor="middle">④ Oxidation(산화)</text>
-            <text class="lbl sm" x="101" y="272" text-anchor="middle">0.015 M I₂ / H₂O / 피리딘 · 45초</text></g>
+            <text class="lbl sm" x="101" y="272" text-anchor="middle">0.015 M I₂ / H₂O / 피리딘 · 45 s</text></g>
           <circle class="bead" cx="320" cy="230" r="22"/>
           <text class="lbl sm" x="320" y="234" text-anchor="middle">CPG</text>
           <path class="bond" d="M320 208 L320 190"/>
@@ -2140,7 +2324,7 @@ M  END
           <path class="flow" data-at="3" d="M490 68 L380 108" marker-end="url(#flArrow)"/>
           <path class="flow" data-at="4" d="M490 232 L382 148" marker-end="url(#flArrow)"/>
           <path class="flow" data-at="5" d="M150 232 L258 148" marker-end="url(#flArrow)"/>
-          <text class="lbl sm" x="320" y="296" text-anchor="middle">매 단계 사이 — 아세토니트릴 세척 30초 + 아르곤 플러시 10초</text>
+          <text class="lbl sm" x="320" y="296" text-anchor="middle">매 단계 사이 — 아세토니트릴 세척 30 s + 아르곤 플러시 10 s</text>
         </svg>
       </div>
       <p class="proc-cap"></p>
@@ -2149,33 +2333,41 @@ M  END
   </div>
 </section>
 
-<section class="slide" data-part="p2" data-title="사이클의 시약 · 농도 · 시간">
-  <header><h2>사이클의 시약 · 농도 · 시간</h2><p class="sub">표준 사이클 한 칸 = 시약 4종 + 세척 · 이 표가 이후 모든 메커니즘의 조건</p></header>
+<section class="slide video-lesson" data-part="p2" data-title="4단계 합성 사이클 — 반응 애니메이션" data-video-lesson>
+  <header><h2>4단계 합성 사이클 — 반응 애니메이션</h2><p class="sub">본문 개념과 영상의 실제 공정·반응 기전 비교 · 재생 버튼 선택</p></header>
   <div class="body">
-    <div class="scroll"><table class="tbl sm">
-      <thead><tr><th>단계</th><th>시약 · 조성</th><th class="num">시간</th><th>일어나는 일</th><th>실패하면</th></tr></thead>
-      <tbody class="today">
-        <tr><td>① Detritylation(탈트리틸화)</td><td>3% 트리클로로아세트산 in 디클로로메탄</td><td class="num">50 s</td><td>5′-DMT 제거 → 자유 5′-OH 노출</td><td>다음 염기가 붙지 않음</td></tr>
-        <tr><td>② Coupling(커플링)</td><td>0.1 M 포스포라미다이트 + 0.5 M 1H-테트라졸 in 아세토니트릴</td><td class="num">30 s</td><td>5′-O가 P(III)를 공격 → 포스파이트 삼중에스터</td><td>그 사슬은 이 사이클에서 결손</td></tr>
-        <tr><td>③ Capping(캡핑)</td><td>Capping(캡핑) A = Ac₂O/피리딘/THF 1:1:8 · Capping(캡핑) B = 16~17.6% w/v N-메틸이미다졸</td><td class="num">30 s</td><td>미반응 5′-OH를 아세틸로 영구 봉인</td><td>내부 결손(n−1) 집단 발생</td></tr>
-        <tr><td>④ Oxidation(산화)</td><td>0.015 M I₂ in 물/피리딘/THF 2:20:78</td><td class="num">45 s</td><td>P(III) → P(V) 포스포트리에스터</td><td>다음 사이클 산 처리에서 골격 절단</td></tr>
-      </tbody>
-      <tbody>
-        <tr><td>세척 · 플러시</td><td>아세토니트릴 세척 · 아르곤 플러시 (각 단계 사이)</td><td class="num">30 s · 10 s</td><td>이전 시약 제거 — 시약 혼합 방지</td><td>교차 반응 · 효율 저하</td></tr>
-      </tbody></table></div>
-    <div class="cols w64">
-      <div class="kb crim"><b>기존 설명 수정 ①</b><p>④ Oxidation(산화)의 산물은 <b>포스포디에스터가 아님</b> — 2-시아노에틸로 보호된 <b>포스포트리에스터 P(V)</b> · 포스포디에스터는 최종 암모니아 탈보호 후 완성(PART 3)</p></div>
-      <div class="kb"><b>순서를 외우는 요령</b><p>제거(탈트리틸) — 연결(커플링) — 봉인(캡핑) — 안정화(산화) · 다만 오늘은 <b>각 단계에서 전자쌍의 이동 경로</b>까지 내려감</p></div>
+    <div class="video-layout">
+      <div><div class="video-stage"><img class="video-preview" src="https://i.ytimg.com/vi/yw0nrLWZSUw/hqdefault.jpg" alt="Educational video oligo synthesis"><button class="video-play" type="button"><span class="play-symbol">▶</span><span class="play-label">슬라이드에서 영상 재생</span></button></div><p class="video-caption"><span class="video-credit">Cytiva · 1:37</span><a class="video-source-link" href="https://www.youtube.com/watch?v=yw0nrLWZSUw" target="_blank" rel="noopener">YouTube에서 보기 ↗</a></p></div>
+      <div class="video-explain"><h3>영상 선택</h3><div class="video-choices"><button class="video-choice" type="button" aria-pressed="true">Cytiva · 4단계 반응 애니메이션<span class="video-time">1:37</span></button><button class="video-choice" type="button" aria-pressed="false">METTLER TOLEDO · 합성부터 절단까지<span class="video-time">4:09</span></button></div><div class="kb teal"><b>관찰할 내용</b><p class="video-observation">볼 것 — Cytiva 애니메이션의 순서는 Detritylation(탈트리틸화) → Coupling(커플링) → Oxidation(산화) → Capping(캡핑) . 오늘 위젯(캡핑 → 산화)과의 순서 차이 비교</p></div><h3>개념 연결</h3><ul class="video-prompts"><li>탈보호·연결·봉인·산화의 목적</li><li>Cytiva 영상과 강의 위젯의 캡핑·산화 순서 비교</li></ul></div>
     </div>
-    <p class="src">ATDBio <i>Nucleic Acids Book</i> · Biotage white paper PPS676 (2022) Table 1 · Figures 6 · 8</p>
+    <p class="src">영상: Cytiva · METTLER TOLEDO AutoChem · YouTube 제목·제작자 확인: 2026-10-07 · 긴 강연은 필요한 구간을 선택하여 시청</p>
+  </div><script type="application/json" class="video-data">[{"id": "yw0nrLWZSUw", "title": "Educational video oligo synthesis", "author": "Cytiva", "label": "Cytiva · 4단계 반응 애니메이션", "duration": "1:37", "note": "볼 것 — Cytiva 애니메이션의 순서는 Detritylation(탈트리틸화) → Coupling(커플링) → Oxidation(산화) → Capping(캡핑) . 오늘 위젯(캡핑 → 산화)과의 순서 차이 비교"}, {"id": "kjSojZWnPQ4", "title": "What is Oligonucleotide Synthesis?", "author": "METTLER TOLEDO AutoChem", "label": "METTLER TOLEDO · 합성부터 절단까지", "duration": "4:09", "note": "볼 것 — Detritylation(탈트리틸화) · 활성화 · Coupling(커플링) · 아세틸 Capping(캡핑) · Oxidation(산화) · 암모니아 절단까지 오늘 PART 1–3 전체를 한 번에 (METTLER TOLEDO)"}]</script>
+</section>
+
+<section class="slide cycle-conditions" data-part="p2" data-title="사이클의 시약 · 농도 · 시간">
+  <header><h2>Synthesis Cycle(합성 사이클) — 시약과 반응 조건</h2><p class="sub">대표 시약·용매·시간과 반응 결과 · 조건은 합성기와 프로토콜에 따라 조정</p></header>
+  <div class="body">
+    <div class="scroll"><table class="tbl sm cycle-table">
+      <colgroup><col style="width:14%"><col style="width:33%"><col style="width:7%"><col style="width:25%"><col style="width:21%"></colgroup>
+      <thead><tr><th>Step<br>(단계)</th><th>Reagents / Solvent<br>(시약 / 용매)</th><th class="num">Time<br>(시간)</th><th>Reaction<br>(반응)</th><th>Failure<br>(실패 시 결과)</th></tr></thead>
+      <tbody class="today">
+        <tr><td>① Detritylation<br><span class="ko">(탈트리틸화)</span></td><td>3% Trichloroacetic acid (TCA)<br><span class="ko">(트리클로로아세트산)</span><br>in Dichloromethane (DCM)<br><span class="ko">(디클로로메탄)</span></td><td class="num">50 s</td><td>5′-DMT removal → free 5′-OH<br><span class="ko">(5′-DMT 제거 → 자유 5′-OH 노출)</span></td><td>Blocked chain extension<br><span class="ko">(다음 뉴클레오타이드의 도입 차단)</span></td></tr>
+        <tr><td>② Coupling<br><span class="ko">(커플링)</span></td><td>0.1 M Phosphoramidite(포스포라미다이트)<br>+ 0.5 M 1H-Tetrazole(1H-테트라졸)<br>in Acetonitrile (ACN)(아세토니트릴)</td><td class="num">30 s</td><td>Nucleophilic attack on P(III) → phosphite triester<br><span class="ko">(P(III)에 대한 친핵 공격 → 포스파이트 삼중에스터)</span></td><td>Failed nucleotide incorporation<br><span class="ko">(해당 사이클의 뉴클레오타이드 도입 실패)</span></td></tr>
+        <tr><td>③ Capping<br><span class="ko">(캡핑)</span></td><td>Cap A: Acetic anhydride(무수아세트산) / Pyridine(피리딘) / THF 1:1:8<br>Cap B: 16–17.6% w/v N-Methylimidazole (NMI)(N-메틸이미다졸)</td><td class="num">30 s</td><td>Acetylation of unreacted 5′-OH<br><span class="ko">(미반응 5′-OH의 아세틸화 → 영구 신장 차단)</span></td><td>Internal deletion (n−1)<br><span class="ko">(미반응 말단의 후속 신장 → 내부 결손)</span></td></tr>
+        <tr><td>④ Oxidation<br><span class="ko">(산화)</span></td><td>0.015 M Iodine (I₂)(요오드)<br>in Water(물) / Pyridine(피리딘) / THF 2:20:78</td><td class="num">45 s</td><td>P(III) → P(V) phosphate triester<br><span class="ko">(P(III) → P(V) 포스포트리에스터)</span></td><td>Acid-induced backbone cleavage<br><span class="ko">(다음 산 처리 단계의 골격 절단)</span></td></tr>
+      </tbody>
+      <tbody><tr><td>Wash / Flush<br><span class="ko">(세척 / 플러시)</span></td><td>Acetonitrile wash(아세토니트릴 세척)<br>Argon flush(아르곤 플러시)<br><span class="ko">(각 단계 사이)</span></td><td class="num">30 s<br>10 s</td><td>Reagent removal; prevention of carryover<br><span class="ko">(이전 시약 제거 · 잔류 시약의 혼합 방지)</span></td><td>Cross-reactions; reduced efficiency<br><span class="ko">(교차 반응 · 효율 저하)</span></td></tr></tbody>
+    </table></div>
+    <p class="cycle-footnote"><b>THF</b> = Tetrahydrofuran(테트라하이드로퓨란) · <b>Oxidation product(산화 산물)</b>: 2-시아노에틸로 보호된 포스포트리에스터 · 포스포디에스터는 최종 탈보호 후 형성</p>
+    <p class="src">ATDBio, Nucleic Acids Book · Biotage white paper PPS676 (2022), Table 1, Figs. 6, 8</p>
   </div>
 </section>
 
-<section class="slide" data-part="p2" data-title="① Detritylation(탈트리틸화) 메커니즘">
-  <header><h2>① Detritylation(탈트리틸화) — S<sub>N</sub>1과 그 대가</h2><p class="sub">산이 반응성을 열어주고, 같은 산이 퓨린을 떨어뜨림</p></header>
+<section class="slide" data-part="p2" data-title="Detritylation(탈트리틸화) — 반응 메커니즘">
+  <header><h2>Detritylation(탈트리틸화) — 반응 메커니즘</h2><p class="sub">S<sub>N</sub>1 반응에 의한 DMT 제거 · 산 유도 Depurination(탈퓨린화)</p></header>
   <div class="body">
-    <div class="proc" data-steps="6" data-caps='["출발 — 5′-O–C(trityl) 에터 결합 · 3% 트리클로로아세트산 in 디클로로메탄 50초 · TCA의 pKa ≈ 0.7","① 에터 산소의 비공유전자쌍이 TCA의 O–H 양성자를 잡음 → 산소에 <b>양전하</b> · 빠르고 가역적","② C(trityl(트리틸))–O 결합 전자쌍이 <b>산소 쪽으로</b> 이동(heterolysis(헤테롤리시스·이종 결합 분해)) → 자유 5′-OH 완성 + DMT 양이온 이탈 · 전형적 S<sub>N</sub>1","③ 떨어져 나온 DMT⁺ — 두 para-OMe 산소의 비공유전자쌍이 고리로 밀려 들어가 <b>quinoidal(퀴노이달) 공명</b>(옥소카베늄) · 청록을 흡수하므로 <span class=\"rx\">주황</span>으로 보임","④ 대가 — 같은 산이 퓨린의 <b>N7</b>도 양성자화함 · 염기의 이탈능이 커짐 · dA가 dG보다 훨씬 빠름","⑤ C1′–N9 글리코시드 결합이 S<sub>N</sub>1으로 끊겨 <b>abasic(AP) site(에이베이식 사이트·무염기 자리)</b>가 됨 → 암모니아 탈보호 때 그 자리가 절단 → DMT가 붙은 채 잘린 <span class=\"rx\">truncated(트렁케이티드·절단 산물)</span>"]'>
-      <div class="proc-head"><h3>3% TCA / DCM · 50초 — 그리고 depurination(디퓨리네이션·탈퓨린화)</h3></div>
+    <div class="proc" data-steps="6" data-caps='["출발 — 5′-O–C(trityl) 에터 결합 · 3% 트리클로로아세트산 in 디클로로메탄 50 s · TCA의 pKa ≈ 0.7","① 에터 산소의 비공유전자쌍이 TCA의 O–H 양성자를 잡음 → 산소에 <b>양전하</b> · 빠르고 가역적","② C(trityl(트리틸))–O 결합 전자쌍이 <b>산소 쪽으로</b> 이동(heterolysis(헤테롤리시스·이종 결합 분해)) → 자유 5′-OH 완성 + DMT 양이온 이탈 · 전형적 S<sub>N</sub>1","③ 떨어져 나온 DMT⁺ — 두 para-OMe 산소의 비공유전자쌍이 고리로 밀려 들어가 <b>quinoidal(퀴노이달) 공명</b>(옥소카베늄) · 청록을 흡수하므로 <span class=\"rx\">주황</span>으로 보임","④ 대가 — 같은 산이 퓨린의 <b>N7</b>도 양성자화함 · 염기의 이탈능이 커짐 · dA가 dG보다 훨씬 빠름","⑤ C1′–N9 글리코시드 결합이 S<sub>N</sub>1으로 끊겨 <b>abasic(AP) site(에이베이식 사이트·무염기 자리)</b>가 됨 → 암모니아 탈보호 때 그 자리가 절단 → DMT가 붙은 채 잘린 <span class=\"rx\">truncated(트렁케이티드·절단 산물)</span>"]'>
+      <div class="proc-head"><h3>3% TCA / DCM · 50 s — 그리고 depurination(디퓨리네이션·탈퓨린화)</h3></div>
       <div class="proc-stage">
         <svg viewBox="0 0 640 300">
           <defs><marker id="epArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#C03B3B"/></marker></defs>
@@ -2198,7 +2390,7 @@ M  END
           <g data-until="2"><rect class="grp dmt" x="246" y="56" width="68" height="30" rx="4"/><text class="lbl rx" x="280" y="76" text-anchor="middle">DMT</text></g>
           <g data-until="3"><rect class="grp warn" x="392" y="40" width="152" height="42" rx="5"/>
             <text class="lbl" x="468" y="58" text-anchor="middle">Cl₃C–COO–H</text>
-            <text class="lbl sm" x="468" y="74" text-anchor="middle">TCA · pKa ≈ 0.7 · 3% in DCM · 50초</text></g>
+            <text class="lbl sm" x="468" y="74" text-anchor="middle">TCA · pKa ≈ 0.7 · 3% in DCM · 50 s</text></g>
           <path class="epath" data-at="2" d="M220 78 Q310 34 392 54"/>
           <g data-from="2" data-until="3"><circle cx="230" cy="102" r="9" style="fill:var(--cream);stroke:var(--ochre);stroke-width:1.4"/><text class="lbl rx" x="230" y="106" text-anchor="middle">+</text></g>
           <path class="epath" data-at="3" d="M240 66 Q222 44 208 70"/>
@@ -2232,7 +2424,7 @@ M  END
             <path class="bond" d="M150 112 L192 94"/><text class="lbl sm" x="204" y="90">5′-OH</text>
             <rect class="grp warn" x="360" y="34" width="182" height="40" rx="5"/>
             <text class="lbl" x="451" y="51" text-anchor="middle">Cl₃C–COO–H</text>
-            <text class="lbl sm" x="451" y="66" text-anchor="middle">같은 TCA · 같은 50초</text>
+            <text class="lbl sm" x="451" y="66" text-anchor="middle">같은 TCA · 같은 50 s</text>
           </g>
           <g data-at="5">
             <path class="bond" d="M132 152 L164 168"/>
@@ -2269,8 +2461,8 @@ M  END
   </div>
 </section>
 
-<section class="slide" data-part="p2" data-title="트리틸 모니터링 — 495 nm">
-  <header><h2>DMT 양이온의 색 — 495 nm로 효율을 실시간 측정</h2><p class="sub">보호기는 무색, 양이온은 주황 · 공명에 따른 색 변화</p></header>
+<section class="slide" data-part="p2" data-title="DMT 양이온의 흡광 특성과 합성 효율 측정">
+  <header><h2>DMT 양이온의 흡광 특성과 합성 효율 측정</h2><p class="sub">보호기는 무색, 양이온은 주황 · 공명에 따른 색 변화</p></header>
   <div class="body">
     <div class="cols w46">
       <div class="stack">
@@ -2406,7 +2598,7 @@ Q 105.4 257.4, 107.2 257.4
           <li>중심 탄소의 <b>빈 p 오비탈</b>에 세 고리의 π가 겹침 · 여기에 두 개의 para-OMe 산소가 전자쌍을 밀어 넣어 <b>옥소카베늄</b> 공명 구조를 만듦</li>
           <li>공명이 확장되며 HOMO–LUMO 간격이 좁아짐 → 흡수가 가시광으로 이동</li>
         </ul>
-        <div class="kb crim"><b>기존 설명 수정 ②</b><p>구조에 붙어 있는 DMT는 <b>무색</b> · 색이 보이는 것은 <b>떨어져 나왔다는 증거</b>이므로 효율 측정이 가능함</p></div>
+        <div class="kb crim"><b>Trityl signal(트리틸 신호)의 의미</b><p>결합된 DMT 보호기의 <b>무색</b> · 산 처리로 분리된 DMT⁺의 <b>주황색</b> · 폐액 흡광도에 의한 탈보호량 측정의 근거</p></div>
       </div>
       <div class="stack">
         <svg viewBox="0 0 470 212" class="dia">
@@ -2453,7 +2645,7 @@ Q 105.4 257.4, 107.2 257.4
     <div class="cols w64">
       <ul class="pts sm">
         <li>산을 <b>약하게</b> 하면 depurination(디퓨리네이션·탈퓨린화)은 줄지만 탈트리틸이 느려짐 → deblock(디블록·탈트리틸화) 시약 <b>전달량을 2배</b>로 늘려 보상</li>
-        <li>사슬이 길어질수록 탈트리틸이 어려워짐 — 17-mer에서 3% TCA는 <b>270초</b>가 필요하고 tailing이 심함 → 장쇄 합성에서 TCA는 이중으로 불리</li>
+        <li>사슬이 길어질수록 탈트리틸이 어려워짐 — 17-mer에서 3% TCA는 <b>270 s</b>가 필요하고 tailing이 심함 → 장쇄 합성에서 TCA는 이중으로 불리</li>
         <li>그래서 현대 대규모 합성은 <b>TCA → DCA</b>로 이동 · 2026년 현재 <b>3% DCA in Toluene(톨루엔)</b>(Glen 40-4240)까지 상업 판매</li>
         <li>단 톨루엔계 deblock(디블록·탈트리틸화)은 <b>전도도식 trityl(트리틸) 모니터와 비호환</b> — 앞 슬라이드의 실시간 효율 측정을 포기해야 함</li>
       </ul>
@@ -2466,8 +2658,8 @@ Q 105.4 257.4, 107.2 257.4
 <section class="slide" data-part="p2" data-title="② Coupling(커플링) 메커니즘">
   <header><h2>② Coupling(커플링) — 활성화 3단계와 율속 단계</h2><p class="sub">테트라졸은 산이면서 친핵체 · 두 역할을 순서대로 수행</p></header>
   <div class="body">
-    <div class="proc" data-steps="6" data-caps='["출발 — 0.1 M 포스포라미다이트 + 0.5 M 1H-테트라졸 in 아세토니트릴 30초 · 인은 <b>P(III)</b> 삼가 피라미드형이고 비공유전자쌍을 하나 가짐","① 활성화제의 산성 N–H가 아미다이트의 <b>다이아이소프로필아미노 질소</b>를 양성자화 → 테트라졸라이드 음이온 생성 · 빠르고 가역적","② 테트라졸라이드 음이온이 P를 친핵 공격하고 P–N 결합 전자쌍이 질소와 함께 빠짐 — <span class=\"rx\">이 친핵 치환이 율속 단계</span>","③ 양성자를 가진 질소가 전자쌍과 함께 빠짐 → 이탈기는 <b>중성 다이아이소프로필아민 HN(iPr)₂</b>(여분의 테트라졸이 잡아 암모늄 염) · 활성종 <b>포스포로테트라졸라이드</b> 완성","④ 지지체의 <b>자유 5′-O</b> 비공유전자쌍이 P를 공격 → 테트라졸라이드 이탈","⑤ <b>포스파이트 삼중에스터 P(III)</b> 완성 · 아직 삼가여서 산에 약함 → Oxidation(산화)를 건너뛰면 다음 사이클 TCA에서 골격이 끊어짐"]'>
-      <div class="proc-head"><h3>0.1 M 아미다이트 + 0.5 M 테트라졸 · 30초</h3></div>
+    <div class="proc" data-steps="6" data-caps='["출발 — 0.1 M 포스포라미다이트 + 0.5 M 1H-테트라졸 in 아세토니트릴 30 s · 인은 <b>P(III)</b> 삼가 피라미드형이고 비공유전자쌍을 하나 가짐","① 활성화제의 산성 N–H가 아미다이트의 <b>다이아이소프로필아미노 질소</b>를 양성자화 → 테트라졸라이드 음이온 생성 · 빠르고 가역적","② 테트라졸라이드 음이온이 P를 친핵 공격하고 P–N 결합 전자쌍이 질소와 함께 빠짐 — <span class=\"rx\">이 친핵 치환이 율속 단계</span>","③ 양성자를 가진 질소가 전자쌍과 함께 빠짐 → 이탈기는 <b>중성 다이아이소프로필아민 HN(iPr)₂</b>(여분의 테트라졸이 잡아 암모늄 염) · 활성종 <b>포스포로테트라졸라이드</b> 완성","④ 지지체의 <b>자유 5′-O</b> 비공유전자쌍이 P를 공격 → 테트라졸라이드 이탈","⑤ <b>포스파이트 삼중에스터 P(III)</b> 완성 · 아직 삼가여서 산에 약함 → Oxidation(산화)를 건너뛰면 다음 사이클 TCA에서 골격이 끊어짐"]'>
+      <div class="proc-head"><h3>0.1 M 아미다이트 + 0.5 M 테트라졸 · 30 s</h3></div>
       <div class="proc-stage">
         <svg viewBox="0 0 640 300">
           <defs><marker id="epArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#C03B3B"/></marker></defs>
@@ -2784,8 +2976,8 @@ L 230.6 85.1
 <section class="slide" data-part="p2" data-title="③ Capping(캡핑) 메커니즘">
   <header><h2>③ Capping(캡핑) — NMI에 의한 아실화제 생성</h2><p class="sub">무수아세트산 단독으로는 느림 · NMI가 더 강한 아실화제로 바꿈</p></header>
   <div class="body">
-    <div class="proc" data-steps="5" data-caps='["출발 — Coupling(커플링)에 실패해 남은 5′-OH + Cap A(무수아세트산/피리딘/THF 1:1:8) + Cap B(16~17.6% w/v N-메틸이미다졸 in ACN) 30초","① NMI의 이미다졸 질소가 무수아세트산의 <b>카보닐 탄소</b>를 공격","② 아세테이트가 이탈하며 <b>N-아세틸-N-메틸이미다졸리움</b> 생성 — 무수아세트산보다 훨씬 강한 아실화제","③ 미반응 5′-OH의 산소가 이 아실 카보닐을 공격","④ NMI가 이탈하고 5′-O-아세틸로 <b>영구 봉인</b> · 실패한 사슬을 고치지 않고 그 길이에서 정지시킴"]'>
-      <div class="proc-head"><h3>Ac₂O/피리딘/THF + NMI · 30초</h3></div>
+    <div class="proc" data-steps="5" data-caps='["출발 — Coupling(커플링)에 실패해 남은 5′-OH + Cap A(무수아세트산/피리딘/THF 1:1:8) + Cap B(16~17.6% w/v N-메틸이미다졸 in ACN) 30 s","① NMI의 이미다졸 질소가 무수아세트산의 <b>카보닐 탄소</b>를 공격","② 아세테이트가 이탈하며 <b>N-아세틸-N-메틸이미다졸리움</b> 생성 — 무수아세트산보다 훨씬 강한 아실화제","③ 미반응 5′-OH의 산소가 이 아실 카보닐을 공격","④ NMI가 이탈하고 5′-O-아세틸로 <b>영구 봉인</b> · 실패한 사슬을 고치지 않고 그 길이에서 정지시킴"]'>
+      <div class="proc-head"><h3>Ac₂O/피리딘/THF + NMI · 30 s</h3></div>
       <div class="proc-stage">
         <svg viewBox="0 0 640 300">
           <defs><marker id="epArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#C03B3B"/></marker></defs>
@@ -2804,7 +2996,7 @@ L 230.6 85.1
             <text class="lbl" x="300" y="104" text-anchor="middle">C</text></g>
           <g data-until="4"><rect class="grp act" x="452" y="224" width="176" height="46" rx="5"/>
             <text class="lbl" x="540" y="243" text-anchor="middle">N-메틸이미다졸 (NMI)</text>
-            <text class="lbl sm" x="540" y="259" text-anchor="middle" textLength="180" lengthAdjust="spacingAndGlyphs">Capping(캡핑) B — 16~17.6% w/v in ACN · 30초</text></g>
+            <text class="lbl sm" x="540" y="259" text-anchor="middle" textLength="180" lengthAdjust="spacingAndGlyphs">Capping(캡핑) B — 16~17.6% w/v in ACN · 30 s</text></g>
           <g data-until="2"><circle cx="470" cy="196" r="11" style="fill:#EAF2FB;stroke:var(--teal);stroke-width:1.5"/>
             <text class="lbl" x="470" y="200" text-anchor="middle">N</text>
             <path class="bond" d="M470 207 L470 224"/></g>
@@ -2838,8 +3030,8 @@ L 230.6 85.1
   </div>
 </section>
 
-<section class="slide" data-part="p2" data-title="Capping(캡핑) 생략 — n−1의 정체">
-  <header><h2>Capping(캡핑) 생략 — 정제 제거가 어려운 오류 발생</h2><p class="sub">설계 철학: 못 고칠 오류를 <b>분리 가능한</b> 오류로 바꿈</p></header>
+<section class="slide" data-part="p2" data-title="Capping(캡핑)의 역할과 내부 결손 형성">
+  <header><h2>Capping(캡핑)의 역할과 내부 결손 형성</h2><p class="sub">설계 철학: 못 고칠 오류를 <b>분리 가능한</b> 오류로 바꿈</p></header>
   <div class="body">
     <div class="diabox">
       <svg viewBox="0 0 640 214" class="dia">
@@ -2885,8 +3077,8 @@ L 230.6 85.1
 <section class="slide" data-part="p2" data-title="④ Oxidation(산화) 메커니즘">
   <header><h2>④ Oxidation(산화) — P(III) → P(V) 포스포트리에스터</h2><p class="sub">요오드가 인을 친전자체로 바꾸고, 물이 산소를 넣어줌</p></header>
   <div class="body">
-    <div class="proc" data-steps="5" data-caps='["출발 — Coupling(커플링) 산물은 <b>P(III) 포스파이트 삼중에스터</b> · 0.015 M 요오드 in 물/피리딘/THF 2:20:78 · 45초","① P의 비공유전자쌍이 I–I 결합을 공격하고, I–I 결합 전자쌍은 한쪽 요오드로 밀려남","② <b>iodophosphonium(아이오도포스포늄)</b> (P⁺–I) + I⁻ 생성 — 인이 강한 친전자체가 됨","③ 물의 산소가 P를 공격하고 남은 요오드가 이탈","④ 피리딘이 양성자를 받아가며 <b>P=O</b>가 생겨 P(V) <span class=\"rx\">포스포트리에스터</span> 완성 · 부산물은 pyridinium iodide(피리디늄 아이오다이드)"]'>
-      <div class="proc-head"><h3>0.015 M I₂ / H₂O / 피리딘 / THF · 45초</h3></div>
+    <div class="proc" data-steps="5" data-caps='["출발 — Coupling(커플링) 산물은 <b>P(III) 포스파이트 삼중에스터</b> · 0.015 M 요오드 in 물/피리딘/THF 2:20:78 · 45 s","① P의 비공유전자쌍이 I–I 결합을 공격하고, I–I 결합 전자쌍은 한쪽 요오드로 밀려남","② <b>iodophosphonium(아이오도포스포늄)</b> (P⁺–I) + I⁻ 생성 — 인이 강한 친전자체가 됨","③ 물의 산소가 P를 공격하고 남은 요오드가 이탈","④ 피리딘이 양성자를 받아가며 <b>P=O</b>가 생겨 P(V) <span class=\"rx\">포스포트리에스터</span> 완성 · 부산물은 pyridinium iodide(피리디늄 아이오다이드)"]'>
+      <div class="proc-head"><h3>0.015 M I₂ / H₂O / 피리딘 / THF · 45 s</h3></div>
       <div class="proc-stage">
         <svg viewBox="0 0 640 300">
           <defs><marker id="epArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#C03B3B"/></marker></defs>
@@ -2903,7 +3095,7 @@ L 230.6 85.1
           <g data-until="2"><circle cx="436" cy="172" r="15" style="fill:#F3E6C4;stroke:var(--ochre);stroke-width:1.5"/><text class="lbl" x="436" y="176" text-anchor="middle">I</text>
             <path class="bond" d="M451 172 L473 172"/>
             <circle cx="488" cy="172" r="15" style="fill:#F3E6C4;stroke:var(--ochre);stroke-width:1.5"/><text class="lbl" x="488" y="176" text-anchor="middle">I</text>
-            <text class="lbl sm" x="462" y="206" text-anchor="middle">0.015 M I₂ · 45초</text></g>
+            <text class="lbl sm" x="462" y="206" text-anchor="middle">0.015 M I₂ · 45 s</text></g>
           <g data-until="4"><rect class="grp" x="44" y="38" width="92" height="28" rx="4"/><text class="lbl" x="90" y="57" text-anchor="middle">H₂O</text></g>
           <rect class="grp" x="504" y="240" width="122" height="30" rx="4"/><text class="lbl" x="565" y="259" text-anchor="middle">피리딘</text>
           <path class="epath" data-at="2" d="M240 176 Q334 208 424 182"/>
@@ -3318,8 +3510,8 @@ Q 144.8 217.1, 146.7 217.1
   </div>
 </section>
 
-<section class="slide" data-part="p3" data-title="아크릴로니트릴 부반응">
-  <header><h2>방출된 아크릴로니트릴의 DNA 재공격</h2><p class="sub">β-제거의 부산물이 Michael(마이클) 수용체로 작동</p></header>
+<section class="slide" data-part="p3" data-title="아크릴로니트릴에 의한 염기 알킬화">
+  <header><h2>아크릴로니트릴에 의한 염기 알킬화</h2><p class="sub">β-제거의 부산물이 Michael(마이클) 수용체로 작동</p></header>
   <div class="body">
     <div class="cols w46">
       <div class="stack">
@@ -3377,8 +3569,8 @@ L 35.7 78.0
   </div>
 </section>
 
-<section class="slide base-protection" data-part="p3" data-title="염기 보호기 — 교과서와 실무">
-  <header><h2>염기 보호기 제거 — 율속은 항상 dG</h2><p class="sub">교과서 도식의 "55 °C 5시간"은 A·C 기준 · dG 기준으로는 부족함</p></header>
+<section class="slide base-protection" data-part="p3" data-title="염기 보호기별 탈보호 속도와 반응 조건">
+  <header><h2>염기 보호기별 탈보호 속도와 반응 조건</h2><p class="sub">교과서 도식의 "55 °C 5시간"은 A·C 기준 · dG 기준으로는 부족함</p></header>
   <div class="body">
     <div class="cols w64">
       <div class="stack">
@@ -3446,8 +3638,8 @@ L 35.7 78.0
   </div>
 </section>
 
-<section class="slide" data-part="p3" data-title="같은 물, 반대 운명">
-  <header><h2>수분에 대한 안정성 차이 — 저장 수명의 병목</h2><p class="sub">물 — 아미다이트 분해 · 완성된 포스포디에스터의 높은 안정성</p></header>
+<section class="slide" data-part="p3" data-title="인산 골격의 가수분해 안정성과 DNA 열화">
+  <header><h2>인산 골격의 가수분해 안정성과 DNA 열화</h2><p class="sub">물 — 아미다이트 분해 · 완성된 포스포디에스터의 높은 안정성</p></header>
   <div class="body">
     <div class="cols w46">
       <div class="stack">
@@ -3633,8 +3825,8 @@ Q 144.8 217.1, 146.7 217.1
   </div>
 </section>
 
-<section class="slide length-limit" data-part="p4" data-title="200 nt가 한계인 이유">
-  <header><h2>200 nt가 한계인 이유 — 네 가지 부산물과 지지체</h2><p class="sub">한계는 한 가지 이유가 아니라 네 경로의 합</p></header>
+<section class="slide length-limit" data-part="p4" data-title="올리고뉴클레오타이드의 길이 제한 요인">
+  <header><h2>올리고뉴클레오타이드의 길이 제한 요인</h2><p class="sub">한계는 한 가지 이유가 아니라 네 경로의 합</p></header>
   <div class="body">
     <div class="scroll"><table class="tbl sm">
       <thead><tr><th>부산물</th><th>어느 단계에서</th><th>원인</th><th>5′ 말단</th><th>정제 가능성</th></tr></thead>
@@ -3678,41 +3870,19 @@ Q 144.8 217.1, 146.7 217.1
         <tr><td>① Detritylation(탈트리틸화)</td><td>3% TCA in 디클로로메탄</td><td><b>3% DCA in Toluene(톨루엔)</b>(Glen 40-4240) — DCM 제거 · 단 전도도식 trityl(트리틸) 모니터와 비호환</td></tr>
         <tr><td>② Coupling(커플링)</td><td>0.5 M 1H-테트라졸</td><td><b>DCI</b> 표준화 — 속도 2배 · 장쇄에서 n+1 억제</td></tr>
         <tr><td>④ Oxidation(산화)</td><td>0.015 M I₂ / H₂O / 피리딘</td><td><b>CSO</b> 무수 Oxidation(산화) — 물·요오드·피리딘을 사이클에서 제거</td></tr>
-        <tr><td>세척</td><td>아세토니트릴 30초 × 사이클 수</td><td>아세토니트릴 <b>재활용</b></td></tr>
+        <tr><td>세척</td><td>아세토니트릴 30 s × 사이클 수</td><td>아세토니트릴 <b>재활용</b></td></tr>
       </tbody></table></div>
     <div class="kb crim"><b>원리적 한계</b><p>5′-DMT · 염기 보호기 · 인산 보호기를 <b>매 사이클 버림</b> → atom economy가 본질적으로 낮음 · 시약을 바꾸는 개선만으로는 넘을 수 없음 → <b>ligation(라이게이션·연결) 기반 조립</b>과 <b>효소 합성</b>이 대안으로 제시됨(6-2강 · 7-2강)</p></div>
     <p class="src">Glen Research, Glen Report 37-26 (2025/26), <i>Greener Roads Ahead</i> · <i>Enzymatic de novo oligonucleotide synthesis</i>, Biotechnol Adv (2025), doi:10.1016/j.biotechadv.2025.108604 · 화학 합성 단량체 농도 약 0.1 M vs 효소 합성 0.001~0.01 M</p>
   </div>
 </section>
 
-<section class="slide" data-part="p4" data-title="수업 중 볼 동영상">
-  <header><h2>수업 중 볼 동영상</h2><p class="sub">컬럼 속 4단계 사이클을 움직이는 그림으로 · 접속 확인된 링크만</p></header>
-  <div class="body mid">
-    <ul class="vids">
-      <li><span class="pl">▶</span><span>
-        <b><a href="https://www.youtube.com/watch?v=yw0nrLWZSUw" target="_blank" rel="noopener">Educational video oligo synthesis(올리고 합성 교육 영상)</a> <em>1:37</em></b>
-        <span>볼 것 — Cytiva 애니메이션의 순서는 Detritylation(탈트리틸화) → Coupling(커플링) → <b>Oxidation(산화) → Capping(캡핑)</b>. 오늘 위젯(캡핑 → 산화)과의 순서 차이 비교</span></span></li>
-      <li><span class="pl">▶</span><span>
-        <b><a href="https://www.youtube.com/watch?v=kjSojZWnPQ4" target="_blank" rel="noopener">What is Oligonucleotide Synthesis?(올리고뉴클레오타이드 합성)</a> <em>4:09</em></b>
-        <span>볼 것 — Detritylation(탈트리틸화) · 활성화 · Coupling(커플링) · 아세틸 Capping(캡핑) · Oxidation(산화) · 암모니아 절단까지 오늘 PART 1–3 전체를 한 번에 (METTLER TOLEDO)</span></span></li>
-      <li><span class="pl">▶</span><span>
-        <b><a href="https://www.youtube.com/watch?v=1S0x3aRCviM" target="_blank" rel="noopener">Gene Synthesis by GeneArt®(GeneArt 유전자 합성)</a> <em>4:11</em></b>
-        <span>볼 것 — 실제 공장: 필터를 찍어 웰에 넣고 CPG를 채운 뒤 자동 합성 · 하루 13,500 올리고 (Thermo Fisher GeneArt) — 후반 PCR 조립은 7-1에서 다시</span></span></li>
-      <li><span class="pl">▶</span><span>
-        <b><a href="https://www.youtube.com/watch?v=GXOR09Q_VEA" target="_blank" rel="noopener">Unit 3 Part 3   Synthesizing DNA by Solid Phase Synthesis</a> <em>8:37</em></b>
-        <span>복습 — 교토대 공개강의 '생명의 화학' 고상 합성 편</span></span></li>
-      <li><span class="pl">▶</span><span>
-        <b><a href="https://www.youtube.com/watch?v=t29CQywQpMY" target="_blank" rel="noopener">Solid state oligonucleotide synthesis (phosphoramidite method)(포스포라미다이트 방식의 고상 올리고 합성)</a> <em>27:29</em></b>
-        <span>과제 시청 — "프라이머를 주문하면 무슨 일이 일어나나": 보호기 · 부반응 · 절단까지 긴 해설</span></span></li>
-    </ul>
-  </div>
-  <p class="src">YouTube · 2026-09-29 접속 확인</p>
-</section>
+
 
 
 <!-- ===================== 정리 ===================== -->
-<section class="slide" data-part="p5" data-title="정리">
-  <header><h2>정리 — 오늘의 세 명제</h2><p class="sub">사이클 한 칸의 화학이 길이 · 수율 · 정제 가능성을 모두 결정</p></header>
+<section class="slide" data-part="p5" data-title="DNA 화학 합성의 핵심 원리">
+  <header><h2>DNA 화학 합성의 핵심 원리</h2><p class="sub">사이클 한 칸의 화학이 길이 · 수율 · 정제 가능성을 모두 결정</p></header>
   <div class="body">
     <ol class="nl">
       <li><span><b>Capping(캡핑) 생략에 따른 정제 제거 곤란 오류</b> — 미반응 5′-OH를 살려두면 내부 결손 n−1이 되고, 전장 산물과 똑같이 <b>DMT-ON</b>이라 정제로 걸러지지 않음 · Capping(캡핑)은 오류를 없애는 것이 아니라 <b>분리 가능한 형태</b>로 바꾸는 장치</span></li>
@@ -3740,8 +3910,8 @@ Q 144.8 217.1, 146.7 217.1
   </div>
 </section>
 
-<section class="slide ending" data-part="p5" data-title="마무리">
-  <h2>합성 — 수분 배제 / 보존 — 물에 안정한 구조</h2>
+<section class="slide ending" data-part="p5" data-title="화학 합성과 DNA 보존의 수분 관리">
+  <h2>화학 합성과 DNA 보존의 수분 관리</h2>
   <div class="rule"></div>
   <p>6-1강: 컬럼 1개 위의 화학 — 사이클 4단계와 200 nt의 벽<br>6-2강: 같은 화학을 칩 위에서 100만 개 동시에 · 그리고 보호기를 쓰지 않는 효소 합성(TdT)<br>7-1강: 오늘 만들어진 truncated(트렁케이티드·절단 산물) · n−1 · n+1을 실제로 분리하는 방법 — 정제와 HPLC</p>
   <p class="small">Q and A(질의응답)</p>
@@ -4038,6 +4208,58 @@ function mol3dInit(root){
 }
 document.addEventListener('DOMContentLoaded', function(){ mol3dInit(document); });
 setTimeout(function(){ mol3dInit(document); }, 60);
+
+/* Stop a lecture video when changing slides or selecting another source. */
+function lectureVideosInit(){
+  var lessons=[].slice.call(document.querySelectorAll('[data-video-lesson]'));
+  var playing=null;
+  lessons.forEach(function(lesson){
+    if(lesson.dataset.videoReady)return;
+    lesson.dataset.videoReady='1';
+    var videos=JSON.parse(lesson.querySelector('.video-data').textContent);
+    var stage=lesson.querySelector('.video-stage');
+    var preview=lesson.querySelector('.video-preview');
+    var play=lesson.querySelector('.video-play');
+    var source=lesson.querySelector('.video-source-link');
+    var credit=lesson.querySelector('.video-credit');
+    var note=lesson.querySelector('.video-observation');
+    var choices=[].slice.call(lesson.querySelectorAll('.video-choice'));
+    var selected=0;
+    function stop(){
+      var frame=stage.querySelector('iframe');
+      if(frame)frame.remove();
+      preview.hidden=false;play.hidden=false;
+      if(playing===stop)playing=null;
+    }
+    function select(i){
+      stop();selected=i;
+      var video=videos[i];
+      preview.src='https://i.ytimg.com/vi/'+video.id+'/hqdefault.jpg';
+      preview.alt=video.title;
+      source.href='https://www.youtube.com/watch?v='+video.id;
+      credit.textContent=video.author+' · '+video.duration;
+      note.textContent=video.note;
+      choices.forEach(function(button,j){button.setAttribute('aria-pressed',String(i===j));});
+      play.setAttribute('aria-label',video.label+' 재생');
+    }
+    choices.forEach(function(button,i){button.addEventListener('click',function(){select(i);});});
+    play.addEventListener('click',function(){
+      if(playing)playing();
+      var video=videos[selected];
+      var frame=document.createElement('iframe');
+      frame.title=video.title;
+      frame.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      frame.allowFullscreen=true;
+      frame.referrerPolicy='strict-origin-when-cross-origin';
+      frame.src='https://www.youtube-nocookie.com/embed/'+video.id+'?autoplay=1&rel=0&playsinline=1';
+      preview.hidden=true;play.hidden=true;stage.appendChild(frame);playing=stop;
+    });
+    new MutationObserver(function(){if(lesson.hidden)stop();}).observe(lesson,{attributes:true,attributeFilter:['hidden']});
+    select(0);
+  });
+}
+document.addEventListener('DOMContentLoaded',lectureVideosInit);
+setTimeout(lectureVideosInit,60);
 
 /* ---------- start ---------- */
 if (window.innerWidth < 1180 && window.innerWidth >= 900) app.classList.add('noside');
