@@ -1,0 +1,675 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>11-1 PCR과 Sanger 시퀀싱 및 게놈 프로젝트</title><style>/* BLUE 포맷 (bluelib.py) 을 HTML 로 옮긴 단일 테마 — 1em = 15pt, 1in = 4.8em (슬라이드 폭 64em) */
+:root{
+  --navy:#16324F; --teal:#529FD9; --amber:#224EBD; --crim:#C03B3B; --ink:#1A1A1A; --gray:#5B6670;
+  --lgray:#F4F6F9; --white:#FFFFFF; --border:#D8DEE6; --green:#2E7D54; --cream:#FAF6EC;
+  --code:#1E2530; --codeink:#E6EDF3; --codecm:#8FB7A0; --sub1:#A8C4D4; --sub2:#C8D8E4;
+  --tealwash:#EAF3FB; --crimwash:#FBECEC; --greenwash:#E9F4EE; --ochre:#8A5F12;
+  --canvas:#E9EDF2; --side-hover:#1F4263; --side-line:#2A4A68;
+  --sans:"Apple SD Gothic Neo","Helvetica Neue","Noto Sans KR","Malgun Gothic",-apple-system,BlinkMacSystemFont,sans-serif;
+  --mono:Menlo,"SFMono-Regular",Consolas,"Liberation Mono",monospace;
+  --math:"STIX Two Math","Cambria Math","Latin Modern Math","Times New Roman","Apple SD Gothic Neo","Noto Sans KR",serif;
+  --helix:none;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{margin:0;background:var(--canvas);color:var(--ink);font:16px/1.6 var(--sans);word-break:keep-all;overflow-wrap:anywhere;-webkit-text-size-adjust:100%}
+p,h1,h2,h3,ul,ol,dl,dd,figure,pre{margin:0}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--teal);outline-offset:2px;border-radius:4px}
+
+/* ---------- shell ---------- */
+.app{height:100%;display:grid;grid-template-columns:292px minmax(0,1fr);grid-template-rows:minmax(0,1fr)}
+.app.noside{grid-template-columns:minmax(0,1fr)} .app.noside .side{display:none}
+.side{background:var(--navy);color:#E8EEF4;display:flex;flex-direction:column;min-height:0;overflow:hidden;border-right:3px solid var(--amber)}
+.side-head{padding:18px 18px 14px;display:flex;flex-direction:column;gap:3px;border-bottom:1px solid var(--side-line)}
+.side-head .k{font:700 11.5px "Helvetica Neue",var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--teal)}
+.side-head .t{font-size:18px;font-weight:700;line-height:1.35;color:#fff}
+.side-head .s{font-size:13px;color:var(--sub1)}
+.side-nav{flex:1;min-height:0;overflow-y:auto;padding:6px 8px 16px}
+.part-h{display:flex;align-items:baseline;gap:6px;width:100%;padding:9px 8px 5px;border:0;background:none;cursor:pointer;text-align:left;font-size:12.5px;font-weight:700;color:var(--sub1);border-radius:6px}
+.part-h:hover{background:var(--side-hover)}
+.part-h .tw{font-size:10px;width:1em;display:inline-block;transition:transform .12s}
+.part-h[aria-expanded="true"] .tw{transform:rotate(90deg)}
+.part-h .nm{flex:1} .part-h .tm{font:500 11.5px var(--mono);color:var(--sub1);white-space:nowrap}
+.part-list{display:flex;flex-direction:column}
+.nav-b{display:flex;gap:8px;width:100%;text-align:left;font-size:13.5px;line-height:1.4;padding:5px 8px 5px 22px;border:0;border-radius:6px;background:none;color:#E8EEF4;cursor:pointer}
+.nav-b .no{font:600 11.5px/1.65 var(--mono);color:var(--sub1);min-width:1.7em}
+.nav-b .ml{font:700 9.5px/1.9 var(--mono);color:var(--teal);margin-left:auto}
+.nav-b:hover{background:var(--side-hover)}
+.nav-b[aria-current="true"]{background:#fff;color:var(--navy);font-weight:700}
+.nav-b[aria-current="true"] .no,.nav-b[aria-current="true"] .ml{color:var(--amber)}
+.side-notes{border-top:1px solid var(--side-line);padding:12px 18px 14px;font-size:13.5px;line-height:1.65;max-height:34%;overflow:auto;color:#E8EEF4}
+.side-notes b{display:block;font-size:11px;letter-spacing:.08em;color:var(--teal);margin-bottom:4px}
+
+.main{display:flex;flex-direction:column;min-width:0;min-height:0}
+.stage{flex:1;min-height:0;container-type:size;display:grid;place-items:center;padding:14px}
+.deck{width:min(100cqw,calc(100cqh * 16 / 9));aspect-ratio:16/9;container-type:inline-size;background:var(--white);border:1px solid var(--border);overflow:hidden;box-shadow:0 1px 2px rgba(10,30,50,.06),0 12px 32px rgba(10,30,50,.12)}
+.ctrl{display:flex;align-items:center;flex-wrap:wrap;gap:6px 8px;padding:8px 14px;border-top:1px solid var(--border);background:var(--white);font-size:14px;color:var(--ink)}
+.ctrl .sp{flex:1}
+.ctrl .where{color:var(--gray);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:36vw}
+.ctrl .count{font:600 14px var(--mono);font-variant-numeric:tabular-nums;min-width:4.4em;text-align:center}
+.ctrl .clock{font:600 14px var(--mono);font-variant-numeric:tabular-nums;color:var(--gray)}
+.cb{min-height:36px;min-width:36px;padding:6px 12px;border:1px solid var(--border);border-radius:8px;background:var(--lgray);cursor:pointer;line-height:1.2;color:var(--ink)}
+.cb:hover{border-color:var(--gray)}
+.cb[aria-pressed="true"]{border-color:var(--amber);background:var(--tealwash);color:var(--amber)}
+.cb.pri{background:var(--amber);border-color:var(--amber);color:#fff;font-weight:700}
+
+/* ---------- read mode ---------- */
+.app.read{display:block;height:auto;min-height:100%}
+.app.read .side{display:none;position:fixed;inset:0 auto 0 0;width:min(86vw,320px);z-index:20;box-shadow:0 0 0 100vmax rgba(0,0,0,.4)}
+.app.read.sideopen .side{display:flex}
+.app.read .main{display:block}
+.app.read .stage{container-type:normal;display:block;padding:16px}
+.app.read .deck{width:100%;max-width:960px;margin-inline:auto;aspect-ratio:auto;container-type:normal;background:none;border:0;box-shadow:none;overflow:visible;display:flex;flex-direction:column;gap:18px}
+.app.read .slide{font-size:16px;height:auto;min-height:0;overflow:hidden;border:1px solid var(--border);box-shadow:0 1px 2px rgba(10,30,50,.05)}
+.app.read .slide.cover,.app.read .slide.ending{min-height:22em}
+.app.read .ctrl{position:sticky;bottom:0;z-index:10}
+.app.read .presentonly{display:none}
+@media (max-width:780px){
+  .app.read .slide{padding-inline:16px}
+  .app.read .cols,.app.read .cols.w64,.app.read .cols.w46,.app.read .cols.w73,.app.read .cols.w55{grid-template-columns:minmax(0,1fr)}
+  .app.read .slide.cover{padding-right:16px} .app.read .slide.cover .art{display:none}
+  .app.read .slide.cover h1{font-size:2em}
+  .app.read .flowx{flex-direction:column} .app.read .flowx .ar{transform:rotate(90deg);align-self:center}
+}
+
+/* ---------- slide (BLUE) ---------- */
+.slide{position:relative;font-size:calc(100cqw / 64);line-height:1.55;height:100%;display:flex;flex-direction:column;background:var(--white);color:var(--ink);padding:2.0em 2.64em .75em;overflow:hidden}
+.slide::before{content:"";position:absolute;inset:0 0 auto 0;height:.48em;background:var(--teal);z-index:2}
+.slide::after{content:"";position:absolute;right:.3em;top:50%;transform:translateY(-50%);height:calc(100% - 1.2em);aspect-ratio:1052/1540;max-width:22.5em;background:var(--helix) center/contain no-repeat;opacity:.07;pointer-events:none;z-index:0}
+.slide > *{position:relative;z-index:1}
+.slide > header{display:flex;flex-direction:column;gap:.1em}
+.slide h2{font-size:2em;font-weight:700;color:var(--navy);line-height:1.25;letter-spacing:-.01em;text-wrap:balance}
+.slide .sub{font-size:1em;color:var(--gray);line-height:1.4}
+.slide > header::after{content:"";display:block;width:7.2em;height:.17em;background:var(--amber);margin-top:.5em}
+.slide .body{flex:1;min-height:0;display:flex;flex-direction:column;gap:.75em;padding-top:1.05em;overflow:hidden auto}
+.slide .body.mid{justify-content:center}
+.slide > footer{display:flex;justify-content:space-between;gap:1em;font-size:.73em;color:var(--gray);padding-top:.45em}
+.slide > footer .pg{font-family:var(--mono)}
+.notes{display:none}
+.app.read.shownotes .slide .notes{display:block;font-size:.88em;color:var(--gray);border-top:1px dashed var(--border);margin-top:.8em;padding-top:.6em}
+
+.slide.quiz{background:var(--cream)} .slide.quiz::before{background:var(--amber)} .slide.quiz::after{display:none}
+.slide.cover,.slide.ending{background:var(--navy);color:#fff;justify-content:center}
+.slide.cover::before,.slide.cover::after,.slide.ending::before,.slide.ending::after{display:none}
+.slide.cover{padding:0 39.5% 0 4.3em;gap:0}
+.slide.cover .en{font:700 1em "Helvetica Neue",var(--sans);color:var(--teal);letter-spacing:.04em;margin-bottom:.7em}
+.slide.cover h1{font-size:2.67em;font-weight:700;line-height:1.22;letter-spacing:-.015em;text-wrap:balance}
+.slide.cover .s1{font-size:1.4em;color:var(--sub1);margin-top:.35em;line-height:1.4}
+.slide.cover .rule{width:7.7em;height:.19em;background:var(--teal);margin:1.5em 0 1.1em}
+.slide.cover .s2{font-size:1em;color:var(--sub2);line-height:1.7;max-width:32em}
+.slide.cover .keys{font-size:.74em;color:var(--sub1);margin-top:1.6em;display:flex;flex-wrap:wrap;gap:.3em 1.1em}
+.slide.cover .art{position:absolute;inset:0 0 0 61.5%;border-left:.24em solid var(--amber);background:#0F2740;overflow:hidden;font:700 1.5em/1.32 var(--mono);color:var(--teal);text-align:center;padding:.4em 0;z-index:1;white-space:pre;opacity:.95}
+.slide.cover .art span{color:#fff}
+kbd{font:600 .95em var(--mono);border:1px solid var(--side-line);border-radius:.3em;padding:0 .35em;color:#fff}
+.slide.ending{align-items:center;text-align:center;padding-inline:5em;gap:1.1em}
+.slide.ending h2{color:#fff;font-size:2.3em}
+.slide.ending .rule{width:100%;height:.24em;background:var(--teal)}
+.slide.ending p{font-size:1.27em;color:var(--sub2);line-height:1.7;max-width:36em}
+
+.cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1.5em;align-items:start}
+.cols.w64{grid-template-columns:minmax(0,3fr) minmax(0,2fr)} .cols.w46{grid-template-columns:minmax(0,2fr) minmax(0,3fr)}
+.cols.w73{grid-template-columns:minmax(0,7fr) minmax(0,4fr)} .cols.w55{grid-template-columns:minmax(0,11fr) minmax(0,9fr)}
+.stack{display:flex;flex-direction:column;gap:.65em;min-width:0}
+ul.pts{padding-left:1.1em;display:flex;flex-direction:column;gap:.4em;font-size:1.08em}
+ul.pts li::marker{color:var(--teal)} ul.pts.sm{font-size:.95em;gap:.3em}
+.gray{color:var(--gray)} .small{font-size:.86em} .tiny{font-size:.75em}
+.hl{color:var(--amber);font-weight:700} .bad{color:var(--crim);font-weight:700} .good{color:var(--green);font-weight:700} .nv{color:var(--navy);font-weight:700}
+code,.mono{font-family:var(--mono);font-size:.92em}
+var,.v{font-family:var(--math);font-style:italic;font-size:1.08em}
+.src{font-size:.6em;line-height:1.45;color:#A3ADB7;letter-spacing:.01em}
+.src i{font-style:italic}
+a{color:var(--amber)}
+
+/* keybox · card · flow · numbered list · stat */
+.kb{border-left:.26em solid var(--amber);background:var(--lgray);padding:.55em .9em .6em 1.1em;display:flex;flex-direction:column;gap:.12em}
+.kb > b{font-size:.8em;color:var(--amber)} .kb > p,.kb > div{font-size:1em;line-height:1.5}
+.kb.teal{border-color:var(--teal)} .kb.teal > b{color:#2F7FBE}
+.kb.crim{border-color:var(--crim)} .kb.crim > b{color:var(--crim)}
+.kb.green{border-color:var(--green)} .kb.green > b{color:var(--green)}
+.card{background:var(--lgray);border:1px solid var(--border);border-top:.36em solid var(--teal);border-radius:.3em;padding:.7em .95em .8em;display:flex;flex-direction:column;gap:.3em;min-width:0}
+.card.amber{border-top-color:var(--amber)} .card.crim{border-top-color:var(--crim)} .card.green{border-top-color:var(--green)}
+.card > h3{font-size:1.07em;color:var(--navy);line-height:1.35} .card > p,.card li{font-size:.87em;line-height:1.5}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(11em,1fr));gap:.8em}
+.flowx{display:flex;align-items:stretch;gap:.35em}
+.flowx .fb{flex:1 1 0;background:var(--lgray);border:1px solid var(--border);border-top:.34em solid var(--teal);border-radius:.3em;padding:.5em .45em .55em;text-align:center;display:flex;flex-direction:column;gap:.15em;min-width:0}
+.flowx .fb b{font-size:.87em;color:var(--navy);line-height:1.3} .flowx .fb span{font-size:.67em;color:var(--gray);line-height:1.4}
+.flowx .ar{align-self:center;color:var(--teal);font-size:.93em;font-weight:700}
+ol.nl{list-style:none;padding:0;display:flex;flex-direction:column;gap:.55em;counter-reset:n}
+ol.nl > li{counter-increment:n;display:grid;grid-template-columns:2.1em 1fr;gap:.7em;align-items:start;font-size:1.05em;line-height:1.5}
+ol.nl > li::before{content:counter(n);inline-size:2.05em;block-size:2.05em;border-radius:50%;background:var(--amber);color:#fff;font:700 .95em/2.05em "Helvetica Neue",var(--sans);text-align:center}
+.stat{display:flex;flex-direction:column;align-items:center;text-align:center}
+.stat b{font-size:2.27em;color:var(--teal);line-height:1.2;font-variant-numeric:tabular-nums} .stat span{font-size:.8em;color:var(--gray)}
+.badge{display:inline-block;font:700 .68em/1.9 var(--sans);padding:0 .7em;border-radius:1em;vertical-align:middle;white-space:nowrap}
+.badge.free{background:var(--greenwash);color:var(--green)} .badge.tb{background:var(--tealwash);color:var(--amber)}
+
+/* tables (BLUE) */
+.scroll{overflow-x:auto;min-width:0}
+table.tbl{border-collapse:collapse;width:100%;font-size:.87em;line-height:1.4}
+table.tbl th{background:var(--navy);color:#fff;font-weight:700;text-align:left;padding:.5em .65em}
+table.tbl td{padding:.42em .65em;border:1px solid var(--border);vertical-align:top;background:var(--white)}
+table.tbl tr:nth-child(even) td{background:var(--lgray)}
+table.tbl td:first-child{font-weight:700;color:var(--navy)}
+table.tbl td.num,table.tbl th.num{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+table.tbl td.c,table.tbl th.c{text-align:center;font-family:var(--mono)}
+table.tbl tbody.today td{background:var(--tealwash)}
+table.tbl tbody.today tr:first-child td{border-top:.22em solid var(--amber)}
+table.tbl tbody.today tr:last-child td{border-bottom:.22em solid var(--amber)}
+table.tbl tbody.today td:first-child{border-left:.22em solid var(--amber)}
+table.tbl tbody.today td:last-child{border-right:.22em solid var(--amber)}
+table.tbl.sm{font-size:.78em} table.tbl.sm td,table.tbl.sm th{padding:.3em .55em}
+.boxkey{display:inline-block;inline-size:1.6em;block-size:.9em;border:.2em solid var(--amber);background:var(--tealwash);vertical-align:middle;margin-right:.4em}
+table.mat{border-collapse:collapse;font:700 1em/1 var(--mono);border-left:.13em solid var(--navy);border-right:.13em solid var(--navy);border-radius:.3em}
+table.mat td{padding:.27em .4em;text-align:center}
+table.mat td.p{color:var(--ochre)} table.mat td.i{color:var(--amber)} table.mat td.on{background:var(--crimwash);color:var(--crim)}
+.matwrap{display:flex;align-items:center;gap:.55em;flex-wrap:wrap}
+
+/* equations, bits */
+.eq{font-family:var(--math);font-size:1.2em;line-height:1.55;padding:.42em .85em;background:var(--lgray);border:1px solid var(--border);overflow-x:auto;white-space:nowrap}
+.eq .why{font-family:var(--sans);font-size:.66em;color:var(--gray);margin-left:1em}
+.bits{display:inline-flex;flex-wrap:wrap;gap:.2em;vertical-align:middle}
+.b{inline-size:1.85em;block-size:1.85em;display:inline-grid;place-items:center;font:700 1em/1 var(--mono);border:.09em solid var(--border);border-radius:.25em;background:var(--white);color:var(--ink);padding:0}
+.b.m{background:var(--tealwash);border-color:var(--amber);color:var(--amber)}
+.b.r{background:var(--cream);border-color:var(--ochre);border-style:dashed;color:var(--ochre)}
+.b.e{background:var(--crimwash);border-color:var(--crim);color:var(--crim)}
+.b.ok{background:var(--greenwash);border-color:var(--green);color:var(--green)}
+.b.sm{inline-size:1.5em;block-size:1.5em;font-size:.86em}
+button.b{cursor:pointer} button.b:hover{border-color:var(--navy);box-shadow:0 0 0 .12em var(--tealwash)}
+.gap{display:inline-block;inline-size:.4em}
+.legend{display:flex;flex-wrap:wrap;gap:.25em 1.1em;font-size:.75em;color:var(--gray)}
+.legend span{display:inline-flex;align-items:center;gap:.45em} .legend .b{inline-size:1.15em;block-size:1.15em}
+.nt{font:700 1.08em var(--mono);letter-spacing:.16em}
+.nt em{font-style:normal;color:var(--crim);background:var(--crimwash);border-radius:.2em}
+.pipe{list-style:none;padding:0;display:flex;flex-direction:column}
+.pipe .stg{display:grid;grid-template-columns:minmax(9em,13.5em) 1fr;align-items:center;gap:.2em 1.2em;padding-block:.3em}
+.pipe .who{font-weight:700;color:var(--navy);line-height:1.35} .pipe .who small{display:block;font-weight:400;color:var(--gray);font-size:.74em}
+.pipe .stp{color:var(--gray);font-size:.8em;padding:.05em 0 .05em .8em;border-left:.13em solid var(--teal);margin-left:.35em}
+.pipe .stp::before{content:"▼ ";color:var(--teal);font-size:.8em}
+.nest{border:.1em solid var(--teal);border-radius:.45em;padding:.42em .7em .55em;display:flex;flex-direction:column;gap:.35em;background:var(--white)}
+.nest .nl2{font-size:.84em;line-height:1.45} .nest .nl2 b{font-size:1.12em;color:var(--navy)}
+.nest .ex{font-size:.72em;color:var(--gray)}
+.nest.n2{background:var(--lgray)} .nest.n4{background:var(--tealwash)} .nest.n5{background:var(--navy);border-color:var(--navy)} .nest.n5 .nl2{color:var(--sub2)} .nest.n5 .nl2 b{color:#fff}
+
+/* widgets */
+.panel{background:var(--lgray);border:1px solid var(--border);border-top:.36em solid var(--teal);border-radius:.3em;padding:.7em .95em .8em;display:flex;flex-direction:column;gap:.6em;min-width:0}
+.panel > h3{font-size:.95em;color:var(--navy)}
+.row{display:flex;flex-wrap:wrap;gap:.35em .5em;align-items:center}
+.lab{font-size:.76em;color:var(--gray);font-weight:700;min-width:5.4em}
+.btn{font-size:.8em;line-height:1.25;padding:.4em .8em;min-height:2.3em;border:1px solid var(--border);border-radius:.4em;background:var(--white);color:var(--ink);cursor:pointer}
+.btn:hover{border-color:var(--gray)}
+.btn[aria-pressed="true"]{border-color:var(--amber);background:var(--tealwash);color:var(--amber);font-weight:700}
+.sliders{display:grid;grid-template-columns:repeat(auto-fit,minmax(11em,1fr));gap:.3em 1.4em}
+.slider{display:flex;flex-direction:column}
+.slider label{display:flex;justify-content:space-between;align-items:baseline;font-size:.8em;color:var(--gray)}
+.slider output{font:700 1.25em var(--mono);color:var(--navy);font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--amber);min-height:1.6em;margin:0}
+select{font:700 1em var(--mono);padding:.3em .5em;border:1px solid var(--border);border-radius:.4em;background:var(--white);color:var(--ink);min-height:2.2em}
+.barx{display:flex;flex-wrap:wrap;gap:.15em}
+.barx .cell{inline-size:.9em;block-size:1.3em;border-radius:.15em;border:.08em solid}
+.barx .cell.m,.barx .seg.m{background:var(--tealwash);border-color:var(--amber);color:var(--amber)}
+.barx .cell.r,.barx .seg.r{background:var(--cream);border-color:var(--ochre);border-style:dashed;color:var(--ochre)}
+.barx.prop{flex-wrap:nowrap}
+.barx .seg{block-size:1.5em;border-radius:.2em;border:.08em solid;min-inline-size:.6em;font:700 .7em/2 var(--mono);text-align:center;overflow:hidden;white-space:nowrap}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(8.5em,1fr));gap:0 1.2em}
+.metric{padding-block:.4em;border-top:1px solid var(--border);display:flex;flex-direction:column}
+.metric .k{font-size:.74em;color:var(--gray)} .metric .val{font:700 1.5em/1.25 var(--mono);color:var(--teal);font-variant-numeric:tabular-nums}
+.metric .f{font-family:var(--math);color:var(--gray);font-size:.9em}
+.dots{display:grid;gap:.14em;max-width:14em} .dots i{aspect-ratio:1;border-radius:50%;background:var(--border)} .dots i.on{background:var(--amber)}
+.verdict{font-weight:700;font-size:.9em;line-height:1.5;padding:.45em .75em;border-radius:.3em;border:1px solid var(--border);background:var(--white)}
+.verdict.good{border-color:var(--green);background:var(--greenwash);color:var(--green)}
+.verdict.bad{border-color:var(--crim);background:var(--crimwash);color:var(--crim)}
+.verdict.warn{border-color:var(--ochre);background:var(--cream);color:var(--ochre)}
+.grid2d{display:inline-grid;grid-template-columns:repeat(4,auto);gap:.22em;align-items:center;justify-items:center}
+.grid2d .flag{font:700 .7em var(--mono);color:var(--gray);min-inline-size:2.6em;text-align:center} .grid2d .flag.bad{color:var(--crim)}
+pre.div{font:700 .92em/1.42 var(--mono);background:var(--white);border:1px solid var(--border);padding:.55em .8em;overflow-x:auto}
+pre.div .g{color:var(--ochre)} pre.div .m{color:var(--amber)} pre.div .rem{color:var(--green)}
+
+/* code box (BLUE code_box + 복사 버튼) */
+.code{background:var(--code);border-radius:.5em;color:var(--codeink);display:flex;flex-direction:column;min-width:0;min-height:0;overflow:hidden}
+.code .bar{display:flex;align-items:center;gap:.6em;padding:.5em .6em .15em 1em}
+.code .bar .ttl{font:700 .73em var(--mono);color:var(--teal);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.code .copy,.code .open{font:700 .68em/1 var(--sans);padding:.5em .85em;border-radius:.4em;border:1px solid #4A5666;background:#2A3340;color:var(--codeink);cursor:pointer;text-decoration:none;white-space:nowrap}
+.code .copy:hover,.code .open:hover{border-color:var(--teal);color:#fff}
+.code .copy.done{background:var(--green);border-color:var(--green);color:#fff}
+.slide .body .code{max-height:24.6em}
+.app.read .slide .body .code{max-height:30em}
+.code pre{font:.74em/1.42 var(--mono);padding:.3em 1.1em .8em;overflow:auto;white-space:pre;tab-size:4;color:var(--codeink)}
+.code pre .cm{color:var(--codecm)} .code pre .sec{color:var(--teal);font-weight:700}
+.out{background:var(--white);border:1px solid var(--border);border-left:.26em solid var(--green);display:flex;flex-direction:column;min-width:0}
+.out > b{font-size:.73em;color:var(--green);padding:.5em .9em 0}
+.out pre{font:.76em/1.5 var(--mono);padding:.25em .9em .6em;overflow:auto;white-space:pre;color:var(--ink)}
+.doc{font-size:.78em;color:var(--gray);line-height:1.7} .doc a{font-family:var(--mono);font-weight:700;text-decoration:none;border-bottom:1px solid var(--teal)}
+
+/* quiz */
+.qcard{background:var(--white);border:1px solid var(--border);border-radius:.5em;padding:.15em 1em}
+details.q summary{cursor:pointer;display:grid;grid-template-columns:2.2em 1fr;gap:.7em;align-items:center;font-weight:700;font-size:1.05em;padding-block:.55em;list-style:none;line-height:1.45}
+details.q summary::-webkit-details-marker{display:none}
+details.q summary::before{content:attr(data-n);inline-size:2.05em;block-size:2.05em;border-radius:50%;background:var(--amber);color:#fff;font:700 .95em/2.05em "Helvetica Neue",var(--sans);text-align:center}
+details.q .ans{padding:0 0 .7em 2.9em;font-size:.96em;display:flex;flex-direction:column;gap:.2em;color:var(--green);font-weight:600}
+details.q .ans::before{content:"클릭해서 답 확인 ▸";display:none}
+
+/* svg */
+svg{max-width:100%;height:auto;display:block}
+.s-ink{fill:var(--ink)} .s-gray{fill:var(--gray)} .s-navy{fill:var(--navy)} .s-amber{fill:var(--amber)} .s-teal{fill:var(--teal)} .s-crim{fill:var(--crim)} .s-green{fill:var(--green)} .s-white{fill:#fff}
+.s-txt{font:14px var(--sans)} .s-sm{font:12px var(--sans)} .s-mono{font:700 15px var(--mono)} .s-math{font:italic 16px var(--math)}
+.l-navy{stroke:var(--navy);fill:none} .l-border{stroke:var(--border);fill:none} .l-gray{stroke:var(--gray);fill:none} .l-amber{stroke:var(--amber);fill:none} .l-teal{stroke:var(--teal);fill:none} .l-crim{stroke:var(--crim);fill:none} .l-green{stroke:var(--green);fill:none}
+.f-wash{fill:var(--tealwash);stroke:var(--amber)} .f-white{fill:#fff;stroke:var(--navy)} .f-cream{fill:var(--cream);stroke:var(--ochre)} .f-crim{fill:var(--crimwash);stroke:var(--crim)} .f-lgray{fill:var(--lgray);stroke:var(--border)}
+.pt{cursor:pointer}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+
+.kv{display:grid;grid-template-columns:auto 1fr;gap:.15em 1em;font-size:.82em;margin:0;align-items:baseline}
+.kv dt{color:var(--gray)} .kv dd{margin:0;font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+table.tbl.terms td:first-child,table.tbl.terms td:nth-child(2){white-space:nowrap}
+
+/* ---------- section divider (bluelib section_slide) ---------- */
+.slide.sect{padding:0;display:grid;grid-template-columns:34.5% minmax(0,1fr)}
+.slide.sect::before{display:none}
+.slide.sect .sl{background:var(--navy);border-right:.29em solid var(--amber);display:flex;flex-direction:column;justify-content:center;gap:.25em;padding:0 2em 0 3.36em;z-index:1}
+.slide.sect .no{font:700 3.87em/1.05 "Helvetica Neue",var(--sans);color:var(--amber)}
+.slide.sect .sl h2{font-size:1.8em;color:#fff;line-height:1.3;text-wrap:balance}
+.slide.sect .sl .en{font-size:.93em;color:var(--sub1);line-height:1.45;margin-top:.2em}
+.slide.sect .sr{display:flex;flex-direction:column;justify-content:center;padding:0 4em 0 4.3em}
+.slide.sect .sr ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.9em}
+.slide.sect .sr li{font-size:1.13em;line-height:1.5;padding-left:1.4em;text-indent:-1.4em}
+.slide.sect .sr li::before{content:"— ";color:var(--amber);font-weight:700}
+.slide.sect > footer{position:absolute;left:calc(34.5% + 4.3em);right:2.64em;bottom:.75em}
+.app.read .slide.sect{min-height:20em}
+@media (max-width:780px){ .app.read .slide.sect{grid-template-columns:minmax(0,1fr)} .app.read .slide.sect .sl{padding:1.5em 16px;border-right:0;border-bottom:.29em solid var(--amber)} .app.read .slide.sect .sr{padding:1.2em 16px 3em} }
+/* ---------- definition slide: 정의 · 예제 · 수학 ---------- */
+.defgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.85em;align-items:stretch}
+.defgrid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.defgrid.dense .dcol ul{font-size:.84em;gap:.3em} .defgrid.dense .dcol .eq{font-size:.95em;padding:.28em .55em}
+.dcol{background:var(--lgray);border:1px solid var(--border);border-top:.36em solid var(--amber);border-radius:.3em;padding:.7em .95em .9em;display:flex;flex-direction:column;gap:.5em;min-width:0}
+.dcol.ex{border-top-color:var(--teal)} .dcol.ma{border-top-color:var(--green)}
+.dcol .dh{display:flex;align-items:baseline;gap:.5em;font-weight:700;color:var(--navy);font-size:1.15em}
+.dcol .dh small{font:700 .64em "Helvetica Neue",var(--sans);letter-spacing:.09em;color:var(--gray);text-transform:uppercase}
+.dcol ul{padding-left:1em;margin:0;display:flex;flex-direction:column;gap:.42em;font-size:.97em;line-height:1.5}
+.dcol ul li::marker{color:var(--teal)}
+.dcol .eq{font-size:1.05em;padding:.35em .6em;white-space:normal;background:var(--white)}
+.dcol .mono{font-size:.95em}
+@media (max-width:780px){ .app.read .defgrid{grid-template-columns:minmax(0,1fr)} }
+
+/* Contextual lecture videos: one inline player, selectable sources and teaching notes. */
+.video-lesson .body{gap:.4em;padding-top:.85em}
+.video-layout{display:grid;grid-template-columns:2.1fr 1fr;gap:1em;align-items:start}
+.video-stage{position:relative;aspect-ratio:16/9;background:#10263E;overflow:hidden;border-radius:.35em;border:1px solid var(--border)}
+.video-stage iframe,.video-preview{position:absolute;inset:0;width:100%;height:100%;border:0}
+.video-preview{object-fit:contain;background:#10263E}
+.video-play{position:absolute;inset:0;border:0;background:linear-gradient(transparent 45%,rgba(0,0,0,.7));color:white;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.65em}
+.video-play .play-symbol{display:grid;place-items:center;background:#C03B3B;border-radius:50%;width:2.2em;height:2.2em;font-size:1.3em;padding-left:.12em}
+.video-play .play-label{font-size:.8em;font-weight:700;background:rgba(16,38,62,.85);padding:.4em .7em;border-radius:.3em}
+.video-caption{display:flex;gap:.6em;align-items:baseline;margin-top:.45em;font-size:.68em;line-height:1.4;color:var(--gray)}
+.video-caption .video-source-link{margin-left:auto;white-space:nowrap}
+.video-explain{display:flex;flex-direction:column;gap:.65em}
+.video-explain h3{font-size:.87em;color:var(--navy)}
+.video-choices{display:flex;flex-direction:column;gap:.35em}
+.video-choice{font:inherit;font-size:.73em;line-height:1.45;text-align:left;padding:.45em .6em;border:1px solid var(--border);border-left:.22em solid var(--teal);border-radius:.25em;background:white;cursor:pointer}
+.video-choice[aria-pressed="true"]{background:var(--tealwash);border-color:var(--amber);color:var(--amber);font-weight:700}
+.video-choice .video-time{display:inline;font-size:.9em;color:var(--gray);margin-left:.2em;white-space:nowrap}
+.video-explain .kb{padding:.4em .65em}
+.video-explain .kb b{font-size:.75em}
+.video-explain .kb p{font-size:.77em;line-height:1.5}
+.video-prompts{font-size:.76em;line-height:1.5;padding-left:1.1em;display:flex;flex-direction:column;gap:.35em}
+.video-prompts li::marker{color:var(--teal)}
+.video-lesson .src{font-size:.58em}
+@media(max-width:780px){.app.read .video-layout{grid-template-columns:1fr}.app.read .video-stage{min-height:0}.app.read .video-choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}}
+
+
+.slide .body{overflow:hidden;gap:.55em}.slide h2{font-size:1.85em}.slide .src{font-size:.56em;line-height:1.3;overflow-wrap:anywhere;margin-top:auto;color:var(--gray)}
+.lecture-bullets{font-size:1.18em;line-height:1.65;padding-left:1.2em;margin:.1em 0;display:flex;flex-direction:column;gap:.65em}
+.lecture-columns{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:1.5em;align-items:center;min-height:0;flex:0 1 auto}
+.lecture-figure{margin:0;min-width:0}.lecture-figure img{display:block;width:100%;height:auto;max-height:21em;object-fit:contain;background:white}.lecture-figure svg{width:100%;height:auto;max-height:22em;display:block}
+.lecture-figure figcaption{font-size:.6em;line-height:1.4;color:var(--gray);margin-top:.5em;overflow-wrap:anywhere}.pair-images{display:flex;gap:.6em;align-items:center}.pair-images figure{width:50%}
+.lecture-table{border-collapse:collapse;width:100%;font-size:.9em}.lecture-table th{background:var(--navy);color:white;text-align:left}.lecture-table th,.lecture-table td{border-bottom:1px solid var(--border);padding:.5em}.lecture-table tr:nth-child(even){background:#F4F6F9}
+.lecture-formula{font:600 1.2em/1.4 var(--math);text-align:center;color:var(--navy);padding:.4em;border-bottom:1px solid var(--border)}
+.lecture-formula,.question,.mechanism-steps{flex-shrink:0}.has-formula .lecture-figure img,.has-formula .lecture-figure svg{max-height:16em}.has-formula.has-quiz .lecture-figure img{max-height:14em}.has-steps .lecture-figure img,.has-steps .lecture-figure svg{max-height:15em}
+.video-layout{grid-template-columns:minmax(0,2.1fr) minmax(0,1fr)}.video-explain,.video-layout>div{min-width:0}.video-choice{display:block;box-sizing:border-box;overflow-wrap:anywhere;white-space:normal;width:100%;max-width:100%;min-width:0}
+.mechanism-steps{display:flex;gap:.8em;list-style-position:inside;padding:0;font-size:.85em;line-height:1.45}.mechanism-steps li{flex:1;border-top:3px solid var(--teal);padding-top:.35em}
+.question{color:var(--crim);font-size:.9em;margin-top:.4em}.question summary{cursor:pointer;font-weight:700}.question p{margin-top:.4em}
+.legacy .body{font-size:.87em}.legacy .body>div:empty{display:none}.legacy .body svg{max-height:24em;width:100%;height:auto}.legacy img{max-height:16em}
+.slide.cover{padding-right:4.3em}.slide.cover .s1{font-size:1.8em}.slide.cover .s2{max-width:48em}.slide.cover .en{font-size:.9em}.slide.cover .au{margin-top:1.4em;color:white;font-size:1em}
+.cover-links{display:flex;gap:1.2em;margin-top:1.3em;font-size:.8em;color:#C8D8E4}.cover-links a{color:inherit}
+.app.read .lecture-columns{min-height:0}.app.read .slide .body{overflow:visible}.app.read .lecture-figure img{max-height:520px}
+@media(max-width:780px){.app.read .lecture-columns{grid-template-columns:1fr}.app.read .mechanism-steps{display:block}.app.read .mechanism-steps li{margin-top:.6em}.app.read .lecture-bullets{font-size:1em}.app.read .slide.cover{padding:2em 1em}}
+@media print{@page{size:13.333333in 7.5in;margin:0}html,body,.app,.main,.stage,.deck{display:block!important;height:auto!important;min-height:0!important;width:1280px!important;max-width:none!important;overflow:visible!important;position:static!important;background:white!important;margin:0!important;padding:0!important}.side,.ctrl{display:none!important}.slide,.slide[hidden]{display:flex!important;width:1280px!important;height:720px!important;min-height:720px!important;max-height:720px!important;font-size:20px!important;position:relative!important;overflow:hidden!important;break-after:page;page-break-after:always;box-shadow:none!important;margin:0!important;border-radius:0!important}.slide:last-child{break-after:auto;page-break-after:auto}.slide .body{overflow:hidden!important}details.question:not([open]) p{display:none}.slide.cover{padding:1em 4.3em!important}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+/* 11-1 — 그림 + 요점 상자 (5-1 형식) */
+img.fig{width:100%;max-height:24em;object-fit:contain;object-position:center top;border:1px solid var(--border);border-radius:.3em;background:#fff}
+img.fig.h18{max-height:18em} img.fig.h20{max-height:20em} img.fig.h14{max-height:14em} img.fig.h16{max-height:16.5em} img.fig.h11{max-height:11em} img.fig.h9{max-height:9em}
+.stack .kb{padding:.45em .8em}
+.kb p.small{font-size:.8em;line-height:1.45;margin:0}
+.cols.w55 > svg,.cols.w64 > svg,.cols.w46 > svg,.cols > svg{align-self:start;max-height:25em;width:100%}
+.tbl td{vertical-align:top}
+table.tbl.xs{font-size:.73em} table.tbl.xs td,table.tbl.xs th{padding:.26em .45em}
+table.tbl td.w{white-space:nowrap}
+.cols.w37{grid-template-columns:minmax(0,3fr) minmax(0,7fr)}
+.cols.w82{grid-template-columns:minmax(0,8fr) minmax(0,5fr)}
+.cols.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+figure.cap{margin:0;display:flex;flex-direction:column;gap:.2em;min-width:0}
+figure.cap figcaption{font-size:.68em;color:var(--gray);line-height:1.35}
+.dcol .eq{font-family:var(--mono)}
+
+/* 동영상 목록 (6-2 extra.css 34–42행) */
+ul.vids{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.42em}
+ul.vids li{display:grid;grid-template-columns:1.9em 1fr;gap:.6em;align-items:start;
+  border:1px solid var(--border);border-left:.22em solid var(--teal);border-radius:.3em;
+  background:var(--white);padding:.4em .7em .45em}
+ul.vids li .pl{inline-size:1.55em;block-size:1.55em;border-radius:50%;background:var(--amber);color:#fff;
+  font:700 .62em/1.55em var(--sans);text-align:center}
+ul.vids li b{font-size:.84em;line-height:1.35;color:var(--navy);display:block}
+ul.vids li b a{text-decoration:none;border-bottom:1px solid var(--teal)}
+ul.vids li span{font-size:.76em;color:var(--gray);line-height:1.4}
+ul.vids li em{font-style:normal;font-family:var(--mono);font-size:.72em;color:var(--amber);font-weight:700}
+/* 11-2 단일분자 시퀀싱 — 그림 + 요점 상자 */
+img.fig{width:100%;max-height:22em;object-fit:contain;object-position:center top;border:1px solid var(--border);border-radius:.3em;background:#fff;display:block}
+img.fig.h20{max-height:20em} img.fig.h17{max-height:17em} img.fig.h14{max-height:14em} img.fig.h11{max-height:11em} img.fig.h10{max-height:10em} img.fig.h9{max-height:9em} img.fig.h8{max-height:8em} img.fig.h7{max-height:7em}
+.figcap{font-size:.68em;color:var(--gray);line-height:1.35;margin-top:.2em}
+.g2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:.6em;align-items:start}
+.stack .kb{padding:.45em .8em}
+.kb p.small{font-size:.8em;line-height:1.45;margin:0}
+.cols > svg,.stack > svg,.g2 > svg{width:100%;height:auto;max-height:24em;display:block}
+.tbl td{vertical-align:top}
+table.tbl.xs{font-size:.7em} table.tbl.xs td,table.tbl.xs th{padding:.26em .5em}
+.dcol svg{width:100%;height:auto;max-height:11em;background:#fff;border:1px solid var(--border);border-radius:.25em}
+.chk{font-size:.62em;color:var(--crim);font-weight:700;border:1px solid var(--crim);border-radius:.3em;padding:0 .35em;white-space:nowrap}
+.cols.w37{grid-template-columns:minmax(0,3fr) minmax(0,7fr)}
+.cols.w73x{grid-template-columns:minmax(0,7fr) minmax(0,3fr)}
+
+/* 표지: 오른쪽 패널을 SVG 도해로 */
+.slide.cover .art.svgart{background:#0F2740;padding:1.4em 1em;display:flex;align-items:center;justify-content:center;font:inherit;white-space:normal;opacity:1}
+.slide.cover .art.svgart svg{width:100%;height:auto;max-height:100%}
+.slide.cover p.au{font-size:.93em;font-weight:700;color:#fff;margin-top:.9em;line-height:1.5}
+.slide.ending p.au{font-size:1em;font-weight:700;color:#fff}
+
+/* 동영상 목록 (6-2 extra.css 34–43행) */
+ul.vids{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.42em}
+ul.vids li{display:grid;grid-template-columns:1.9em 1fr;gap:.6em;align-items:start;
+  border:1px solid var(--border);border-left:.22em solid var(--teal);border-radius:.3em;
+  background:var(--white);padding:.4em .7em .45em}
+ul.vids li .pl{inline-size:1.55em;block-size:1.55em;border-radius:50%;background:var(--amber);color:#fff;
+  font:700 .62em/1.55em var(--sans);text-align:center}
+ul.vids li b{font-size:.84em;line-height:1.35;color:var(--navy);display:block}
+ul.vids li b a{text-decoration:none;border-bottom:1px solid var(--teal)}
+ul.vids li span{font-size:.76em;color:var(--gray);line-height:1.4}
+ul.vids li em{font-style:normal;font-family:var(--mono);font-size:.72em;color:var(--amber);font-weight:700}
+.vh{font-size:.85em;font-weight:700;color:var(--navy);margin:.1em 0 -.1em}
+.slide.ending p.src{font-size:.62em;color:var(--sub1);max-width:48em}
+/* 11-3 — 그림 + 요점 상자 */
+img.fig{width:100%;max-height:23em;object-fit:contain;object-position:left top;border:1px solid var(--border);border-radius:.3em;background:#fff}
+img.ph{width:100%;height:13.5em;object-fit:cover;border:1px solid var(--border);border-radius:.3em;background:#fff}
+.stack .kb{padding:.45em .8em}
+.kb p.small{font-size:.8em;line-height:1.45;margin:0}
+.cols.w55 > svg,.cols.w64 > svg{align-self:start;max-height:25em}
+.tbl td{vertical-align:top}
+.calc{font:600 .82em/1.55 var(--mono);background:var(--white);border:1px solid var(--border);border-left:.24em solid var(--green);padding:.4em .8em;white-space:pre-wrap}
+.calc b{color:var(--crim)}
+.fq{font:600 .74em/1.5 var(--mono);background:#1E2630;color:#E6EDF3;border-radius:.4em;padding:.55em .9em;white-space:pre;overflow:hidden}
+.fq .h{color:#7CC4FA} .fq .s{color:#E6EDF3} .fq .p{color:#9AA5B1} .fq .q{color:#F2C14E}
+.photos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.6em}
+.photos figure{margin:0;display:flex;flex-direction:column;gap:.2em}
+.photos figcaption{font-size:.7em;color:var(--gray);line-height:1.35}
+/* 동영상 목록 */
+ul.vids{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.42em}
+ul.vids li{display:grid;grid-template-columns:1.9em 1fr;gap:.6em;align-items:start;
+  border:1px solid var(--border);border-left:.22em solid var(--teal);border-radius:.3em;
+  background:var(--white);padding:.4em .7em .45em}
+ul.vids li .pl{inline-size:1.55em;block-size:1.55em;border-radius:50%;background:var(--amber);color:#fff;
+  font:700 .62em/1.55em var(--sans);text-align:center}
+ul.vids li b{font-size:.84em;line-height:1.35;color:var(--navy);display:block}
+ul.vids li b a{text-decoration:none;border-bottom:1px solid var(--teal)}
+ul.vids li span{font-size:.76em;color:var(--gray);line-height:1.4}
+ul.vids li em{font-style:normal;font-family:var(--mono);font-size:.72em;color:var(--amber);font-weight:700}
+.fcards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.6em}
+.fcards .card p{font-size:.8em}
+.fcards .card .eq{font-size:.95em;padding:.25em .5em;white-space:normal;background:var(--white)}
+
+
+.slide .body{overflow:hidden;gap:.55em}.slide h2{font-size:1.85em}.slide .src{font-size:.56em;line-height:1.3;overflow-wrap:anywhere;margin-top:auto;color:var(--gray)}
+.lecture-bullets{font-size:1.18em;line-height:1.65;padding-left:1.2em;margin:.1em 0;display:flex;flex-direction:column;gap:.65em}
+.lecture-columns{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:1.5em;align-items:center;min-height:0;flex:0 1 auto}
+.lecture-figure{margin:0;min-width:0}.lecture-figure img{display:block;width:100%;height:auto;max-height:21em;object-fit:contain;background:white}.lecture-figure svg{width:100%;height:auto;max-height:22em;display:block}
+.lecture-figure figcaption{font-size:.6em;line-height:1.4;color:var(--gray);margin-top:.5em;overflow-wrap:anywhere}.pair-images{display:flex;gap:.6em;align-items:center}.pair-images figure{width:50%}
+.lecture-table{border-collapse:collapse;width:100%;font-size:.9em}.lecture-table th{background:var(--navy);color:white;text-align:left}.lecture-table th,.lecture-table td{border-bottom:1px solid var(--border);padding:.5em}.lecture-table tr:nth-child(even){background:#F4F6F9}
+.lecture-formula{font:600 1.2em/1.4 var(--math);text-align:center;color:var(--navy);padding:.4em;border-bottom:1px solid var(--border)}
+.lecture-formula,.question,.mechanism-steps{flex-shrink:0}.has-formula .lecture-figure img,.has-formula .lecture-figure svg{max-height:16em}.has-formula.has-quiz .lecture-figure img{max-height:14em}.has-steps .lecture-figure img,.has-steps .lecture-figure svg{max-height:15em}
+.video-layout{grid-template-columns:minmax(0,2.1fr) minmax(0,1fr)}.video-explain,.video-layout>div{min-width:0}.video-choice{display:block;box-sizing:border-box;overflow-wrap:anywhere;white-space:normal;width:100%;max-width:100%;min-width:0}
+.mechanism-steps{display:flex;gap:.8em;list-style-position:inside;padding:0;font-size:.85em;line-height:1.45}.mechanism-steps li{flex:1;border-top:3px solid var(--teal);padding-top:.35em}
+.question{color:var(--crim);font-size:.9em;margin-top:.4em}.question summary{cursor:pointer;font-weight:700}.question p{margin-top:.4em}
+.legacy .body{font-size:.87em}.legacy .body>div:empty{display:none}.legacy .body svg{max-height:24em;width:100%;height:auto}.legacy img{max-height:16em}
+.slide.cover{padding-right:4.3em}.slide.cover .s1{font-size:1.8em}.slide.cover .s2{max-width:48em}.slide.cover .en{font-size:.9em}.slide.cover .au{margin-top:1.4em;color:white;font-size:1em}
+.cover-links{display:flex;gap:1.2em;margin-top:1.3em;font-size:.8em;color:#C8D8E4}.cover-links a{color:inherit}
+.app.read .lecture-columns{min-height:0}.app.read .slide .body{overflow:visible}.app.read .lecture-figure img{max-height:520px}
+@media(max-width:780px){.app.read .lecture-columns{grid-template-columns:1fr}.app.read .mechanism-steps{display:block}.app.read .mechanism-steps li{margin-top:.6em}.app.read .lecture-bullets{font-size:1em}.app.read .slide.cover{padding:2em 1em}}
+@media print{@page{size:13.333333in 7.5in;margin:0}html,body,.app,.main,.stage,.deck{display:block!important;height:auto!important;min-height:0!important;width:1280px!important;max-width:none!important;overflow:visible!important;position:static!important;background:white!important;margin:0!important;padding:0!important}.side,.ctrl{display:none!important}.slide,.slide[hidden]{display:flex!important;width:1280px!important;height:720px!important;min-height:720px!important;max-height:720px!important;font-size:20px!important;position:relative!important;overflow:hidden!important;break-after:page;page-break-after:always;box-shadow:none!important;margin:0!important;border-radius:0!important}.slide:last-child{break-after:auto;page-break-after:auto}.slide .body{overflow:hidden!important}details.question:not([open]) p{display:none}.slide.cover{padding:1em 4.3em!important}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style></head><body><div class="app" id="app"><aside class="side" id="side" aria-label="슬라이드 목차"><div class="side-head"><span class="k">DNA DATA STORAGE 11-1</span><span class="t">PCR과 Sanger 시퀀싱 및 게놈 프로젝트</span><span class="s">학부 강의 / 75분</span></div><nav class="side-nav" id="side-nav"></nav></aside><div class="main"><div class="stage"><main class="deck" id="deck"><section class="slide cover" data-part="p0" data-title="PCR과 Sanger 시퀀싱 및 게놈 프로젝트"><div class="en">MOLECULAR INFORMATION ENGINEERING 11-1</div><h1>PCR Sanger and Genome Sequencing</h1><p class="s1">PCR과 Sanger 시퀀싱 및 게놈 프로젝트</p><div class="rule"></div><p class="s2">주형 의존 합성과 PCR / Sanger 사슬 종결과 판독 / 게놈 프로젝트와 비용</p><p class="au">송영준 Youngjun Song / 인천대학교 / 75분</p><p class="cover-links"><a href="../index.html">강의 폴더</a><a href="https://bbl.stdbioelec.com/ko/molecular-information-engineering.html">강의 안내</a></p></section><section class="slide " data-part="p0" data-title="염기서열 분석의 측정 대상"><header><h2>염기서열 분석의 측정 대상</h2></header><div class="body"><ul class="lecture-bullets"><li>Sequencing: 염기의 순서를 결정하는 측정</li><li>알려진 프라이머에서 시작하는 판독</li><li>상보 합성과 직접 신호 검출의 구분</li></ul><p class="src"><a href="https://www.genome.gov/about-genomics/fact-sheets/Polymerase-Chain-Reaction-Fact-Sheet" target="_blank" rel="noopener">https://www.genome.gov/about-genomics/fact-sheets/Polymerase-Chain-Reaction-Fact-Sheet</a></p></div></section><section class="slide " data-part="p0" data-title="주형과 새 가닥의 방향"><header><h2>주형과 새 가닥의 방향</h2></header><div class="body"><ul class="lecture-bullets"><li>주형은 새 가닥과 역평행</li><li>중합효소는 프라이머 3′-OH에서 신장</li><li>새 가닥의 합성 방향: 5′→3′</li><li>새 가닥 판독 후 주형은 역상보로 변환</li></ul><p class="src"><a href="https://www.genome.gov/about-genomics/fact-sheets/Polymerase-Chain-Reaction-Fact-Sheet" target="_blank" rel="noopener">https://www.genome.gov/about-genomics/fact-sheets/Polymerase-Chain-Reaction-Fact-Sheet</a></p></div></section><section class="slide " data-part="p0" data-title="PCR의 반응 구성과 선택"><header><h2>PCR의 반응 구성과 선택</h2></header><div class="body"><div class="lecture-columns"><div><figure class="lecture-figure"><img src="assets/pcr.jpg" alt="PCR"><figcaption>NHGRI</figcaption></figure></div><div><ul class="lecture-bullets"><li>두 프라이머가 정하는 증폭 구간</li><li>주형, DNA polymerase, dNTP</li><li>변성·어닐링·신장의 반복</li><li>여러 사이클에 걸친 표적 사본 축적</li></ul></div></div><p class="src"><a href="https://www.genome.gov/about-genomics/fact-sheets/Polymerase-Chain-Reaction-Fact-Sheet" target="_blank" rel="noopener">https://www.genome.gov/about-genomics/fact-sheets/Polymerase-Chain-Reaction-Fact-Sheet</a></p></div></section><section class="slide  has-steps" data-part="p0" data-title="PCR 주기의 단계"><header><h2>PCR 주기의 단계</h2></header><div class="body"><ul class="lecture-bullets"><li>Denaturation: 두 가닥 분리</li><li>Annealing: 상보 프라이머 결합</li><li>Extension: 프라이머 3′ 말단의 신장</li><li>다음 주기에서 새 산물도 주형으로 사용</li></ul><ol class="mechanism-steps"><li>가닥 분리</li><li>두 프라이머의 결합</li><li>상보 가닥 신장</li><li>산물의 다음 주형 참여</li></ol><p class="src"><a href="https://www.genome.gov/about-genomics/fact-sheets/Polymerase-Chain-Reaction-Fact-Sheet" target="_blank" rel="noopener">https://www.genome.gov/about-genomics/fact-sheets/Polymerase-Chain-Reaction-Fact-Sheet</a></p></div></section><section class="slide " data-part="p0" data-title="PCR과 cycle sequencing"><header><h2>PCR과 cycle sequencing</h2></header><div class="body"><ul class="lecture-bullets"><li>PCR: 두 프라이머, 표적의 지수적 증폭</li><li>Cycle sequencing: 한 프라이머, 종결 산물의 생성</li><li>공통점: 가열 주기와 DNA polymerase</li><li>차이: 산물 종류와 정보를 얻는 목적</li></ul><p class="src"><a href="https://www.genome.gov/about-genomics/fact-sheets/Polymerase-Chain-Reaction-Fact-Sheet" target="_blank" rel="noopener">https://www.genome.gov/about-genomics/fact-sheets/Polymerase-Chain-Reaction-Fact-Sheet</a></p></div></section><section class="slide video-lesson" data-part="p0" data-title="PCR 원리 영상" data-video-lesson><header><h2>PCR 원리 영상</h2></header><div class="body"><div class="video-content"><div class="video-layout"><div><div class="video-stage"><img class="video-preview" src="assets/yt_Q2847XA-Rfk.jpg" alt="PCR explained | biology animation"><button class="video-play" type="button"><span class="play-symbol">▶</span><span class="play-label">본문에서 영상 재생</span></button></div><p class="video-caption"><span>yourgenome </span><a class="video-source-link" href="https://www.youtube.com/watch?v=Q2847XA-Rfk" target="_blank" rel="noopener">YouTube에서 보기</a></p></div><div class="video-explain"><h3>영상의 관찰 항목</h3><ul class="video-prompts"><li>가열 후 가닥 분리의 위치</li><li>프라이머 3′ 말단과 신장 방향</li><li>산물이 다음 사이클 주형이 되는 시점</li></ul><div class="video-observation" hidden></div><div class="video-credit" hidden></div><div class="video-choices"><button class="video-choice" type="button">PCR explained | biology animation</button></div></div></div><script type="application/json" class="video-data">[{"id": "Q2847XA-Rfk", "title": "PCR explained | biology animation", "author": "yourgenome", "duration": "원본 참조", "note": "영상에서는 프라이머가 두 가닥의 서로 다른 끝에 붙는 장면에서 잠시 멈춥니다. 학생에게 두 화살표를 그리게 하고 새 가닥이 어느 방향으로 자라는지 말하게 합니다. 이후 정확한 길이의 산물이 축적되는 과정을 확인합니다.", "label": "PCR 원리 영상"}]</script></div><p class="src"><a href="https://www.yourgenome.org/theme/polymerase-chain-reaction/" target="_blank" rel="noopener">https://www.yourgenome.org/theme/polymerase-chain-reaction/</a></p></div></section><section class="slide " data-part="p1" data-title="dNTP와 ddNTP의 구조"><header><h2>dNTP와 ddNTP의 구조</h2></header><div class="body"><div class="lecture-columns"><div><div class="pair-images"><figure class="lecture-figure"><img src="assets/dATP.png" alt="dATP 구조"><figcaption>PubChem, NIH</figcaption></figure><figure class="lecture-figure"><img src="assets/ddATP.png" alt="ddATP 구조"><figcaption>PubChem, NIH</figcaption></figure></div></div><div><ul class="lecture-bullets"><li>dNTP: 3′-OH를 가진 신장 기질</li><li>ddNTP: 3′-OH 대신 H</li><li>ddNTP 도입 후 다음 결합 형성 불가</li><li>3′ 위치와 5′ 인산의 구분</li></ul></div></div><p class="src"><a href="https://pubchem.ncbi.nlm.nih.gov/" target="_blank" rel="noopener">https://pubchem.ncbi.nlm.nih.gov/</a></p></div></section><section class="slide legacy" data-part="p1" data-title="Sanger chain termination"><header><h2>Sanger chain termination</h2></header><div class="body"><div class="defgrid two">
+      <div class="dcol"><div class="dh">정의 · 원리 <small>Definition</small></div><ul>
+        <li>재료: 단일가닥 주형 · 프라이머 · DNA 중합효소 · dNTP 4종 · <b>소량의 ddNTP</b></li>
+        <li>ddNTP = 3′ 탄소에 −OH 대신 −H → 다음 뉴클레오타이드와 <b>인산다이에스터 결합 불가</b> → 사슬 종결</li>
+        <li>결과: 해당 염기 자리마다 끝나는 <b>중첩된 조각 집합(nested set)</b> → 전기영동으로 길이순 정렬</li>
+      </ul></div>
+      <div class="dcol ex"><div class="dh">예제 <small>Example</small></div><ul>
+        <li>새 가닥 5′-<span class="mono">A T G C G</span> … ddGTP 반응관 → 끝이 G인 조각 = <span class="mono">ATG</span> · <span class="mono">ATGCG</span> (길이 3, 5)</li>
+        <li>ddATP 관 → 길이 1 · ddTTP 관 → 길이 2 · ddCTP 관 → 길이 4</li>
+        <li>네 관을 짧은 순서로 합치면 1 A · 2 T · 3 G · 4 C · 5 G → <span class="mono">ATGCG</span></li>
+      </ul></div>
+    </div>
+    
+  <p class="src"><a href="https://doi.org/10.1073/pnas.74.12.5463" target="_blank" rel="noopener">https://doi.org/10.1073/pnas.74.12.5463</a></p></div></section><section class="slide  has-steps" data-part="p1" data-title="Sanger 반응의 순서"><header><h2>Sanger 반응의 순서</h2></header><div class="body"><ul class="lecture-bullets"><li>주형과 프라이머의 결합</li><li>dNTP와 ddNTP를 포함한 연장 반응</li><li>각 위치에서 확률적으로 사슬 종결</li><li>종결 조각의 분리와 끝 염기 판독</li></ul><ol class="mechanism-steps"><li>같은 시작점의 주형 준비</li><li>dNTP와 ddNTP의 경쟁 도입</li><li>다양한 길이의 종결 조각 생성</li><li>길이순 분리와 염기 판독</li></ol><p class="src"><a href="https://www.genome.gov/about-genomics/fact-sheets/Polymerase-Chain-Reaction-Fact-Sheet" target="_blank" rel="noopener">https://www.genome.gov/about-genomics/fact-sheets/Polymerase-Chain-Reaction-Fact-Sheet</a></p></div></section><section class="slide  has-quiz" data-part="p1" data-title="종결 조각의 길이와 염기"><header><h2>종결 조각의 길이와 염기</h2></header><div class="body"><div class="lecture-columns"><div><table class="lecture-table"><thead><tr><th>조각 길이</th><th>종결 조각</th><th>끝 염기</th></tr></thead><tbody><tr><td>1</td><td>A</td><td>A</td></tr><tr><td>2</td><td>AT</td><td>T</td></tr><tr><td>3</td><td>ATG</td><td>G</td></tr><tr><td>4</td><td>ATGC</td><td>C</td></tr><tr><td>5</td><td>ATGCG</td><td>G</td></tr></tbody></table></div><div><ul class="lecture-bullets"><li>새 가닥 예: 5′-ATGCG-3′</li><li>A에서 종결: A</li><li>G에서 종결: ATG, ATGCG</li><li>길이 1·2·3·4·5의 끝 염기: A·T·G·C·G</li></ul></div></div><details class="question"><summary>확인·실습 문제</summary><p>주형 가닥의 서열을 5′→3′ 방향으로 작성</p></details><p class="src"><a href="https://www.genome.gov/about-genomics/fact-sheets/Polymerase-Chain-Reaction-Fact-Sheet" target="_blank" rel="noopener">https://www.genome.gov/about-genomics/fact-sheets/Polymerase-Chain-Reaction-Fact-Sheet</a></p></div></section><section class="slide legacy" data-part="p1" data-title="ddNTP 비율과 종결 위치"><header><h2>ddNTP 비율과 종결 위치</h2></header><div class="body"><div class="cols w55">
+      <svg viewBox="0 0 520 320" role="img" aria-label="종결 확률 p에 따른 n번째 X 자리 신호 감소 곡선" font-family="Apple SD Gothic Neo,Helvetica Neue,sans-serif">
+        <line x1="70" y1="250" x2="495" y2="250" stroke="#5B6670" stroke-width="1.4"></line><line x1="70" y1="30" x2="70" y2="250" stroke="#5B6670" stroke-width="1.4"></line>
+        <g font-size="12" fill="#5B6670" text-anchor="middle"><text x="70" y="268">0</text><text x="140" y="268">50</text><text x="210" y="268">100</text><text x="280" y="268">150</text><text x="350" y="268">200</text><text x="420" y="268">250</text><text x="490" y="268">300</text></g>
+        <g font-size="12" fill="#5B6670" text-anchor="end"><text x="62" y="254">0</text><text x="62" y="149">0.5</text><text x="62" y="44">1</text></g>
+        <line x1="70" y1="145" x2="495" y2="145" stroke="#D8DEE6" stroke-dasharray="4 4"></line>
+        <text x="282" y="292" font-size="13" fill="#16324F" text-anchor="middle">n번째 X 자리 (X 염기는 평균 4 nt마다 → n = 125 ≈ 500 nt)</text>
+        <text x="20" y="150" font-size="13" fill="#16324F" transform="rotate(-90 20 150)" text-anchor="middle">상대 신호 (1 − p)ⁿ⁻¹</text>
+        <path d="M71.4,40.0 L79.8,45.0 L88.2,49.9 L96.6,54.6 L105.0,59.3 L113.4,63.8 L121.8,68.2 L130.2,72.5 L138.6,76.8 L147.0,80.9 L155.4,84.9 L163.8,88.8 L172.2,92.6 L180.6,96.4 L189.0,100.0 L197.4,103.6 L205.8,107.1 L214.2,110.5 L222.6,113.8 L231.0,117.0 L239.4,120.2 L247.8,123.3 L256.2,126.3 L264.6,129.2 L273.0,132.1 L281.4,134.9 L289.8,137.6 L298.2,140.3 L306.6,142.9 L315.0,145.4 L323.4,147.9 L331.8,150.4 L340.2,152.7 L348.6,155.0 L357.0,157.3 L365.4,159.5 L373.8,161.6 L382.2,163.7 L390.6,165.8 L399.0,167.8 L407.4,169.7 L415.8,171.7 L424.2,173.5 L432.6,175.3 L441.0,177.1 L449.4,178.8 L457.8,180.5 L466.2,182.2 L474.6,183.8 L483.0,185.4" fill="none" stroke="#2E7D54" stroke-width="2.6"></path>
+        <path d="M71.4,40.0 L79.8,49.9 L88.2,59.3 L96.6,68.3 L105.0,76.8 L113.4,85.0 L121.8,92.7 L130.2,100.1 L138.6,107.2 L147.0,113.9 L155.4,120.3 L163.8,126.4 L172.2,132.2 L180.6,137.8 L189.0,143.0 L197.4,148.1 L205.8,152.9 L214.2,157.4 L222.6,161.8 L231.0,165.9 L239.4,169.9 L247.8,173.7 L256.2,177.3 L264.6,180.7 L273.0,183.9 L281.4,187.1 L289.8,190.0 L298.2,192.8 L306.6,195.5 L315.0,198.1 L323.4,200.5 L331.8,202.9 L340.2,205.1 L348.6,207.2 L357.0,209.2 L365.4,211.1 L373.8,213.0 L382.2,214.7 L390.6,216.4 L399.0,217.9 L407.4,219.4 L415.8,220.9 L424.2,222.3 L432.6,223.6 L441.0,224.8 L449.4,226.0 L457.8,227.1 L466.2,228.2 L474.6,229.2 L483.0,230.2" fill="none" stroke="#224EBD" stroke-width="2.6"></path>
+        <path d="M71.4,40.0 L79.8,59.4 L88.2,77.0 L96.6,92.9 L105.0,107.4 L113.4,120.6 L121.8,132.5 L130.2,143.3 L138.6,153.2 L147.0,162.1 L155.4,170.2 L163.8,177.6 L172.2,184.3 L180.6,190.3 L189.0,195.8 L197.4,200.8 L205.8,205.4 L214.2,209.5 L222.6,213.2 L231.0,216.6 L239.4,219.7 L247.8,222.5 L256.2,225.0 L264.6,227.3 L273.0,229.4 L281.4,231.3 L289.8,233.0 L298.2,234.6 L306.6,236.0 L315.0,237.3 L323.4,238.5 L331.8,239.5 L340.2,240.5 L348.6,241.4 L357.0,242.2 L365.4,242.9 L373.8,243.6 L382.2,244.2 L390.6,244.7 L399.0,245.2 L407.4,245.6 L415.8,246.0 L424.2,246.4 L432.6,246.7 L441.0,247.0 L449.4,247.3 L457.8,247.6 L466.2,247.8 L474.6,248.0 L483.0,248.2" fill="none" stroke="#C03B3B" stroke-width="2.6"></path>
+        <g font-size="13" font-weight="700"><text x="400" y="160" fill="#2E7D54">p = 0.004</text><text x="400" y="206" fill="#224EBD">p = 0.008</text><text x="330" y="232" fill="#C03B3B">p = 0.016</text></g>
+      </svg>
+      <div class="stack">
+        <div class="kb"><b>식</b><p class="small">n번째 X 자리에서 종결할 확률 <span class="mono">P(n) = (1 − p)ⁿ⁻¹ · p</span><br>평균 종결 위치 = <span class="mono">1/p</span>번째 X · <span class="mono">p ≈ k·[ddXTP]/[dXTP]</span> (k = 중합효소가 ddNTP를 받아들이는 상대 효율)</p></div>
+        <table class="tbl xs">
+          <tr><th>p</th><th class="num">평균 위치</th><th class="num">125번째 신호</th><th class="num">250번째 신호</th></tr>
+          <tr><td>0.004</td><td class="num">250</td><td class="num">0.61</td><td class="num">0.37</td></tr>
+          <tr><td>0.008</td><td class="num">125</td><td class="num">0.37</td><td class="num">0.14</td></tr>
+          <tr><td>0.016</td><td class="num">62.5</td><td class="num">0.14</td><td class="num">0.02</td></tr>
+        </table>
+        <div class="kb green"><b>손계산</b><p class="small">p = 0.008, n = 125 → 0.992¹²⁴ ≈ e<sup>−0.99</sup> ≈ 0.37<br>→ ddNTP가 <b>많으면 짧은 조각만</b>, <b>적으면 신호가 약함</b> → 읽을 길이에 맞춰 비율 조절</p></div>
+      </div>
+    </div>
+    
+  <p class="src">교육용 종결 확률 모형 / <a href="https://doi.org/10.1073/pnas.74.12.5463" target="_blank" rel="noopener">https://doi.org/10.1073/pnas.74.12.5463</a></p></div></section><section class="slide " data-part="p1" data-title="형광 표지와 모세관 전기영동"><header><h2>형광 표지와 모세관 전기영동</h2></header><div class="body"><ul class="lecture-bullets"><li>네 염기를 구분하는 형광 표지</li><li>종결 조각을 모세관 안에서 길이순 분리</li><li>레이저 여기와 형광 검출</li><li>피크 순서를 A·C·G·T로 변환</li></ul><p class="src"><a href="https://www.genome.gov/about-genomics/fact-sheets/Polymerase-Chain-Reaction-Fact-Sheet" target="_blank" rel="noopener">https://www.genome.gov/about-genomics/fact-sheets/Polymerase-Chain-Reaction-Fact-Sheet</a></p></div></section><section class="slide video-lesson" data-part="p1" data-title="Sanger 공식 원리 영상" data-video-lesson><header><h2>Sanger 공식 원리 영상</h2></header><div class="body"><div class="video-content"><div class="video-layout"><div><div class="video-stage"><img class="video-preview" src="assets/yt_ONGdehkB8jU.jpg" alt="DNA Sequencing - 3D"><button class="video-play" type="button"><span class="play-symbol">▶</span><span class="play-label">본문에서 영상 재생</span></button></div><p class="video-caption"><span>yourgenome (4:55)</span><a class="video-source-link" href="https://www.youtube.com/watch?v=ONGdehkB8jU" target="_blank" rel="noopener">YouTube에서 보기</a></p></div><div class="video-explain"><h3>영상의 관찰 항목</h3><ul class="video-prompts"><li>ddNTP가 도입되는 순간</li><li>다른 길이 조각이 생기는 이유</li><li>모세관 검출과 크로마토그램의 연결</li></ul><div class="video-observation" hidden></div><div class="video-credit" hidden></div><div class="video-choices"><button class="video-choice" type="button">DNA Sequencing - 3D</button></div></div></div><script type="application/json" class="video-data">[{"id": "ONGdehkB8jU", "title": "DNA Sequencing - 3D", "author": "yourgenome", "duration": "4:55", "note": "영상의 반응 장면과 장비 장면을 구분해서 봅니다. 반응에서 만든 길이 정보가 모세관 분리에서 시간 순서로 바뀌고 마지막 염기의 형광이 색 정보가 됩니다. 합성 반응, 분리, 광학 검출의 세 단계를 차례로 짚습니다.", "label": "Sanger 공식 원리 영상"}]</script></div><p class="src"><a href="https://www.yourgenome.org/theme/dna-sequencing/" target="_blank" rel="noopener">https://www.yourgenome.org/theme/dna-sequencing/</a></p></div></section><section class="slide " data-part="p1" data-title="크로마토그램과 품질 판단"><header><h2>크로마토그램과 품질 판단</h2></header><div class="body"><ul class="lecture-bullets"><li>피크 위치: 염기의 순서</li><li>피크 겹침과 배경 신호</li><li>읽기 시작·끝의 품질 저하 가능성</li><li>혼합 주형과 이형접합의 신호 해석</li></ul><p class="src"><a href="https://www.genome.gov/about-genomics/fact-sheets/Polymerase-Chain-Reaction-Fact-Sheet" target="_blank" rel="noopener">https://www.genome.gov/about-genomics/fact-sheets/Polymerase-Chain-Reaction-Fact-Sheet</a></p></div></section><section class="slide " data-part="p1" data-title="Sanger의 현재 용도"><header><h2>Sanger의 현재 용도</h2></header><div class="body"><ul class="lecture-bullets"><li>특정 구간과 클론의 서열 확인</li><li>한 개 표적을 비교적 길게 판독</li><li>전체 혼합 올리고 풀의 병렬 판독에는 제한</li><li>비용·처리량·시료 복잡도에 따른 선택</li></ul><p class="src"><a href="https://www.genome.gov/about-genomics/fact-sheets/Polymerase-Chain-Reaction-Fact-Sheet" target="_blank" rel="noopener">https://www.genome.gov/about-genomics/fact-sheets/Polymerase-Chain-Reaction-Fact-Sheet</a></p></div></section><section class="slide " data-part="p2" data-title="인간 게놈 프로젝트"><header><h2>인간 게놈 프로젝트</h2></header><div class="body"><ul class="lecture-bullets"><li>국제 협력 프로젝트: 1990-2003</li><li>유전·물리 지도, 서열 생산, 조립의 결합</li><li>Sanger 장비의 대규모 자동화</li><li>하나의 완전한 개인 게놈과 참조 서열의 차이</li></ul><p class="src"><a href="https://www.genome.gov/about-genomics/educational-resources/fact-sheets/human-genome-project" target="_blank" rel="noopener">https://www.genome.gov/about-genomics/educational-resources/fact-sheets/human-genome-project</a></p></div></section><section class="slide " data-part="p2" data-title="계층적 샷건과 전장 샷건"><header><h2>계층적 샷건과 전장 샷건</h2></header><div class="body"><ul class="lecture-bullets"><li>계층적 샷건: 큰 조각의 지도를 먼저 구성</li><li>전장 샷건: 다수 read의 중첩으로 조립</li><li>두 전략 모두 많은 부분 서열을 연결</li><li>반복 서열에서 조립의 모호성 발생</li></ul><p class="src"><a href="https://www.genome.gov/about-genomics/fact-sheets/Polymerase-Chain-Reaction-Fact-Sheet" target="_blank" rel="noopener">https://www.genome.gov/about-genomics/fact-sheets/Polymerase-Chain-Reaction-Fact-Sheet</a></p></div></section><section class="slide " data-part="p2" data-title="참조 게놈 완성의 의미"><header><h2>참조 게놈 완성의 의미</h2></header><div class="body"><ul class="lecture-bullets"><li>2001년 초안 논문</li><li>2003년 HGP 완료 선언</li><li>2022년 T2T 참조의 추가 완성</li><li>참조의 범위와 여러 사람의 변이 구분</li></ul><p class="src"><a href="https://www.nih.gov/news-events/nih-research-matters/first-complete-sequence-human-genome" target="_blank" rel="noopener">https://www.nih.gov/news-events/nih-research-matters/first-complete-sequence-human-genome</a></p></div></section><section class="slide " data-part="p2" data-title="$1,000 Genome Program"><header><h2>$1,000 Genome Program</h2></header><div class="body"><ul class="lecture-bullets"><li>NHGRI가 2004년 시작한 기술 개발 지원</li><li>게놈 판독 비용의 큰 감소를 목표</li><li>새 반응·검출기·병렬화의 개발</li><li>검사·해석·임상 서비스의 총비용과 구분</li></ul><p class="src"><a href="https://www.genome.gov/Funded-Programs-Projects/1000-Dollar-Genome-Program" target="_blank" rel="noopener">https://www.genome.gov/Funded-Programs-Projects/1000-Dollar-Genome-Program</a></p></div></section><section class="slide " data-part="p2" data-title="1000 Genomes Project"><header><h2>1000 Genomes Project</h2></header><div class="body"><ul class="lecture-bullets"><li>여러 집단의 사람 유전 변이를 조사한 국제 사업</li><li>목표: 집단에서 관측되는 변이의 목록</li><li>비용 목표인 $1,000 Genome Program과 다른 사업</li><li>가격, 참여자 수, 참조 게놈의 구분</li></ul><p class="src"><a href="https://www.internationalgenome.org/about" target="_blank" rel="noopener">https://www.internationalgenome.org/about</a></p></div></section><section class="slide " data-part="p2" data-title="NHGRI 게놈당 비용 곡선"><header><h2>NHGRI 게놈당 비용 곡선</h2></header><div class="body"><div class="lecture-columns"><div><figure class="lecture-figure"><img src="assets/cost_genome.jpg" alt="Graph: Sequencing Cost Per Genome"><figcaption>NHGRI, 2022 data</figcaption></figure></div><div><ul class="lecture-bullets"><li>세로축은 로그 눈금</li><li>2008년 전후의 NGS 전환</li><li>같은 양의 염기 생산과 게놈 재시퀀싱의 차이</li><li>공개 자료의 마지막 측정 연도를 함께 표기</li></ul></div></div><p class="src"><a href="https://www.genome.gov/about-genomics/fact-sheets/DNA-Sequencing-Costs-Data" target="_blank" rel="noopener">https://www.genome.gov/about-genomics/fact-sheets/DNA-Sequencing-Costs-Data</a></p></div></section><section class="slide " data-part="p2" data-title="비용 감소의 기술적 요인"><header><h2>비용 감소의 기술적 요인</h2></header><div class="body"><ul class="lecture-bullets"><li>많은 분자의 병렬 검출</li><li>반응 부피와 시약 사용량 감소</li><li>광학·반도체·단일분자 측정의 발전</li><li>장비·시약·컴퓨팅·시료 준비의 전체 비용</li></ul><p class="src"><a href="https://www.genome.gov/about-genomics/fact-sheets/Polymerase-Chain-Reaction-Fact-Sheet" target="_blank" rel="noopener">https://www.genome.gov/about-genomics/fact-sheets/Polymerase-Chain-Reaction-Fact-Sheet</a></p></div></section><section class="slide  has-quiz" data-part="p2" data-title="PCR과 시퀀싱 확인 문제"><header><h2>PCR과 시퀀싱 확인 문제</h2></header><div class="body"><ul class="lecture-bullets"><li>PCR과 cycle sequencing의 프라이머 수 비교</li><li>3′-OH 부재가 종결을 만드는 이유</li><li>HGP, $1,000 Genome, 1000 Genomes 목적 비교</li></ul><details class="question"><summary>확인·실습 문제</summary><p>Sanger 반응에서 조각 길이와 형광을 모두 측정해야 하는 이유 설명</p></details><p class="src"><a href="https://www.genome.gov/about-genomics/fact-sheets/Polymerase-Chain-Reaction-Fact-Sheet" target="_blank" rel="noopener">https://www.genome.gov/about-genomics/fact-sheets/Polymerase-Chain-Reaction-Fact-Sheet</a></p></div></section></main></div><div class="ctrl"><button class="cb" id="b-side" type="button">☰ 목차</button><button class="cb" id="b-prev" type="button" aria-label="이전 슬라이드">←</button><span class="count" id="count"></span><button class="cb pri" id="b-next" type="button">다음 →</button><span class="where" id="where"></span><span class="sp"></span><button class="cb" id="b-read" type="button">읽기 모드</button><button class="cb presentonly" id="b-full" type="button">전체화면</button></div></div></div><script>(function(){'use strict';var META={"label": "DNA Data Storage 11-1", "parts": [{"id": "p0", "name": "주형 의존 합성과 PCR", "min": 20}, {"id": "p1", "name": "Sanger 사슬 종결과 판독", "min": 28}, {"id": "p2", "name": "게놈 프로젝트와 비용", "min": 27}]};
+var $ = function(id){ return document.getElementById(id); };
+var el = function(tag, cls, txt){ var e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
+var app = $('app'), deck = $('deck');
+var slides = Array.prototype.slice.call(deck.querySelectorAll('.slide'));
+var PARTS = META.parts;
+var partOf = {}, t0 = 0;
+PARTS.forEach(function(p){ p.start = t0; t0 += p.min; partOf[p.id] = p; });
+function mmss(m){ return Math.floor(m/60) + ':' + String(m%60).padStart(2,'0'); }
+
+/* ---------- footers ---------- */
+slides.forEach(function(s, i){
+  if (s.classList.contains('cover') || s.classList.contains('ending')) return;
+  var f = el('footer'); f.appendChild(el('span', '', META.label + ' · ' + partOf[s.dataset.part].name)); f.appendChild(el('span', 'pg', String(i+1)));
+  var notes = s.querySelector('.notes'); if (notes) s.insertBefore(f, notes); else s.appendChild(f);
+});
+
+/* ---------- sidebar (Notion식 트리) ---------- */
+var nav = $('side-nav'), navBtns = [], groups = {};
+PARTS.forEach(function(p){
+  var h = el('button', 'part-h'); h.type = 'button'; h.setAttribute('aria-expanded', 'true');
+  h.appendChild(el('span', 'tw', '▶')); h.appendChild(el('span', 'nm', p.name));
+  var list = el('div', 'part-list');
+  h.addEventListener('click', function(){ var open = h.getAttribute('aria-expanded') !== 'true'; h.setAttribute('aria-expanded', String(open)); list.hidden = !open; });
+  nav.appendChild(h); nav.appendChild(list); groups[p.id] = {h:h, list:list};
+});
+slides.forEach(function(s, i){
+  var b = el('button', 'nav-b'); b.type = 'button';
+  b.appendChild(el('span', 'no', String(i+1))); b.appendChild(el('span', '', s.dataset.title || ''));
+  if (s.dataset.lab) b.appendChild(el('span', 'ml', 'MATLAB'));
+  if (s.dataset.def) b.appendChild(el('span', 'ml', 'DEF'));
+  b.addEventListener('click', function(){ go(i); if (mode === 'read') { app.classList.remove('sideopen'); syncBtns(); } });
+  groups[s.dataset.part].list.appendChild(b); navBtns.push(b);
+});
+
+/* ---------- navigation ---------- */
+var cur = 0, mode = 'present', userMode = null;
+function go(i, fromScroll){
+  cur = Math.max(0, Math.min(slides.length - 1, i));
+  slides.forEach(function(s, j){ s.hidden = (mode === 'present' && j !== cur); });
+  navBtns.forEach(function(b, j){ if (j === cur) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current'); });
+  var s = slides[cur], p = partOf[s.dataset.part], g = groups[p.id];
+  g.h.setAttribute('aria-expanded', 'true'); g.list.hidden = false;
+  if (navBtns[cur].scrollIntoView) navBtns[cur].scrollIntoView({block:'nearest'});
+  $('count').textContent = (cur+1) + ' / ' + slides.length;
+  $('where').textContent = p.name;
+  try { history.replaceState(null, '', '#' + (cur+1)); } catch(e){}
+  if (mode === 'read' && !fromScroll) s.scrollIntoView({block:'start'});
+}
+function setMode(m){
+  mode = m; app.classList.toggle('read', m === 'read');
+  if (m === 'read') app.classList.remove('sideopen');
+  go(cur); syncBtns();
+}
+function autoMode(){ if (userMode) return; var want = window.innerWidth < 900 ? 'read' : 'present'; if (want !== mode) setMode(want); }
+function sideVisible(){ return mode === 'read' ? app.classList.contains('sideopen') : !app.classList.contains('noside'); }
+function toggleSide(){ if (mode === 'read') app.classList.toggle('sideopen'); else app.classList.toggle('noside'); syncBtns(); }
+function syncBtns(){
+  $('b-side').setAttribute('aria-pressed', String(sideVisible()));
+  $('b-read').setAttribute('aria-pressed', String(mode === 'read'));
+}
+$('b-prev').addEventListener('click', function(){ go(cur-1); });
+$('b-next').addEventListener('click', function(){ go(cur+1); });
+$('b-side').addEventListener('click', toggleSide);
+$('b-read').addEventListener('click', function(){ userMode = true; setMode(mode === 'read' ? 'present' : 'read'); });
+var fsBtn = $('b-full');
+if (!document.fullscreenEnabled) fsBtn.hidden = true;
+function fullscreen(){ try { if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen(); } catch(e){} }
+fsBtn.addEventListener('click', fullscreen);
+document.addEventListener('keydown', function(ev){
+  if (ev.metaKey || ev.ctrlKey || ev.altKey) return;
+  var t = ev.target, tag = t && t.tagName;
+  if (tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA') return;
+  var k = ev.key, isBtn = (tag === 'BUTTON' || tag === 'SUMMARY' || tag === 'A');
+  if ((k === ' ' || k === 'Enter') && isBtn) return;
+  if (k === 'ArrowRight' || k === 'PageDown' || k === ' ') { go(cur+1); ev.preventDefault(); }
+  else if (k === 'ArrowLeft' || k === 'PageUp') { go(cur-1); ev.preventDefault(); }
+  else if (k === 'Home') { go(0); ev.preventDefault(); }
+  else if (k === 'End') { go(slides.length-1); ev.preventDefault(); }
+  else if (k === 's' || k === 'S') toggleSide();
+  else if (k === 'r' || k === 'R') { userMode = true; setMode(mode === 'read' ? 'present' : 'read'); }
+  else if (k === 'f' || k === 'F') fullscreen();
+});
+var tx = null;
+deck.addEventListener('touchstart', function(e){ tx = e.touches[0].clientX; }, {passive:true});
+deck.addEventListener('touchend', function(e){ if (tx == null || mode !== 'present') return; var dx = e.changedTouches[0].clientX - tx; tx = null; if (Math.abs(dx) > 70) go(cur + (dx < 0 ? 1 : -1)); }, {passive:true});
+window.addEventListener('resize', autoMode);
+window.addEventListener('hashchange', function(){ var n = parseInt(location.hash.slice(1), 10); if (n && n-1 !== cur) go(n-1); });
+if ('IntersectionObserver' in window){
+  var io = new IntersectionObserver(function(es){ if (mode !== 'read') return; es.forEach(function(e){ if (e.isIntersecting) go(slides.indexOf(e.target), true); }); }, {rootMargin:'-45% 0px -50% 0px'});
+  slides.forEach(function(s){ io.observe(s); });
+}
+
+/* ---------- code boxes: highlight + copy ---------- */
+function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+Array.prototype.forEach.call(document.querySelectorAll('.code'), function(box){
+  var pre = box.querySelector('pre'), raw = pre.textContent.replace(/\s+$/, '');
+  pre.innerHTML = raw.split('\n').map(function(line){
+    if (/^\s*%%/.test(line)) return '<span class="sec">' + esc(line) + '</span>';
+    var inStr = false, cut = -1;
+    for (var i = 0; i < line.length; i++){
+      var ch = line[i];
+      if (ch === "'" ){ var prev = line[i-1] || ' '; if (inStr) inStr = false; else if (!/[\w\)\]\}\.']/.test(prev)) inStr = true; }
+      else if (ch === '%' && !inStr){ cut = i; break; }
+    }
+    return cut < 0 ? esc(line) : esc(line.slice(0, cut)) + '<span class="cm">' + esc(line.slice(cut)) + '</span>';
+  }).join('\n');
+  var btn = box.querySelector('.copy');
+  btn.addEventListener('click', function(){
+    function done(ok){ btn.textContent = ok ? '복사됨 ✓' : '선택됨 — Ctrl/⌘+C'; btn.classList.toggle('done', ok); setTimeout(function(){ btn.textContent = '복사'; btn.classList.remove('done'); }, 1800); }
+    function fallback(){
+      var ta = el('textarea'); ta.value = raw; ta.setAttribute('readonly', ''); ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0'; document.body.appendChild(ta); ta.select();
+      var ok = false; try { ok = document.execCommand('copy'); } catch(e){}
+      document.body.removeChild(ta);
+      if (!ok){ var r = document.createRange(); r.selectNodeContents(pre); var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r); }
+      done(ok);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(raw).then(function(){ done(true); }, fallback); else fallback();
+  });
+});
+
+/* ---------- helpers for bit widgets ---------- */
+function bitRow(host, bits, opts){
+  host.innerHTML = '';
+  bits.forEach(function(v, i){
+    var cls = 'b ' + (opts.cls ? opts.cls(i, v) : '');
+    var e = opts.onClick ? el('button', cls, String(v)) : el('span', cls, String(v));
+    if (opts.onClick){ e.type = 'button'; e.setAttribute('aria-label', (i+1) + '번 칸, 값 ' + v); e.addEventListener('click', function(){ opts.onClick(i); }); }
+    host.appendChild(e);
+    if (opts.gapAfter && opts.gapAfter.indexOf(i) >= 0) host.appendChild(el('span', 'gap'));
+  });
+}
+function pct(x){ return (x*100).toFixed(2).replace(/\.?0+$/,'') + '%'; }
+
+/* Stop a lecture video when changing slides or selecting another source. */
+function lectureVideosInit(){
+  var lessons=[].slice.call(document.querySelectorAll('[data-video-lesson]'));
+  var playing=null;
+  lessons.forEach(function(lesson){
+    if(lesson.dataset.videoReady)return;
+    lesson.dataset.videoReady='1';
+    var videos=JSON.parse(lesson.querySelector('.video-data').textContent);
+    var stage=lesson.querySelector('.video-stage');
+    var preview=lesson.querySelector('.video-preview');
+    var play=lesson.querySelector('.video-play');
+    var source=lesson.querySelector('.video-source-link');
+    var credit=lesson.querySelector('.video-credit');
+    var note=lesson.querySelector('.video-observation');
+    var choices=[].slice.call(lesson.querySelectorAll('.video-choice'));
+    var selected=0;
+    function stop(){
+      var frame=stage.querySelector('iframe');
+      if(frame)frame.remove();
+      preview.hidden=false;play.hidden=false;
+      if(playing===stop)playing=null;
+    }
+    function select(i){
+      stop();selected=i;
+      var video=videos[i];
+      preview.src='assets/yt_'+video.id+'.jpg';
+      preview.alt=video.title;
+      source.href='https://www.youtube.com/watch?v='+video.id;
+      credit.textContent=video.author+' ('+video.duration+')';
+      note.textContent=video.note;
+      choices.forEach(function(button,j){button.setAttribute('aria-pressed',String(i===j));});
+      play.setAttribute('aria-label',video.label+' 재생');
+    }
+    choices.forEach(function(button,i){button.addEventListener('click',function(){select(i);});});
+    play.addEventListener('click',function(){
+      if(playing)playing();
+      var video=videos[selected];
+      var frame=document.createElement('iframe');
+      frame.title=video.title;
+      frame.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      frame.allowFullscreen=true;
+      frame.referrerPolicy='strict-origin-when-cross-origin';
+      frame.src='https://www.youtube-nocookie.com/embed/'+video.id+'?autoplay=1&rel=0&playsinline=1';
+      preview.hidden=true;play.hidden=true;stage.appendChild(frame);playing=stop;
+    });
+    new MutationObserver(function(){if(lesson.hidden)stop();}).observe(lesson,{attributes:true,attributeFilter:['hidden']});
+    select(0);
+  });
+}
+document.addEventListener('DOMContentLoaded',lectureVideosInit);
+setTimeout(lectureVideosInit,60);
+
+/* ---------- start ---------- */
+if (window.innerWidth < 1180 && window.innerWidth >= 900) app.classList.add('noside');
+var h0 = parseInt(location.hash.slice(1), 10); cur = (h0 && h0 <= slides.length) ? h0 - 1 : 0;
+mode = window.innerWidth < 900 ? 'read' : 'present'; app.classList.toggle('read', mode === 'read');
+go(cur, mode === 'read' && cur === 0); syncBtns();
+
+})();</script></body></html>

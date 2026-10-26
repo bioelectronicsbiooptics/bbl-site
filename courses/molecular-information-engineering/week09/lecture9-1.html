@@ -1,0 +1,637 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>9-1 DNA 저장 매체와 장기 보존</title><style>/* BLUE 포맷 (bluelib.py) 을 HTML 로 옮긴 단일 테마 — 1em = 15pt, 1in = 4.8em (슬라이드 폭 64em) */
+:root{
+  --navy:#16324F; --teal:#529FD9; --amber:#224EBD; --crim:#C03B3B; --ink:#1A1A1A; --gray:#5B6670;
+  --lgray:#F4F6F9; --white:#FFFFFF; --border:#D8DEE6; --green:#2E7D54; --cream:#FAF6EC;
+  --code:#1E2530; --codeink:#E6EDF3; --codecm:#8FB7A0; --sub1:#A8C4D4; --sub2:#C8D8E4;
+  --tealwash:#EAF3FB; --crimwash:#FBECEC; --greenwash:#E9F4EE; --ochre:#8A5F12;
+  --canvas:#E9EDF2; --side-hover:#1F4263; --side-line:#2A4A68;
+  --sans:"Apple SD Gothic Neo","Helvetica Neue","Noto Sans KR","Malgun Gothic",-apple-system,BlinkMacSystemFont,sans-serif;
+  --mono:Menlo,"SFMono-Regular",Consolas,"Liberation Mono",monospace;
+  --math:"STIX Two Math","Cambria Math","Latin Modern Math","Times New Roman","Apple SD Gothic Neo","Noto Sans KR",serif;
+  --helix:none;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{margin:0;background:var(--canvas);color:var(--ink);font:16px/1.6 var(--sans);word-break:keep-all;overflow-wrap:anywhere;-webkit-text-size-adjust:100%}
+p,h1,h2,h3,ul,ol,dl,dd,figure,pre{margin:0}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--teal);outline-offset:2px;border-radius:4px}
+
+/* ---------- shell ---------- */
+.app{height:100%;display:grid;grid-template-columns:292px minmax(0,1fr);grid-template-rows:minmax(0,1fr)}
+.app.noside{grid-template-columns:minmax(0,1fr)} .app.noside .side{display:none}
+.side{background:var(--navy);color:#E8EEF4;display:flex;flex-direction:column;min-height:0;overflow:hidden;border-right:3px solid var(--amber)}
+.side-head{padding:18px 18px 14px;display:flex;flex-direction:column;gap:3px;border-bottom:1px solid var(--side-line)}
+.side-head .k{font:700 11.5px "Helvetica Neue",var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--teal)}
+.side-head .t{font-size:18px;font-weight:700;line-height:1.35;color:#fff}
+.side-head .s{font-size:13px;color:var(--sub1)}
+.side-nav{flex:1;min-height:0;overflow-y:auto;padding:6px 8px 16px}
+.part-h{display:flex;align-items:baseline;gap:6px;width:100%;padding:9px 8px 5px;border:0;background:none;cursor:pointer;text-align:left;font-size:12.5px;font-weight:700;color:var(--sub1);border-radius:6px}
+.part-h:hover{background:var(--side-hover)}
+.part-h .tw{font-size:10px;width:1em;display:inline-block;transition:transform .12s}
+.part-h[aria-expanded="true"] .tw{transform:rotate(90deg)}
+.part-h .nm{flex:1} .part-h .tm{font:500 11.5px var(--mono);color:var(--sub1);white-space:nowrap}
+.part-list{display:flex;flex-direction:column}
+.nav-b{display:flex;gap:8px;width:100%;text-align:left;font-size:13.5px;line-height:1.4;padding:5px 8px 5px 22px;border:0;border-radius:6px;background:none;color:#E8EEF4;cursor:pointer}
+.nav-b .no{font:600 11.5px/1.65 var(--mono);color:var(--sub1);min-width:1.7em}
+.nav-b .ml{font:700 9.5px/1.9 var(--mono);color:var(--teal);margin-left:auto}
+.nav-b:hover{background:var(--side-hover)}
+.nav-b[aria-current="true"]{background:#fff;color:var(--navy);font-weight:700}
+.nav-b[aria-current="true"] .no,.nav-b[aria-current="true"] .ml{color:var(--amber)}
+.side-notes{border-top:1px solid var(--side-line);padding:12px 18px 14px;font-size:13.5px;line-height:1.65;max-height:34%;overflow:auto;color:#E8EEF4}
+.side-notes b{display:block;font-size:11px;letter-spacing:.08em;color:var(--teal);margin-bottom:4px}
+
+.main{display:flex;flex-direction:column;min-width:0;min-height:0}
+.stage{flex:1;min-height:0;container-type:size;display:grid;place-items:center;padding:14px}
+.deck{width:min(100cqw,calc(100cqh * 16 / 9));aspect-ratio:16/9;container-type:inline-size;background:var(--white);border:1px solid var(--border);overflow:hidden;box-shadow:0 1px 2px rgba(10,30,50,.06),0 12px 32px rgba(10,30,50,.12)}
+.ctrl{display:flex;align-items:center;flex-wrap:wrap;gap:6px 8px;padding:8px 14px;border-top:1px solid var(--border);background:var(--white);font-size:14px;color:var(--ink)}
+.ctrl .sp{flex:1}
+.ctrl .where{color:var(--gray);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:36vw}
+.ctrl .count{font:600 14px var(--mono);font-variant-numeric:tabular-nums;min-width:4.4em;text-align:center}
+.ctrl .clock{font:600 14px var(--mono);font-variant-numeric:tabular-nums;color:var(--gray)}
+.cb{min-height:36px;min-width:36px;padding:6px 12px;border:1px solid var(--border);border-radius:8px;background:var(--lgray);cursor:pointer;line-height:1.2;color:var(--ink)}
+.cb:hover{border-color:var(--gray)}
+.cb[aria-pressed="true"]{border-color:var(--amber);background:var(--tealwash);color:var(--amber)}
+.cb.pri{background:var(--amber);border-color:var(--amber);color:#fff;font-weight:700}
+
+/* ---------- read mode ---------- */
+.app.read{display:block;height:auto;min-height:100%}
+.app.read .side{display:none;position:fixed;inset:0 auto 0 0;width:min(86vw,320px);z-index:20;box-shadow:0 0 0 100vmax rgba(0,0,0,.4)}
+.app.read.sideopen .side{display:flex}
+.app.read .main{display:block}
+.app.read .stage{container-type:normal;display:block;padding:16px}
+.app.read .deck{width:100%;max-width:960px;margin-inline:auto;aspect-ratio:auto;container-type:normal;background:none;border:0;box-shadow:none;overflow:visible;display:flex;flex-direction:column;gap:18px}
+.app.read .slide{font-size:16px;height:auto;min-height:0;overflow:hidden;border:1px solid var(--border);box-shadow:0 1px 2px rgba(10,30,50,.05)}
+.app.read .slide.cover,.app.read .slide.ending{min-height:22em}
+.app.read .ctrl{position:sticky;bottom:0;z-index:10}
+.app.read .presentonly{display:none}
+@media (max-width:780px){
+  .app.read .slide{padding-inline:16px}
+  .app.read .cols,.app.read .cols.w64,.app.read .cols.w46,.app.read .cols.w73,.app.read .cols.w55{grid-template-columns:minmax(0,1fr)}
+  .app.read .slide.cover{padding-right:16px} .app.read .slide.cover .art{display:none}
+  .app.read .slide.cover h1{font-size:2em}
+  .app.read .flowx{flex-direction:column} .app.read .flowx .ar{transform:rotate(90deg);align-self:center}
+}
+
+/* ---------- slide (BLUE) ---------- */
+.slide{position:relative;font-size:calc(100cqw / 64);line-height:1.55;height:100%;display:flex;flex-direction:column;background:var(--white);color:var(--ink);padding:2.0em 2.64em .75em;overflow:hidden}
+.slide::before{content:"";position:absolute;inset:0 0 auto 0;height:.48em;background:var(--teal);z-index:2}
+.slide::after{content:"";position:absolute;right:.3em;top:50%;transform:translateY(-50%);height:calc(100% - 1.2em);aspect-ratio:1052/1540;max-width:22.5em;background:var(--helix) center/contain no-repeat;opacity:.07;pointer-events:none;z-index:0}
+.slide > *{position:relative;z-index:1}
+.slide > header{display:flex;flex-direction:column;gap:.1em}
+.slide h2{font-size:2em;font-weight:700;color:var(--navy);line-height:1.25;letter-spacing:-.01em;text-wrap:balance}
+.slide .sub{font-size:1em;color:var(--gray);line-height:1.4}
+.slide > header::after{content:"";display:block;width:7.2em;height:.17em;background:var(--amber);margin-top:.5em}
+.slide .body{flex:1;min-height:0;display:flex;flex-direction:column;gap:.75em;padding-top:1.05em;overflow:hidden auto}
+.slide .body.mid{justify-content:center}
+.slide > footer{display:flex;justify-content:space-between;gap:1em;font-size:.73em;color:var(--gray);padding-top:.45em}
+.slide > footer .pg{font-family:var(--mono)}
+.notes{display:none}
+.app.read.shownotes .slide .notes{display:block;font-size:.88em;color:var(--gray);border-top:1px dashed var(--border);margin-top:.8em;padding-top:.6em}
+
+.slide.quiz{background:var(--cream)} .slide.quiz::before{background:var(--amber)} .slide.quiz::after{display:none}
+.slide.cover,.slide.ending{background:var(--navy);color:#fff;justify-content:center}
+.slide.cover::before,.slide.cover::after,.slide.ending::before,.slide.ending::after{display:none}
+.slide.cover{padding:0 39.5% 0 4.3em;gap:0}
+.slide.cover .en{font:700 1em "Helvetica Neue",var(--sans);color:var(--teal);letter-spacing:.04em;margin-bottom:.7em}
+.slide.cover h1{font-size:2.67em;font-weight:700;line-height:1.22;letter-spacing:-.015em;text-wrap:balance}
+.slide.cover .s1{font-size:1.4em;color:var(--sub1);margin-top:.35em;line-height:1.4}
+.slide.cover .rule{width:7.7em;height:.19em;background:var(--teal);margin:1.5em 0 1.1em}
+.slide.cover .s2{font-size:1em;color:var(--sub2);line-height:1.7;max-width:32em}
+.slide.cover .keys{font-size:.74em;color:var(--sub1);margin-top:1.6em;display:flex;flex-wrap:wrap;gap:.3em 1.1em}
+.slide.cover .art{position:absolute;inset:0 0 0 61.5%;border-left:.24em solid var(--amber);background:#0F2740;overflow:hidden;font:700 1.5em/1.32 var(--mono);color:var(--teal);text-align:center;padding:.4em 0;z-index:1;white-space:pre;opacity:.95}
+.slide.cover .art span{color:#fff}
+kbd{font:600 .95em var(--mono);border:1px solid var(--side-line);border-radius:.3em;padding:0 .35em;color:#fff}
+.slide.ending{align-items:center;text-align:center;padding-inline:5em;gap:1.1em}
+.slide.ending h2{color:#fff;font-size:2.3em}
+.slide.ending .rule{width:100%;height:.24em;background:var(--teal)}
+.slide.ending p{font-size:1.27em;color:var(--sub2);line-height:1.7;max-width:36em}
+
+.cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1.5em;align-items:start}
+.cols.w64{grid-template-columns:minmax(0,3fr) minmax(0,2fr)} .cols.w46{grid-template-columns:minmax(0,2fr) minmax(0,3fr)}
+.cols.w73{grid-template-columns:minmax(0,7fr) minmax(0,4fr)} .cols.w55{grid-template-columns:minmax(0,11fr) minmax(0,9fr)}
+.stack{display:flex;flex-direction:column;gap:.65em;min-width:0}
+ul.pts{padding-left:1.1em;display:flex;flex-direction:column;gap:.4em;font-size:1.08em}
+ul.pts li::marker{color:var(--teal)} ul.pts.sm{font-size:.95em;gap:.3em}
+.gray{color:var(--gray)} .small{font-size:.86em} .tiny{font-size:.75em}
+.hl{color:var(--amber);font-weight:700} .bad{color:var(--crim);font-weight:700} .good{color:var(--green);font-weight:700} .nv{color:var(--navy);font-weight:700}
+code,.mono{font-family:var(--mono);font-size:.92em}
+var,.v{font-family:var(--math);font-style:italic;font-size:1.08em}
+.src{font-size:.6em;line-height:1.45;color:#A3ADB7;letter-spacing:.01em}
+.src i{font-style:italic}
+a{color:var(--amber)}
+
+/* keybox · card · flow · numbered list · stat */
+.kb{border-left:.26em solid var(--amber);background:var(--lgray);padding:.55em .9em .6em 1.1em;display:flex;flex-direction:column;gap:.12em}
+.kb > b{font-size:.8em;color:var(--amber)} .kb > p,.kb > div{font-size:1em;line-height:1.5}
+.kb.teal{border-color:var(--teal)} .kb.teal > b{color:#2F7FBE}
+.kb.crim{border-color:var(--crim)} .kb.crim > b{color:var(--crim)}
+.kb.green{border-color:var(--green)} .kb.green > b{color:var(--green)}
+.card{background:var(--lgray);border:1px solid var(--border);border-top:.36em solid var(--teal);border-radius:.3em;padding:.7em .95em .8em;display:flex;flex-direction:column;gap:.3em;min-width:0}
+.card.amber{border-top-color:var(--amber)} .card.crim{border-top-color:var(--crim)} .card.green{border-top-color:var(--green)}
+.card > h3{font-size:1.07em;color:var(--navy);line-height:1.35} .card > p,.card li{font-size:.87em;line-height:1.5}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(11em,1fr));gap:.8em}
+.flowx{display:flex;align-items:stretch;gap:.35em}
+.flowx .fb{flex:1 1 0;background:var(--lgray);border:1px solid var(--border);border-top:.34em solid var(--teal);border-radius:.3em;padding:.5em .45em .55em;text-align:center;display:flex;flex-direction:column;gap:.15em;min-width:0}
+.flowx .fb b{font-size:.87em;color:var(--navy);line-height:1.3} .flowx .fb span{font-size:.67em;color:var(--gray);line-height:1.4}
+.flowx .ar{align-self:center;color:var(--teal);font-size:.93em;font-weight:700}
+ol.nl{list-style:none;padding:0;display:flex;flex-direction:column;gap:.55em;counter-reset:n}
+ol.nl > li{counter-increment:n;display:grid;grid-template-columns:2.1em 1fr;gap:.7em;align-items:start;font-size:1.05em;line-height:1.5}
+ol.nl > li::before{content:counter(n);inline-size:2.05em;block-size:2.05em;border-radius:50%;background:var(--amber);color:#fff;font:700 .95em/2.05em "Helvetica Neue",var(--sans);text-align:center}
+.stat{display:flex;flex-direction:column;align-items:center;text-align:center}
+.stat b{font-size:2.27em;color:var(--teal);line-height:1.2;font-variant-numeric:tabular-nums} .stat span{font-size:.8em;color:var(--gray)}
+.badge{display:inline-block;font:700 .68em/1.9 var(--sans);padding:0 .7em;border-radius:1em;vertical-align:middle;white-space:nowrap}
+.badge.free{background:var(--greenwash);color:var(--green)} .badge.tb{background:var(--tealwash);color:var(--amber)}
+
+/* tables (BLUE) */
+.scroll{overflow-x:auto;min-width:0}
+table.tbl{border-collapse:collapse;width:100%;font-size:.87em;line-height:1.4}
+table.tbl th{background:var(--navy);color:#fff;font-weight:700;text-align:left;padding:.5em .65em}
+table.tbl td{padding:.42em .65em;border:1px solid var(--border);vertical-align:top;background:var(--white)}
+table.tbl tr:nth-child(even) td{background:var(--lgray)}
+table.tbl td:first-child{font-weight:700;color:var(--navy)}
+table.tbl td.num,table.tbl th.num{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+table.tbl td.c,table.tbl th.c{text-align:center;font-family:var(--mono)}
+table.tbl tbody.today td{background:var(--tealwash)}
+table.tbl tbody.today tr:first-child td{border-top:.22em solid var(--amber)}
+table.tbl tbody.today tr:last-child td{border-bottom:.22em solid var(--amber)}
+table.tbl tbody.today td:first-child{border-left:.22em solid var(--amber)}
+table.tbl tbody.today td:last-child{border-right:.22em solid var(--amber)}
+table.tbl.sm{font-size:.78em} table.tbl.sm td,table.tbl.sm th{padding:.3em .55em}
+.boxkey{display:inline-block;inline-size:1.6em;block-size:.9em;border:.2em solid var(--amber);background:var(--tealwash);vertical-align:middle;margin-right:.4em}
+table.mat{border-collapse:collapse;font:700 1em/1 var(--mono);border-left:.13em solid var(--navy);border-right:.13em solid var(--navy);border-radius:.3em}
+table.mat td{padding:.27em .4em;text-align:center}
+table.mat td.p{color:var(--ochre)} table.mat td.i{color:var(--amber)} table.mat td.on{background:var(--crimwash);color:var(--crim)}
+.matwrap{display:flex;align-items:center;gap:.55em;flex-wrap:wrap}
+
+/* equations, bits */
+.eq{font-family:var(--math);font-size:1.2em;line-height:1.55;padding:.42em .85em;background:var(--lgray);border:1px solid var(--border);overflow-x:auto;white-space:nowrap}
+.eq .why{font-family:var(--sans);font-size:.66em;color:var(--gray);margin-left:1em}
+.bits{display:inline-flex;flex-wrap:wrap;gap:.2em;vertical-align:middle}
+.b{inline-size:1.85em;block-size:1.85em;display:inline-grid;place-items:center;font:700 1em/1 var(--mono);border:.09em solid var(--border);border-radius:.25em;background:var(--white);color:var(--ink);padding:0}
+.b.m{background:var(--tealwash);border-color:var(--amber);color:var(--amber)}
+.b.r{background:var(--cream);border-color:var(--ochre);border-style:dashed;color:var(--ochre)}
+.b.e{background:var(--crimwash);border-color:var(--crim);color:var(--crim)}
+.b.ok{background:var(--greenwash);border-color:var(--green);color:var(--green)}
+.b.sm{inline-size:1.5em;block-size:1.5em;font-size:.86em}
+button.b{cursor:pointer} button.b:hover{border-color:var(--navy);box-shadow:0 0 0 .12em var(--tealwash)}
+.gap{display:inline-block;inline-size:.4em}
+.legend{display:flex;flex-wrap:wrap;gap:.25em 1.1em;font-size:.75em;color:var(--gray)}
+.legend span{display:inline-flex;align-items:center;gap:.45em} .legend .b{inline-size:1.15em;block-size:1.15em}
+.nt{font:700 1.08em var(--mono);letter-spacing:.16em}
+.nt em{font-style:normal;color:var(--crim);background:var(--crimwash);border-radius:.2em}
+.pipe{list-style:none;padding:0;display:flex;flex-direction:column}
+.pipe .stg{display:grid;grid-template-columns:minmax(9em,13.5em) 1fr;align-items:center;gap:.2em 1.2em;padding-block:.3em}
+.pipe .who{font-weight:700;color:var(--navy);line-height:1.35} .pipe .who small{display:block;font-weight:400;color:var(--gray);font-size:.74em}
+.pipe .stp{color:var(--gray);font-size:.8em;padding:.05em 0 .05em .8em;border-left:.13em solid var(--teal);margin-left:.35em}
+.pipe .stp::before{content:"▼ ";color:var(--teal);font-size:.8em}
+.nest{border:.1em solid var(--teal);border-radius:.45em;padding:.42em .7em .55em;display:flex;flex-direction:column;gap:.35em;background:var(--white)}
+.nest .nl2{font-size:.84em;line-height:1.45} .nest .nl2 b{font-size:1.12em;color:var(--navy)}
+.nest .ex{font-size:.72em;color:var(--gray)}
+.nest.n2{background:var(--lgray)} .nest.n4{background:var(--tealwash)} .nest.n5{background:var(--navy);border-color:var(--navy)} .nest.n5 .nl2{color:var(--sub2)} .nest.n5 .nl2 b{color:#fff}
+
+/* widgets */
+.panel{background:var(--lgray);border:1px solid var(--border);border-top:.36em solid var(--teal);border-radius:.3em;padding:.7em .95em .8em;display:flex;flex-direction:column;gap:.6em;min-width:0}
+.panel > h3{font-size:.95em;color:var(--navy)}
+.row{display:flex;flex-wrap:wrap;gap:.35em .5em;align-items:center}
+.lab{font-size:.76em;color:var(--gray);font-weight:700;min-width:5.4em}
+.btn{font-size:.8em;line-height:1.25;padding:.4em .8em;min-height:2.3em;border:1px solid var(--border);border-radius:.4em;background:var(--white);color:var(--ink);cursor:pointer}
+.btn:hover{border-color:var(--gray)}
+.btn[aria-pressed="true"]{border-color:var(--amber);background:var(--tealwash);color:var(--amber);font-weight:700}
+.sliders{display:grid;grid-template-columns:repeat(auto-fit,minmax(11em,1fr));gap:.3em 1.4em}
+.slider{display:flex;flex-direction:column}
+.slider label{display:flex;justify-content:space-between;align-items:baseline;font-size:.8em;color:var(--gray)}
+.slider output{font:700 1.25em var(--mono);color:var(--navy);font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--amber);min-height:1.6em;margin:0}
+select{font:700 1em var(--mono);padding:.3em .5em;border:1px solid var(--border);border-radius:.4em;background:var(--white);color:var(--ink);min-height:2.2em}
+.barx{display:flex;flex-wrap:wrap;gap:.15em}
+.barx .cell{inline-size:.9em;block-size:1.3em;border-radius:.15em;border:.08em solid}
+.barx .cell.m,.barx .seg.m{background:var(--tealwash);border-color:var(--amber);color:var(--amber)}
+.barx .cell.r,.barx .seg.r{background:var(--cream);border-color:var(--ochre);border-style:dashed;color:var(--ochre)}
+.barx.prop{flex-wrap:nowrap}
+.barx .seg{block-size:1.5em;border-radius:.2em;border:.08em solid;min-inline-size:.6em;font:700 .7em/2 var(--mono);text-align:center;overflow:hidden;white-space:nowrap}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(8.5em,1fr));gap:0 1.2em}
+.metric{padding-block:.4em;border-top:1px solid var(--border);display:flex;flex-direction:column}
+.metric .k{font-size:.74em;color:var(--gray)} .metric .val{font:700 1.5em/1.25 var(--mono);color:var(--teal);font-variant-numeric:tabular-nums}
+.metric .f{font-family:var(--math);color:var(--gray);font-size:.9em}
+.dots{display:grid;gap:.14em;max-width:14em} .dots i{aspect-ratio:1;border-radius:50%;background:var(--border)} .dots i.on{background:var(--amber)}
+.verdict{font-weight:700;font-size:.9em;line-height:1.5;padding:.45em .75em;border-radius:.3em;border:1px solid var(--border);background:var(--white)}
+.verdict.good{border-color:var(--green);background:var(--greenwash);color:var(--green)}
+.verdict.bad{border-color:var(--crim);background:var(--crimwash);color:var(--crim)}
+.verdict.warn{border-color:var(--ochre);background:var(--cream);color:var(--ochre)}
+.grid2d{display:inline-grid;grid-template-columns:repeat(4,auto);gap:.22em;align-items:center;justify-items:center}
+.grid2d .flag{font:700 .7em var(--mono);color:var(--gray);min-inline-size:2.6em;text-align:center} .grid2d .flag.bad{color:var(--crim)}
+pre.div{font:700 .92em/1.42 var(--mono);background:var(--white);border:1px solid var(--border);padding:.55em .8em;overflow-x:auto}
+pre.div .g{color:var(--ochre)} pre.div .m{color:var(--amber)} pre.div .rem{color:var(--green)}
+
+/* code box (BLUE code_box + 복사 버튼) */
+.code{background:var(--code);border-radius:.5em;color:var(--codeink);display:flex;flex-direction:column;min-width:0;min-height:0;overflow:hidden}
+.code .bar{display:flex;align-items:center;gap:.6em;padding:.5em .6em .15em 1em}
+.code .bar .ttl{font:700 .73em var(--mono);color:var(--teal);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.code .copy,.code .open{font:700 .68em/1 var(--sans);padding:.5em .85em;border-radius:.4em;border:1px solid #4A5666;background:#2A3340;color:var(--codeink);cursor:pointer;text-decoration:none;white-space:nowrap}
+.code .copy:hover,.code .open:hover{border-color:var(--teal);color:#fff}
+.code .copy.done{background:var(--green);border-color:var(--green);color:#fff}
+.slide .body .code{max-height:24.6em}
+.app.read .slide .body .code{max-height:30em}
+.code pre{font:.74em/1.42 var(--mono);padding:.3em 1.1em .8em;overflow:auto;white-space:pre;tab-size:4;color:var(--codeink)}
+.code pre .cm{color:var(--codecm)} .code pre .sec{color:var(--teal);font-weight:700}
+.out{background:var(--white);border:1px solid var(--border);border-left:.26em solid var(--green);display:flex;flex-direction:column;min-width:0}
+.out > b{font-size:.73em;color:var(--green);padding:.5em .9em 0}
+.out pre{font:.76em/1.5 var(--mono);padding:.25em .9em .6em;overflow:auto;white-space:pre;color:var(--ink)}
+.doc{font-size:.78em;color:var(--gray);line-height:1.7} .doc a{font-family:var(--mono);font-weight:700;text-decoration:none;border-bottom:1px solid var(--teal)}
+
+/* quiz */
+.qcard{background:var(--white);border:1px solid var(--border);border-radius:.5em;padding:.15em 1em}
+details.q summary{cursor:pointer;display:grid;grid-template-columns:2.2em 1fr;gap:.7em;align-items:center;font-weight:700;font-size:1.05em;padding-block:.55em;list-style:none;line-height:1.45}
+details.q summary::-webkit-details-marker{display:none}
+details.q summary::before{content:attr(data-n);inline-size:2.05em;block-size:2.05em;border-radius:50%;background:var(--amber);color:#fff;font:700 .95em/2.05em "Helvetica Neue",var(--sans);text-align:center}
+details.q .ans{padding:0 0 .7em 2.9em;font-size:.96em;display:flex;flex-direction:column;gap:.2em;color:var(--green);font-weight:600}
+details.q .ans::before{content:"클릭해서 답 확인 ▸";display:none}
+
+/* svg */
+svg{max-width:100%;height:auto;display:block}
+.s-ink{fill:var(--ink)} .s-gray{fill:var(--gray)} .s-navy{fill:var(--navy)} .s-amber{fill:var(--amber)} .s-teal{fill:var(--teal)} .s-crim{fill:var(--crim)} .s-green{fill:var(--green)} .s-white{fill:#fff}
+.s-txt{font:14px var(--sans)} .s-sm{font:12px var(--sans)} .s-mono{font:700 15px var(--mono)} .s-math{font:italic 16px var(--math)}
+.l-navy{stroke:var(--navy);fill:none} .l-border{stroke:var(--border);fill:none} .l-gray{stroke:var(--gray);fill:none} .l-amber{stroke:var(--amber);fill:none} .l-teal{stroke:var(--teal);fill:none} .l-crim{stroke:var(--crim);fill:none} .l-green{stroke:var(--green);fill:none}
+.f-wash{fill:var(--tealwash);stroke:var(--amber)} .f-white{fill:#fff;stroke:var(--navy)} .f-cream{fill:var(--cream);stroke:var(--ochre)} .f-crim{fill:var(--crimwash);stroke:var(--crim)} .f-lgray{fill:var(--lgray);stroke:var(--border)}
+.pt{cursor:pointer}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+
+.kv{display:grid;grid-template-columns:auto 1fr;gap:.15em 1em;font-size:.82em;margin:0;align-items:baseline}
+.kv dt{color:var(--gray)} .kv dd{margin:0;font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+table.tbl.terms td:first-child,table.tbl.terms td:nth-child(2){white-space:nowrap}
+
+/* ---------- section divider (bluelib section_slide) ---------- */
+.slide.sect{padding:0;display:grid;grid-template-columns:34.5% minmax(0,1fr)}
+.slide.sect::before{display:none}
+.slide.sect .sl{background:var(--navy);border-right:.29em solid var(--amber);display:flex;flex-direction:column;justify-content:center;gap:.25em;padding:0 2em 0 3.36em;z-index:1}
+.slide.sect .no{font:700 3.87em/1.05 "Helvetica Neue",var(--sans);color:var(--amber)}
+.slide.sect .sl h2{font-size:1.8em;color:#fff;line-height:1.3;text-wrap:balance}
+.slide.sect .sl .en{font-size:.93em;color:var(--sub1);line-height:1.45;margin-top:.2em}
+.slide.sect .sr{display:flex;flex-direction:column;justify-content:center;padding:0 4em 0 4.3em}
+.slide.sect .sr ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.9em}
+.slide.sect .sr li{font-size:1.13em;line-height:1.5;padding-left:1.4em;text-indent:-1.4em}
+.slide.sect .sr li::before{content:"— ";color:var(--amber);font-weight:700}
+.slide.sect > footer{position:absolute;left:calc(34.5% + 4.3em);right:2.64em;bottom:.75em}
+.app.read .slide.sect{min-height:20em}
+@media (max-width:780px){ .app.read .slide.sect{grid-template-columns:minmax(0,1fr)} .app.read .slide.sect .sl{padding:1.5em 16px;border-right:0;border-bottom:.29em solid var(--amber)} .app.read .slide.sect .sr{padding:1.2em 16px 3em} }
+/* ---------- definition slide: 정의 · 예제 · 수학 ---------- */
+.defgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.85em;align-items:stretch}
+.defgrid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.defgrid.dense .dcol ul{font-size:.84em;gap:.3em} .defgrid.dense .dcol .eq{font-size:.95em;padding:.28em .55em}
+.dcol{background:var(--lgray);border:1px solid var(--border);border-top:.36em solid var(--amber);border-radius:.3em;padding:.7em .95em .9em;display:flex;flex-direction:column;gap:.5em;min-width:0}
+.dcol.ex{border-top-color:var(--teal)} .dcol.ma{border-top-color:var(--green)}
+.dcol .dh{display:flex;align-items:baseline;gap:.5em;font-weight:700;color:var(--navy);font-size:1.15em}
+.dcol .dh small{font:700 .64em "Helvetica Neue",var(--sans);letter-spacing:.09em;color:var(--gray);text-transform:uppercase}
+.dcol ul{padding-left:1em;margin:0;display:flex;flex-direction:column;gap:.42em;font-size:.97em;line-height:1.5}
+.dcol ul li::marker{color:var(--teal)}
+.dcol .eq{font-size:1.05em;padding:.35em .6em;white-space:normal;background:var(--white)}
+.dcol .mono{font-size:.95em}
+@media (max-width:780px){ .app.read .defgrid{grid-template-columns:minmax(0,1fr)} }
+
+/* Contextual lecture videos: one inline player, selectable sources and teaching notes. */
+.video-lesson .body{gap:.4em;padding-top:.85em}
+.video-layout{display:grid;grid-template-columns:2.1fr 1fr;gap:1em;align-items:start}
+.video-stage{position:relative;aspect-ratio:16/9;background:#10263E;overflow:hidden;border-radius:.35em;border:1px solid var(--border)}
+.video-stage iframe,.video-preview{position:absolute;inset:0;width:100%;height:100%;border:0}
+.video-preview{object-fit:contain;background:#10263E}
+.video-play{position:absolute;inset:0;border:0;background:linear-gradient(transparent 45%,rgba(0,0,0,.7));color:white;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.65em}
+.video-play .play-symbol{display:grid;place-items:center;background:#C03B3B;border-radius:50%;width:2.2em;height:2.2em;font-size:1.3em;padding-left:.12em}
+.video-play .play-label{font-size:.8em;font-weight:700;background:rgba(16,38,62,.85);padding:.4em .7em;border-radius:.3em}
+.video-caption{display:flex;gap:.6em;align-items:baseline;margin-top:.45em;font-size:.68em;line-height:1.4;color:var(--gray)}
+.video-caption .video-source-link{margin-left:auto;white-space:nowrap}
+.video-explain{display:flex;flex-direction:column;gap:.65em}
+.video-explain h3{font-size:.87em;color:var(--navy)}
+.video-choices{display:flex;flex-direction:column;gap:.35em}
+.video-choice{font:inherit;font-size:.73em;line-height:1.45;text-align:left;padding:.45em .6em;border:1px solid var(--border);border-left:.22em solid var(--teal);border-radius:.25em;background:white;cursor:pointer}
+.video-choice[aria-pressed="true"]{background:var(--tealwash);border-color:var(--amber);color:var(--amber);font-weight:700}
+.video-choice .video-time{display:inline;font-size:.9em;color:var(--gray);margin-left:.2em;white-space:nowrap}
+.video-explain .kb{padding:.4em .65em}
+.video-explain .kb b{font-size:.75em}
+.video-explain .kb p{font-size:.77em;line-height:1.5}
+.video-prompts{font-size:.76em;line-height:1.5;padding-left:1.1em;display:flex;flex-direction:column;gap:.35em}
+.video-prompts li::marker{color:var(--teal)}
+.video-lesson .src{font-size:.58em}
+@media(max-width:780px){.app.read .video-layout{grid-template-columns:1fr}.app.read .video-stage{min-height:0}.app.read .video-choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}}
+
+
+.slide .body{overflow:hidden;gap:.55em}.slide h2{font-size:1.85em}.slide .src{font-size:.56em;line-height:1.3;overflow-wrap:anywhere;margin-top:auto;color:var(--gray)}
+.lecture-bullets{font-size:1.18em;line-height:1.65;padding-left:1.2em;margin:.1em 0;display:flex;flex-direction:column;gap:.65em}
+.lecture-columns{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:1.5em;align-items:center;min-height:0;flex:0 1 auto}
+.lecture-figure{margin:0;min-width:0}.lecture-figure img{display:block;width:100%;height:auto;max-height:21em;object-fit:contain;background:white}.lecture-figure svg{width:100%;height:auto;max-height:22em;display:block}
+.lecture-figure figcaption{font-size:.6em;line-height:1.4;color:var(--gray);margin-top:.5em;overflow-wrap:anywhere}.pair-images{display:flex;gap:.6em;align-items:center}.pair-images figure{width:50%}
+.lecture-table{border-collapse:collapse;width:100%;font-size:.9em}.lecture-table th{background:var(--navy);color:white;text-align:left}.lecture-table th,.lecture-table td{border-bottom:1px solid var(--border);padding:.5em}.lecture-table tr:nth-child(even){background:#F4F6F9}
+.lecture-formula{font:600 1.2em/1.4 var(--math);text-align:center;color:var(--navy);padding:.4em;border-bottom:1px solid var(--border)}
+.lecture-formula,.question,.mechanism-steps{flex-shrink:0}.has-formula .lecture-figure img,.has-formula .lecture-figure svg{max-height:16em}.has-formula.has-quiz .lecture-figure img{max-height:14em}.has-steps .lecture-figure img,.has-steps .lecture-figure svg{max-height:15em}
+.video-layout{grid-template-columns:minmax(0,2.1fr) minmax(0,1fr)}.video-explain,.video-layout>div{min-width:0}.video-choice{display:block;box-sizing:border-box;overflow-wrap:anywhere;white-space:normal;width:100%;max-width:100%;min-width:0}
+.mechanism-steps{display:flex;gap:.8em;list-style-position:inside;padding:0;font-size:.85em;line-height:1.45}.mechanism-steps li{flex:1;border-top:3px solid var(--teal);padding-top:.35em}
+.question{color:var(--crim);font-size:.9em;margin-top:.4em}.question summary{cursor:pointer;font-weight:700}.question p{margin-top:.4em}
+.legacy .body{font-size:.87em}.legacy .body>div:empty{display:none}.legacy .body svg{max-height:24em;width:100%;height:auto}.legacy img{max-height:16em}
+.slide.cover{padding-right:4.3em}.slide.cover .s1{font-size:1.8em}.slide.cover .s2{max-width:48em}.slide.cover .en{font-size:.9em}.slide.cover .au{margin-top:1.4em;color:white;font-size:1em}
+.cover-links{display:flex;gap:1.2em;margin-top:1.3em;font-size:.8em;color:#C8D8E4}.cover-links a{color:inherit}
+.app.read .lecture-columns{min-height:0}.app.read .slide .body{overflow:visible}.app.read .lecture-figure img{max-height:520px}
+@media(max-width:780px){.app.read .lecture-columns{grid-template-columns:1fr}.app.read .mechanism-steps{display:block}.app.read .mechanism-steps li{margin-top:.6em}.app.read .lecture-bullets{font-size:1em}.app.read .slide.cover{padding:2em 1em}}
+@media print{@page{size:13.333333in 7.5in;margin:0}html,body,.app,.main,.stage,.deck{display:block!important;height:auto!important;min-height:0!important;width:1280px!important;max-width:none!important;overflow:visible!important;position:static!important;background:white!important;margin:0!important;padding:0!important}.side,.ctrl{display:none!important}.slide,.slide[hidden]{display:flex!important;width:1280px!important;height:720px!important;min-height:720px!important;max-height:720px!important;font-size:20px!important;position:relative!important;overflow:hidden!important;break-after:page;page-break-after:always;box-shadow:none!important;margin:0!important;border-radius:0!important}.slide:last-child{break-after:auto;page-break-after:auto}.slide .body{overflow:hidden!important}details.question:not([open]) p{display:none}.slide.cover{padding:1em 4.3em!important}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+/* 11-1 — 그림 + 요점 상자 (5-1 형식) */
+img.fig{width:100%;max-height:24em;object-fit:contain;object-position:center top;border:1px solid var(--border);border-radius:.3em;background:#fff}
+img.fig.h18{max-height:18em} img.fig.h20{max-height:20em} img.fig.h14{max-height:14em} img.fig.h16{max-height:16.5em} img.fig.h11{max-height:11em} img.fig.h9{max-height:9em}
+.stack .kb{padding:.45em .8em}
+.kb p.small{font-size:.8em;line-height:1.45;margin:0}
+.cols.w55 > svg,.cols.w64 > svg,.cols.w46 > svg,.cols > svg{align-self:start;max-height:25em;width:100%}
+.tbl td{vertical-align:top}
+table.tbl.xs{font-size:.73em} table.tbl.xs td,table.tbl.xs th{padding:.26em .45em}
+table.tbl td.w{white-space:nowrap}
+.cols.w37{grid-template-columns:minmax(0,3fr) minmax(0,7fr)}
+.cols.w82{grid-template-columns:minmax(0,8fr) minmax(0,5fr)}
+.cols.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+figure.cap{margin:0;display:flex;flex-direction:column;gap:.2em;min-width:0}
+figure.cap figcaption{font-size:.68em;color:var(--gray);line-height:1.35}
+.dcol .eq{font-family:var(--mono)}
+
+/* 동영상 목록 (6-2 extra.css 34–42행) */
+ul.vids{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.42em}
+ul.vids li{display:grid;grid-template-columns:1.9em 1fr;gap:.6em;align-items:start;
+  border:1px solid var(--border);border-left:.22em solid var(--teal);border-radius:.3em;
+  background:var(--white);padding:.4em .7em .45em}
+ul.vids li .pl{inline-size:1.55em;block-size:1.55em;border-radius:50%;background:var(--amber);color:#fff;
+  font:700 .62em/1.55em var(--sans);text-align:center}
+ul.vids li b{font-size:.84em;line-height:1.35;color:var(--navy);display:block}
+ul.vids li b a{text-decoration:none;border-bottom:1px solid var(--teal)}
+ul.vids li span{font-size:.76em;color:var(--gray);line-height:1.4}
+ul.vids li em{font-style:normal;font-family:var(--mono);font-size:.72em;color:var(--amber);font-weight:700}
+/* 11-2 단일분자 시퀀싱 — 그림 + 요점 상자 */
+img.fig{width:100%;max-height:22em;object-fit:contain;object-position:center top;border:1px solid var(--border);border-radius:.3em;background:#fff;display:block}
+img.fig.h20{max-height:20em} img.fig.h17{max-height:17em} img.fig.h14{max-height:14em} img.fig.h11{max-height:11em} img.fig.h10{max-height:10em} img.fig.h9{max-height:9em} img.fig.h8{max-height:8em} img.fig.h7{max-height:7em}
+.figcap{font-size:.68em;color:var(--gray);line-height:1.35;margin-top:.2em}
+.g2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:.6em;align-items:start}
+.stack .kb{padding:.45em .8em}
+.kb p.small{font-size:.8em;line-height:1.45;margin:0}
+.cols > svg,.stack > svg,.g2 > svg{width:100%;height:auto;max-height:24em;display:block}
+.tbl td{vertical-align:top}
+table.tbl.xs{font-size:.7em} table.tbl.xs td,table.tbl.xs th{padding:.26em .5em}
+.dcol svg{width:100%;height:auto;max-height:11em;background:#fff;border:1px solid var(--border);border-radius:.25em}
+.chk{font-size:.62em;color:var(--crim);font-weight:700;border:1px solid var(--crim);border-radius:.3em;padding:0 .35em;white-space:nowrap}
+.cols.w37{grid-template-columns:minmax(0,3fr) minmax(0,7fr)}
+.cols.w73x{grid-template-columns:minmax(0,7fr) minmax(0,3fr)}
+
+/* 표지: 오른쪽 패널을 SVG 도해로 */
+.slide.cover .art.svgart{background:#0F2740;padding:1.4em 1em;display:flex;align-items:center;justify-content:center;font:inherit;white-space:normal;opacity:1}
+.slide.cover .art.svgart svg{width:100%;height:auto;max-height:100%}
+.slide.cover p.au{font-size:.93em;font-weight:700;color:#fff;margin-top:.9em;line-height:1.5}
+.slide.ending p.au{font-size:1em;font-weight:700;color:#fff}
+
+/* 동영상 목록 (6-2 extra.css 34–43행) */
+ul.vids{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.42em}
+ul.vids li{display:grid;grid-template-columns:1.9em 1fr;gap:.6em;align-items:start;
+  border:1px solid var(--border);border-left:.22em solid var(--teal);border-radius:.3em;
+  background:var(--white);padding:.4em .7em .45em}
+ul.vids li .pl{inline-size:1.55em;block-size:1.55em;border-radius:50%;background:var(--amber);color:#fff;
+  font:700 .62em/1.55em var(--sans);text-align:center}
+ul.vids li b{font-size:.84em;line-height:1.35;color:var(--navy);display:block}
+ul.vids li b a{text-decoration:none;border-bottom:1px solid var(--teal)}
+ul.vids li span{font-size:.76em;color:var(--gray);line-height:1.4}
+ul.vids li em{font-style:normal;font-family:var(--mono);font-size:.72em;color:var(--amber);font-weight:700}
+.vh{font-size:.85em;font-weight:700;color:var(--navy);margin:.1em 0 -.1em}
+.slide.ending p.src{font-size:.62em;color:var(--sub1);max-width:48em}
+/* 11-3 — 그림 + 요점 상자 */
+img.fig{width:100%;max-height:23em;object-fit:contain;object-position:left top;border:1px solid var(--border);border-radius:.3em;background:#fff}
+img.ph{width:100%;height:13.5em;object-fit:cover;border:1px solid var(--border);border-radius:.3em;background:#fff}
+.stack .kb{padding:.45em .8em}
+.kb p.small{font-size:.8em;line-height:1.45;margin:0}
+.cols.w55 > svg,.cols.w64 > svg{align-self:start;max-height:25em}
+.tbl td{vertical-align:top}
+.calc{font:600 .82em/1.55 var(--mono);background:var(--white);border:1px solid var(--border);border-left:.24em solid var(--green);padding:.4em .8em;white-space:pre-wrap}
+.calc b{color:var(--crim)}
+.fq{font:600 .74em/1.5 var(--mono);background:#1E2630;color:#E6EDF3;border-radius:.4em;padding:.55em .9em;white-space:pre;overflow:hidden}
+.fq .h{color:#7CC4FA} .fq .s{color:#E6EDF3} .fq .p{color:#9AA5B1} .fq .q{color:#F2C14E}
+.photos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.6em}
+.photos figure{margin:0;display:flex;flex-direction:column;gap:.2em}
+.photos figcaption{font-size:.7em;color:var(--gray);line-height:1.35}
+/* 동영상 목록 */
+ul.vids{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.42em}
+ul.vids li{display:grid;grid-template-columns:1.9em 1fr;gap:.6em;align-items:start;
+  border:1px solid var(--border);border-left:.22em solid var(--teal);border-radius:.3em;
+  background:var(--white);padding:.4em .7em .45em}
+ul.vids li .pl{inline-size:1.55em;block-size:1.55em;border-radius:50%;background:var(--amber);color:#fff;
+  font:700 .62em/1.55em var(--sans);text-align:center}
+ul.vids li b{font-size:.84em;line-height:1.35;color:var(--navy);display:block}
+ul.vids li b a{text-decoration:none;border-bottom:1px solid var(--teal)}
+ul.vids li span{font-size:.76em;color:var(--gray);line-height:1.4}
+ul.vids li em{font-style:normal;font-family:var(--mono);font-size:.72em;color:var(--amber);font-weight:700}
+.fcards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.6em}
+.fcards .card p{font-size:.8em}
+.fcards .card .eq{font-size:.95em;padding:.25em .5em;white-space:normal;background:var(--white)}
+
+
+.slide .body{overflow:hidden;gap:.55em}.slide h2{font-size:1.85em}.slide .src{font-size:.56em;line-height:1.3;overflow-wrap:anywhere;margin-top:auto;color:var(--gray)}
+.lecture-bullets{font-size:1.18em;line-height:1.65;padding-left:1.2em;margin:.1em 0;display:flex;flex-direction:column;gap:.65em}
+.lecture-columns{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:1.5em;align-items:center;min-height:0;flex:0 1 auto}
+.lecture-figure{margin:0;min-width:0}.lecture-figure img{display:block;width:100%;height:auto;max-height:21em;object-fit:contain;background:white}.lecture-figure svg{width:100%;height:auto;max-height:22em;display:block}
+.lecture-figure figcaption{font-size:.6em;line-height:1.4;color:var(--gray);margin-top:.5em;overflow-wrap:anywhere}.pair-images{display:flex;gap:.6em;align-items:center}.pair-images figure{width:50%}
+.lecture-table{border-collapse:collapse;width:100%;font-size:.9em}.lecture-table th{background:var(--navy);color:white;text-align:left}.lecture-table th,.lecture-table td{border-bottom:1px solid var(--border);padding:.5em}.lecture-table tr:nth-child(even){background:#F4F6F9}
+.lecture-formula{font:600 1.2em/1.4 var(--math);text-align:center;color:var(--navy);padding:.4em;border-bottom:1px solid var(--border)}
+.lecture-formula,.question,.mechanism-steps{flex-shrink:0}.has-formula .lecture-figure img,.has-formula .lecture-figure svg{max-height:16em}.has-formula.has-quiz .lecture-figure img{max-height:14em}.has-steps .lecture-figure img,.has-steps .lecture-figure svg{max-height:15em}
+.video-layout{grid-template-columns:minmax(0,2.1fr) minmax(0,1fr)}.video-explain,.video-layout>div{min-width:0}.video-choice{display:block;box-sizing:border-box;overflow-wrap:anywhere;white-space:normal;width:100%;max-width:100%;min-width:0}
+.mechanism-steps{display:flex;gap:.8em;list-style-position:inside;padding:0;font-size:.85em;line-height:1.45}.mechanism-steps li{flex:1;border-top:3px solid var(--teal);padding-top:.35em}
+.question{color:var(--crim);font-size:.9em;margin-top:.4em}.question summary{cursor:pointer;font-weight:700}.question p{margin-top:.4em}
+.legacy .body{font-size:.87em}.legacy .body>div:empty{display:none}.legacy .body svg{max-height:24em;width:100%;height:auto}.legacy img{max-height:16em}
+.slide.cover{padding-right:4.3em}.slide.cover .s1{font-size:1.8em}.slide.cover .s2{max-width:48em}.slide.cover .en{font-size:.9em}.slide.cover .au{margin-top:1.4em;color:white;font-size:1em}
+.cover-links{display:flex;gap:1.2em;margin-top:1.3em;font-size:.8em;color:#C8D8E4}.cover-links a{color:inherit}
+.app.read .lecture-columns{min-height:0}.app.read .slide .body{overflow:visible}.app.read .lecture-figure img{max-height:520px}
+@media(max-width:780px){.app.read .lecture-columns{grid-template-columns:1fr}.app.read .mechanism-steps{display:block}.app.read .mechanism-steps li{margin-top:.6em}.app.read .lecture-bullets{font-size:1em}.app.read .slide.cover{padding:2em 1em}}
+@media print{@page{size:13.333333in 7.5in;margin:0}html,body,.app,.main,.stage,.deck{display:block!important;height:auto!important;min-height:0!important;width:1280px!important;max-width:none!important;overflow:visible!important;position:static!important;background:white!important;margin:0!important;padding:0!important}.side,.ctrl{display:none!important}.slide,.slide[hidden]{display:flex!important;width:1280px!important;height:720px!important;min-height:720px!important;max-height:720px!important;font-size:20px!important;position:relative!important;overflow:hidden!important;break-after:page;page-break-after:always;box-shadow:none!important;margin:0!important;border-radius:0!important}.slide:last-child{break-after:auto;page-break-after:auto}.slide .body{overflow:hidden!important}details.question:not([open]) p{display:none}.slide.cover{padding:1em 4.3em!important}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style></head><body><div class="app" id="app"><aside class="side" id="side" aria-label="슬라이드 목차"><div class="side-head"><span class="k">DNA DATA STORAGE 9-1</span><span class="t">DNA 저장 매체와 장기 보존</span><span class="s">학부 강의 / 75분</span></div><nav class="side-nav" id="side-nav"></nav></aside><div class="main"><div class="stage"><main class="deck" id="deck"><section class="slide cover" data-part="p0" data-title="DNA 저장 매체와 장기 보존"><div class="en">MOLECULAR INFORMATION ENGINEERING 9-1</div><h1>DNA Data Preservation</h1><p class="s1">DNA 저장 매체와 장기 보존</p><div class="rule"></div><p class="s2">보존의 평가 기준 / DNA 손상과 환경 / 실리카와 고분자 보존 / 가속 시험과 복원 평가</p><p class="au">송영준 Youngjun Song / 인천대학교 / 75분</p><p class="cover-links"><a href="../index.html">강의 폴더</a><a href="https://bbl.stdbioelec.com/ko/molecular-information-engineering.html">강의 안내</a></p></section><section class="slide " data-part="p0" data-title="DNA 보존과 파일 복원"><header><h2>DNA 보존과 파일 복원</h2></header><div class="body"><ul class="lecture-bullets"><li>보존 대상: 염기 정보와 복원에 필요한 분자 사본</li><li>평가 항목: 분자 손상, 사본 손실, 복원 성공률</li><li>보존 조건과 읽기 과정의 연계</li></ul><p class="src"><a href="https://doi.org/10.1002/anie.201411378" target="_blank" rel="noopener">https://doi.org/10.1002/anie.201411378</a></p></div></section><section class="slide " data-part="p0" data-title="보존 시스템의 구성"><header><h2>보존 시스템의 구성</h2></header><div class="body"><ul class="lecture-bullets"><li>DNA: 서열과 사본 수</li><li>보호 재료: 실리카, 고분자, 표면</li><li>용기와 환경: 습도, 산소, 온도</li><li>메타데이터: 파일 주소, 부호 규칙, 버전</li></ul><p class="src"><a href="https://doi.org/10.1002/anie.201411378" target="_blank" rel="noopener">https://doi.org/10.1002/anie.201411378</a></p></div></section><section class="slide " data-part="p0" data-title="분자 안정성과 정보 안정성"><header><h2>분자 안정성과 정보 안정성</h2></header><div class="body"><ul class="lecture-bullets"><li>화학적 안정성: 결합과 염기의 유지</li><li>증폭 가능성: 온전한 프라이머 부위와 주형</li><li>정보 안정성: 오류정정 범위 안의 손상</li><li>최종 기준: 원본 byte 및 해시 일치</li></ul><p class="src"><a href="https://doi.org/10.1002/anie.201411378" target="_blank" rel="noopener">https://doi.org/10.1002/anie.201411378</a></p></div></section><section class="slide  has-formula has-quiz" data-part="p0" data-title="분자 사본과 무작위 손실"><header><h2>분자 사본과 무작위 손실</h2></header><div class="body"><div class="lecture-columns"><div><figure class="lecture-figure"><img src="assets/model_survival.svg" alt="model_survival"><figcaption>사본 독립 생존 모형 / 교육용 모형, 측정 데이터 아님</figcaption></figure></div><div><ul class="lecture-bullets"><li>한 서열의 사본 수를 m으로 표기</li><li>각 사본의 생존 확률을 p로 가정</li><li>전부 소실될 확률: (1−p)^m</li><li>독립·동일 생존을 가정한 교육용 모형</li></ul></div></div><p class="lecture-formula">P(loss) = (1 − p)^m</p><details class="question"><summary>확인·실습 문제</summary><p>p=0.5일 때 m=1과 m=10의 전체 소실 확률 비교</p></details><p class="src"><a href="https://doi.org/10.1002/anie.201411378" target="_blank" rel="noopener">https://doi.org/10.1002/anie.201411378</a></p></div></section><section class="slide  has-steps" data-part="p1" data-title="Hydrolysis 가수분해"><header><h2>Hydrolysis 가수분해</h2></header><div class="body"><ul class="lecture-bullets"><li>수분에 의한 염기·당·골격의 화학 변화</li><li>Depurination: 퓨린-당 결합 손실</li><li>AP site: apurinic/apyrimidinic site, 무염기 자리</li><li>무염기 자리의 추가 반응과 사슬 절단</li></ul><ol class="mechanism-steps"><li>염기-당 결합의 가수분해</li><li>무염기 자리 형성</li><li>추가 반응에 따른 사슬 절단 가능성</li></ol><p class="src"><a href="https://doi.org/10.1038/362709a0" target="_blank" rel="noopener">https://doi.org/10.1038/362709a0</a></p></div></section><section class="slide " data-part="p1" data-title="Deamination 탈아미노화"><header><h2>Deamination 탈아미노화</h2></header><div class="body"><ul class="lecture-bullets"><li>염기의 아미노기 손실</li><li>Cytosine에서 uracil로 변화 가능</li><li>복제·판독 과정에서 치환 오류로 관측 가능</li><li>분자 개수 유지와 정보 유지의 차이</li></ul><p class="src"><a href="https://doi.org/10.1038/362709a0" target="_blank" rel="noopener">https://doi.org/10.1038/362709a0</a></p></div></section><section class="slide " data-part="p1" data-title="산화와 자외선 손상"><header><h2>산화와 자외선 손상</h2></header><div class="body"><ul class="lecture-bullets"><li>활성산소에 의한 염기·당 손상</li><li>자외선에 의한 광화학 반응</li><li>광원 종류와 조사량에 따른 차이</li><li>차광, 산소 차단, 재료의 투과성 고려</li></ul><p class="src"><a href="https://doi.org/10.1002/anie.201411378" target="_blank" rel="noopener">https://doi.org/10.1002/anie.201411378</a></p></div></section><section class="slide " data-part="p1" data-title="용액 보존과 건조 보존"><header><h2>용액 보존과 건조 보존</h2></header><div class="body"><ul class="lecture-bullets"><li>용액: 취급과 분주에 유리</li><li>건조: 수분 관련 반응을 줄이는 설계</li><li>잔류 수분, 염, pH, 건조 방식의 영향</li><li>건조 후 재용해와 회수율 평가</li></ul><p class="src"><a href="https://doi.org/10.1002/anie.201411378" target="_blank" rel="noopener">https://doi.org/10.1002/anie.201411378</a></p></div></section><section class="slide  has-formula" data-part="p1" data-title="온도와 반응 속도"><header><h2>온도와 반응 속도</h2></header><div class="body"><ul class="lecture-bullets"><li>온도 상승에 따른 손상 속도 증가 가능</li><li>반응마다 다른 활성화 에너지</li><li>Arrhenius 모형: k=A exp(−Ea/RT)</li><li>측정 범위 밖 외삽의 불확실성</li></ul><p class="lecture-formula">k(T) = A exp(−Ea / RT)</p><p class="src"><a href="https://doi.org/10.1002/anie.201411378" target="_blank" rel="noopener">https://doi.org/10.1002/anie.201411378</a></p></div></section><section class="slide " data-part="p1" data-title="보존 조건의 설계"><header><h2>보존 조건의 설계</h2></header><div class="body"><ul class="lecture-bullets"><li>수분 유입 경로의 차단</li><li>산소·빛·열의 노출 관리</li><li>분주 단위와 반복 개봉 횟수의 관리</li><li>회수 방법과 보존 재료의 동시 선택</li></ul><p class="src"><a href="https://doi.org/10.1002/anie.201411378" target="_blank" rel="noopener">https://doi.org/10.1002/anie.201411378</a></p></div></section><section class="slide " data-part="p2" data-title="Silica encapsulation 실리카 캡슐화"><header><h2>Silica encapsulation 실리카 캡슐화</h2></header><div class="body"><ul class="lecture-bullets"><li>무기 매트릭스 안에 DNA를 봉입</li><li>외부 환경과 DNA 사이의 장벽 형성</li><li>보호 효과와 DNA 회수 가능성의 동시 평가</li><li>입자 크기와 사슬 길이는 서로 다른 변수</li></ul><p class="src"><a href="https://doi.org/10.1002/anie.201411378" target="_blank" rel="noopener">https://doi.org/10.1002/anie.201411378</a></p></div></section><section class="slide " data-part="p2" data-title="Grass 연구의 가속 열화 실험"><header><h2>Grass 연구의 가속 열화 실험</h2></header><div class="body"><ul class="lecture-bullets"><li>2015년, 실리카와 오류정정을 결합한 DNA 보존</li><li>83 kB, 4,991개 DNA 조각의 저장 사례</li><li>실리카 내 DNA를 70 °C에서 1주 처리 후 정보 복원</li><li>장기 수명은 속도 모형에 따른 환산</li></ul><p class="src"><a href="https://doi.org/10.1002/anie.201411378" target="_blank" rel="noopener">https://doi.org/10.1002/anie.201411378</a></p></div></section><section class="slide " data-part="p2" data-title="실리카의 기능 분리"><header><h2>실리카의 기능 분리</h2></header><div class="body"><div class="lecture-columns"><div><figure class="lecture-figure"><img src="assets/capsule_dna.jpg" alt="DNA sequences encoding data"><figcaption>MIT researchers / MIT News</figcaption></figure></div><div><ul class="lecture-bullets"><li>물리적 보호: 내부 DNA와 환경의 분리</li><li>표면 기능화: 주소·태그의 연결</li><li>선택: 태그를 인식하는 분자나 형광 탐침</li><li>해체·회수: 선택된 DNA를 읽을 수 있는 상태로 전환</li></ul></div></div><p class="src"><a href="https://news.mit.edu/2021/dna-data-storage-0610" target="_blank" rel="noopener">https://news.mit.edu/2021/dna-data-storage-0610</a></p></div></section><section class="slide " data-part="p2" data-title="보호 재료의 회수 단계"><header><h2>보호 재료의 회수 단계</h2></header><div class="body"><ul class="lecture-bullets"><li>보호층의 제거 또는 DNA 방출</li><li>남은 재료와 시약의 효소 반응 영향</li><li>회수 후 농도·길이·증폭 가능성의 확인</li><li>보호 전후 물질수지의 기록</li></ul><p class="src"><a href="https://doi.org/10.1002/anie.201411378" target="_blank" rel="noopener">https://doi.org/10.1002/anie.201411378</a></p></div></section><section class="slide " data-part="p2" data-title="고분자 내 DNA 봉입"><header><h2>고분자 내 DNA 봉입</h2></header><div class="body"><ul class="lecture-bullets"><li>고분자 네트워크를 이용한 DNA 격리</li><li>상온 취급과 환경 노출에 대한 보호 설계</li><li>DNA와 고분자의 상용성 및 방출 방법</li><li>재료 무게를 포함한 실효 저장 밀도</li></ul><p class="src"><a href="https://doi.org/10.1002/anie.201411378" target="_blank" rel="noopener">https://doi.org/10.1002/anie.201411378</a></p></div></section><section class="slide  has-steps" data-part="p2" data-title="T-REX 고분자 보존 연구"><header><h2>T-REX 고분자 보존 연구</h2></header><div class="body"><div class="lecture-columns"><div><figure class="lecture-figure"><img src="assets/amber_process.jpg" alt="Diagram showing the “encase and store” inset with zoomed in polymer and “deconstruct and retrieve,” with individual DNA strands, phases of DNA storage"><figcaption>MIT researchers / MIT News</figcaption></figure></div><div><ul class="lecture-bullets"><li>Thermoset-REinforced Xeropreservation</li><li>가교 고분자 안에 DNA를 봉입하는 연구 사례</li><li>봉입, 보관, 재료 해체, DNA 회수의 과정</li><li>연구에서 시험한 조건과 장기 예측의 구분</li></ul></div></div><ol class="mechanism-steps"><li>DNA와 전구체의 혼합</li><li>보호 고분자 네트워크 형성</li><li>저장 후 네트워크 해체</li><li>방출 DNA의 회수와 분석</li></ol><p class="src"><a href="https://news.mit.edu/2024/scientists-preserve-dna-amber-polymer-0613" target="_blank" rel="noopener">https://news.mit.edu/2024/scientists-preserve-dna-amber-polymer-0613</a></p></div></section><section class="slide " data-part="p2" data-title="DNA ink와 표면 보존"><header><h2>DNA ink와 표면 보존</h2></header><div class="body"><ul class="lecture-bullets"><li>잉크: DNA와 용매·첨가제의 분산 또는 용액</li><li>기판에 일정 위치·양으로 도포</li><li>건조, 고정화, 보호층 형성의 선택</li><li>위치별 주소와 회수량의 관리</li></ul><p class="src"><a href="https://doi.org/10.1002/anie.201411378" target="_blank" rel="noopener">https://doi.org/10.1002/anie.201411378</a></p></div></section><section class="slide " data-part="p2" data-title="보존 매체 비교"><header><h2>보존 매체 비교</h2></header><div class="body"><div class="lecture-columns"><div><table class="lecture-table"><thead><tr><th>형태</th><th>장점의 근거</th><th>함께 평가할 항목</th></tr></thead><tbody><tr><td>건조 튜브</td><td>소분·기밀 용기</td><td>잔류 수분과 개봉</td></tr><tr><td>실리카</td><td>무기 보호층</td><td>해체·회수</td></tr><tr><td>고분자</td><td>네트워크 봉입</td><td>방출·효소 적합성</td></tr><tr><td>표면·필름</td><td>공간 주소</td><td>도포·회수 편차</td></tr></tbody></table></div><div><ul class="lecture-bullets"><li>건조 튜브: 단순 취급, 반복 개봉의 영향</li><li>실리카 입자: 보호·표면 태그와 해체 과정</li><li>고분자: 물리적 보호와 재료 해체의 설계</li><li>표면·필름: 공간 주소와 회수 균일성</li></ul></div></div><p class="src"><a href="https://doi.org/10.1002/anie.201411378" target="_blank" rel="noopener">https://doi.org/10.1002/anie.201411378</a></p></div></section><section class="slide video-lesson" data-part="p2" data-title="DNA 보존 연구 참고 영상" data-video-lesson><header><h2>DNA 보존 연구 참고 영상</h2></header><div class="body"><div class="video-content"><div class="video-layout"><div><div class="video-stage"><img class="video-preview" src="assets/yt_NttJ4NFXAbs.jpg" alt="How to preserve fleeting digital information with DNA for future generations"><button class="video-play" type="button"><span class="play-symbol">▶</span><span class="play-label">본문에서 영상 재생</span></button></div><p class="video-caption"><span>American Chemical Society </span><a class="video-source-link" href="https://www.youtube.com/watch?v=NttJ4NFXAbs" target="_blank" rel="noopener">YouTube에서 보기</a></p></div><div class="video-explain"><h3>영상의 관찰 항목</h3><ul class="video-prompts"><li>실리카 봉입과 정보 복원의 연구 맥락</li><li>실제 가속 시험과 수명 환산의 구분</li><li>연구자 발표에서 확인할 조건</li></ul><div class="video-observation" hidden></div><div class="video-credit" hidden></div><div class="video-choices"><button class="video-choice" type="button">How to preserve fleeting digital information with DNA for future generations</button></div></div></div><script type="application/json" class="video-data">[{"id": "NttJ4NFXAbs", "title": "How to preserve fleeting digital information with DNA for future generations", "author": "American Chemical Society", "duration": "원본 참조", "note": "ACS의 연구자 발표를 참고 영상으로 연결합니다. 수업에서는 보존 재료와 오류정정이 함께 작동한다는 부분을 발췌하여 설명하고, 실제 측정과 외삽된 수명을 구분하여 정리합니다.", "label": "DNA 보존 연구 참고 영상"}]</script></div><p class="src"><a href="https://fml.ethz.ch/news-and-events/fml-news/2015/08/acs-press-conference-about-storing-digital-information-with-dna.html" target="_blank" rel="noopener">https://fml.ethz.ch/news-and-events/fml-news/2015/08/acs-press-conference-about-storing-digital-information-with-dna.html</a></p></div></section><section class="slide  has-quiz" data-part="p3" data-title="가속 열화 실험의 설계"><header><h2>가속 열화 실험의 설계</h2></header><div class="body"><ul class="lecture-bullets"><li>무처리 대조군과 재료 대조군</li><li>온도·습도·노출 시간의 기록</li><li>보존 전후 같은 방법으로 회수</li><li>생존 분자와 파일 복원 결과를 별도 보고</li></ul><details class="question"><summary>확인·실습 문제</summary><p>실리카 보호 효과를 비교할 대조군과 측정 항목 설계</p></details><p class="src"><a href="https://doi.org/10.1002/anie.201411378" target="_blank" rel="noopener">https://doi.org/10.1002/anie.201411378</a></p></div></section><section class="slide " data-part="p3" data-title="손상과 회수의 측정"><header><h2>손상과 회수의 측정</h2></header><div class="body"><ul class="lecture-bullets"><li>형광 정량: 총량의 지표</li><li>전기영동: 길이 분포와 절단의 지표</li><li>qPCR: 특정 구간의 증폭 가능 사본</li><li>시퀀싱·복호: 서열 오류와 파일 복원</li></ul><p class="src"><a href="https://doi.org/10.1002/anie.201411378" target="_blank" rel="noopener">https://doi.org/10.1002/anie.201411378</a></p></div></section><section class="slide  has-formula" data-part="p3" data-title="실효 밀도의 분모"><header><h2>실효 밀도의 분모</h2></header><div class="body"><ul class="lecture-bullets"><li>순수 DNA 질량당 payload</li><li>DNA와 보호 재료 질량당 payload</li><li>용기·기판을 포함한 부피당 payload</li><li>중복 사본·주소·오류정정 비율의 포함</li></ul><p class="lecture-formula">실효 밀도 = 복원 가능한 payload / 전체 패키지 질량 또는 부피</p><p class="src"><a href="https://doi.org/10.1002/anie.201411378" target="_blank" rel="noopener">https://doi.org/10.1002/anie.201411378</a></p></div></section><section class="slide " data-part="p3" data-title="사본 수와 복원 성공률의 실험"><header><h2>사본 수와 복원 성공률의 실험</h2></header><div class="body"><div class="lecture-columns"><div><figure class="lecture-figure"><img src="assets/access_fig2.png" alt="분자 손실"><figcaption>Organick et al., Nature Communications 11, 616 (2020), Fig. 2</figcaption></figure></div><div><ul class="lecture-bullets"><li>평균 10 copies/sequence 조건의 복원 연구</li><li>파일 크기, 풀 복잡도, sequencing coverage의 영향</li><li>시험한 부호와 실험 조건에 한정된 결과</li><li>모든 DNA 보존법의 보장치로 일반화 금지</li></ul></div></div><p class="src"><a href="https://www.nature.com/articles/s41467-020-14319-8" target="_blank" rel="noopener">https://www.nature.com/articles/s41467-020-14319-8</a></p></div></section><section class="slide " data-part="p3" data-title="보존 성능 보고서의 항목"><header><h2>보존 성능 보고서의 항목</h2></header><div class="body"><ul class="lecture-bullets"><li>보관 재료와 DNA 형태</li><li>실제 측정 시간·환경·반복 수</li><li>회수율과 증폭 가능 사본 수</li><li>복원 성공 여부 및 검증 방법</li><li>외삽 모형과 불확실성</li></ul><p class="src"><a href="https://doi.org/10.1002/anie.201411378" target="_blank" rel="noopener">https://doi.org/10.1002/anie.201411378</a></p></div></section><section class="slide  has-quiz" data-part="p3" data-title="확인 문제와 보존 설계"><header><h2>확인 문제와 보존 설계</h2></header><div class="body"><ul class="lecture-bullets"><li>가속 열화 결과와 실시간 수명 측정의 차이</li><li>장기 보존과 빠른 회수 사이의 절충</li><li>분자 회수율이 높아도 파일 복원에 실패하는 이유</li></ul><details class="question"><summary>확인·실습 문제</summary><p>대학 기록 파일 보존용 매체 한 가지를 선택하고 보호·회수·복원 검증 절차 설명</p></details><p class="src"><a href="https://doi.org/10.1002/anie.201411378" target="_blank" rel="noopener">https://doi.org/10.1002/anie.201411378</a></p></div></section></main></div><div class="ctrl"><button class="cb" id="b-side" type="button">☰ 목차</button><button class="cb" id="b-prev" type="button" aria-label="이전 슬라이드">←</button><span class="count" id="count"></span><button class="cb pri" id="b-next" type="button">다음 →</button><span class="where" id="where"></span><span class="sp"></span><button class="cb" id="b-read" type="button">읽기 모드</button><button class="cb presentonly" id="b-full" type="button">전체화면</button></div></div></div><script>(function(){'use strict';var META={"label": "DNA Data Storage 9-1", "parts": [{"id": "p0", "name": "보존의 평가 기준", "min": 12}, {"id": "p1", "name": "DNA 손상과 환경", "min": 18}, {"id": "p2", "name": "실리카와 고분자 보존", "min": 24}, {"id": "p3", "name": "가속 시험과 복원 평가", "min": 21}]};
+var $ = function(id){ return document.getElementById(id); };
+var el = function(tag, cls, txt){ var e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
+var app = $('app'), deck = $('deck');
+var slides = Array.prototype.slice.call(deck.querySelectorAll('.slide'));
+var PARTS = META.parts;
+var partOf = {}, t0 = 0;
+PARTS.forEach(function(p){ p.start = t0; t0 += p.min; partOf[p.id] = p; });
+function mmss(m){ return Math.floor(m/60) + ':' + String(m%60).padStart(2,'0'); }
+
+/* ---------- footers ---------- */
+slides.forEach(function(s, i){
+  if (s.classList.contains('cover') || s.classList.contains('ending')) return;
+  var f = el('footer'); f.appendChild(el('span', '', META.label + ' · ' + partOf[s.dataset.part].name)); f.appendChild(el('span', 'pg', String(i+1)));
+  var notes = s.querySelector('.notes'); if (notes) s.insertBefore(f, notes); else s.appendChild(f);
+});
+
+/* ---------- sidebar (Notion식 트리) ---------- */
+var nav = $('side-nav'), navBtns = [], groups = {};
+PARTS.forEach(function(p){
+  var h = el('button', 'part-h'); h.type = 'button'; h.setAttribute('aria-expanded', 'true');
+  h.appendChild(el('span', 'tw', '▶')); h.appendChild(el('span', 'nm', p.name));
+  var list = el('div', 'part-list');
+  h.addEventListener('click', function(){ var open = h.getAttribute('aria-expanded') !== 'true'; h.setAttribute('aria-expanded', String(open)); list.hidden = !open; });
+  nav.appendChild(h); nav.appendChild(list); groups[p.id] = {h:h, list:list};
+});
+slides.forEach(function(s, i){
+  var b = el('button', 'nav-b'); b.type = 'button';
+  b.appendChild(el('span', 'no', String(i+1))); b.appendChild(el('span', '', s.dataset.title || ''));
+  if (s.dataset.lab) b.appendChild(el('span', 'ml', 'MATLAB'));
+  if (s.dataset.def) b.appendChild(el('span', 'ml', 'DEF'));
+  b.addEventListener('click', function(){ go(i); if (mode === 'read') { app.classList.remove('sideopen'); syncBtns(); } });
+  groups[s.dataset.part].list.appendChild(b); navBtns.push(b);
+});
+
+/* ---------- navigation ---------- */
+var cur = 0, mode = 'present', userMode = null;
+function go(i, fromScroll){
+  cur = Math.max(0, Math.min(slides.length - 1, i));
+  slides.forEach(function(s, j){ s.hidden = (mode === 'present' && j !== cur); });
+  navBtns.forEach(function(b, j){ if (j === cur) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current'); });
+  var s = slides[cur], p = partOf[s.dataset.part], g = groups[p.id];
+  g.h.setAttribute('aria-expanded', 'true'); g.list.hidden = false;
+  if (navBtns[cur].scrollIntoView) navBtns[cur].scrollIntoView({block:'nearest'});
+  $('count').textContent = (cur+1) + ' / ' + slides.length;
+  $('where').textContent = p.name;
+  try { history.replaceState(null, '', '#' + (cur+1)); } catch(e){}
+  if (mode === 'read' && !fromScroll) s.scrollIntoView({block:'start'});
+}
+function setMode(m){
+  mode = m; app.classList.toggle('read', m === 'read');
+  if (m === 'read') app.classList.remove('sideopen');
+  go(cur); syncBtns();
+}
+function autoMode(){ if (userMode) return; var want = window.innerWidth < 900 ? 'read' : 'present'; if (want !== mode) setMode(want); }
+function sideVisible(){ return mode === 'read' ? app.classList.contains('sideopen') : !app.classList.contains('noside'); }
+function toggleSide(){ if (mode === 'read') app.classList.toggle('sideopen'); else app.classList.toggle('noside'); syncBtns(); }
+function syncBtns(){
+  $('b-side').setAttribute('aria-pressed', String(sideVisible()));
+  $('b-read').setAttribute('aria-pressed', String(mode === 'read'));
+}
+$('b-prev').addEventListener('click', function(){ go(cur-1); });
+$('b-next').addEventListener('click', function(){ go(cur+1); });
+$('b-side').addEventListener('click', toggleSide);
+$('b-read').addEventListener('click', function(){ userMode = true; setMode(mode === 'read' ? 'present' : 'read'); });
+var fsBtn = $('b-full');
+if (!document.fullscreenEnabled) fsBtn.hidden = true;
+function fullscreen(){ try { if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen(); } catch(e){} }
+fsBtn.addEventListener('click', fullscreen);
+document.addEventListener('keydown', function(ev){
+  if (ev.metaKey || ev.ctrlKey || ev.altKey) return;
+  var t = ev.target, tag = t && t.tagName;
+  if (tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA') return;
+  var k = ev.key, isBtn = (tag === 'BUTTON' || tag === 'SUMMARY' || tag === 'A');
+  if ((k === ' ' || k === 'Enter') && isBtn) return;
+  if (k === 'ArrowRight' || k === 'PageDown' || k === ' ') { go(cur+1); ev.preventDefault(); }
+  else if (k === 'ArrowLeft' || k === 'PageUp') { go(cur-1); ev.preventDefault(); }
+  else if (k === 'Home') { go(0); ev.preventDefault(); }
+  else if (k === 'End') { go(slides.length-1); ev.preventDefault(); }
+  else if (k === 's' || k === 'S') toggleSide();
+  else if (k === 'r' || k === 'R') { userMode = true; setMode(mode === 'read' ? 'present' : 'read'); }
+  else if (k === 'f' || k === 'F') fullscreen();
+});
+var tx = null;
+deck.addEventListener('touchstart', function(e){ tx = e.touches[0].clientX; }, {passive:true});
+deck.addEventListener('touchend', function(e){ if (tx == null || mode !== 'present') return; var dx = e.changedTouches[0].clientX - tx; tx = null; if (Math.abs(dx) > 70) go(cur + (dx < 0 ? 1 : -1)); }, {passive:true});
+window.addEventListener('resize', autoMode);
+window.addEventListener('hashchange', function(){ var n = parseInt(location.hash.slice(1), 10); if (n && n-1 !== cur) go(n-1); });
+if ('IntersectionObserver' in window){
+  var io = new IntersectionObserver(function(es){ if (mode !== 'read') return; es.forEach(function(e){ if (e.isIntersecting) go(slides.indexOf(e.target), true); }); }, {rootMargin:'-45% 0px -50% 0px'});
+  slides.forEach(function(s){ io.observe(s); });
+}
+
+/* ---------- code boxes: highlight + copy ---------- */
+function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+Array.prototype.forEach.call(document.querySelectorAll('.code'), function(box){
+  var pre = box.querySelector('pre'), raw = pre.textContent.replace(/\s+$/, '');
+  pre.innerHTML = raw.split('\n').map(function(line){
+    if (/^\s*%%/.test(line)) return '<span class="sec">' + esc(line) + '</span>';
+    var inStr = false, cut = -1;
+    for (var i = 0; i < line.length; i++){
+      var ch = line[i];
+      if (ch === "'" ){ var prev = line[i-1] || ' '; if (inStr) inStr = false; else if (!/[\w\)\]\}\.']/.test(prev)) inStr = true; }
+      else if (ch === '%' && !inStr){ cut = i; break; }
+    }
+    return cut < 0 ? esc(line) : esc(line.slice(0, cut)) + '<span class="cm">' + esc(line.slice(cut)) + '</span>';
+  }).join('\n');
+  var btn = box.querySelector('.copy');
+  btn.addEventListener('click', function(){
+    function done(ok){ btn.textContent = ok ? '복사됨 ✓' : '선택됨 — Ctrl/⌘+C'; btn.classList.toggle('done', ok); setTimeout(function(){ btn.textContent = '복사'; btn.classList.remove('done'); }, 1800); }
+    function fallback(){
+      var ta = el('textarea'); ta.value = raw; ta.setAttribute('readonly', ''); ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0'; document.body.appendChild(ta); ta.select();
+      var ok = false; try { ok = document.execCommand('copy'); } catch(e){}
+      document.body.removeChild(ta);
+      if (!ok){ var r = document.createRange(); r.selectNodeContents(pre); var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r); }
+      done(ok);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(raw).then(function(){ done(true); }, fallback); else fallback();
+  });
+});
+
+/* ---------- helpers for bit widgets ---------- */
+function bitRow(host, bits, opts){
+  host.innerHTML = '';
+  bits.forEach(function(v, i){
+    var cls = 'b ' + (opts.cls ? opts.cls(i, v) : '');
+    var e = opts.onClick ? el('button', cls, String(v)) : el('span', cls, String(v));
+    if (opts.onClick){ e.type = 'button'; e.setAttribute('aria-label', (i+1) + '번 칸, 값 ' + v); e.addEventListener('click', function(){ opts.onClick(i); }); }
+    host.appendChild(e);
+    if (opts.gapAfter && opts.gapAfter.indexOf(i) >= 0) host.appendChild(el('span', 'gap'));
+  });
+}
+function pct(x){ return (x*100).toFixed(2).replace(/\.?0+$/,'') + '%'; }
+
+/* Stop a lecture video when changing slides or selecting another source. */
+function lectureVideosInit(){
+  var lessons=[].slice.call(document.querySelectorAll('[data-video-lesson]'));
+  var playing=null;
+  lessons.forEach(function(lesson){
+    if(lesson.dataset.videoReady)return;
+    lesson.dataset.videoReady='1';
+    var videos=JSON.parse(lesson.querySelector('.video-data').textContent);
+    var stage=lesson.querySelector('.video-stage');
+    var preview=lesson.querySelector('.video-preview');
+    var play=lesson.querySelector('.video-play');
+    var source=lesson.querySelector('.video-source-link');
+    var credit=lesson.querySelector('.video-credit');
+    var note=lesson.querySelector('.video-observation');
+    var choices=[].slice.call(lesson.querySelectorAll('.video-choice'));
+    var selected=0;
+    function stop(){
+      var frame=stage.querySelector('iframe');
+      if(frame)frame.remove();
+      preview.hidden=false;play.hidden=false;
+      if(playing===stop)playing=null;
+    }
+    function select(i){
+      stop();selected=i;
+      var video=videos[i];
+      preview.src='assets/yt_'+video.id+'.jpg';
+      preview.alt=video.title;
+      source.href='https://www.youtube.com/watch?v='+video.id;
+      credit.textContent=video.author+' ('+video.duration+')';
+      note.textContent=video.note;
+      choices.forEach(function(button,j){button.setAttribute('aria-pressed',String(i===j));});
+      play.setAttribute('aria-label',video.label+' 재생');
+    }
+    choices.forEach(function(button,i){button.addEventListener('click',function(){select(i);});});
+    play.addEventListener('click',function(){
+      if(playing)playing();
+      var video=videos[selected];
+      var frame=document.createElement('iframe');
+      frame.title=video.title;
+      frame.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      frame.allowFullscreen=true;
+      frame.referrerPolicy='strict-origin-when-cross-origin';
+      frame.src='https://www.youtube-nocookie.com/embed/'+video.id+'?autoplay=1&rel=0&playsinline=1';
+      preview.hidden=true;play.hidden=true;stage.appendChild(frame);playing=stop;
+    });
+    new MutationObserver(function(){if(lesson.hidden)stop();}).observe(lesson,{attributes:true,attributeFilter:['hidden']});
+    select(0);
+  });
+}
+document.addEventListener('DOMContentLoaded',lectureVideosInit);
+setTimeout(lectureVideosInit,60);
+
+/* ---------- start ---------- */
+if (window.innerWidth < 1180 && window.innerWidth >= 900) app.classList.add('noside');
+var h0 = parseInt(location.hash.slice(1), 10); cur = (h0 && h0 <= slides.length) ? h0 - 1 : 0;
+mode = window.innerWidth < 900 ? 'read' : 'present'; app.classList.toggle('read', mode === 'read');
+go(cur, mode === 'read' && cur === 0); syncBtns();
+
+})();</script></body></html>

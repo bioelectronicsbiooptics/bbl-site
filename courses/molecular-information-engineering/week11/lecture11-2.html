@@ -1,0 +1,854 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>11-2 대량 병렬 시퀀싱과 DNBSEQ</title><style>/* BLUE 포맷 (bluelib.py) 을 HTML 로 옮긴 단일 테마 — 1em = 15pt, 1in = 4.8em (슬라이드 폭 64em) */
+:root{
+  --navy:#16324F; --teal:#529FD9; --amber:#224EBD; --crim:#C03B3B; --ink:#1A1A1A; --gray:#5B6670;
+  --lgray:#F4F6F9; --white:#FFFFFF; --border:#D8DEE6; --green:#2E7D54; --cream:#FAF6EC;
+  --code:#1E2530; --codeink:#E6EDF3; --codecm:#8FB7A0; --sub1:#A8C4D4; --sub2:#C8D8E4;
+  --tealwash:#EAF3FB; --crimwash:#FBECEC; --greenwash:#E9F4EE; --ochre:#8A5F12;
+  --canvas:#E9EDF2; --side-hover:#1F4263; --side-line:#2A4A68;
+  --sans:"Apple SD Gothic Neo","Helvetica Neue","Noto Sans KR","Malgun Gothic",-apple-system,BlinkMacSystemFont,sans-serif;
+  --mono:Menlo,"SFMono-Regular",Consolas,"Liberation Mono",monospace;
+  --math:"STIX Two Math","Cambria Math","Latin Modern Math","Times New Roman","Apple SD Gothic Neo","Noto Sans KR",serif;
+  --helix:none;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{margin:0;background:var(--canvas);color:var(--ink);font:16px/1.6 var(--sans);word-break:keep-all;overflow-wrap:anywhere;-webkit-text-size-adjust:100%}
+p,h1,h2,h3,ul,ol,dl,dd,figure,pre{margin:0}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--teal);outline-offset:2px;border-radius:4px}
+
+/* ---------- shell ---------- */
+.app{height:100%;display:grid;grid-template-columns:292px minmax(0,1fr);grid-template-rows:minmax(0,1fr)}
+.app.noside{grid-template-columns:minmax(0,1fr)} .app.noside .side{display:none}
+.side{background:var(--navy);color:#E8EEF4;display:flex;flex-direction:column;min-height:0;overflow:hidden;border-right:3px solid var(--amber)}
+.side-head{padding:18px 18px 14px;display:flex;flex-direction:column;gap:3px;border-bottom:1px solid var(--side-line)}
+.side-head .k{font:700 11.5px "Helvetica Neue",var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--teal)}
+.side-head .t{font-size:18px;font-weight:700;line-height:1.35;color:#fff}
+.side-head .s{font-size:13px;color:var(--sub1)}
+.side-nav{flex:1;min-height:0;overflow-y:auto;padding:6px 8px 16px}
+.part-h{display:flex;align-items:baseline;gap:6px;width:100%;padding:9px 8px 5px;border:0;background:none;cursor:pointer;text-align:left;font-size:12.5px;font-weight:700;color:var(--sub1);border-radius:6px}
+.part-h:hover{background:var(--side-hover)}
+.part-h .tw{font-size:10px;width:1em;display:inline-block;transition:transform .12s}
+.part-h[aria-expanded="true"] .tw{transform:rotate(90deg)}
+.part-h .nm{flex:1} .part-h .tm{font:500 11.5px var(--mono);color:var(--sub1);white-space:nowrap}
+.part-list{display:flex;flex-direction:column}
+.nav-b{display:flex;gap:8px;width:100%;text-align:left;font-size:13.5px;line-height:1.4;padding:5px 8px 5px 22px;border:0;border-radius:6px;background:none;color:#E8EEF4;cursor:pointer}
+.nav-b .no{font:600 11.5px/1.65 var(--mono);color:var(--sub1);min-width:1.7em}
+.nav-b .ml{font:700 9.5px/1.9 var(--mono);color:var(--teal);margin-left:auto}
+.nav-b:hover{background:var(--side-hover)}
+.nav-b[aria-current="true"]{background:#fff;color:var(--navy);font-weight:700}
+.nav-b[aria-current="true"] .no,.nav-b[aria-current="true"] .ml{color:var(--amber)}
+.side-notes{border-top:1px solid var(--side-line);padding:12px 18px 14px;font-size:13.5px;line-height:1.65;max-height:34%;overflow:auto;color:#E8EEF4}
+.side-notes b{display:block;font-size:11px;letter-spacing:.08em;color:var(--teal);margin-bottom:4px}
+
+.main{display:flex;flex-direction:column;min-width:0;min-height:0}
+.stage{flex:1;min-height:0;container-type:size;display:grid;place-items:center;padding:14px}
+.deck{width:min(100cqw,calc(100cqh * 16 / 9));aspect-ratio:16/9;container-type:inline-size;background:var(--white);border:1px solid var(--border);overflow:hidden;box-shadow:0 1px 2px rgba(10,30,50,.06),0 12px 32px rgba(10,30,50,.12)}
+.ctrl{display:flex;align-items:center;flex-wrap:wrap;gap:6px 8px;padding:8px 14px;border-top:1px solid var(--border);background:var(--white);font-size:14px;color:var(--ink)}
+.ctrl .sp{flex:1}
+.ctrl .where{color:var(--gray);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:36vw}
+.ctrl .count{font:600 14px var(--mono);font-variant-numeric:tabular-nums;min-width:4.4em;text-align:center}
+.ctrl .clock{font:600 14px var(--mono);font-variant-numeric:tabular-nums;color:var(--gray)}
+.cb{min-height:36px;min-width:36px;padding:6px 12px;border:1px solid var(--border);border-radius:8px;background:var(--lgray);cursor:pointer;line-height:1.2;color:var(--ink)}
+.cb:hover{border-color:var(--gray)}
+.cb[aria-pressed="true"]{border-color:var(--amber);background:var(--tealwash);color:var(--amber)}
+.cb.pri{background:var(--amber);border-color:var(--amber);color:#fff;font-weight:700}
+
+/* ---------- read mode ---------- */
+.app.read{display:block;height:auto;min-height:100%}
+.app.read .side{display:none;position:fixed;inset:0 auto 0 0;width:min(86vw,320px);z-index:20;box-shadow:0 0 0 100vmax rgba(0,0,0,.4)}
+.app.read.sideopen .side{display:flex}
+.app.read .main{display:block}
+.app.read .stage{container-type:normal;display:block;padding:16px}
+.app.read .deck{width:100%;max-width:960px;margin-inline:auto;aspect-ratio:auto;container-type:normal;background:none;border:0;box-shadow:none;overflow:visible;display:flex;flex-direction:column;gap:18px}
+.app.read .slide{font-size:16px;height:auto;min-height:0;overflow:hidden;border:1px solid var(--border);box-shadow:0 1px 2px rgba(10,30,50,.05)}
+.app.read .slide.cover,.app.read .slide.ending{min-height:22em}
+.app.read .ctrl{position:sticky;bottom:0;z-index:10}
+.app.read .presentonly{display:none}
+@media (max-width:780px){
+  .app.read .slide{padding-inline:16px}
+  .app.read .cols,.app.read .cols.w64,.app.read .cols.w46,.app.read .cols.w73,.app.read .cols.w55{grid-template-columns:minmax(0,1fr)}
+  .app.read .slide.cover{padding-right:16px} .app.read .slide.cover .art{display:none}
+  .app.read .slide.cover h1{font-size:2em}
+  .app.read .flowx{flex-direction:column} .app.read .flowx .ar{transform:rotate(90deg);align-self:center}
+}
+
+/* ---------- slide (BLUE) ---------- */
+.slide{position:relative;font-size:calc(100cqw / 64);line-height:1.55;height:100%;display:flex;flex-direction:column;background:var(--white);color:var(--ink);padding:2.0em 2.64em .75em;overflow:hidden}
+.slide::before{content:"";position:absolute;inset:0 0 auto 0;height:.48em;background:var(--teal);z-index:2}
+.slide::after{content:"";position:absolute;right:.3em;top:50%;transform:translateY(-50%);height:calc(100% - 1.2em);aspect-ratio:1052/1540;max-width:22.5em;background:var(--helix) center/contain no-repeat;opacity:.07;pointer-events:none;z-index:0}
+.slide > *{position:relative;z-index:1}
+.slide > header{display:flex;flex-direction:column;gap:.1em}
+.slide h2{font-size:2em;font-weight:700;color:var(--navy);line-height:1.25;letter-spacing:-.01em;text-wrap:balance}
+.slide .sub{font-size:1em;color:var(--gray);line-height:1.4}
+.slide > header::after{content:"";display:block;width:7.2em;height:.17em;background:var(--amber);margin-top:.5em}
+.slide .body{flex:1;min-height:0;display:flex;flex-direction:column;gap:.75em;padding-top:1.05em;overflow:hidden auto}
+.slide .body.mid{justify-content:center}
+.slide > footer{display:flex;justify-content:space-between;gap:1em;font-size:.73em;color:var(--gray);padding-top:.45em}
+.slide > footer .pg{font-family:var(--mono)}
+.notes{display:none}
+.app.read.shownotes .slide .notes{display:block;font-size:.88em;color:var(--gray);border-top:1px dashed var(--border);margin-top:.8em;padding-top:.6em}
+
+.slide.quiz{background:var(--cream)} .slide.quiz::before{background:var(--amber)} .slide.quiz::after{display:none}
+.slide.cover,.slide.ending{background:var(--navy);color:#fff;justify-content:center}
+.slide.cover::before,.slide.cover::after,.slide.ending::before,.slide.ending::after{display:none}
+.slide.cover{padding:0 39.5% 0 4.3em;gap:0}
+.slide.cover .en{font:700 1em "Helvetica Neue",var(--sans);color:var(--teal);letter-spacing:.04em;margin-bottom:.7em}
+.slide.cover h1{font-size:2.67em;font-weight:700;line-height:1.22;letter-spacing:-.015em;text-wrap:balance}
+.slide.cover .s1{font-size:1.4em;color:var(--sub1);margin-top:.35em;line-height:1.4}
+.slide.cover .rule{width:7.7em;height:.19em;background:var(--teal);margin:1.5em 0 1.1em}
+.slide.cover .s2{font-size:1em;color:var(--sub2);line-height:1.7;max-width:32em}
+.slide.cover .keys{font-size:.74em;color:var(--sub1);margin-top:1.6em;display:flex;flex-wrap:wrap;gap:.3em 1.1em}
+.slide.cover .art{position:absolute;inset:0 0 0 61.5%;border-left:.24em solid var(--amber);background:#0F2740;overflow:hidden;font:700 1.5em/1.32 var(--mono);color:var(--teal);text-align:center;padding:.4em 0;z-index:1;white-space:pre;opacity:.95}
+.slide.cover .art span{color:#fff}
+kbd{font:600 .95em var(--mono);border:1px solid var(--side-line);border-radius:.3em;padding:0 .35em;color:#fff}
+.slide.ending{align-items:center;text-align:center;padding-inline:5em;gap:1.1em}
+.slide.ending h2{color:#fff;font-size:2.3em}
+.slide.ending .rule{width:100%;height:.24em;background:var(--teal)}
+.slide.ending p{font-size:1.27em;color:var(--sub2);line-height:1.7;max-width:36em}
+
+.cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1.5em;align-items:start}
+.cols.w64{grid-template-columns:minmax(0,3fr) minmax(0,2fr)} .cols.w46{grid-template-columns:minmax(0,2fr) minmax(0,3fr)}
+.cols.w73{grid-template-columns:minmax(0,7fr) minmax(0,4fr)} .cols.w55{grid-template-columns:minmax(0,11fr) minmax(0,9fr)}
+.stack{display:flex;flex-direction:column;gap:.65em;min-width:0}
+ul.pts{padding-left:1.1em;display:flex;flex-direction:column;gap:.4em;font-size:1.08em}
+ul.pts li::marker{color:var(--teal)} ul.pts.sm{font-size:.95em;gap:.3em}
+.gray{color:var(--gray)} .small{font-size:.86em} .tiny{font-size:.75em}
+.hl{color:var(--amber);font-weight:700} .bad{color:var(--crim);font-weight:700} .good{color:var(--green);font-weight:700} .nv{color:var(--navy);font-weight:700}
+code,.mono{font-family:var(--mono);font-size:.92em}
+var,.v{font-family:var(--math);font-style:italic;font-size:1.08em}
+.src{font-size:.6em;line-height:1.45;color:#A3ADB7;letter-spacing:.01em}
+.src i{font-style:italic}
+a{color:var(--amber)}
+
+/* keybox · card · flow · numbered list · stat */
+.kb{border-left:.26em solid var(--amber);background:var(--lgray);padding:.55em .9em .6em 1.1em;display:flex;flex-direction:column;gap:.12em}
+.kb > b{font-size:.8em;color:var(--amber)} .kb > p,.kb > div{font-size:1em;line-height:1.5}
+.kb.teal{border-color:var(--teal)} .kb.teal > b{color:#2F7FBE}
+.kb.crim{border-color:var(--crim)} .kb.crim > b{color:var(--crim)}
+.kb.green{border-color:var(--green)} .kb.green > b{color:var(--green)}
+.card{background:var(--lgray);border:1px solid var(--border);border-top:.36em solid var(--teal);border-radius:.3em;padding:.7em .95em .8em;display:flex;flex-direction:column;gap:.3em;min-width:0}
+.card.amber{border-top-color:var(--amber)} .card.crim{border-top-color:var(--crim)} .card.green{border-top-color:var(--green)}
+.card > h3{font-size:1.07em;color:var(--navy);line-height:1.35} .card > p,.card li{font-size:.87em;line-height:1.5}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(11em,1fr));gap:.8em}
+.flowx{display:flex;align-items:stretch;gap:.35em}
+.flowx .fb{flex:1 1 0;background:var(--lgray);border:1px solid var(--border);border-top:.34em solid var(--teal);border-radius:.3em;padding:.5em .45em .55em;text-align:center;display:flex;flex-direction:column;gap:.15em;min-width:0}
+.flowx .fb b{font-size:.87em;color:var(--navy);line-height:1.3} .flowx .fb span{font-size:.67em;color:var(--gray);line-height:1.4}
+.flowx .ar{align-self:center;color:var(--teal);font-size:.93em;font-weight:700}
+ol.nl{list-style:none;padding:0;display:flex;flex-direction:column;gap:.55em;counter-reset:n}
+ol.nl > li{counter-increment:n;display:grid;grid-template-columns:2.1em 1fr;gap:.7em;align-items:start;font-size:1.05em;line-height:1.5}
+ol.nl > li::before{content:counter(n);inline-size:2.05em;block-size:2.05em;border-radius:50%;background:var(--amber);color:#fff;font:700 .95em/2.05em "Helvetica Neue",var(--sans);text-align:center}
+.stat{display:flex;flex-direction:column;align-items:center;text-align:center}
+.stat b{font-size:2.27em;color:var(--teal);line-height:1.2;font-variant-numeric:tabular-nums} .stat span{font-size:.8em;color:var(--gray)}
+.badge{display:inline-block;font:700 .68em/1.9 var(--sans);padding:0 .7em;border-radius:1em;vertical-align:middle;white-space:nowrap}
+.badge.free{background:var(--greenwash);color:var(--green)} .badge.tb{background:var(--tealwash);color:var(--amber)}
+
+/* tables (BLUE) */
+.scroll{overflow-x:auto;min-width:0}
+table.tbl{border-collapse:collapse;width:100%;font-size:.87em;line-height:1.4}
+table.tbl th{background:var(--navy);color:#fff;font-weight:700;text-align:left;padding:.5em .65em}
+table.tbl td{padding:.42em .65em;border:1px solid var(--border);vertical-align:top;background:var(--white)}
+table.tbl tr:nth-child(even) td{background:var(--lgray)}
+table.tbl td:first-child{font-weight:700;color:var(--navy)}
+table.tbl td.num,table.tbl th.num{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+table.tbl td.c,table.tbl th.c{text-align:center;font-family:var(--mono)}
+table.tbl tbody.today td{background:var(--tealwash)}
+table.tbl tbody.today tr:first-child td{border-top:.22em solid var(--amber)}
+table.tbl tbody.today tr:last-child td{border-bottom:.22em solid var(--amber)}
+table.tbl tbody.today td:first-child{border-left:.22em solid var(--amber)}
+table.tbl tbody.today td:last-child{border-right:.22em solid var(--amber)}
+table.tbl.sm{font-size:.78em} table.tbl.sm td,table.tbl.sm th{padding:.3em .55em}
+.boxkey{display:inline-block;inline-size:1.6em;block-size:.9em;border:.2em solid var(--amber);background:var(--tealwash);vertical-align:middle;margin-right:.4em}
+table.mat{border-collapse:collapse;font:700 1em/1 var(--mono);border-left:.13em solid var(--navy);border-right:.13em solid var(--navy);border-radius:.3em}
+table.mat td{padding:.27em .4em;text-align:center}
+table.mat td.p{color:var(--ochre)} table.mat td.i{color:var(--amber)} table.mat td.on{background:var(--crimwash);color:var(--crim)}
+.matwrap{display:flex;align-items:center;gap:.55em;flex-wrap:wrap}
+
+/* equations, bits */
+.eq{font-family:var(--math);font-size:1.2em;line-height:1.55;padding:.42em .85em;background:var(--lgray);border:1px solid var(--border);overflow-x:auto;white-space:nowrap}
+.eq .why{font-family:var(--sans);font-size:.66em;color:var(--gray);margin-left:1em}
+.bits{display:inline-flex;flex-wrap:wrap;gap:.2em;vertical-align:middle}
+.b{inline-size:1.85em;block-size:1.85em;display:inline-grid;place-items:center;font:700 1em/1 var(--mono);border:.09em solid var(--border);border-radius:.25em;background:var(--white);color:var(--ink);padding:0}
+.b.m{background:var(--tealwash);border-color:var(--amber);color:var(--amber)}
+.b.r{background:var(--cream);border-color:var(--ochre);border-style:dashed;color:var(--ochre)}
+.b.e{background:var(--crimwash);border-color:var(--crim);color:var(--crim)}
+.b.ok{background:var(--greenwash);border-color:var(--green);color:var(--green)}
+.b.sm{inline-size:1.5em;block-size:1.5em;font-size:.86em}
+button.b{cursor:pointer} button.b:hover{border-color:var(--navy);box-shadow:0 0 0 .12em var(--tealwash)}
+.gap{display:inline-block;inline-size:.4em}
+.legend{display:flex;flex-wrap:wrap;gap:.25em 1.1em;font-size:.75em;color:var(--gray)}
+.legend span{display:inline-flex;align-items:center;gap:.45em} .legend .b{inline-size:1.15em;block-size:1.15em}
+.nt{font:700 1.08em var(--mono);letter-spacing:.16em}
+.nt em{font-style:normal;color:var(--crim);background:var(--crimwash);border-radius:.2em}
+.pipe{list-style:none;padding:0;display:flex;flex-direction:column}
+.pipe .stg{display:grid;grid-template-columns:minmax(9em,13.5em) 1fr;align-items:center;gap:.2em 1.2em;padding-block:.3em}
+.pipe .who{font-weight:700;color:var(--navy);line-height:1.35} .pipe .who small{display:block;font-weight:400;color:var(--gray);font-size:.74em}
+.pipe .stp{color:var(--gray);font-size:.8em;padding:.05em 0 .05em .8em;border-left:.13em solid var(--teal);margin-left:.35em}
+.pipe .stp::before{content:"▼ ";color:var(--teal);font-size:.8em}
+.nest{border:.1em solid var(--teal);border-radius:.45em;padding:.42em .7em .55em;display:flex;flex-direction:column;gap:.35em;background:var(--white)}
+.nest .nl2{font-size:.84em;line-height:1.45} .nest .nl2 b{font-size:1.12em;color:var(--navy)}
+.nest .ex{font-size:.72em;color:var(--gray)}
+.nest.n2{background:var(--lgray)} .nest.n4{background:var(--tealwash)} .nest.n5{background:var(--navy);border-color:var(--navy)} .nest.n5 .nl2{color:var(--sub2)} .nest.n5 .nl2 b{color:#fff}
+
+/* widgets */
+.panel{background:var(--lgray);border:1px solid var(--border);border-top:.36em solid var(--teal);border-radius:.3em;padding:.7em .95em .8em;display:flex;flex-direction:column;gap:.6em;min-width:0}
+.panel > h3{font-size:.95em;color:var(--navy)}
+.row{display:flex;flex-wrap:wrap;gap:.35em .5em;align-items:center}
+.lab{font-size:.76em;color:var(--gray);font-weight:700;min-width:5.4em}
+.btn{font-size:.8em;line-height:1.25;padding:.4em .8em;min-height:2.3em;border:1px solid var(--border);border-radius:.4em;background:var(--white);color:var(--ink);cursor:pointer}
+.btn:hover{border-color:var(--gray)}
+.btn[aria-pressed="true"]{border-color:var(--amber);background:var(--tealwash);color:var(--amber);font-weight:700}
+.sliders{display:grid;grid-template-columns:repeat(auto-fit,minmax(11em,1fr));gap:.3em 1.4em}
+.slider{display:flex;flex-direction:column}
+.slider label{display:flex;justify-content:space-between;align-items:baseline;font-size:.8em;color:var(--gray)}
+.slider output{font:700 1.25em var(--mono);color:var(--navy);font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--amber);min-height:1.6em;margin:0}
+select{font:700 1em var(--mono);padding:.3em .5em;border:1px solid var(--border);border-radius:.4em;background:var(--white);color:var(--ink);min-height:2.2em}
+.barx{display:flex;flex-wrap:wrap;gap:.15em}
+.barx .cell{inline-size:.9em;block-size:1.3em;border-radius:.15em;border:.08em solid}
+.barx .cell.m,.barx .seg.m{background:var(--tealwash);border-color:var(--amber);color:var(--amber)}
+.barx .cell.r,.barx .seg.r{background:var(--cream);border-color:var(--ochre);border-style:dashed;color:var(--ochre)}
+.barx.prop{flex-wrap:nowrap}
+.barx .seg{block-size:1.5em;border-radius:.2em;border:.08em solid;min-inline-size:.6em;font:700 .7em/2 var(--mono);text-align:center;overflow:hidden;white-space:nowrap}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(8.5em,1fr));gap:0 1.2em}
+.metric{padding-block:.4em;border-top:1px solid var(--border);display:flex;flex-direction:column}
+.metric .k{font-size:.74em;color:var(--gray)} .metric .val{font:700 1.5em/1.25 var(--mono);color:var(--teal);font-variant-numeric:tabular-nums}
+.metric .f{font-family:var(--math);color:var(--gray);font-size:.9em}
+.dots{display:grid;gap:.14em;max-width:14em} .dots i{aspect-ratio:1;border-radius:50%;background:var(--border)} .dots i.on{background:var(--amber)}
+.verdict{font-weight:700;font-size:.9em;line-height:1.5;padding:.45em .75em;border-radius:.3em;border:1px solid var(--border);background:var(--white)}
+.verdict.good{border-color:var(--green);background:var(--greenwash);color:var(--green)}
+.verdict.bad{border-color:var(--crim);background:var(--crimwash);color:var(--crim)}
+.verdict.warn{border-color:var(--ochre);background:var(--cream);color:var(--ochre)}
+.grid2d{display:inline-grid;grid-template-columns:repeat(4,auto);gap:.22em;align-items:center;justify-items:center}
+.grid2d .flag{font:700 .7em var(--mono);color:var(--gray);min-inline-size:2.6em;text-align:center} .grid2d .flag.bad{color:var(--crim)}
+pre.div{font:700 .92em/1.42 var(--mono);background:var(--white);border:1px solid var(--border);padding:.55em .8em;overflow-x:auto}
+pre.div .g{color:var(--ochre)} pre.div .m{color:var(--amber)} pre.div .rem{color:var(--green)}
+
+/* code box (BLUE code_box + 복사 버튼) */
+.code{background:var(--code);border-radius:.5em;color:var(--codeink);display:flex;flex-direction:column;min-width:0;min-height:0;overflow:hidden}
+.code .bar{display:flex;align-items:center;gap:.6em;padding:.5em .6em .15em 1em}
+.code .bar .ttl{font:700 .73em var(--mono);color:var(--teal);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.code .copy,.code .open{font:700 .68em/1 var(--sans);padding:.5em .85em;border-radius:.4em;border:1px solid #4A5666;background:#2A3340;color:var(--codeink);cursor:pointer;text-decoration:none;white-space:nowrap}
+.code .copy:hover,.code .open:hover{border-color:var(--teal);color:#fff}
+.code .copy.done{background:var(--green);border-color:var(--green);color:#fff}
+.slide .body .code{max-height:24.6em}
+.app.read .slide .body .code{max-height:30em}
+.code pre{font:.74em/1.42 var(--mono);padding:.3em 1.1em .8em;overflow:auto;white-space:pre;tab-size:4;color:var(--codeink)}
+.code pre .cm{color:var(--codecm)} .code pre .sec{color:var(--teal);font-weight:700}
+.out{background:var(--white);border:1px solid var(--border);border-left:.26em solid var(--green);display:flex;flex-direction:column;min-width:0}
+.out > b{font-size:.73em;color:var(--green);padding:.5em .9em 0}
+.out pre{font:.76em/1.5 var(--mono);padding:.25em .9em .6em;overflow:auto;white-space:pre;color:var(--ink)}
+.doc{font-size:.78em;color:var(--gray);line-height:1.7} .doc a{font-family:var(--mono);font-weight:700;text-decoration:none;border-bottom:1px solid var(--teal)}
+
+/* quiz */
+.qcard{background:var(--white);border:1px solid var(--border);border-radius:.5em;padding:.15em 1em}
+details.q summary{cursor:pointer;display:grid;grid-template-columns:2.2em 1fr;gap:.7em;align-items:center;font-weight:700;font-size:1.05em;padding-block:.55em;list-style:none;line-height:1.45}
+details.q summary::-webkit-details-marker{display:none}
+details.q summary::before{content:attr(data-n);inline-size:2.05em;block-size:2.05em;border-radius:50%;background:var(--amber);color:#fff;font:700 .95em/2.05em "Helvetica Neue",var(--sans);text-align:center}
+details.q .ans{padding:0 0 .7em 2.9em;font-size:.96em;display:flex;flex-direction:column;gap:.2em;color:var(--green);font-weight:600}
+details.q .ans::before{content:"클릭해서 답 확인 ▸";display:none}
+
+/* svg */
+svg{max-width:100%;height:auto;display:block}
+.s-ink{fill:var(--ink)} .s-gray{fill:var(--gray)} .s-navy{fill:var(--navy)} .s-amber{fill:var(--amber)} .s-teal{fill:var(--teal)} .s-crim{fill:var(--crim)} .s-green{fill:var(--green)} .s-white{fill:#fff}
+.s-txt{font:14px var(--sans)} .s-sm{font:12px var(--sans)} .s-mono{font:700 15px var(--mono)} .s-math{font:italic 16px var(--math)}
+.l-navy{stroke:var(--navy);fill:none} .l-border{stroke:var(--border);fill:none} .l-gray{stroke:var(--gray);fill:none} .l-amber{stroke:var(--amber);fill:none} .l-teal{stroke:var(--teal);fill:none} .l-crim{stroke:var(--crim);fill:none} .l-green{stroke:var(--green);fill:none}
+.f-wash{fill:var(--tealwash);stroke:var(--amber)} .f-white{fill:#fff;stroke:var(--navy)} .f-cream{fill:var(--cream);stroke:var(--ochre)} .f-crim{fill:var(--crimwash);stroke:var(--crim)} .f-lgray{fill:var(--lgray);stroke:var(--border)}
+.pt{cursor:pointer}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+
+.kv{display:grid;grid-template-columns:auto 1fr;gap:.15em 1em;font-size:.82em;margin:0;align-items:baseline}
+.kv dt{color:var(--gray)} .kv dd{margin:0;font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+table.tbl.terms td:first-child,table.tbl.terms td:nth-child(2){white-space:nowrap}
+
+/* ---------- section divider (bluelib section_slide) ---------- */
+.slide.sect{padding:0;display:grid;grid-template-columns:34.5% minmax(0,1fr)}
+.slide.sect::before{display:none}
+.slide.sect .sl{background:var(--navy);border-right:.29em solid var(--amber);display:flex;flex-direction:column;justify-content:center;gap:.25em;padding:0 2em 0 3.36em;z-index:1}
+.slide.sect .no{font:700 3.87em/1.05 "Helvetica Neue",var(--sans);color:var(--amber)}
+.slide.sect .sl h2{font-size:1.8em;color:#fff;line-height:1.3;text-wrap:balance}
+.slide.sect .sl .en{font-size:.93em;color:var(--sub1);line-height:1.45;margin-top:.2em}
+.slide.sect .sr{display:flex;flex-direction:column;justify-content:center;padding:0 4em 0 4.3em}
+.slide.sect .sr ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.9em}
+.slide.sect .sr li{font-size:1.13em;line-height:1.5;padding-left:1.4em;text-indent:-1.4em}
+.slide.sect .sr li::before{content:"— ";color:var(--amber);font-weight:700}
+.slide.sect > footer{position:absolute;left:calc(34.5% + 4.3em);right:2.64em;bottom:.75em}
+.app.read .slide.sect{min-height:20em}
+@media (max-width:780px){ .app.read .slide.sect{grid-template-columns:minmax(0,1fr)} .app.read .slide.sect .sl{padding:1.5em 16px;border-right:0;border-bottom:.29em solid var(--amber)} .app.read .slide.sect .sr{padding:1.2em 16px 3em} }
+/* ---------- definition slide: 정의 · 예제 · 수학 ---------- */
+.defgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.85em;align-items:stretch}
+.defgrid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.defgrid.dense .dcol ul{font-size:.84em;gap:.3em} .defgrid.dense .dcol .eq{font-size:.95em;padding:.28em .55em}
+.dcol{background:var(--lgray);border:1px solid var(--border);border-top:.36em solid var(--amber);border-radius:.3em;padding:.7em .95em .9em;display:flex;flex-direction:column;gap:.5em;min-width:0}
+.dcol.ex{border-top-color:var(--teal)} .dcol.ma{border-top-color:var(--green)}
+.dcol .dh{display:flex;align-items:baseline;gap:.5em;font-weight:700;color:var(--navy);font-size:1.15em}
+.dcol .dh small{font:700 .64em "Helvetica Neue",var(--sans);letter-spacing:.09em;color:var(--gray);text-transform:uppercase}
+.dcol ul{padding-left:1em;margin:0;display:flex;flex-direction:column;gap:.42em;font-size:.97em;line-height:1.5}
+.dcol ul li::marker{color:var(--teal)}
+.dcol .eq{font-size:1.05em;padding:.35em .6em;white-space:normal;background:var(--white)}
+.dcol .mono{font-size:.95em}
+@media (max-width:780px){ .app.read .defgrid{grid-template-columns:minmax(0,1fr)} }
+
+/* Contextual lecture videos: one inline player, selectable sources and teaching notes. */
+.video-lesson .body{gap:.4em;padding-top:.85em}
+.video-layout{display:grid;grid-template-columns:2.1fr 1fr;gap:1em;align-items:start}
+.video-stage{position:relative;aspect-ratio:16/9;background:#10263E;overflow:hidden;border-radius:.35em;border:1px solid var(--border)}
+.video-stage iframe,.video-preview{position:absolute;inset:0;width:100%;height:100%;border:0}
+.video-preview{object-fit:contain;background:#10263E}
+.video-play{position:absolute;inset:0;border:0;background:linear-gradient(transparent 45%,rgba(0,0,0,.7));color:white;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.65em}
+.video-play .play-symbol{display:grid;place-items:center;background:#C03B3B;border-radius:50%;width:2.2em;height:2.2em;font-size:1.3em;padding-left:.12em}
+.video-play .play-label{font-size:.8em;font-weight:700;background:rgba(16,38,62,.85);padding:.4em .7em;border-radius:.3em}
+.video-caption{display:flex;gap:.6em;align-items:baseline;margin-top:.45em;font-size:.68em;line-height:1.4;color:var(--gray)}
+.video-caption .video-source-link{margin-left:auto;white-space:nowrap}
+.video-explain{display:flex;flex-direction:column;gap:.65em}
+.video-explain h3{font-size:.87em;color:var(--navy)}
+.video-choices{display:flex;flex-direction:column;gap:.35em}
+.video-choice{font:inherit;font-size:.73em;line-height:1.45;text-align:left;padding:.45em .6em;border:1px solid var(--border);border-left:.22em solid var(--teal);border-radius:.25em;background:white;cursor:pointer}
+.video-choice[aria-pressed="true"]{background:var(--tealwash);border-color:var(--amber);color:var(--amber);font-weight:700}
+.video-choice .video-time{display:inline;font-size:.9em;color:var(--gray);margin-left:.2em;white-space:nowrap}
+.video-explain .kb{padding:.4em .65em}
+.video-explain .kb b{font-size:.75em}
+.video-explain .kb p{font-size:.77em;line-height:1.5}
+.video-prompts{font-size:.76em;line-height:1.5;padding-left:1.1em;display:flex;flex-direction:column;gap:.35em}
+.video-prompts li::marker{color:var(--teal)}
+.video-lesson .src{font-size:.58em}
+@media(max-width:780px){.app.read .video-layout{grid-template-columns:1fr}.app.read .video-stage{min-height:0}.app.read .video-choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}}
+
+
+.slide .body{overflow:hidden;gap:.55em}.slide h2{font-size:1.85em}.slide .src{font-size:.56em;line-height:1.3;overflow-wrap:anywhere;margin-top:auto;color:var(--gray)}
+.lecture-bullets{font-size:1.18em;line-height:1.65;padding-left:1.2em;margin:.1em 0;display:flex;flex-direction:column;gap:.65em}
+.lecture-columns{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:1.5em;align-items:center;min-height:0;flex:0 1 auto}
+.lecture-figure{margin:0;min-width:0}.lecture-figure img{display:block;width:100%;height:auto;max-height:21em;object-fit:contain;background:white}.lecture-figure svg{width:100%;height:auto;max-height:22em;display:block}
+.lecture-figure figcaption{font-size:.6em;line-height:1.4;color:var(--gray);margin-top:.5em;overflow-wrap:anywhere}.pair-images{display:flex;gap:.6em;align-items:center}.pair-images figure{width:50%}
+.lecture-table{border-collapse:collapse;width:100%;font-size:.9em}.lecture-table th{background:var(--navy);color:white;text-align:left}.lecture-table th,.lecture-table td{border-bottom:1px solid var(--border);padding:.5em}.lecture-table tr:nth-child(even){background:#F4F6F9}
+.lecture-formula{font:600 1.2em/1.4 var(--math);text-align:center;color:var(--navy);padding:.4em;border-bottom:1px solid var(--border)}
+.lecture-formula,.question,.mechanism-steps{flex-shrink:0}.has-formula .lecture-figure img,.has-formula .lecture-figure svg{max-height:16em}.has-formula.has-quiz .lecture-figure img{max-height:14em}.has-steps .lecture-figure img,.has-steps .lecture-figure svg{max-height:15em}
+.video-layout{grid-template-columns:minmax(0,2.1fr) minmax(0,1fr)}.video-explain,.video-layout>div{min-width:0}.video-choice{display:block;box-sizing:border-box;overflow-wrap:anywhere;white-space:normal;width:100%;max-width:100%;min-width:0}
+.mechanism-steps{display:flex;gap:.8em;list-style-position:inside;padding:0;font-size:.85em;line-height:1.45}.mechanism-steps li{flex:1;border-top:3px solid var(--teal);padding-top:.35em}
+.question{color:var(--crim);font-size:.9em;margin-top:.4em}.question summary{cursor:pointer;font-weight:700}.question p{margin-top:.4em}
+.legacy .body{font-size:.87em}.legacy .body>div:empty{display:none}.legacy .body svg{max-height:24em;width:100%;height:auto}.legacy img{max-height:16em}
+.slide.cover{padding-right:4.3em}.slide.cover .s1{font-size:1.8em}.slide.cover .s2{max-width:48em}.slide.cover .en{font-size:.9em}.slide.cover .au{margin-top:1.4em;color:white;font-size:1em}
+.cover-links{display:flex;gap:1.2em;margin-top:1.3em;font-size:.8em;color:#C8D8E4}.cover-links a{color:inherit}
+.app.read .lecture-columns{min-height:0}.app.read .slide .body{overflow:visible}.app.read .lecture-figure img{max-height:520px}
+@media(max-width:780px){.app.read .lecture-columns{grid-template-columns:1fr}.app.read .mechanism-steps{display:block}.app.read .mechanism-steps li{margin-top:.6em}.app.read .lecture-bullets{font-size:1em}.app.read .slide.cover{padding:2em 1em}}
+@media print{@page{size:13.333333in 7.5in;margin:0}html,body,.app,.main,.stage,.deck{display:block!important;height:auto!important;min-height:0!important;width:1280px!important;max-width:none!important;overflow:visible!important;position:static!important;background:white!important;margin:0!important;padding:0!important}.side,.ctrl{display:none!important}.slide,.slide[hidden]{display:flex!important;width:1280px!important;height:720px!important;min-height:720px!important;max-height:720px!important;font-size:20px!important;position:relative!important;overflow:hidden!important;break-after:page;page-break-after:always;box-shadow:none!important;margin:0!important;border-radius:0!important}.slide:last-child{break-after:auto;page-break-after:auto}.slide .body{overflow:hidden!important}details.question:not([open]) p{display:none}.slide.cover{padding:1em 4.3em!important}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+/* 11-1 — 그림 + 요점 상자 (5-1 형식) */
+img.fig{width:100%;max-height:24em;object-fit:contain;object-position:center top;border:1px solid var(--border);border-radius:.3em;background:#fff}
+img.fig.h18{max-height:18em} img.fig.h20{max-height:20em} img.fig.h14{max-height:14em} img.fig.h16{max-height:16.5em} img.fig.h11{max-height:11em} img.fig.h9{max-height:9em}
+.stack .kb{padding:.45em .8em}
+.kb p.small{font-size:.8em;line-height:1.45;margin:0}
+.cols.w55 > svg,.cols.w64 > svg,.cols.w46 > svg,.cols > svg{align-self:start;max-height:25em;width:100%}
+.tbl td{vertical-align:top}
+table.tbl.xs{font-size:.73em} table.tbl.xs td,table.tbl.xs th{padding:.26em .45em}
+table.tbl td.w{white-space:nowrap}
+.cols.w37{grid-template-columns:minmax(0,3fr) minmax(0,7fr)}
+.cols.w82{grid-template-columns:minmax(0,8fr) minmax(0,5fr)}
+.cols.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+figure.cap{margin:0;display:flex;flex-direction:column;gap:.2em;min-width:0}
+figure.cap figcaption{font-size:.68em;color:var(--gray);line-height:1.35}
+.dcol .eq{font-family:var(--mono)}
+
+/* 동영상 목록 (6-2 extra.css 34–42행) */
+ul.vids{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.42em}
+ul.vids li{display:grid;grid-template-columns:1.9em 1fr;gap:.6em;align-items:start;
+  border:1px solid var(--border);border-left:.22em solid var(--teal);border-radius:.3em;
+  background:var(--white);padding:.4em .7em .45em}
+ul.vids li .pl{inline-size:1.55em;block-size:1.55em;border-radius:50%;background:var(--amber);color:#fff;
+  font:700 .62em/1.55em var(--sans);text-align:center}
+ul.vids li b{font-size:.84em;line-height:1.35;color:var(--navy);display:block}
+ul.vids li b a{text-decoration:none;border-bottom:1px solid var(--teal)}
+ul.vids li span{font-size:.76em;color:var(--gray);line-height:1.4}
+ul.vids li em{font-style:normal;font-family:var(--mono);font-size:.72em;color:var(--amber);font-weight:700}
+/* 11-2 단일분자 시퀀싱 — 그림 + 요점 상자 */
+img.fig{width:100%;max-height:22em;object-fit:contain;object-position:center top;border:1px solid var(--border);border-radius:.3em;background:#fff;display:block}
+img.fig.h20{max-height:20em} img.fig.h17{max-height:17em} img.fig.h14{max-height:14em} img.fig.h11{max-height:11em} img.fig.h10{max-height:10em} img.fig.h9{max-height:9em} img.fig.h8{max-height:8em} img.fig.h7{max-height:7em}
+.figcap{font-size:.68em;color:var(--gray);line-height:1.35;margin-top:.2em}
+.g2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:.6em;align-items:start}
+.stack .kb{padding:.45em .8em}
+.kb p.small{font-size:.8em;line-height:1.45;margin:0}
+.cols > svg,.stack > svg,.g2 > svg{width:100%;height:auto;max-height:24em;display:block}
+.tbl td{vertical-align:top}
+table.tbl.xs{font-size:.7em} table.tbl.xs td,table.tbl.xs th{padding:.26em .5em}
+.dcol svg{width:100%;height:auto;max-height:11em;background:#fff;border:1px solid var(--border);border-radius:.25em}
+.chk{font-size:.62em;color:var(--crim);font-weight:700;border:1px solid var(--crim);border-radius:.3em;padding:0 .35em;white-space:nowrap}
+.cols.w37{grid-template-columns:minmax(0,3fr) minmax(0,7fr)}
+.cols.w73x{grid-template-columns:minmax(0,7fr) minmax(0,3fr)}
+
+/* 표지: 오른쪽 패널을 SVG 도해로 */
+.slide.cover .art.svgart{background:#0F2740;padding:1.4em 1em;display:flex;align-items:center;justify-content:center;font:inherit;white-space:normal;opacity:1}
+.slide.cover .art.svgart svg{width:100%;height:auto;max-height:100%}
+.slide.cover p.au{font-size:.93em;font-weight:700;color:#fff;margin-top:.9em;line-height:1.5}
+.slide.ending p.au{font-size:1em;font-weight:700;color:#fff}
+
+/* 동영상 목록 (6-2 extra.css 34–43행) */
+ul.vids{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.42em}
+ul.vids li{display:grid;grid-template-columns:1.9em 1fr;gap:.6em;align-items:start;
+  border:1px solid var(--border);border-left:.22em solid var(--teal);border-radius:.3em;
+  background:var(--white);padding:.4em .7em .45em}
+ul.vids li .pl{inline-size:1.55em;block-size:1.55em;border-radius:50%;background:var(--amber);color:#fff;
+  font:700 .62em/1.55em var(--sans);text-align:center}
+ul.vids li b{font-size:.84em;line-height:1.35;color:var(--navy);display:block}
+ul.vids li b a{text-decoration:none;border-bottom:1px solid var(--teal)}
+ul.vids li span{font-size:.76em;color:var(--gray);line-height:1.4}
+ul.vids li em{font-style:normal;font-family:var(--mono);font-size:.72em;color:var(--amber);font-weight:700}
+.vh{font-size:.85em;font-weight:700;color:var(--navy);margin:.1em 0 -.1em}
+.slide.ending p.src{font-size:.62em;color:var(--sub1);max-width:48em}
+/* 11-3 — 그림 + 요점 상자 */
+img.fig{width:100%;max-height:23em;object-fit:contain;object-position:left top;border:1px solid var(--border);border-radius:.3em;background:#fff}
+img.ph{width:100%;height:13.5em;object-fit:cover;border:1px solid var(--border);border-radius:.3em;background:#fff}
+.stack .kb{padding:.45em .8em}
+.kb p.small{font-size:.8em;line-height:1.45;margin:0}
+.cols.w55 > svg,.cols.w64 > svg{align-self:start;max-height:25em}
+.tbl td{vertical-align:top}
+.calc{font:600 .82em/1.55 var(--mono);background:var(--white);border:1px solid var(--border);border-left:.24em solid var(--green);padding:.4em .8em;white-space:pre-wrap}
+.calc b{color:var(--crim)}
+.fq{font:600 .74em/1.5 var(--mono);background:#1E2630;color:#E6EDF3;border-radius:.4em;padding:.55em .9em;white-space:pre;overflow:hidden}
+.fq .h{color:#7CC4FA} .fq .s{color:#E6EDF3} .fq .p{color:#9AA5B1} .fq .q{color:#F2C14E}
+.photos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.6em}
+.photos figure{margin:0;display:flex;flex-direction:column;gap:.2em}
+.photos figcaption{font-size:.7em;color:var(--gray);line-height:1.35}
+/* 동영상 목록 */
+ul.vids{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.42em}
+ul.vids li{display:grid;grid-template-columns:1.9em 1fr;gap:.6em;align-items:start;
+  border:1px solid var(--border);border-left:.22em solid var(--teal);border-radius:.3em;
+  background:var(--white);padding:.4em .7em .45em}
+ul.vids li .pl{inline-size:1.55em;block-size:1.55em;border-radius:50%;background:var(--amber);color:#fff;
+  font:700 .62em/1.55em var(--sans);text-align:center}
+ul.vids li b{font-size:.84em;line-height:1.35;color:var(--navy);display:block}
+ul.vids li b a{text-decoration:none;border-bottom:1px solid var(--teal)}
+ul.vids li span{font-size:.76em;color:var(--gray);line-height:1.4}
+ul.vids li em{font-style:normal;font-family:var(--mono);font-size:.72em;color:var(--amber);font-weight:700}
+.fcards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.6em}
+.fcards .card p{font-size:.8em}
+.fcards .card .eq{font-size:.95em;padding:.25em .5em;white-space:normal;background:var(--white)}
+
+
+.slide .body{overflow:hidden;gap:.55em}.slide h2{font-size:1.85em}.slide .src{font-size:.56em;line-height:1.3;overflow-wrap:anywhere;margin-top:auto;color:var(--gray)}
+.lecture-bullets{font-size:1.18em;line-height:1.65;padding-left:1.2em;margin:.1em 0;display:flex;flex-direction:column;gap:.65em}
+.lecture-columns{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:1.5em;align-items:center;min-height:0;flex:0 1 auto}
+.lecture-figure{margin:0;min-width:0}.lecture-figure img{display:block;width:100%;height:auto;max-height:21em;object-fit:contain;background:white}.lecture-figure svg{width:100%;height:auto;max-height:22em;display:block}
+.lecture-figure figcaption{font-size:.6em;line-height:1.4;color:var(--gray);margin-top:.5em;overflow-wrap:anywhere}.pair-images{display:flex;gap:.6em;align-items:center}.pair-images figure{width:50%}
+.lecture-table{border-collapse:collapse;width:100%;font-size:.9em}.lecture-table th{background:var(--navy);color:white;text-align:left}.lecture-table th,.lecture-table td{border-bottom:1px solid var(--border);padding:.5em}.lecture-table tr:nth-child(even){background:#F4F6F9}
+.lecture-formula{font:600 1.2em/1.4 var(--math);text-align:center;color:var(--navy);padding:.4em;border-bottom:1px solid var(--border)}
+.lecture-formula,.question,.mechanism-steps{flex-shrink:0}.has-formula .lecture-figure img,.has-formula .lecture-figure svg{max-height:16em}.has-formula.has-quiz .lecture-figure img{max-height:14em}.has-steps .lecture-figure img,.has-steps .lecture-figure svg{max-height:15em}
+.video-layout{grid-template-columns:minmax(0,2.1fr) minmax(0,1fr)}.video-explain,.video-layout>div{min-width:0}.video-choice{display:block;box-sizing:border-box;overflow-wrap:anywhere;white-space:normal;width:100%;max-width:100%;min-width:0}
+.mechanism-steps{display:flex;gap:.8em;list-style-position:inside;padding:0;font-size:.85em;line-height:1.45}.mechanism-steps li{flex:1;border-top:3px solid var(--teal);padding-top:.35em}
+.question{color:var(--crim);font-size:.9em;margin-top:.4em}.question summary{cursor:pointer;font-weight:700}.question p{margin-top:.4em}
+.legacy .body{font-size:.87em}.legacy .body>div:empty{display:none}.legacy .body svg{max-height:24em;width:100%;height:auto}.legacy img{max-height:16em}
+.slide.cover{padding-right:4.3em}.slide.cover .s1{font-size:1.8em}.slide.cover .s2{max-width:48em}.slide.cover .en{font-size:.9em}.slide.cover .au{margin-top:1.4em;color:white;font-size:1em}
+.cover-links{display:flex;gap:1.2em;margin-top:1.3em;font-size:.8em;color:#C8D8E4}.cover-links a{color:inherit}
+.app.read .lecture-columns{min-height:0}.app.read .slide .body{overflow:visible}.app.read .lecture-figure img{max-height:520px}
+@media(max-width:780px){.app.read .lecture-columns{grid-template-columns:1fr}.app.read .mechanism-steps{display:block}.app.read .mechanism-steps li{margin-top:.6em}.app.read .lecture-bullets{font-size:1em}.app.read .slide.cover{padding:2em 1em}}
+@media print{@page{size:13.333333in 7.5in;margin:0}html,body,.app,.main,.stage,.deck{display:block!important;height:auto!important;min-height:0!important;width:1280px!important;max-width:none!important;overflow:visible!important;position:static!important;background:white!important;margin:0!important;padding:0!important}.side,.ctrl{display:none!important}.slide,.slide[hidden]{display:flex!important;width:1280px!important;height:720px!important;min-height:720px!important;max-height:720px!important;font-size:20px!important;position:relative!important;overflow:hidden!important;break-after:page;page-break-after:always;box-shadow:none!important;margin:0!important;border-radius:0!important}.slide:last-child{break-after:auto;page-break-after:auto}.slide .body{overflow:hidden!important}details.question:not([open]) p{display:none}.slide.cover{padding:1em 4.3em!important}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style></head><body><div class="app" id="app"><aside class="side" id="side" aria-label="슬라이드 목차"><div class="side-head"><span class="k">DNA DATA STORAGE 11-2</span><span class="t">대량 병렬 시퀀싱과 DNBSEQ</span><span class="s">학부 강의 / 75분</span></div><nav class="side-nav" id="side-nav"></nav></aside><div class="main"><div class="stage"><main class="deck" id="deck"><section class="slide cover" data-part="p0" data-title="대량 병렬 시퀀싱과 DNBSEQ"><div class="en">MOLECULAR INFORMATION ENGINEERING 11-2</div><h1>Parallel Sequencing Technologies</h1><p class="s1">대량 병렬 시퀀싱과 DNBSEQ</p><div class="rule"></div><p class="s2">클론 증폭과 신호 검출 / 454 Illumina SOLiD Ion Torrent / DNBSEQ와 중간 기술 / 기술 비교와 문제</p><p class="au">송영준 Youngjun Song / 인천대학교 / 75분</p><p class="cover-links"><a href="../index.html">강의 폴더</a><a href="https://bbl.stdbioelec.com/ko/molecular-information-engineering.html">강의 안내</a></p></section><section class="slide " data-part="p0" data-title="병렬 시퀀싱의 분자 단위"><header><h2>병렬 시퀀싱의 분자 단위</h2></header><div class="body"><ul class="lecture-bullets"><li>서로 다른 DNA를 위치별로 분리</li><li>각 위치에서 같은 서열의 신호 축적</li><li>위치마다 반응 주기를 반복</li><li>수많은 read의 동시 생성</li></ul><p class="src"><a href="https://www.illumina.com/science/technology/next-generation-sequencing/sequencing-technology.html" target="_blank" rel="noopener">https://www.illumina.com/science/technology/next-generation-sequencing/sequencing-technology.html</a></p></div></section><section class="slide  has-steps" data-part="p0" data-title="Emulsion PCR"><header><h2>Emulsion PCR</h2></header><div class="body"><ul class="lecture-bullets"><li>물방울 안에서 하나의 주형과 비드를 분리</li><li>프라이머가 결합된 비드에서 증폭</li><li>같은 서열의 많은 사본을 가진 비드</li><li>물방울·비드의 점유율과 혼합 비드 문제</li></ul><ol class="mechanism-steps"><li>주형과 비드의 분산</li><li>물방울 반응기 형성</li><li>물방울 내부 PCR</li><li>증폭 비드의 회수·배열</li></ol><p class="src"><a href="https://www.illumina.com/science/technology/next-generation-sequencing/sequencing-technology.html" target="_blank" rel="noopener">https://www.illumina.com/science/technology/next-generation-sequencing/sequencing-technology.html</a></p></div></section><section class="slide " data-part="p0" data-title="Bridge amplification"><header><h2>Bridge amplification</h2></header><div class="body"><div class="lecture-columns"><div><figure class="lecture-figure"><img src="assets/flowcell.jpg" alt="Introduction to SBS Technology"><figcaption>Illumina</figcaption></figure></div><div><ul class="lecture-bullets"><li>표면 프라이머와 DNA adapter의 결합</li><li>표면에서 상보 가닥 합성</li><li>휘어진 가닥의 이웃 프라이머 결합</li><li>국소 cluster로 신호 확대</li></ul></div></div><p class="src"><a href="https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf" target="_blank" rel="noopener">https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf</a></p></div></section><section class="slide legacy" data-part="p1" data-title="Pyrosequencing 파이로시퀀싱"><header><h2>Pyrosequencing 파이로시퀀싱</h2></header><div class="body"><div class="defgrid two">
+      <div class="dcol"><div class="dh">정의 · 원리 <small>Definition</small></div><ul>
+        <li>고정된 단일가닥 주형 + 프라이머 · dNTP를 <b>한 종류씩 차례로</b> 흘림</li>
+        <li>맞는 dNTP가 붙으면 PPi 방출 → 효소 연쇄 → <b>빛</b> · 안 붙으면 빛 없음</li>
+        <li>apyrase가 남은 dNTP · ATP 분해 → 세척 없이 다음 흐름</li>
+        <li>dATP 대신 <b>dATPαS</b> — dATP는 루시페라제 기질이라 배경 빛을 냄</li>
+      </ul>
+      <div class="eq small">(DNA)ₙ + dNTP → (DNA)ₙ₊₁ + PPi<br>PPi + APS → ATP + SO₄²⁻ (ATP sulfurylase)<br>ATP + 루시페린 + O₂ → 빛 (루시페라제)</div></div>
+      <div class="dcol ex"><div class="dh">예제 <small>Example</small></div><ul>
+        <li>흐름 순서 T → A → C → G, 주형이 새 가닥 <span class="mono">G AAA CC</span>를 요구</li>
+        <li>T: 0 · A: 0 · C: 0 · G: 빛 1 → A: 빛 3 → C: 빛 2</li>
+        <li>막대 높이를 흐름 순서대로 풀면 <span class="mono">G AAA CC</span></li>
+        <li>종결자가 없으므로 같은 염기 연속(호모폴리머)은 <b>한 흐름에 한꺼번에</b> 붙음</li>
+      </ul></div>
+    </div>
+    
+  <p class="src"><a href="https://doi.org/10.1126/science.281.5375.363" target="_blank" rel="noopener">https://doi.org/10.1126/science.281.5375.363</a></p></div></section><section class="slide  has-steps" data-part="p1" data-title="파이로시퀀싱의 신호 변환"><header><h2>파이로시퀀싱의 신호 변환</h2></header><div class="body"><ul class="lecture-bullets"><li>DNA polymerase: 도입과 PPi 방출</li><li>ATP sulfurylase: PPi를 ATP 생성에 연결</li><li>Luciferase: ATP를 빛 생성에 이용</li><li>남은 시약의 제거 후 다음 흐름</li></ul><ol class="mechanism-steps"><li>염기의 도입</li><li>PPi 방출</li><li>ATP 생성</li><li>발광과 신호 기록</li></ol><p class="src"><a href="https://www.illumina.com/science/technology/next-generation-sequencing/sequencing-technology.html" target="_blank" rel="noopener">https://www.illumina.com/science/technology/next-generation-sequencing/sequencing-technology.html</a></p></div></section><section class="slide legacy" data-part="p1" data-title="Flow 방식과 homopolymer 길이"><header><h2>Flow 방식과 homopolymer 길이</h2></header><div class="body"><div class="cols w55">
+      <svg viewBox="0 0 520 330" role="img" aria-label="파이로그램 예와 호모폴리머 구분 비율 막대" font-family="Apple SD Gothic Neo,Helvetica Neue,sans-serif">
+        <text x="10" y="18" font-size="13" font-weight="700" fill="#16324F">① 파이로그램 (흐름 T A C G 반복)</text>
+        <line x1="40" y1="140" x2="510" y2="140" stroke="#5B6670"></line>
+        <g font-size="10.5" fill="#5B6670" text-anchor="middle"><text x="40" y="136">0</text></g>
+        <g stroke="#D8DEE6" stroke-dasharray="3 3"><line x1="40" y1="110" x2="510" y2="110"></line><line x1="40" y1="80" x2="510" y2="80"></line><line x1="40" y1="50" x2="510" y2="50"></line></g>
+        <g font-size="10.5" fill="#5B6670"><text x="22" y="114">1</text><text x="22" y="84">2</text><text x="22" y="54">3</text></g>
+        <g font-family="Menlo,monospace" font-size="12" text-anchor="middle" fill="#16324F">
+          <text x="60" y="156">T</text><text x="98" y="156">A</text><text x="136" y="156">C</text><text x="174" y="156">G</text><text x="212" y="156">T</text><text x="250" y="156">A</text><text x="288" y="156">C</text><text x="326" y="156">G</text><text x="364" y="156">T</text><text x="402" y="156">A</text><text x="440" y="156">C</text><text x="478" y="156">G</text>
+        </g>
+        <g>
+          <rect x="164" y="110" width="20" height="30" fill="#16324F"></rect>
+          <rect x="240" y="50" width="20" height="90" fill="#2E7D54"></rect>
+          <rect x="278" y="80" width="20" height="60" fill="#224EBD"></rect>
+          <rect x="354" y="110" width="20" height="30" fill="#C03B3B"></rect>
+          <rect x="468" y="80" width="20" height="60" fill="#16324F"></rect>
+        </g>
+        <text x="40" y="178" font-size="12.5" fill="#16324F">판독: <tspan font-family="Menlo,monospace" font-weight="700">G AAA CC T GG</tspan> — 0인 흐름은 건너뜀</text>
+        <line x1="10" y1="192" x2="510" y2="192" stroke="#D8DEE6"></line>
+        <text x="10" y="212" font-size="13" font-weight="700" fill="#16324F">② n과 n+1의 신호 차이 (n+1)/n − 1</text>
+        <line x1="60" y1="310" x2="510" y2="310" stroke="#5B6670"></line>
+        <g fill="#224EBD">
+          <rect x="70" y="222" width="36" height="88"></rect><rect x="124" y="266" width="36" height="44"></rect><rect x="178" y="281" width="36" height="29"></rect><rect x="232" y="288" width="36" height="22"></rect>
+          <rect x="286" y="292" width="36" height="18"></rect><rect x="340" y="295" width="36" height="15"></rect><rect x="394" y="297" width="36" height="13" fill="#C03B3B"></rect><rect x="448" y="299" width="36" height="11" fill="#C03B3B"></rect>
+        </g>
+        <g font-size="11" fill="#16324F" text-anchor="middle">
+          <text x="88" y="236" fill="#fff">100%</text><text x="142" y="262">50%</text><text x="196" y="277">33%</text><text x="250" y="284">25%</text><text x="304" y="288">20%</text><text x="358" y="291">17%</text><text x="412" y="293" fill="#C03B3B">14%</text><text x="466" y="295" fill="#C03B3B">12.5%</text>
+        </g>
+        <g font-size="11" fill="#5B6670" text-anchor="middle"><text x="88" y="326">1→2</text><text x="142" y="326">2→3</text><text x="196" y="326">3→4</text><text x="250" y="326">4→5</text><text x="304" y="326">5→6</text><text x="358" y="326">6→7</text><text x="412" y="326">7→8</text><text x="466" y="326">8→9</text></g>
+      </svg>
+      <div class="stack">
+        <div class="kb"><b>식</b><p class="small">한 흐름에 같은 염기 n개 결합 → PPi n개 → <span class="mono">I ≈ n · I₁</span><br>판정 기준 = I/I₁을 가장 가까운 정수로 반올림</p></div>
+        <div class="kb green"><b>손계산</b><p class="small">1 vs 2 → 신호 2배(100% 차이) — 쉬움<br>7 vs 8 → 8/7 ≈ 1.14(14% 차이) — 잡음 · 효소 포화에 묻힘<br>잡음이 ±10%면 n ≥ 5부터 판정이 흔들림 (예시)</p></div>
+        <div class="kb crim"><b>오류의 성격</b><p class="small">틀린 dNTP는 거의 안 붙음 → <b>치환은 드묾</b><br>주 오류 = <b>호모폴리머 길이 오류(삽입 · 결실, indel)</b> — 454 · Ion Torrent · Ultima 공통</p></div>
+      </div>
+    </div>
+    
+  <p class="src">교육용 신호 크기 모형 / <a href="https://doi.org/10.1126/science.281.5375.363" target="_blank" rel="noopener">https://doi.org/10.1126/science.281.5375.363</a></p></div></section><section class="slide " data-part="p1" data-title="Roche 454의 시스템 구성"><header><h2>Roche 454의 시스템 구성</h2></header><div class="body"><ul class="lecture-bullets"><li>Emulsion PCR 비드의 준비</li><li>PicoTiterPlate의 작은 웰에 비드 적재</li><li>염기 흐름과 광학 발광 검출</li><li>역사적 플랫폼으로 현재 Roche SBX와 구분</li></ul><p class="src"><a href="https://doi.org/10.1038/nature03959" target="_blank" rel="noopener">https://doi.org/10.1038/nature03959</a></p></div></section><section class="slide legacy" data-part="p1" data-title="Illumina reversible terminator SBS"><header><h2>Illumina reversible terminator SBS</h2></header><div class="body"><div class="defgrid two">
+      <div class="dcol"><div class="dh">정의 · 원리 <small>Definition</small></div><ul>
+        <li>뉴클레오타이드 3′-OH를 <b>3′-O-azidomethyl</b>로 막고, 염기마다 다른 형광을 <b>절단 가능한 링커</b>로 부착</li>
+        <li>네 종류를 한꺼번에 넣어도 <b>한 염기만</b> 결합 → 영상 촬영 → 종결기 · 형광 절단 → 3′-OH 복원 → 다음 주기</li>
+        <li>주기 수 = read 길이 (예: 150 주기 → 150 nt)</li>
+      </ul></div>
+      <div class="dcol ex"><div class="dh">예제 <small>Example</small></div><ul>
+        <li>주형 상보 서열 <span class="mono">A A A C</span> — 파이로: 한 흐름에 A 3개가 한꺼번에(빛 3배)</li>
+        <li>SBS: 주기 1 A · 주기 2 A · 주기 3 A · 주기 4 C — <b>한 주기 한 염기</b></li>
+        <li>→ 호모폴리머 길이를 “세기”로 재지 않음 → indel 드묾 · 주 오류는 <b>치환</b></li>
+      </ul>
+      <div class="eq small">read 길이 L = 주기 수 · paired-end 2×150 = 300 주기 (+ 인덱스)</div></div>
+    </div>
+    
+  <p class="src"><a href="https://www.illumina.com/science/technology/next-generation-sequencing/sequencing-technology.html" target="_blank" rel="noopener">https://www.illumina.com/science/technology/next-generation-sequencing/sequencing-technology.html</a></p></div></section><section class="slide  has-steps" data-part="p1" data-title="SBS 주기의 순서"><header><h2>SBS 주기의 순서</h2></header><div class="body"><div class="lecture-columns"><div><figure class="lecture-figure"><img src="assets/illumina_sbs.jpg" alt="sequencing technology video web graphic standard"><figcaption>Illumina</figcaption></figure></div><div><ul class="lecture-bullets"><li>상보적인 형광 뉴클레오타이드의 도입</li><li>여러 cluster의 형광 촬영</li><li>위치별 염기 호출</li><li>형광·차단기 제거 후 다음 도입</li></ul></div></div><ol class="mechanism-steps"><li>도입</li><li>촬영</li><li>Base call</li><li>표지·차단기 제거</li></ol><p class="src"><a href="https://www.illumina.com/science/technology/next-generation-sequencing/sequencing-technology.html" target="_blank" rel="noopener">https://www.illumina.com/science/technology/next-generation-sequencing/sequencing-technology.html</a></p></div></section><section class="slide legacy" data-part="p1" data-title="Phasing과 prephasing"><header><h2>Phasing과 prephasing</h2></header><div class="body"><div class="cols w55">
+      <div class="stack">
+        <figure class="cap lecture-figure"><img src="assets/flowcell.jpg" alt="Introduction to SBS Technology" class="fig h9"><figcaption>Illumina</figcaption></figure>
+        <svg viewBox="0 0 440 190" style="max-height:12em" role="img" aria-label="phasing 감쇠 곡선" font-family="Apple SD Gothic Neo,Helvetica Neue,sans-serif">
+          <line x1="50" y1="150" x2="430" y2="150" stroke="#5B6670"></line><line x1="50" y1="10" x2="50" y2="150" stroke="#5B6670"></line>
+          <g font-size="11.5" fill="#5B6670"><text x="42" y="154" text-anchor="end">0</text><text x="42" y="84" text-anchor="end">0.5</text><text x="42" y="14" text-anchor="end">1</text><text x="50" y="168" text-anchor="middle">0</text><text x="240" y="168" text-anchor="middle">150</text><text x="430" y="168" text-anchor="middle">300</text></g>
+          <text x="240" y="186" font-size="12" fill="#16324F" text-anchor="middle">주기 n</text>
+          <line x1="50" y1="80" x2="430" y2="80" stroke="#D8DEE6" stroke-dasharray="4 4"></line>
+          <path d="M50,10 L145,19.9 L240,29.7 L335,38.3 L430,46.4" fill="none" stroke="#2E7D54" stroke-width="2.6"></path>
+          <path d="M50,10 L145,53.9 L240,84.1 L335,105 L430,119" fill="none" stroke="#C03B3B" stroke-width="2.6"></path>
+          <text x="300" y="30" font-size="12.5" font-weight="700" fill="#2E7D54">p = 0.1%</text><text x="300" y="126" font-size="12.5" font-weight="700" fill="#C03B3B">p = 0.5%</text>
+        </svg>
+      </div>
+      <div class="stack">
+        <div class="kb crim"><b>phasing</b><p class="small">한 주기에 박자를 놓칠(덜 붙거나 · 먼저 붙을) 확률 p → n 주기 뒤 제 박자 분자 비율 <span class="mono">≈ (1 − p)ⁿ</span></p></div>
+        <table class="tbl xs">
+          <tr><th>p</th><th class="num">n = 75</th><th class="num">n = 150</th><th class="num">n = 300</th></tr>
+          <tr><td>0.1%</td><td class="num">0.93</td><td class="num">0.86</td><td class="num">0.74</td></tr>
+          <tr><td>0.5%</td><td class="num">0.69</td><td class="num">0.47</td><td class="num">0.22</td></tr>
+        </table>
+        <div class="kb green"><b>손계산</b><p class="small">p = 0.5%, n = 150 → 0.995¹⁵⁰ ≈ e<sup>−0.75</sup> ≈ 0.47 → 신호 절반이 앞뒤 박자 잡음 (예시 값)<br>→ read 뒤쪽 품질 하락 · 2×150 paired-end로 양쪽에서 나눠 읽는 이유</p></div>
+      </div>
+    </div>
+    
+  <p class="src"><a href="https://www.illumina.com/science/technology/next-generation-sequencing/sequencing-technology.html" target="_blank" rel="noopener">https://www.illumina.com/science/technology/next-generation-sequencing/sequencing-technology.html</a></p></div></section><section class="slide legacy" data-part="p1" data-title="광학 채널과 염기 부호"><header><h2>광학 채널과 염기 부호</h2></header><div class="body"><div class="cols w55">
+      <svg viewBox="0 0 520 320" role="img" aria-label="2색 SBS 부호표와 두 채널 세기 산점도" font-family="Apple SD Gothic Neo,Helvetica Neue,sans-serif">
+        <text x="10" y="18" font-size="13" font-weight="700" fill="#16324F">① 부호표 (● 켜짐 · ○ 꺼짐)</text>
+        <g font-size="12.5" fill="#16324F">
+          <rect x="10" y="28" width="250" height="26" fill="#16324F"></rect>
+          <text x="20" y="46" fill="#fff" font-weight="700">염기</text><text x="72" y="46" fill="#fff" font-weight="700">적</text><text x="112" y="46" fill="#fff" font-weight="700">녹</text><text x="160" y="46" fill="#fff" font-weight="700">XLEAP 청 · 녹</text>
+          <text x="26" y="76" font-weight="700">A</text><text x="72" y="76" fill="#C03B3B">●</text><text x="112" y="76" fill="#2E7D54">●</text><text x="170" y="76" fill="#224EBD">● </text><text x="210" y="76" fill="#2E7D54">○</text>
+          <text x="26" y="104" font-weight="700">C</text><text x="72" y="104" fill="#C03B3B">●</text><text x="112" y="104" fill="#2E7D54">○</text><text x="170" y="104" fill="#224EBD">● </text><text x="210" y="104" fill="#2E7D54">●</text>
+          <text x="26" y="132" font-weight="700">T</text><text x="72" y="132" fill="#C03B3B">○</text><text x="112" y="132" fill="#2E7D54">●</text><text x="170" y="132" fill="#224EBD">○ </text><text x="210" y="132" fill="#2E7D54">●</text>
+          <text x="26" y="160" font-weight="700" fill="#C03B3B">G</text><text x="72" y="160" fill="#C03B3B">○</text><text x="112" y="160" fill="#2E7D54">○</text><text x="170" y="160" fill="#224EBD">○ </text><text x="210" y="160" fill="#2E7D54">○</text>
+          <line x1="10" y1="86" x2="260" y2="86" stroke="#D8DEE6"></line><line x1="10" y1="114" x2="260" y2="114" stroke="#D8DEE6"></line><line x1="10" y1="142" x2="260" y2="142" stroke="#D8DEE6"></line>
+        </g>
+        <text x="10" y="190" font-size="12" fill="#5B6670">표준 2색: NextSeq 500/550 · NovaSeq 6000</text>
+        <text x="10" y="208" font-size="12" fill="#5B6670">XLEAP-SBS: NextSeq 1000/2000 · NovaSeq X</text>
+        <text x="10" y="236" font-size="12.5" font-weight="700" fill="#C03B3B">G = 어둠(표지 없음)</text>
+        <text x="10" y="254" font-size="12" fill="#16324F">클러스터가 죽거나 삽입 끝을 넘으면</text>
+        <text x="10" y="272" font-size="12" fill="#16324F">신호 없음 → G로 호출 → read 끝 poly-G</text>
+        <text x="280" y="18" font-size="13" font-weight="700" fill="#16324F">② 두 채널 세기 산점도</text>
+        <line x1="300" y1="280" x2="510" y2="280" stroke="#5B6670" stroke-width="1.4"></line><line x1="300" y1="280" x2="300" y2="40" stroke="#5B6670" stroke-width="1.4"></line>
+        <text x="420" y="306" font-size="12" fill="#C03B3B" text-anchor="middle">적 채널 세기 →</text>
+        <text x="290" y="170" font-size="12" fill="#2E7D54" text-anchor="middle" transform="rotate(-90 290 170)">녹 채널 세기 →</text>
+        <g opacity=".75">
+          <circle cx="330" cy="255" r="22" fill="#5B6670"></circle><circle cx="470" cy="255" r="22" fill="#224EBD"></circle><circle cx="330" cy="80" r="22" fill="#2E7D54"></circle><circle cx="470" cy="80" r="22" fill="#8A5F12"></circle>
+        </g>
+        <g font-size="15" font-weight="700" fill="#fff" text-anchor="middle"><text x="330" y="260">G</text><text x="470" y="260">C</text><text x="330" y="85">T</text><text x="470" y="85">A</text></g>
+      </svg>
+      <div class="stack">
+        <div class="kb"><b>4색(GA · HiSeq · MiSeq)</b><p class="small">염기마다 고유색 1개 → 주기마다 네 채널 촬영</p></div>
+        <div class="kb teal"><b>2색</b><p class="small">두 채널만 촬영 · A는 두 색 모두(또는 혼합 표지) · G는 표지 없음 → 산점도의 네 군집으로 판정</p></div>
+        <div class="kb green"><b>손계산 — 몇 bit?</b><p class="small">염기 4종 = log₂ 4 = 2 bit · 채널 c개가 각각 켜짐/꺼짐이면 2ᶜ 상태 → c = 2면 충분 · 1색(iSeq 100)은 한 염료 + 화학 단계 두 장의 영상으로 같은 2 bit</p></div>
+        <div class="kb crim"><b>DNA 저장 · 올리고 풀 주의</b><p class="small">첫 주기들의 염기 다양성이 낮으면(같은 프라이머) 색 보정 실패 → PhiX를 섞어 다양성 보충</p></div>
+      </div>
+    </div>
+    
+  <p class="src"><a href="https://www.illumina.com/science/technology/next-generation-sequencing/sequencing-technology.html" target="_blank" rel="noopener">https://www.illumina.com/science/technology/next-generation-sequencing/sequencing-technology.html</a></p></div></section><section class="slide video-lesson" data-part="p1" data-title="Illumina 공식 SBS 영상" data-video-lesson><header><h2>Illumina 공식 SBS 영상</h2></header><div class="body"><div class="video-content"><div class="video-layout"><div><div class="video-stage"><img class="video-preview" src="assets/yt_fCd6B5HRaZ8.jpg" alt="Overview of Illumina Sequencing by Synthesis Workflow | Standard SBS chemistry"><button class="video-play" type="button"><span class="play-symbol">▶</span><span class="play-label">본문에서 영상 재생</span></button></div><p class="video-caption"><span>Illumina (5:13)</span><a class="video-source-link" href="https://www.youtube.com/watch?v=fCd6B5HRaZ8" target="_blank" rel="noopener">YouTube에서 보기</a></p></div><div class="video-explain"><h3>영상의 관찰 항목</h3><ul class="video-prompts"><li>표면 cluster의 생성</li><li>도입·촬영·제거 주기</li><li>Read 1과 Read 2의 연결</li><li>실제 장비의 광학 판독 방식</li></ul><div class="video-observation" hidden></div><div class="video-credit" hidden></div><div class="video-choices"><button class="video-choice" type="button">Overview of Illumina Sequencing by Synthesis Workflow | Standard SBS chemistry</button></div></div></div><script type="application/json" class="video-data">[{"id": "fCd6B5HRaZ8", "title": "Overview of Illumina Sequencing by Synthesis Workflow | Standard SBS chemistry", "author": "Illumina", "duration": "5:13", "note": "전체 영상을 모두 볼 필요는 없습니다. cluster 생성과 SBS 주기를 구분하는 장면을 중심으로 봅니다. 학생에게 각 신호가 한 분자에서 나온 것인지 같은 서열의 많은 사본에서 나온 것인지 질문합니다.", "label": "Illumina 공식 SBS 영상"}]</script></div><p class="src"><a href="https://www.illumina.com/science/technology/next-generation-sequencing/sequencing-technology.html" target="_blank" rel="noopener">https://www.illumina.com/science/technology/next-generation-sequencing/sequencing-technology.html</a></p></div></section><section class="slide legacy" data-part="p1" data-title="SOLiD sequencing by ligation"><header><h2>SOLiD sequencing by ligation</h2></header><div class="body"><div class="cols w55">
+      <svg viewBox="0 0 520 320" role="img" aria-label="SOLiD 2-염기 색 부호 행렬과 복호 예" font-family="Apple SD Gothic Neo,Helvetica Neue,sans-serif">
+        <text x="10" y="18" font-size="13" font-weight="700" fill="#16324F">① 색 = 두 염기 코드의 XOR (A=0 C=1 G=2 T=3)</text>
+        <g font-size="14" font-weight="700" fill="#16324F" text-anchor="middle">
+          <text x="95" y="48">A</text><text x="145" y="48">C</text><text x="195" y="48">G</text><text x="245" y="48">T</text>
+          <text x="50" y="80">A</text><text x="50" y="126">C</text><text x="50" y="172">G</text><text x="50" y="218">T</text>
+        </g>
+        <text x="170" y="30" font-size="11" fill="#5B6670" text-anchor="middle">두 번째 염기</text>
+        <text x="20" y="150" font-size="11" fill="#5B6670" transform="rotate(-90 20 150)" text-anchor="middle">첫 번째 염기</text>
+        <g stroke="#fff" stroke-width="2">
+          <rect x="70" y="56" width="50" height="46" fill="#224EBD"></rect><rect x="120" y="56" width="50" height="46" fill="#2E7D54"></rect><rect x="170" y="56" width="50" height="46" fill="#8A5F12"></rect><rect x="220" y="56" width="50" height="46" fill="#C03B3B"></rect>
+          <rect x="70" y="102" width="50" height="46" fill="#2E7D54"></rect><rect x="120" y="102" width="50" height="46" fill="#224EBD"></rect><rect x="170" y="102" width="50" height="46" fill="#C03B3B"></rect><rect x="220" y="102" width="50" height="46" fill="#8A5F12"></rect>
+          <rect x="70" y="148" width="50" height="46" fill="#8A5F12"></rect><rect x="120" y="148" width="50" height="46" fill="#C03B3B"></rect><rect x="170" y="148" width="50" height="46" fill="#224EBD"></rect><rect x="220" y="148" width="50" height="46" fill="#2E7D54"></rect>
+          <rect x="70" y="194" width="50" height="46" fill="#C03B3B"></rect><rect x="120" y="194" width="50" height="46" fill="#8A5F12"></rect><rect x="170" y="194" width="50" height="46" fill="#2E7D54"></rect><rect x="220" y="194" width="50" height="46" fill="#224EBD"></rect>
+        </g>
+        <g font-size="15" font-weight="700" fill="#fff" text-anchor="middle">
+          <text x="95" y="84">0</text><text x="145" y="84">1</text><text x="195" y="84">2</text><text x="245" y="84">3</text>
+          <text x="95" y="130">1</text><text x="145" y="130">0</text><text x="195" y="130">3</text><text x="245" y="130">2</text>
+          <text x="95" y="176">2</text><text x="145" y="176">3</text><text x="195" y="176">0</text><text x="245" y="176">1</text>
+          <text x="95" y="222">3</text><text x="145" y="222">2</text><text x="195" y="222">1</text><text x="245" y="222">0</text>
+        </g>
+        <text x="290" y="48" font-size="13" font-weight="700" fill="#16324F">② 복호 (첫 염기 A를 앎)</text>
+        <g font-family="Menlo,monospace" font-size="13" fill="#16324F">
+          <text x="290" y="76">색: 3 1 0 3 1</text>
+          <text x="290" y="100">A⊕3 = T</text><text x="400" y="100">T⊕1 = G</text>
+          <text x="290" y="122">G⊕0 = G</text><text x="400" y="122">G⊕3 = C</text>
+          <text x="290" y="144">C⊕1 = A</text>
+          <text x="290" y="172" font-weight="700">→ A T G G C A</text>
+        </g>
+        <line x1="290" y1="190" x2="510" y2="190" stroke="#D8DEE6"></line>
+        <g font-size="12" fill="#16324F">
+          <text x="290" y="212" font-weight="700" fill="#2E7D54">진짜 SNP (4번째 G→T)</text>
+          <text x="290" y="230">이웃한 두 색이 규칙적으로 동시 변화</text>
+          <text x="290" y="256" font-weight="700" fill="#C03B3B">측정 오류</text>
+          <text x="290" y="274">색 하나만 바뀜 → 규칙 위반 → 검출</text>
+        </g>
+        <text x="10" y="270" font-size="12" fill="#5B6670">대각선(같은 염기 두 개) = 색 0</text>
+        <text x="10" y="290" font-size="12" fill="#5B6670">색 하나로는 염기를 모름 — 첫 염기가 열쇠</text>
+      </svg>
+      <div class="stack">
+        <div class="kb"><b>원리 — sequencing by ligation</b><p class="small">중합효소 대신 <b>DNA 리가아제</b>가 맞는 형광 8-mer 프로브를 붙임 → 촬영 → 절단 → 반복 · 프라이머를 1염기씩 옮겨 5라운드 · 에멀전 PCR 비드</p></div>
+        <div class="kb teal"><b>부호 이론 연결</b><p class="small">색 공간 = <b>측정 채널에 넣은 부호</b> — 오류 검출 · 원시 정확도 &gt; 99.9%(McKernan 2009) ↔ DNA 저장은 <b>쓰기 단계</b>에 부호를 넣음</p></div>
+        <div class="kb crim"><b>한계 · 현재</b><p class="small">짧은 read · 색 공간 해석 도구가 복잡 → 단종(Life Tech → Thermo)</p></div>
+      </div>
+    </div>
+    
+  <p class="src"><a href="https://doi.org/10.1101/gr.091868.109" target="_blank" rel="noopener">https://doi.org/10.1101/gr.091868.109</a></p></div></section><section class="slide " data-part="p1" data-title="SOLiD의 color space"><header><h2>SOLiD의 color space</h2></header><div class="body"><ul class="lecture-bullets"><li>인접 염기 쌍을 색 부호로 기록</li><li>시작 염기를 알면 색열에서 서열 복원</li><li>하나의 잘못된 색과 실제 변이의 영향 차이</li><li>현행 SBS와 다른 데이터 해석</li></ul><p class="src"><a href="https://doi.org/10.1101/gr.091868.109" target="_blank" rel="noopener">https://doi.org/10.1101/gr.091868.109</a></p></div></section><section class="slide legacy" data-part="p1" data-title="Ion Torrent semiconductor sequencing"><header><h2>Ion Torrent semiconductor sequencing</h2></header><div class="body"><div class="defgrid two">
+      <div class="dcol"><div class="dh">정의 · 원리 <small>Definition</small></div><ul>
+        <li>뉴클레오타이드가 결합할 때 PPi와 함께 <b>H⁺ 1개</b> 방출 → 웰의 pH 하강</li>
+        <li>웰 바닥의 <b>ISFET</b>(이온 감응 전계효과 트랜지스터)가 pH를 전압으로 변환</li>
+        <li>천연 dNTP를 한 종류씩 흘림 = 파이로와 같은 “흐름” 방식 → 호모폴리머는 한꺼번에</li>
+        <li>표준 <b>CMOS</b> 공정 칩 · 카메라 · 레이저 · 형광 없음</li>
+      </ul>
+      <div class="eq small">결합 n개 → H⁺ n개 → ΔpH ∝ n → ΔV ∝ n</div></div>
+      <div class="dcol ex"><div class="dh">예제 <small>Example</small></div><ul>
+        <li>흐름 G에 주형이 C 1개 → 작은 전압 1단 · 흐름 A에 T 3개 → 3단</li>
+        <li>개략 계산: 염기당 ≈ 0.02 pH × 58 mV/pH ≈ <b>1.2 mV</b> (이상적 기울기 가정)</li>
+        <li>3개 → ≈ 3.5 mV · 8 vs 9 → 9.3 vs 10.4 mV → 약 11% 차이 → 판정 어려움</li>
+      </ul></div>
+    </div>
+    
+  <p class="src"><a href="https://tools.thermofisher.com/content/sfs/brochures/cms_090197.pdf" target="_blank" rel="noopener">https://tools.thermofisher.com/content/sfs/brochures/cms_090197.pdf</a></p></div></section><section class="slide legacy" data-part="p1" data-title="Ion Torrent 웰 비드 ISFET"><header><h2>Ion Torrent 웰 비드 ISFET</h2></header><div class="body"><div class="cols w55">
+      <svg viewBox="0 0 520 320" role="img" aria-label="Ion Torrent 웰 단면과 흐름별 전압 신호" font-family="Apple SD Gothic Neo,Helvetica Neue,sans-serif">
+        <text x="10" y="18" font-size="13" font-weight="700" fill="#16324F">① 웰 단면</text>
+        <rect x="40" y="30" width="30" height="130" fill="#D8DEE6"></rect><rect x="190" y="30" width="30" height="130" fill="#D8DEE6"></rect>
+        <rect x="70" y="30" width="120" height="130" fill="#EAF3FB"></rect>
+        <circle cx="130" cy="100" r="36" fill="#16324F"></circle>
+        <g stroke="#C03B3B" stroke-width="2"><line x1="130" y1="64" x2="130" y2="48"></line><line x1="166" y1="100" x2="182" y2="100"></line><line x1="94" y1="100" x2="78" y2="100"></line></g>
+        <g font-size="13" font-weight="700" fill="#C03B3B"><text x="80" y="54">H⁺</text><text x="150" y="60">H⁺</text><text x="160" y="148">H⁺</text></g>
+        <text x="130" y="105" font-size="11" fill="#fff" text-anchor="middle">DNA 비드</text>
+        <rect x="40" y="160" width="180" height="14" fill="#8A5F12"></rect><text x="228" y="171" font-size="11" fill="#8A5F12">감지막(Ta₂O₅)</text>
+        <rect x="40" y="174" width="180" height="16" fill="#529FD9"></rect><text x="228" y="187" font-size="11" fill="#224EBD">부유 게이트</text>
+        <rect x="40" y="190" width="180" height="30" fill="#5B6670"></rect>
+        <rect x="50" y="200" width="40" height="20" fill="#16324F"></rect><rect x="170" y="200" width="40" height="20" fill="#16324F"></rect>
+        <g font-size="11" fill="#fff" text-anchor="middle"><text x="70" y="214">소스</text><text x="190" y="214">드레인</text></g>
+        <text x="40" y="240" font-size="12" fill="#16324F">pH ↓ → 게이트 전위 변화 → 전류 변화</text>
+        <text x="40" y="258" font-size="12" fill="#5B6670">웰 하나 = 센서 하나 · 칩 1장에 수백만–수천만 웰</text>
+        <text x="300" y="18" font-size="13" font-weight="700" fill="#16324F">② 흐름별 신호 (예)</text>
+        <line x1="300" y1="210" x2="510" y2="210" stroke="#5B6670"></line>
+        <g font-family="Menlo,monospace" font-size="12" text-anchor="middle" fill="#16324F"><text x="316" y="228">T</text><text x="342" y="228">A</text><text x="368" y="228">C</text><text x="394" y="228">G</text><text x="420" y="228">T</text><text x="446" y="228">A</text><text x="472" y="228">C</text><text x="498" y="228">G</text></g>
+        <g fill="#224EBD"><rect x="306" y="180" width="20" height="30"></rect><rect x="358" y="120" width="20" height="90"></rect><rect x="410" y="150" width="20" height="60"></rect><rect x="488" y="180" width="20" height="30"></rect></g>
+        <text x="300" y="252" font-size="12.5" fill="#16324F">판독: <tspan font-family="Menlo,monospace" font-weight="700">T CCC TT G</tspan></text>
+        <text x="300" y="274" font-size="12" fill="#5B6670">막대 높이 = 붙은 염기 수 (파이로와 같은 구조)</text>
+        <text x="300" y="300" font-size="12" fill="#C03B3B">3 vs 4의 차이는 1 vs 2보다 작다 → indel</text>
+      </svg>
+      <div class="stack">
+        <div class="kb"><b>Rothberg et al. 2011</b><p class="small">표준 CMOS 칩 · 첫 칩 약 120만 웰 · 광학 없음 → “무어의 법칙을 타는 시퀀서” · Gordon Moore 게놈 판독</p></div>
+        <div class="kb teal"><b>계보</b><p class="small">Rothberg(454 창업자) → Ion Torrent → Life Technologies 인수(2010) → Thermo Fisher(2014) · 현재 임상 표적 패널 · 빠른 소요 시간(Genexus) 중심</p></div>
+        <div class="kb green"><b>무엇이 반도체인가</b><p class="small">검출기 = 트랜지스터 배열 → 카메라 없이 칩을 바꾸면 처리량 증가 · 칩 = 소모품</p></div>
+      </div>
+    </div>
+    
+  <p class="src"><a href="https://tools.thermofisher.com/content/sfs/brochures/cms_090197.pdf" target="_blank" rel="noopener">https://tools.thermofisher.com/content/sfs/brochures/cms_090197.pdf</a></p></div></section><section class="slide video-lesson" data-part="p1" data-title="Ion Torrent 공식 원리 영상" data-video-lesson><header><h2>Ion Torrent 공식 원리 영상</h2></header><div class="body"><div class="video-content"><div class="video-layout"><div><div class="video-stage"><img class="video-preview" src="assets/yt_zBPKj0mMcDg.jpg" alt="Ion Torrent Next-generation Sequencing"><button class="video-play" type="button"><span class="play-symbol">▶</span><span class="play-label">본문에서 영상 재생</span></button></div><p class="video-caption"><span>Thermo Fisher Scientific (3:24)</span><a class="video-source-link" href="https://www.youtube.com/watch?v=zBPKj0mMcDg" target="_blank" rel="noopener">YouTube에서 보기</a></p></div><div class="video-explain"><h3>영상의 관찰 항목</h3><ul class="video-prompts"><li>한 종류씩 공급되는 dNTP</li><li>염기 도입과 H⁺ 신호</li><li>웰 아래 반도체 검출기</li><li>발광 파이로시퀀싱과 신호 경로 비교</li></ul><div class="video-observation" hidden></div><div class="video-credit" hidden></div><div class="video-choices"><button class="video-choice" type="button">Ion Torrent Next-generation Sequencing</button></div></div></div><script type="application/json" class="video-data">[{"id": "zBPKj0mMcDg", "title": "Ion Torrent Next-generation Sequencing", "author": "Thermo Fisher Scientific", "duration": "3:24", "note": "영상에서 빛이 없는 검출을 확인하게 합니다. 두 방식 모두 염기를 흐름별로 공급할 수 있지만 454는 PPi-발광 경로이고 Ion Torrent는 이온-pH-전압 경로입니다. 반도체라는 말이 곧 나노포어라는 뜻은 아닙니다.", "label": "Ion Torrent 공식 원리 영상"}]</script></div><p class="src"><a href="https://tools.thermofisher.com/content/sfs/brochures/cms_090197.pdf" target="_blank" rel="noopener">https://tools.thermofisher.com/content/sfs/brochures/cms_090197.pdf</a></p></div></section><section class="slide " data-part="p2" data-title="DNBSEQ의 분자 구조"><header><h2>DNBSEQ의 분자 구조</h2></header><div class="body"><ul class="lecture-bullets"><li>DNA nanoball: 같은 원형 주형의 반복 복사 산물</li><li>한 나노볼에 같은 서열의 많은 사본</li><li>나노볼의 공간 배열 후 광학 판독</li><li>단일분자 판독과 구분</li></ul><p class="src"><a href="https://www.completegenomics.com/dnbseq-technology/" target="_blank" rel="noopener">https://www.completegenomics.com/dnbseq-technology/</a></p></div></section><section class="slide  has-steps" data-part="p2" data-title="DNBSEQ 라이브러리의 원형화"><header><h2>DNBSEQ 라이브러리의 원형화</h2></header><div class="body"><ul class="lecture-bullets"><li>Adapter를 가진 DNA 조각 준비</li><li>단일가닥으로 전환</li><li>Splint와 ligase로 양끝 연결</li><li>완성된 single-stranded circle 선택</li></ul><ol class="mechanism-steps"><li>선형 라이브러리</li><li>단일가닥 전환</li><li>Splint 결합과 연결</li><li>원형 주형 확보</li></ol><p class="src"><a href="https://www.completegenomics.com/dnbseq-technology/" target="_blank" rel="noopener">https://www.completegenomics.com/dnbseq-technology/</a></p></div></section><section class="slide  has-steps" data-part="p2" data-title="Rolling Circle Amplification RCA"><header><h2>Rolling Circle Amplification RCA</h2></header><div class="body"><ul class="lecture-bullets"><li>원형 주형을 따라 연속 신장</li><li>한 가닥 안에 반복된 사본의 연결</li><li>원래 circle을 반복하여 읽는 복제</li><li>PCR의 열 주기·지수 증폭과 구분</li></ul><ol class="mechanism-steps"><li>원형 주형과 프라이머</li><li>중합효소의 연속 복제</li><li>반복 사본이 연결된 긴 가닥</li><li>압축된 DNA nanoball</li></ol><p class="src"><a href="https://www.completegenomics.com/dnbseq-technology/" target="_blank" rel="noopener">https://www.completegenomics.com/dnbseq-technology/</a></p></div></section><section class="slide " data-part="p2" data-title="나노볼과 패턴 배열"><header><h2>나노볼과 패턴 배열</h2></header><div class="body"><ul class="lecture-bullets"><li>만들어진 DNB를 고정된 위치에 적재</li><li>정해진 자리별로 광학 신호 구분</li><li>위치 혼합과 빈 자리의 관리</li><li>원형 주형 수와 읽히는 DNB 수의 구분</li></ul><p class="src"><a href="https://www.completegenomics.com/dnbseq-technology/" target="_blank" rel="noopener">https://www.completegenomics.com/dnbseq-technology/</a></p></div></section><section class="slide " data-part="p2" data-title="cPAS와 염기 판독"><header><h2>cPAS와 염기 판독</h2></header><div class="body"><ul class="lecture-bullets"><li>Combinatorial Probe-Anchor Synthesis</li><li>Adapter·anchor를 기반으로 판독 위치 설정</li><li>염기 신호의 촬영과 주기 반복</li><li>초기 cPAL ligation과 현재 cPAS의 구분</li></ul><p class="src"><a href="https://www.bgi.com/wp-content/uploads/sites/2/2018/06/DNBseq-Human-Whole-Genome-Sequencing-092019.pdf" target="_blank" rel="noopener">https://www.bgi.com/wp-content/uploads/sites/2/2018/06/DNBseq-Human-Whole-Genome-Sequencing-092019.pdf</a></p></div></section><section class="slide video-lesson" data-part="p2" data-title="DNBSEQ 공식 개관 영상" data-video-lesson><header><h2>DNBSEQ 공식 개관 영상</h2></header><div class="body"><div class="video-content"><div class="video-layout"><div><div class="video-stage"><img class="video-preview" src="assets/yt_-sWSkjITVxc.jpg" alt="Discover DNBSEQ™ Technology: Revolutionizing Next-Generation Sequencing"><button class="video-play" type="button"><span class="play-symbol">▶</span><span class="play-label">본문에서 영상 재생</span></button></div><p class="video-caption"><span>Complete Genomics (0:56)</span><a class="video-source-link" href="https://www.youtube.com/watch?v=-sWSkjITVxc" target="_blank" rel="noopener">YouTube에서 보기</a></p></div><div class="video-explain"><h3>영상의 관찰 항목</h3><ul class="video-prompts"><li>원형화와 반복 복제</li><li>나노볼 형성과 flow cell 적재</li><li>광학 신호에서 read 생성</li></ul><div class="video-observation" hidden></div><div class="video-credit" hidden></div><div class="video-choices"><button class="video-choice" type="button">Discover DNBSEQ™ Technology: Revolutionizing Next-Generation Sequencing</button></div></div></div><script type="application/json" class="video-data">[{"id": "-sWSkjITVxc", "title": "Discover DNBSEQ™ Technology: Revolutionizing Next-Generation Sequencing", "author": "Complete Genomics", "duration": "0:56", "note": "영상은 전체 흐름을 짧게 확인하는 데 사용합니다. 방금 설명한 원형화, RCA, 배열, 판독의 위치를 다시 가리키게 합니다. 제조사의 성능 표현을 모든 library에서 보장되는 결과로 일반화하지 않습니다.", "label": "DNBSEQ 공식 개관 영상"}]</script></div><p class="src"><a href="https://www.completegenomics.com/dnbseq-technology/" target="_blank" rel="noopener">https://www.completegenomics.com/dnbseq-technology/</a></p></div></section><section class="slide  has-steps" data-part="p2" data-title="Element avidity sequencing"><header><h2>Element avidity sequencing</h2></header><div class="body"><div class="lecture-columns"><div><figure class="lecture-figure"><img src="assets/aviti.jpg" alt="technology-abc-hero-photo"><figcaption>Element Biosciences</figcaption></figure></div><div><ul class="lecture-bullets"><li>RCA 기반 polony의 준비</li><li>다중 결합 avidite로 염기 인식</li><li>염기 인식과 한 칸 신장을 분리</li><li>검출 시약 농도와 결합 안정성의 설계</li></ul></div></div><ol class="mechanism-steps"><li>원형 주형의 polony 형성</li><li>Avidite 결합과 염기 인식</li><li>인식 표지 제거</li><li>한 염기 신장과 다음 주기</li></ol><p class="src"><a href="https://www.elementbiosciences.com/technology/avidite-base-chemistry" target="_blank" rel="noopener">https://www.elementbiosciences.com/technology/avidite-base-chemistry</a></p></div></section><section class="slide " data-part="p2" data-title="Sequencing by Binding SBB"><header><h2>Sequencing by Binding SBB</h2></header><div class="body"><ul class="lecture-bullets"><li>효소-뉴클레오타이드의 상보 결합을 검출</li><li>검출 단계와 염기 도입 단계를 분리</li><li>Onso의 2024년 공개 기술 자료를 사례로 사용</li><li>단일분자 SMRT와 다른 short-read 화학</li></ul><p class="src"><a href="https://www.pacb.com/wp-content/uploads/SBB-Product-note.pdf" target="_blank" rel="noopener">https://www.pacb.com/wp-content/uploads/SBB-Product-note.pdf</a></p></div></section><section class="slide " data-part="p2" data-title="Ultima mostly natural SBS"><header><h2>Ultima mostly natural SBS</h2></header><div class="body"><ul class="lecture-bullets"><li>한 종류의 염기를 흐름별로 공급</li><li>일부 표지 기질의 신호로 도입을 검출</li><li>열린 wafer 표면의 액체 분배와 광학 스캔</li><li>Homopolymer 길이 추정의 필요</li></ul><p class="src"><a href="https://www.nature.com/articles/s41587-022-01452-6" target="_blank" rel="noopener">https://www.nature.com/articles/s41587-022-01452-6</a></p></div></section><section class="slide " data-part="p3" data-title="증폭 방식과 판독 화학 비교"><header><h2>증폭 방식과 판독 화학 비교</h2></header><div class="body"><div class="lecture-columns"><div><table class="lecture-table"><thead><tr><th>기술</th><th>주형 신호 확대</th><th>측정 신호</th></tr></thead><tbody><tr><td>454</td><td>비드 emPCR</td><td>PPi 연쇄 발광</td></tr><tr><td>Illumina</td><td>Cluster</td><td>형광 SBS</td></tr><tr><td>SOLiD</td><td>비드 emPCR</td><td>Ligation 색 공간</td></tr><tr><td>Ion Torrent</td><td>비드 emPCR</td><td>pH·전압</td></tr><tr><td>DNBSEQ</td><td>원형 주형 RCR</td><td>광학 cPAS</td></tr><tr><td>Element</td><td>RCA polony</td><td>Avidite 결합</td></tr><tr><td>Ultima</td><td>비드</td><td>Flow 광학</td></tr></tbody></table></div><div><ul class="lecture-bullets"><li>Emulsion PCR과 bridge 증폭</li><li>RCA 나노볼·polony</li><li>가역 종결자 SBS와 ligation</li><li>이온 검출과 결합 기반 검출</li></ul></div></div><p class="src"><a href="https://www.illumina.com/science/technology/next-generation-sequencing/sequencing-technology.html" target="_blank" rel="noopener">https://www.illumina.com/science/technology/next-generation-sequencing/sequencing-technology.html</a></p></div></section><section class="slide " data-part="p3" data-title="오류 유형과 데이터 저장"><header><h2>오류 유형과 데이터 저장</h2></header><div class="body"><ul class="lecture-bullets"><li>치환: 틀린 염기 호출</li><li>삽입·삭제: 반복 길이·동기화 문제</li><li>Dropout: 분자·증폭·적재·판독 단계의 손실</li><li>오류율과 read당 독립성의 구분</li></ul><p class="src"><a href="https://www.illumina.com/science/technology/next-generation-sequencing/sequencing-technology.html" target="_blank" rel="noopener">https://www.illumina.com/science/technology/next-generation-sequencing/sequencing-technology.html</a></p></div></section><section class="slide  has-quiz" data-part="p3" data-title="병렬 시퀀싱 확인 문제"><header><h2>병렬 시퀀싱 확인 문제</h2></header><div class="body"><ul class="lecture-bullets"><li>DNBSEQ에서 circle·RCA·나노볼·cPAS의 순서</li><li>Sanger의 ddNTP와 SBS의 가역 종결자 비교</li><li>Ion Torrent와 454의 검출 신호 비교</li><li>Avidity·SBB에서 인식과 신장을 분리하는 이유</li></ul><details class="question"><summary>확인·실습 문제</summary><p>새 플랫폼의 증폭 방식·판독 화학·검출기를 각각 한 문장으로 분리하여 설명</p></details><p class="src"><a href="https://www.illumina.com/science/technology/next-generation-sequencing/sequencing-technology.html" target="_blank" rel="noopener">https://www.illumina.com/science/technology/next-generation-sequencing/sequencing-technology.html</a></p></div></section></main></div><div class="ctrl"><button class="cb" id="b-side" type="button">☰ 목차</button><button class="cb" id="b-prev" type="button" aria-label="이전 슬라이드">←</button><span class="count" id="count"></span><button class="cb pri" id="b-next" type="button">다음 →</button><span class="where" id="where"></span><span class="sp"></span><button class="cb" id="b-read" type="button">읽기 모드</button><button class="cb presentonly" id="b-full" type="button">전체화면</button></div></div></div><script>(function(){'use strict';var META={"label": "DNA Data Storage 11-2", "parts": [{"id": "p0", "name": "클론 증폭과 신호 검출", "min": 10}, {"id": "p1", "name": "454 Illumina SOLiD Ion Torrent", "min": 29}, {"id": "p2", "name": "DNBSEQ와 중간 기술", "min": 26}, {"id": "p3", "name": "기술 비교와 문제", "min": 10}]};
+var $ = function(id){ return document.getElementById(id); };
+var el = function(tag, cls, txt){ var e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
+var app = $('app'), deck = $('deck');
+var slides = Array.prototype.slice.call(deck.querySelectorAll('.slide'));
+var PARTS = META.parts;
+var partOf = {}, t0 = 0;
+PARTS.forEach(function(p){ p.start = t0; t0 += p.min; partOf[p.id] = p; });
+function mmss(m){ return Math.floor(m/60) + ':' + String(m%60).padStart(2,'0'); }
+
+/* ---------- footers ---------- */
+slides.forEach(function(s, i){
+  if (s.classList.contains('cover') || s.classList.contains('ending')) return;
+  var f = el('footer'); f.appendChild(el('span', '', META.label + ' · ' + partOf[s.dataset.part].name)); f.appendChild(el('span', 'pg', String(i+1)));
+  var notes = s.querySelector('.notes'); if (notes) s.insertBefore(f, notes); else s.appendChild(f);
+});
+
+/* ---------- sidebar (Notion식 트리) ---------- */
+var nav = $('side-nav'), navBtns = [], groups = {};
+PARTS.forEach(function(p){
+  var h = el('button', 'part-h'); h.type = 'button'; h.setAttribute('aria-expanded', 'true');
+  h.appendChild(el('span', 'tw', '▶')); h.appendChild(el('span', 'nm', p.name));
+  var list = el('div', 'part-list');
+  h.addEventListener('click', function(){ var open = h.getAttribute('aria-expanded') !== 'true'; h.setAttribute('aria-expanded', String(open)); list.hidden = !open; });
+  nav.appendChild(h); nav.appendChild(list); groups[p.id] = {h:h, list:list};
+});
+slides.forEach(function(s, i){
+  var b = el('button', 'nav-b'); b.type = 'button';
+  b.appendChild(el('span', 'no', String(i+1))); b.appendChild(el('span', '', s.dataset.title || ''));
+  if (s.dataset.lab) b.appendChild(el('span', 'ml', 'MATLAB'));
+  if (s.dataset.def) b.appendChild(el('span', 'ml', 'DEF'));
+  b.addEventListener('click', function(){ go(i); if (mode === 'read') { app.classList.remove('sideopen'); syncBtns(); } });
+  groups[s.dataset.part].list.appendChild(b); navBtns.push(b);
+});
+
+/* ---------- navigation ---------- */
+var cur = 0, mode = 'present', userMode = null;
+function go(i, fromScroll){
+  cur = Math.max(0, Math.min(slides.length - 1, i));
+  slides.forEach(function(s, j){ s.hidden = (mode === 'present' && j !== cur); });
+  navBtns.forEach(function(b, j){ if (j === cur) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current'); });
+  var s = slides[cur], p = partOf[s.dataset.part], g = groups[p.id];
+  g.h.setAttribute('aria-expanded', 'true'); g.list.hidden = false;
+  if (navBtns[cur].scrollIntoView) navBtns[cur].scrollIntoView({block:'nearest'});
+  $('count').textContent = (cur+1) + ' / ' + slides.length;
+  $('where').textContent = p.name;
+  try { history.replaceState(null, '', '#' + (cur+1)); } catch(e){}
+  if (mode === 'read' && !fromScroll) s.scrollIntoView({block:'start'});
+}
+function setMode(m){
+  mode = m; app.classList.toggle('read', m === 'read');
+  if (m === 'read') app.classList.remove('sideopen');
+  go(cur); syncBtns();
+}
+function autoMode(){ if (userMode) return; var want = window.innerWidth < 900 ? 'read' : 'present'; if (want !== mode) setMode(want); }
+function sideVisible(){ return mode === 'read' ? app.classList.contains('sideopen') : !app.classList.contains('noside'); }
+function toggleSide(){ if (mode === 'read') app.classList.toggle('sideopen'); else app.classList.toggle('noside'); syncBtns(); }
+function syncBtns(){
+  $('b-side').setAttribute('aria-pressed', String(sideVisible()));
+  $('b-read').setAttribute('aria-pressed', String(mode === 'read'));
+}
+$('b-prev').addEventListener('click', function(){ go(cur-1); });
+$('b-next').addEventListener('click', function(){ go(cur+1); });
+$('b-side').addEventListener('click', toggleSide);
+$('b-read').addEventListener('click', function(){ userMode = true; setMode(mode === 'read' ? 'present' : 'read'); });
+var fsBtn = $('b-full');
+if (!document.fullscreenEnabled) fsBtn.hidden = true;
+function fullscreen(){ try { if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen(); } catch(e){} }
+fsBtn.addEventListener('click', fullscreen);
+document.addEventListener('keydown', function(ev){
+  if (ev.metaKey || ev.ctrlKey || ev.altKey) return;
+  var t = ev.target, tag = t && t.tagName;
+  if (tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA') return;
+  var k = ev.key, isBtn = (tag === 'BUTTON' || tag === 'SUMMARY' || tag === 'A');
+  if ((k === ' ' || k === 'Enter') && isBtn) return;
+  if (k === 'ArrowRight' || k === 'PageDown' || k === ' ') { go(cur+1); ev.preventDefault(); }
+  else if (k === 'ArrowLeft' || k === 'PageUp') { go(cur-1); ev.preventDefault(); }
+  else if (k === 'Home') { go(0); ev.preventDefault(); }
+  else if (k === 'End') { go(slides.length-1); ev.preventDefault(); }
+  else if (k === 's' || k === 'S') toggleSide();
+  else if (k === 'r' || k === 'R') { userMode = true; setMode(mode === 'read' ? 'present' : 'read'); }
+  else if (k === 'f' || k === 'F') fullscreen();
+});
+var tx = null;
+deck.addEventListener('touchstart', function(e){ tx = e.touches[0].clientX; }, {passive:true});
+deck.addEventListener('touchend', function(e){ if (tx == null || mode !== 'present') return; var dx = e.changedTouches[0].clientX - tx; tx = null; if (Math.abs(dx) > 70) go(cur + (dx < 0 ? 1 : -1)); }, {passive:true});
+window.addEventListener('resize', autoMode);
+window.addEventListener('hashchange', function(){ var n = parseInt(location.hash.slice(1), 10); if (n && n-1 !== cur) go(n-1); });
+if ('IntersectionObserver' in window){
+  var io = new IntersectionObserver(function(es){ if (mode !== 'read') return; es.forEach(function(e){ if (e.isIntersecting) go(slides.indexOf(e.target), true); }); }, {rootMargin:'-45% 0px -50% 0px'});
+  slides.forEach(function(s){ io.observe(s); });
+}
+
+/* ---------- code boxes: highlight + copy ---------- */
+function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+Array.prototype.forEach.call(document.querySelectorAll('.code'), function(box){
+  var pre = box.querySelector('pre'), raw = pre.textContent.replace(/\s+$/, '');
+  pre.innerHTML = raw.split('\n').map(function(line){
+    if (/^\s*%%/.test(line)) return '<span class="sec">' + esc(line) + '</span>';
+    var inStr = false, cut = -1;
+    for (var i = 0; i < line.length; i++){
+      var ch = line[i];
+      if (ch === "'" ){ var prev = line[i-1] || ' '; if (inStr) inStr = false; else if (!/[\w\)\]\}\.']/.test(prev)) inStr = true; }
+      else if (ch === '%' && !inStr){ cut = i; break; }
+    }
+    return cut < 0 ? esc(line) : esc(line.slice(0, cut)) + '<span class="cm">' + esc(line.slice(cut)) + '</span>';
+  }).join('\n');
+  var btn = box.querySelector('.copy');
+  btn.addEventListener('click', function(){
+    function done(ok){ btn.textContent = ok ? '복사됨 ✓' : '선택됨 — Ctrl/⌘+C'; btn.classList.toggle('done', ok); setTimeout(function(){ btn.textContent = '복사'; btn.classList.remove('done'); }, 1800); }
+    function fallback(){
+      var ta = el('textarea'); ta.value = raw; ta.setAttribute('readonly', ''); ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0'; document.body.appendChild(ta); ta.select();
+      var ok = false; try { ok = document.execCommand('copy'); } catch(e){}
+      document.body.removeChild(ta);
+      if (!ok){ var r = document.createRange(); r.selectNodeContents(pre); var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r); }
+      done(ok);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(raw).then(function(){ done(true); }, fallback); else fallback();
+  });
+});
+
+/* ---------- helpers for bit widgets ---------- */
+function bitRow(host, bits, opts){
+  host.innerHTML = '';
+  bits.forEach(function(v, i){
+    var cls = 'b ' + (opts.cls ? opts.cls(i, v) : '');
+    var e = opts.onClick ? el('button', cls, String(v)) : el('span', cls, String(v));
+    if (opts.onClick){ e.type = 'button'; e.setAttribute('aria-label', (i+1) + '번 칸, 값 ' + v); e.addEventListener('click', function(){ opts.onClick(i); }); }
+    host.appendChild(e);
+    if (opts.gapAfter && opts.gapAfter.indexOf(i) >= 0) host.appendChild(el('span', 'gap'));
+  });
+}
+function pct(x){ return (x*100).toFixed(2).replace(/\.?0+$/,'') + '%'; }
+
+/* Stop a lecture video when changing slides or selecting another source. */
+function lectureVideosInit(){
+  var lessons=[].slice.call(document.querySelectorAll('[data-video-lesson]'));
+  var playing=null;
+  lessons.forEach(function(lesson){
+    if(lesson.dataset.videoReady)return;
+    lesson.dataset.videoReady='1';
+    var videos=JSON.parse(lesson.querySelector('.video-data').textContent);
+    var stage=lesson.querySelector('.video-stage');
+    var preview=lesson.querySelector('.video-preview');
+    var play=lesson.querySelector('.video-play');
+    var source=lesson.querySelector('.video-source-link');
+    var credit=lesson.querySelector('.video-credit');
+    var note=lesson.querySelector('.video-observation');
+    var choices=[].slice.call(lesson.querySelectorAll('.video-choice'));
+    var selected=0;
+    function stop(){
+      var frame=stage.querySelector('iframe');
+      if(frame)frame.remove();
+      preview.hidden=false;play.hidden=false;
+      if(playing===stop)playing=null;
+    }
+    function select(i){
+      stop();selected=i;
+      var video=videos[i];
+      preview.src='assets/yt_'+video.id+'.jpg';
+      preview.alt=video.title;
+      source.href='https://www.youtube.com/watch?v='+video.id;
+      credit.textContent=video.author+' ('+video.duration+')';
+      note.textContent=video.note;
+      choices.forEach(function(button,j){button.setAttribute('aria-pressed',String(i===j));});
+      play.setAttribute('aria-label',video.label+' 재생');
+    }
+    choices.forEach(function(button,i){button.addEventListener('click',function(){select(i);});});
+    play.addEventListener('click',function(){
+      if(playing)playing();
+      var video=videos[selected];
+      var frame=document.createElement('iframe');
+      frame.title=video.title;
+      frame.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      frame.allowFullscreen=true;
+      frame.referrerPolicy='strict-origin-when-cross-origin';
+      frame.src='https://www.youtube-nocookie.com/embed/'+video.id+'?autoplay=1&rel=0&playsinline=1';
+      preview.hidden=true;play.hidden=true;stage.appendChild(frame);playing=stop;
+    });
+    new MutationObserver(function(){if(lesson.hidden)stop();}).observe(lesson,{attributes:true,attributeFilter:['hidden']});
+    select(0);
+  });
+}
+document.addEventListener('DOMContentLoaded',lectureVideosInit);
+setTimeout(lectureVideosInit,60);
+
+/* ---------- start ---------- */
+if (window.innerWidth < 1180 && window.innerWidth >= 900) app.classList.add('noside');
+var h0 = parseInt(location.hash.slice(1), 10); cur = (h0 && h0 <= slides.length) ? h0 - 1 : 0;
+mode = window.innerWidth < 900 ? 'read' : 'present'; app.classList.toggle('read', mode === 'read');
+go(cur, mode === 'read' && cur === 0); syncBtns();
+
+})();</script></body></html>

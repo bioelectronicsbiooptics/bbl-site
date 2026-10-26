@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 320" width="520" height="320" font-family="Pretendard, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif">
+  <title>단백질 나노포어 3종 단면과 감지 구역</title>
+  <rect x="0" y="0" width="520" height="320" fill="#FFFFFF"/>
+
+  <!-- 지질막 띠 (포어 뒤) -->
+  <rect x="0" y="160" width="520" height="40" fill="#5B6670" fill-opacity="0.28"/>
+  <text x="6" y="184" font-size="10" fill="#5B6670">막</text>
+  <text x="6" y="72" font-size="11" fill="#16324F">cis</text>
+  <text x="6" y="236" font-size="11" fill="#16324F">trans</text>
+
+  <!-- 이름 -->
+  <g font-size="13" font-weight="700" fill="#16324F" text-anchor="middle">
+    <text x="95" y="30">α-hemolysin</text>
+    <text x="260" y="30">MspA</text>
+    <text x="425" y="30">CsgG (MinION R9)</text>
+  </g>
+  <g font-size="11" fill="#5B6670" text-anchor="middle">
+    <text x="95" y="46">7량체 · 황색포도알균 독소</text>
+    <text x="260" y="46">8량체 · 마이코박테리아</text>
+    <text x="425" y="46">9량체 · 대장균 분비 통로</text>
+  </g>
+
+  <!-- α-hemolysin: 넓은 cap + 긴 stem -->
+  <path d="M35,62 L155,62 L155,132 L117,142 L117,222 L73,222 L73,142 L35,132 Z" fill="#2E7D54"/>
+  <path d="M70,62 L120,62 L125,98 L101,136 L103,222 L87,222 L89,136 L65,98 Z" fill="#FFFFFF"/>
+  <!-- MspA: 깔때기 -->
+  <path d="M205,72 L315,72 L310,140 L282,200 L238,200 L210,140 Z" fill="#2E7D54"/>
+  <path d="M225,72 L295,72 L266,194 L265,200 L255,200 L254,194 Z" fill="#FFFFFF"/>
+  <!-- CsgG: 통 + 가운데 조임 -->
+  <path d="M365,70 L485,70 L485,140 L470,212 L380,212 L365,140 Z" fill="#2E7D54"/>
+  <path d="M395,70 L455,70 L450,112 L431,122 L431,130 L455,140 L455,212 L395,212 L395,140 L419,130 L419,122 L400,112 Z" fill="#FFFFFF"/>
+
+  <!-- ssDNA -->
+  <g stroke="#16324F" stroke-width="2" fill="none">
+    <path d="M95,54 L95,240"/>
+    <path d="M260,60 L260,222"/>
+    <path d="M425,58 L425,232"/>
+  </g>
+
+  <!-- 감지 구역 표시 -->
+  <g stroke="#C03B3B" stroke-width="2.2" fill="none">
+    <path d="M124,140 L130,140 L130,222 L124,222"/>
+    <path d="M276,188 L282,188 L282,204 L276,204"/>
+    <path d="M413,118 L407,118 L407,134 L413,134"/>
+    <path d="M407,126 L364,126" stroke-width="1"/>
+  </g>
+  <g font-size="10.5" fill="#C03B3B">
+    <text x="134" y="178">stem 전체</text>
+    <text x="134" y="192">~5 nm ≈ 12 nt</text>
+    <text x="287" y="194">좁은 목</text>
+    <text x="287" y="207">≈ 4–5 nt</text>
+    <text x="360" y="119" text-anchor="end">좁은 목</text>
+    <text x="360" y="140" text-anchor="end">≈ 4–5 nt</text>
+  </g>
+
+  <!-- 아래 요약 -->
+  <text x="260" y="254" font-size="12" font-weight="700" fill="#C03B3B" text-anchor="middle">감지 구역 = 반지름 ~0.75 nm인 가장 좁은 부분 (ssDNA 반지름 ~0.6 nm)</text>
+  <g font-size="11" fill="#16324F" text-anchor="middle">
+    <text x="95" y="276">최대 막힘 ≥ 90%</text>
+    <text x="260" y="276">최대 막힘 ~80%</text>
+    <text x="425" y="276">최대 막힘 ~75%</text>
+    <text x="95" y="292">여러 염기가 한꺼번에 → 해독 어려움</text>
+    <text x="260" y="292">phi29 중합효소로 첫 해독</text>
+    <text x="425" y="292">helicase와 함께 MinION에 사용</text>
+  </g>
+  <text x="514" y="314" font-size="8.5" fill="#5B6670" text-anchor="end">Branton &amp; Deamer (2019) Fig. 4.1 재구성 (50·54–57쪽)</text>
+</svg>

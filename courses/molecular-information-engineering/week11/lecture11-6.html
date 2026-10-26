@@ -1,0 +1,1183 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>11-6 라이브러리 커버리지와 FASTQ</title><style>/* BLUE 포맷 (bluelib.py) 을 HTML 로 옮긴 단일 테마 — 1em = 15pt, 1in = 4.8em (슬라이드 폭 64em) */
+:root{
+  --navy:#16324F; --teal:#529FD9; --amber:#224EBD; --crim:#C03B3B; --ink:#1A1A1A; --gray:#5B6670;
+  --lgray:#F4F6F9; --white:#FFFFFF; --border:#D8DEE6; --green:#2E7D54; --cream:#FAF6EC;
+  --code:#1E2530; --codeink:#E6EDF3; --codecm:#8FB7A0; --sub1:#A8C4D4; --sub2:#C8D8E4;
+  --tealwash:#EAF3FB; --crimwash:#FBECEC; --greenwash:#E9F4EE; --ochre:#8A5F12;
+  --canvas:#E9EDF2; --side-hover:#1F4263; --side-line:#2A4A68;
+  --sans:"Apple SD Gothic Neo","Helvetica Neue","Noto Sans KR","Malgun Gothic",-apple-system,BlinkMacSystemFont,sans-serif;
+  --mono:Menlo,"SFMono-Regular",Consolas,"Liberation Mono",monospace;
+  --math:"STIX Two Math","Cambria Math","Latin Modern Math","Times New Roman","Apple SD Gothic Neo","Noto Sans KR",serif;
+  --helix:none;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{margin:0;background:var(--canvas);color:var(--ink);font:16px/1.6 var(--sans);word-break:keep-all;overflow-wrap:anywhere;-webkit-text-size-adjust:100%}
+p,h1,h2,h3,ul,ol,dl,dd,figure,pre{margin:0}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--teal);outline-offset:2px;border-radius:4px}
+
+/* ---------- shell ---------- */
+.app{height:100%;display:grid;grid-template-columns:292px minmax(0,1fr);grid-template-rows:minmax(0,1fr)}
+.app.noside{grid-template-columns:minmax(0,1fr)} .app.noside .side{display:none}
+.side{background:var(--navy);color:#E8EEF4;display:flex;flex-direction:column;min-height:0;overflow:hidden;border-right:3px solid var(--amber)}
+.side-head{padding:18px 18px 14px;display:flex;flex-direction:column;gap:3px;border-bottom:1px solid var(--side-line)}
+.side-head .k{font:700 11.5px "Helvetica Neue",var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--teal)}
+.side-head .t{font-size:18px;font-weight:700;line-height:1.35;color:#fff}
+.side-head .s{font-size:13px;color:var(--sub1)}
+.side-nav{flex:1;min-height:0;overflow-y:auto;padding:6px 8px 16px}
+.part-h{display:flex;align-items:baseline;gap:6px;width:100%;padding:9px 8px 5px;border:0;background:none;cursor:pointer;text-align:left;font-size:12.5px;font-weight:700;color:var(--sub1);border-radius:6px}
+.part-h:hover{background:var(--side-hover)}
+.part-h .tw{font-size:10px;width:1em;display:inline-block;transition:transform .12s}
+.part-h[aria-expanded="true"] .tw{transform:rotate(90deg)}
+.part-h .nm{flex:1} .part-h .tm{font:500 11.5px var(--mono);color:var(--sub1);white-space:nowrap}
+.part-list{display:flex;flex-direction:column}
+.nav-b{display:flex;gap:8px;width:100%;text-align:left;font-size:13.5px;line-height:1.4;padding:5px 8px 5px 22px;border:0;border-radius:6px;background:none;color:#E8EEF4;cursor:pointer}
+.nav-b .no{font:600 11.5px/1.65 var(--mono);color:var(--sub1);min-width:1.7em}
+.nav-b .ml{font:700 9.5px/1.9 var(--mono);color:var(--teal);margin-left:auto}
+.nav-b:hover{background:var(--side-hover)}
+.nav-b[aria-current="true"]{background:#fff;color:var(--navy);font-weight:700}
+.nav-b[aria-current="true"] .no,.nav-b[aria-current="true"] .ml{color:var(--amber)}
+.side-notes{border-top:1px solid var(--side-line);padding:12px 18px 14px;font-size:13.5px;line-height:1.65;max-height:34%;overflow:auto;color:#E8EEF4}
+.side-notes b{display:block;font-size:11px;letter-spacing:.08em;color:var(--teal);margin-bottom:4px}
+
+.main{display:flex;flex-direction:column;min-width:0;min-height:0}
+.stage{flex:1;min-height:0;container-type:size;display:grid;place-items:center;padding:14px}
+.deck{width:min(100cqw,calc(100cqh * 16 / 9));aspect-ratio:16/9;container-type:inline-size;background:var(--white);border:1px solid var(--border);overflow:hidden;box-shadow:0 1px 2px rgba(10,30,50,.06),0 12px 32px rgba(10,30,50,.12)}
+.ctrl{display:flex;align-items:center;flex-wrap:wrap;gap:6px 8px;padding:8px 14px;border-top:1px solid var(--border);background:var(--white);font-size:14px;color:var(--ink)}
+.ctrl .sp{flex:1}
+.ctrl .where{color:var(--gray);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:36vw}
+.ctrl .count{font:600 14px var(--mono);font-variant-numeric:tabular-nums;min-width:4.4em;text-align:center}
+.ctrl .clock{font:600 14px var(--mono);font-variant-numeric:tabular-nums;color:var(--gray)}
+.cb{min-height:36px;min-width:36px;padding:6px 12px;border:1px solid var(--border);border-radius:8px;background:var(--lgray);cursor:pointer;line-height:1.2;color:var(--ink)}
+.cb:hover{border-color:var(--gray)}
+.cb[aria-pressed="true"]{border-color:var(--amber);background:var(--tealwash);color:var(--amber)}
+.cb.pri{background:var(--amber);border-color:var(--amber);color:#fff;font-weight:700}
+
+/* ---------- read mode ---------- */
+.app.read{display:block;height:auto;min-height:100%}
+.app.read .side{display:none;position:fixed;inset:0 auto 0 0;width:min(86vw,320px);z-index:20;box-shadow:0 0 0 100vmax rgba(0,0,0,.4)}
+.app.read.sideopen .side{display:flex}
+.app.read .main{display:block}
+.app.read .stage{container-type:normal;display:block;padding:16px}
+.app.read .deck{width:100%;max-width:960px;margin-inline:auto;aspect-ratio:auto;container-type:normal;background:none;border:0;box-shadow:none;overflow:visible;display:flex;flex-direction:column;gap:18px}
+.app.read .slide{font-size:16px;height:auto;min-height:0;overflow:hidden;border:1px solid var(--border);box-shadow:0 1px 2px rgba(10,30,50,.05)}
+.app.read .slide.cover,.app.read .slide.ending{min-height:22em}
+.app.read .ctrl{position:sticky;bottom:0;z-index:10}
+.app.read .presentonly{display:none}
+@media (max-width:780px){
+  .app.read .slide{padding-inline:16px}
+  .app.read .cols,.app.read .cols.w64,.app.read .cols.w46,.app.read .cols.w73,.app.read .cols.w55{grid-template-columns:minmax(0,1fr)}
+  .app.read .slide.cover{padding-right:16px} .app.read .slide.cover .art{display:none}
+  .app.read .slide.cover h1{font-size:2em}
+  .app.read .flowx{flex-direction:column} .app.read .flowx .ar{transform:rotate(90deg);align-self:center}
+}
+
+/* ---------- slide (BLUE) ---------- */
+.slide{position:relative;font-size:calc(100cqw / 64);line-height:1.55;height:100%;display:flex;flex-direction:column;background:var(--white);color:var(--ink);padding:2.0em 2.64em .75em;overflow:hidden}
+.slide::before{content:"";position:absolute;inset:0 0 auto 0;height:.48em;background:var(--teal);z-index:2}
+.slide::after{content:"";position:absolute;right:.3em;top:50%;transform:translateY(-50%);height:calc(100% - 1.2em);aspect-ratio:1052/1540;max-width:22.5em;background:var(--helix) center/contain no-repeat;opacity:.07;pointer-events:none;z-index:0}
+.slide > *{position:relative;z-index:1}
+.slide > header{display:flex;flex-direction:column;gap:.1em}
+.slide h2{font-size:2em;font-weight:700;color:var(--navy);line-height:1.25;letter-spacing:-.01em;text-wrap:balance}
+.slide .sub{font-size:1em;color:var(--gray);line-height:1.4}
+.slide > header::after{content:"";display:block;width:7.2em;height:.17em;background:var(--amber);margin-top:.5em}
+.slide .body{flex:1;min-height:0;display:flex;flex-direction:column;gap:.75em;padding-top:1.05em;overflow:hidden auto}
+.slide .body.mid{justify-content:center}
+.slide > footer{display:flex;justify-content:space-between;gap:1em;font-size:.73em;color:var(--gray);padding-top:.45em}
+.slide > footer .pg{font-family:var(--mono)}
+.notes{display:none}
+.app.read.shownotes .slide .notes{display:block;font-size:.88em;color:var(--gray);border-top:1px dashed var(--border);margin-top:.8em;padding-top:.6em}
+
+.slide.quiz{background:var(--cream)} .slide.quiz::before{background:var(--amber)} .slide.quiz::after{display:none}
+.slide.cover,.slide.ending{background:var(--navy);color:#fff;justify-content:center}
+.slide.cover::before,.slide.cover::after,.slide.ending::before,.slide.ending::after{display:none}
+.slide.cover{padding:0 39.5% 0 4.3em;gap:0}
+.slide.cover .en{font:700 1em "Helvetica Neue",var(--sans);color:var(--teal);letter-spacing:.04em;margin-bottom:.7em}
+.slide.cover h1{font-size:2.67em;font-weight:700;line-height:1.22;letter-spacing:-.015em;text-wrap:balance}
+.slide.cover .s1{font-size:1.4em;color:var(--sub1);margin-top:.35em;line-height:1.4}
+.slide.cover .rule{width:7.7em;height:.19em;background:var(--teal);margin:1.5em 0 1.1em}
+.slide.cover .s2{font-size:1em;color:var(--sub2);line-height:1.7;max-width:32em}
+.slide.cover .keys{font-size:.74em;color:var(--sub1);margin-top:1.6em;display:flex;flex-wrap:wrap;gap:.3em 1.1em}
+.slide.cover .art{position:absolute;inset:0 0 0 61.5%;border-left:.24em solid var(--amber);background:#0F2740;overflow:hidden;font:700 1.5em/1.32 var(--mono);color:var(--teal);text-align:center;padding:.4em 0;z-index:1;white-space:pre;opacity:.95}
+.slide.cover .art span{color:#fff}
+kbd{font:600 .95em var(--mono);border:1px solid var(--side-line);border-radius:.3em;padding:0 .35em;color:#fff}
+.slide.ending{align-items:center;text-align:center;padding-inline:5em;gap:1.1em}
+.slide.ending h2{color:#fff;font-size:2.3em}
+.slide.ending .rule{width:100%;height:.24em;background:var(--teal)}
+.slide.ending p{font-size:1.27em;color:var(--sub2);line-height:1.7;max-width:36em}
+
+.cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1.5em;align-items:start}
+.cols.w64{grid-template-columns:minmax(0,3fr) minmax(0,2fr)} .cols.w46{grid-template-columns:minmax(0,2fr) minmax(0,3fr)}
+.cols.w73{grid-template-columns:minmax(0,7fr) minmax(0,4fr)} .cols.w55{grid-template-columns:minmax(0,11fr) minmax(0,9fr)}
+.stack{display:flex;flex-direction:column;gap:.65em;min-width:0}
+ul.pts{padding-left:1.1em;display:flex;flex-direction:column;gap:.4em;font-size:1.08em}
+ul.pts li::marker{color:var(--teal)} ul.pts.sm{font-size:.95em;gap:.3em}
+.gray{color:var(--gray)} .small{font-size:.86em} .tiny{font-size:.75em}
+.hl{color:var(--amber);font-weight:700} .bad{color:var(--crim);font-weight:700} .good{color:var(--green);font-weight:700} .nv{color:var(--navy);font-weight:700}
+code,.mono{font-family:var(--mono);font-size:.92em}
+var,.v{font-family:var(--math);font-style:italic;font-size:1.08em}
+.src{font-size:.6em;line-height:1.45;color:#A3ADB7;letter-spacing:.01em}
+.src i{font-style:italic}
+a{color:var(--amber)}
+
+/* keybox · card · flow · numbered list · stat */
+.kb{border-left:.26em solid var(--amber);background:var(--lgray);padding:.55em .9em .6em 1.1em;display:flex;flex-direction:column;gap:.12em}
+.kb > b{font-size:.8em;color:var(--amber)} .kb > p,.kb > div{font-size:1em;line-height:1.5}
+.kb.teal{border-color:var(--teal)} .kb.teal > b{color:#2F7FBE}
+.kb.crim{border-color:var(--crim)} .kb.crim > b{color:var(--crim)}
+.kb.green{border-color:var(--green)} .kb.green > b{color:var(--green)}
+.card{background:var(--lgray);border:1px solid var(--border);border-top:.36em solid var(--teal);border-radius:.3em;padding:.7em .95em .8em;display:flex;flex-direction:column;gap:.3em;min-width:0}
+.card.amber{border-top-color:var(--amber)} .card.crim{border-top-color:var(--crim)} .card.green{border-top-color:var(--green)}
+.card > h3{font-size:1.07em;color:var(--navy);line-height:1.35} .card > p,.card li{font-size:.87em;line-height:1.5}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(11em,1fr));gap:.8em}
+.flowx{display:flex;align-items:stretch;gap:.35em}
+.flowx .fb{flex:1 1 0;background:var(--lgray);border:1px solid var(--border);border-top:.34em solid var(--teal);border-radius:.3em;padding:.5em .45em .55em;text-align:center;display:flex;flex-direction:column;gap:.15em;min-width:0}
+.flowx .fb b{font-size:.87em;color:var(--navy);line-height:1.3} .flowx .fb span{font-size:.67em;color:var(--gray);line-height:1.4}
+.flowx .ar{align-self:center;color:var(--teal);font-size:.93em;font-weight:700}
+ol.nl{list-style:none;padding:0;display:flex;flex-direction:column;gap:.55em;counter-reset:n}
+ol.nl > li{counter-increment:n;display:grid;grid-template-columns:2.1em 1fr;gap:.7em;align-items:start;font-size:1.05em;line-height:1.5}
+ol.nl > li::before{content:counter(n);inline-size:2.05em;block-size:2.05em;border-radius:50%;background:var(--amber);color:#fff;font:700 .95em/2.05em "Helvetica Neue",var(--sans);text-align:center}
+.stat{display:flex;flex-direction:column;align-items:center;text-align:center}
+.stat b{font-size:2.27em;color:var(--teal);line-height:1.2;font-variant-numeric:tabular-nums} .stat span{font-size:.8em;color:var(--gray)}
+.badge{display:inline-block;font:700 .68em/1.9 var(--sans);padding:0 .7em;border-radius:1em;vertical-align:middle;white-space:nowrap}
+.badge.free{background:var(--greenwash);color:var(--green)} .badge.tb{background:var(--tealwash);color:var(--amber)}
+
+/* tables (BLUE) */
+.scroll{overflow-x:auto;min-width:0}
+table.tbl{border-collapse:collapse;width:100%;font-size:.87em;line-height:1.4}
+table.tbl th{background:var(--navy);color:#fff;font-weight:700;text-align:left;padding:.5em .65em}
+table.tbl td{padding:.42em .65em;border:1px solid var(--border);vertical-align:top;background:var(--white)}
+table.tbl tr:nth-child(even) td{background:var(--lgray)}
+table.tbl td:first-child{font-weight:700;color:var(--navy)}
+table.tbl td.num,table.tbl th.num{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+table.tbl td.c,table.tbl th.c{text-align:center;font-family:var(--mono)}
+table.tbl tbody.today td{background:var(--tealwash)}
+table.tbl tbody.today tr:first-child td{border-top:.22em solid var(--amber)}
+table.tbl tbody.today tr:last-child td{border-bottom:.22em solid var(--amber)}
+table.tbl tbody.today td:first-child{border-left:.22em solid var(--amber)}
+table.tbl tbody.today td:last-child{border-right:.22em solid var(--amber)}
+table.tbl.sm{font-size:.78em} table.tbl.sm td,table.tbl.sm th{padding:.3em .55em}
+.boxkey{display:inline-block;inline-size:1.6em;block-size:.9em;border:.2em solid var(--amber);background:var(--tealwash);vertical-align:middle;margin-right:.4em}
+table.mat{border-collapse:collapse;font:700 1em/1 var(--mono);border-left:.13em solid var(--navy);border-right:.13em solid var(--navy);border-radius:.3em}
+table.mat td{padding:.27em .4em;text-align:center}
+table.mat td.p{color:var(--ochre)} table.mat td.i{color:var(--amber)} table.mat td.on{background:var(--crimwash);color:var(--crim)}
+.matwrap{display:flex;align-items:center;gap:.55em;flex-wrap:wrap}
+
+/* equations, bits */
+.eq{font-family:var(--math);font-size:1.2em;line-height:1.55;padding:.42em .85em;background:var(--lgray);border:1px solid var(--border);overflow-x:auto;white-space:nowrap}
+.eq .why{font-family:var(--sans);font-size:.66em;color:var(--gray);margin-left:1em}
+.bits{display:inline-flex;flex-wrap:wrap;gap:.2em;vertical-align:middle}
+.b{inline-size:1.85em;block-size:1.85em;display:inline-grid;place-items:center;font:700 1em/1 var(--mono);border:.09em solid var(--border);border-radius:.25em;background:var(--white);color:var(--ink);padding:0}
+.b.m{background:var(--tealwash);border-color:var(--amber);color:var(--amber)}
+.b.r{background:var(--cream);border-color:var(--ochre);border-style:dashed;color:var(--ochre)}
+.b.e{background:var(--crimwash);border-color:var(--crim);color:var(--crim)}
+.b.ok{background:var(--greenwash);border-color:var(--green);color:var(--green)}
+.b.sm{inline-size:1.5em;block-size:1.5em;font-size:.86em}
+button.b{cursor:pointer} button.b:hover{border-color:var(--navy);box-shadow:0 0 0 .12em var(--tealwash)}
+.gap{display:inline-block;inline-size:.4em}
+.legend{display:flex;flex-wrap:wrap;gap:.25em 1.1em;font-size:.75em;color:var(--gray)}
+.legend span{display:inline-flex;align-items:center;gap:.45em} .legend .b{inline-size:1.15em;block-size:1.15em}
+.nt{font:700 1.08em var(--mono);letter-spacing:.16em}
+.nt em{font-style:normal;color:var(--crim);background:var(--crimwash);border-radius:.2em}
+.pipe{list-style:none;padding:0;display:flex;flex-direction:column}
+.pipe .stg{display:grid;grid-template-columns:minmax(9em,13.5em) 1fr;align-items:center;gap:.2em 1.2em;padding-block:.3em}
+.pipe .who{font-weight:700;color:var(--navy);line-height:1.35} .pipe .who small{display:block;font-weight:400;color:var(--gray);font-size:.74em}
+.pipe .stp{color:var(--gray);font-size:.8em;padding:.05em 0 .05em .8em;border-left:.13em solid var(--teal);margin-left:.35em}
+.pipe .stp::before{content:"▼ ";color:var(--teal);font-size:.8em}
+.nest{border:.1em solid var(--teal);border-radius:.45em;padding:.42em .7em .55em;display:flex;flex-direction:column;gap:.35em;background:var(--white)}
+.nest .nl2{font-size:.84em;line-height:1.45} .nest .nl2 b{font-size:1.12em;color:var(--navy)}
+.nest .ex{font-size:.72em;color:var(--gray)}
+.nest.n2{background:var(--lgray)} .nest.n4{background:var(--tealwash)} .nest.n5{background:var(--navy);border-color:var(--navy)} .nest.n5 .nl2{color:var(--sub2)} .nest.n5 .nl2 b{color:#fff}
+
+/* widgets */
+.panel{background:var(--lgray);border:1px solid var(--border);border-top:.36em solid var(--teal);border-radius:.3em;padding:.7em .95em .8em;display:flex;flex-direction:column;gap:.6em;min-width:0}
+.panel > h3{font-size:.95em;color:var(--navy)}
+.row{display:flex;flex-wrap:wrap;gap:.35em .5em;align-items:center}
+.lab{font-size:.76em;color:var(--gray);font-weight:700;min-width:5.4em}
+.btn{font-size:.8em;line-height:1.25;padding:.4em .8em;min-height:2.3em;border:1px solid var(--border);border-radius:.4em;background:var(--white);color:var(--ink);cursor:pointer}
+.btn:hover{border-color:var(--gray)}
+.btn[aria-pressed="true"]{border-color:var(--amber);background:var(--tealwash);color:var(--amber);font-weight:700}
+.sliders{display:grid;grid-template-columns:repeat(auto-fit,minmax(11em,1fr));gap:.3em 1.4em}
+.slider{display:flex;flex-direction:column}
+.slider label{display:flex;justify-content:space-between;align-items:baseline;font-size:.8em;color:var(--gray)}
+.slider output{font:700 1.25em var(--mono);color:var(--navy);font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--amber);min-height:1.6em;margin:0}
+select{font:700 1em var(--mono);padding:.3em .5em;border:1px solid var(--border);border-radius:.4em;background:var(--white);color:var(--ink);min-height:2.2em}
+.barx{display:flex;flex-wrap:wrap;gap:.15em}
+.barx .cell{inline-size:.9em;block-size:1.3em;border-radius:.15em;border:.08em solid}
+.barx .cell.m,.barx .seg.m{background:var(--tealwash);border-color:var(--amber);color:var(--amber)}
+.barx .cell.r,.barx .seg.r{background:var(--cream);border-color:var(--ochre);border-style:dashed;color:var(--ochre)}
+.barx.prop{flex-wrap:nowrap}
+.barx .seg{block-size:1.5em;border-radius:.2em;border:.08em solid;min-inline-size:.6em;font:700 .7em/2 var(--mono);text-align:center;overflow:hidden;white-space:nowrap}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(8.5em,1fr));gap:0 1.2em}
+.metric{padding-block:.4em;border-top:1px solid var(--border);display:flex;flex-direction:column}
+.metric .k{font-size:.74em;color:var(--gray)} .metric .val{font:700 1.5em/1.25 var(--mono);color:var(--teal);font-variant-numeric:tabular-nums}
+.metric .f{font-family:var(--math);color:var(--gray);font-size:.9em}
+.dots{display:grid;gap:.14em;max-width:14em} .dots i{aspect-ratio:1;border-radius:50%;background:var(--border)} .dots i.on{background:var(--amber)}
+.verdict{font-weight:700;font-size:.9em;line-height:1.5;padding:.45em .75em;border-radius:.3em;border:1px solid var(--border);background:var(--white)}
+.verdict.good{border-color:var(--green);background:var(--greenwash);color:var(--green)}
+.verdict.bad{border-color:var(--crim);background:var(--crimwash);color:var(--crim)}
+.verdict.warn{border-color:var(--ochre);background:var(--cream);color:var(--ochre)}
+.grid2d{display:inline-grid;grid-template-columns:repeat(4,auto);gap:.22em;align-items:center;justify-items:center}
+.grid2d .flag{font:700 .7em var(--mono);color:var(--gray);min-inline-size:2.6em;text-align:center} .grid2d .flag.bad{color:var(--crim)}
+pre.div{font:700 .92em/1.42 var(--mono);background:var(--white);border:1px solid var(--border);padding:.55em .8em;overflow-x:auto}
+pre.div .g{color:var(--ochre)} pre.div .m{color:var(--amber)} pre.div .rem{color:var(--green)}
+
+/* code box (BLUE code_box + 복사 버튼) */
+.code{background:var(--code);border-radius:.5em;color:var(--codeink);display:flex;flex-direction:column;min-width:0;min-height:0;overflow:hidden}
+.code .bar{display:flex;align-items:center;gap:.6em;padding:.5em .6em .15em 1em}
+.code .bar .ttl{font:700 .73em var(--mono);color:var(--teal);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.code .copy,.code .open{font:700 .68em/1 var(--sans);padding:.5em .85em;border-radius:.4em;border:1px solid #4A5666;background:#2A3340;color:var(--codeink);cursor:pointer;text-decoration:none;white-space:nowrap}
+.code .copy:hover,.code .open:hover{border-color:var(--teal);color:#fff}
+.code .copy.done{background:var(--green);border-color:var(--green);color:#fff}
+.slide .body .code{max-height:24.6em}
+.app.read .slide .body .code{max-height:30em}
+.code pre{font:.74em/1.42 var(--mono);padding:.3em 1.1em .8em;overflow:auto;white-space:pre;tab-size:4;color:var(--codeink)}
+.code pre .cm{color:var(--codecm)} .code pre .sec{color:var(--teal);font-weight:700}
+.out{background:var(--white);border:1px solid var(--border);border-left:.26em solid var(--green);display:flex;flex-direction:column;min-width:0}
+.out > b{font-size:.73em;color:var(--green);padding:.5em .9em 0}
+.out pre{font:.76em/1.5 var(--mono);padding:.25em .9em .6em;overflow:auto;white-space:pre;color:var(--ink)}
+.doc{font-size:.78em;color:var(--gray);line-height:1.7} .doc a{font-family:var(--mono);font-weight:700;text-decoration:none;border-bottom:1px solid var(--teal)}
+
+/* quiz */
+.qcard{background:var(--white);border:1px solid var(--border);border-radius:.5em;padding:.15em 1em}
+details.q summary{cursor:pointer;display:grid;grid-template-columns:2.2em 1fr;gap:.7em;align-items:center;font-weight:700;font-size:1.05em;padding-block:.55em;list-style:none;line-height:1.45}
+details.q summary::-webkit-details-marker{display:none}
+details.q summary::before{content:attr(data-n);inline-size:2.05em;block-size:2.05em;border-radius:50%;background:var(--amber);color:#fff;font:700 .95em/2.05em "Helvetica Neue",var(--sans);text-align:center}
+details.q .ans{padding:0 0 .7em 2.9em;font-size:.96em;display:flex;flex-direction:column;gap:.2em;color:var(--green);font-weight:600}
+details.q .ans::before{content:"클릭해서 답 확인 ▸";display:none}
+
+/* svg */
+svg{max-width:100%;height:auto;display:block}
+.s-ink{fill:var(--ink)} .s-gray{fill:var(--gray)} .s-navy{fill:var(--navy)} .s-amber{fill:var(--amber)} .s-teal{fill:var(--teal)} .s-crim{fill:var(--crim)} .s-green{fill:var(--green)} .s-white{fill:#fff}
+.s-txt{font:14px var(--sans)} .s-sm{font:12px var(--sans)} .s-mono{font:700 15px var(--mono)} .s-math{font:italic 16px var(--math)}
+.l-navy{stroke:var(--navy);fill:none} .l-border{stroke:var(--border);fill:none} .l-gray{stroke:var(--gray);fill:none} .l-amber{stroke:var(--amber);fill:none} .l-teal{stroke:var(--teal);fill:none} .l-crim{stroke:var(--crim);fill:none} .l-green{stroke:var(--green);fill:none}
+.f-wash{fill:var(--tealwash);stroke:var(--amber)} .f-white{fill:#fff;stroke:var(--navy)} .f-cream{fill:var(--cream);stroke:var(--ochre)} .f-crim{fill:var(--crimwash);stroke:var(--crim)} .f-lgray{fill:var(--lgray);stroke:var(--border)}
+.pt{cursor:pointer}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+
+.kv{display:grid;grid-template-columns:auto 1fr;gap:.15em 1em;font-size:.82em;margin:0;align-items:baseline}
+.kv dt{color:var(--gray)} .kv dd{margin:0;font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+table.tbl.terms td:first-child,table.tbl.terms td:nth-child(2){white-space:nowrap}
+
+/* ---------- section divider (bluelib section_slide) ---------- */
+.slide.sect{padding:0;display:grid;grid-template-columns:34.5% minmax(0,1fr)}
+.slide.sect::before{display:none}
+.slide.sect .sl{background:var(--navy);border-right:.29em solid var(--amber);display:flex;flex-direction:column;justify-content:center;gap:.25em;padding:0 2em 0 3.36em;z-index:1}
+.slide.sect .no{font:700 3.87em/1.05 "Helvetica Neue",var(--sans);color:var(--amber)}
+.slide.sect .sl h2{font-size:1.8em;color:#fff;line-height:1.3;text-wrap:balance}
+.slide.sect .sl .en{font-size:.93em;color:var(--sub1);line-height:1.45;margin-top:.2em}
+.slide.sect .sr{display:flex;flex-direction:column;justify-content:center;padding:0 4em 0 4.3em}
+.slide.sect .sr ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.9em}
+.slide.sect .sr li{font-size:1.13em;line-height:1.5;padding-left:1.4em;text-indent:-1.4em}
+.slide.sect .sr li::before{content:"— ";color:var(--amber);font-weight:700}
+.slide.sect > footer{position:absolute;left:calc(34.5% + 4.3em);right:2.64em;bottom:.75em}
+.app.read .slide.sect{min-height:20em}
+@media (max-width:780px){ .app.read .slide.sect{grid-template-columns:minmax(0,1fr)} .app.read .slide.sect .sl{padding:1.5em 16px;border-right:0;border-bottom:.29em solid var(--amber)} .app.read .slide.sect .sr{padding:1.2em 16px 3em} }
+/* ---------- definition slide: 정의 · 예제 · 수학 ---------- */
+.defgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.85em;align-items:stretch}
+.defgrid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.defgrid.dense .dcol ul{font-size:.84em;gap:.3em} .defgrid.dense .dcol .eq{font-size:.95em;padding:.28em .55em}
+.dcol{background:var(--lgray);border:1px solid var(--border);border-top:.36em solid var(--amber);border-radius:.3em;padding:.7em .95em .9em;display:flex;flex-direction:column;gap:.5em;min-width:0}
+.dcol.ex{border-top-color:var(--teal)} .dcol.ma{border-top-color:var(--green)}
+.dcol .dh{display:flex;align-items:baseline;gap:.5em;font-weight:700;color:var(--navy);font-size:1.15em}
+.dcol .dh small{font:700 .64em "Helvetica Neue",var(--sans);letter-spacing:.09em;color:var(--gray);text-transform:uppercase}
+.dcol ul{padding-left:1em;margin:0;display:flex;flex-direction:column;gap:.42em;font-size:.97em;line-height:1.5}
+.dcol ul li::marker{color:var(--teal)}
+.dcol .eq{font-size:1.05em;padding:.35em .6em;white-space:normal;background:var(--white)}
+.dcol .mono{font-size:.95em}
+@media (max-width:780px){ .app.read .defgrid{grid-template-columns:minmax(0,1fr)} }
+
+/* Contextual lecture videos: one inline player, selectable sources and teaching notes. */
+.video-lesson .body{gap:.4em;padding-top:.85em}
+.video-layout{display:grid;grid-template-columns:2.1fr 1fr;gap:1em;align-items:start}
+.video-stage{position:relative;aspect-ratio:16/9;background:#10263E;overflow:hidden;border-radius:.35em;border:1px solid var(--border)}
+.video-stage iframe,.video-preview{position:absolute;inset:0;width:100%;height:100%;border:0}
+.video-preview{object-fit:contain;background:#10263E}
+.video-play{position:absolute;inset:0;border:0;background:linear-gradient(transparent 45%,rgba(0,0,0,.7));color:white;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.65em}
+.video-play .play-symbol{display:grid;place-items:center;background:#C03B3B;border-radius:50%;width:2.2em;height:2.2em;font-size:1.3em;padding-left:.12em}
+.video-play .play-label{font-size:.8em;font-weight:700;background:rgba(16,38,62,.85);padding:.4em .7em;border-radius:.3em}
+.video-caption{display:flex;gap:.6em;align-items:baseline;margin-top:.45em;font-size:.68em;line-height:1.4;color:var(--gray)}
+.video-caption .video-source-link{margin-left:auto;white-space:nowrap}
+.video-explain{display:flex;flex-direction:column;gap:.65em}
+.video-explain h3{font-size:.87em;color:var(--navy)}
+.video-choices{display:flex;flex-direction:column;gap:.35em}
+.video-choice{font:inherit;font-size:.73em;line-height:1.45;text-align:left;padding:.45em .6em;border:1px solid var(--border);border-left:.22em solid var(--teal);border-radius:.25em;background:white;cursor:pointer}
+.video-choice[aria-pressed="true"]{background:var(--tealwash);border-color:var(--amber);color:var(--amber);font-weight:700}
+.video-choice .video-time{display:inline;font-size:.9em;color:var(--gray);margin-left:.2em;white-space:nowrap}
+.video-explain .kb{padding:.4em .65em}
+.video-explain .kb b{font-size:.75em}
+.video-explain .kb p{font-size:.77em;line-height:1.5}
+.video-prompts{font-size:.76em;line-height:1.5;padding-left:1.1em;display:flex;flex-direction:column;gap:.35em}
+.video-prompts li::marker{color:var(--teal)}
+.video-lesson .src{font-size:.58em}
+@media(max-width:780px){.app.read .video-layout{grid-template-columns:1fr}.app.read .video-stage{min-height:0}.app.read .video-choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}}
+
+
+.slide .body{overflow:hidden;gap:.55em}.slide h2{font-size:1.85em}.slide .src{font-size:.56em;line-height:1.3;overflow-wrap:anywhere;margin-top:auto;color:var(--gray)}
+.lecture-bullets{font-size:1.18em;line-height:1.65;padding-left:1.2em;margin:.1em 0;display:flex;flex-direction:column;gap:.65em}
+.lecture-columns{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:1.5em;align-items:center;min-height:0;flex:0 1 auto}
+.lecture-figure{margin:0;min-width:0}.lecture-figure img{display:block;width:100%;height:auto;max-height:21em;object-fit:contain;background:white}.lecture-figure svg{width:100%;height:auto;max-height:22em;display:block}
+.lecture-figure figcaption{font-size:.6em;line-height:1.4;color:var(--gray);margin-top:.5em;overflow-wrap:anywhere}.pair-images{display:flex;gap:.6em;align-items:center}.pair-images figure{width:50%}
+.lecture-table{border-collapse:collapse;width:100%;font-size:.9em}.lecture-table th{background:var(--navy);color:white;text-align:left}.lecture-table th,.lecture-table td{border-bottom:1px solid var(--border);padding:.5em}.lecture-table tr:nth-child(even){background:#F4F6F9}
+.lecture-formula{font:600 1.2em/1.4 var(--math);text-align:center;color:var(--navy);padding:.4em;border-bottom:1px solid var(--border)}
+.lecture-formula,.question,.mechanism-steps{flex-shrink:0}.has-formula .lecture-figure img,.has-formula .lecture-figure svg{max-height:16em}.has-formula.has-quiz .lecture-figure img{max-height:14em}.has-steps .lecture-figure img,.has-steps .lecture-figure svg{max-height:15em}
+.video-layout{grid-template-columns:minmax(0,2.1fr) minmax(0,1fr)}.video-explain,.video-layout>div{min-width:0}.video-choice{display:block;box-sizing:border-box;overflow-wrap:anywhere;white-space:normal;width:100%;max-width:100%;min-width:0}
+.mechanism-steps{display:flex;gap:.8em;list-style-position:inside;padding:0;font-size:.85em;line-height:1.45}.mechanism-steps li{flex:1;border-top:3px solid var(--teal);padding-top:.35em}
+.question{color:var(--crim);font-size:.9em;margin-top:.4em}.question summary{cursor:pointer;font-weight:700}.question p{margin-top:.4em}
+.legacy .body{font-size:.87em}.legacy .body>div:empty{display:none}.legacy .body svg{max-height:24em;width:100%;height:auto}.legacy img{max-height:16em}
+.slide.cover{padding-right:4.3em}.slide.cover .s1{font-size:1.8em}.slide.cover .s2{max-width:48em}.slide.cover .en{font-size:.9em}.slide.cover .au{margin-top:1.4em;color:white;font-size:1em}
+.cover-links{display:flex;gap:1.2em;margin-top:1.3em;font-size:.8em;color:#C8D8E4}.cover-links a{color:inherit}
+.app.read .lecture-columns{min-height:0}.app.read .slide .body{overflow:visible}.app.read .lecture-figure img{max-height:520px}
+@media(max-width:780px){.app.read .lecture-columns{grid-template-columns:1fr}.app.read .mechanism-steps{display:block}.app.read .mechanism-steps li{margin-top:.6em}.app.read .lecture-bullets{font-size:1em}.app.read .slide.cover{padding:2em 1em}}
+@media print{@page{size:13.333333in 7.5in;margin:0}html,body,.app,.main,.stage,.deck{display:block!important;height:auto!important;min-height:0!important;width:1280px!important;max-width:none!important;overflow:visible!important;position:static!important;background:white!important;margin:0!important;padding:0!important}.side,.ctrl{display:none!important}.slide,.slide[hidden]{display:flex!important;width:1280px!important;height:720px!important;min-height:720px!important;max-height:720px!important;font-size:20px!important;position:relative!important;overflow:hidden!important;break-after:page;page-break-after:always;box-shadow:none!important;margin:0!important;border-radius:0!important}.slide:last-child{break-after:auto;page-break-after:auto}.slide .body{overflow:hidden!important}details.question:not([open]) p{display:none}.slide.cover{padding:1em 4.3em!important}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+/* 11-1 — 그림 + 요점 상자 (5-1 형식) */
+img.fig{width:100%;max-height:24em;object-fit:contain;object-position:center top;border:1px solid var(--border);border-radius:.3em;background:#fff}
+img.fig.h18{max-height:18em} img.fig.h20{max-height:20em} img.fig.h14{max-height:14em} img.fig.h16{max-height:16.5em} img.fig.h11{max-height:11em} img.fig.h9{max-height:9em}
+.stack .kb{padding:.45em .8em}
+.kb p.small{font-size:.8em;line-height:1.45;margin:0}
+.cols.w55 > svg,.cols.w64 > svg,.cols.w46 > svg,.cols > svg{align-self:start;max-height:25em;width:100%}
+.tbl td{vertical-align:top}
+table.tbl.xs{font-size:.73em} table.tbl.xs td,table.tbl.xs th{padding:.26em .45em}
+table.tbl td.w{white-space:nowrap}
+.cols.w37{grid-template-columns:minmax(0,3fr) minmax(0,7fr)}
+.cols.w82{grid-template-columns:minmax(0,8fr) minmax(0,5fr)}
+.cols.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+figure.cap{margin:0;display:flex;flex-direction:column;gap:.2em;min-width:0}
+figure.cap figcaption{font-size:.68em;color:var(--gray);line-height:1.35}
+.dcol .eq{font-family:var(--mono)}
+
+/* 동영상 목록 (6-2 extra.css 34–42행) */
+ul.vids{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.42em}
+ul.vids li{display:grid;grid-template-columns:1.9em 1fr;gap:.6em;align-items:start;
+  border:1px solid var(--border);border-left:.22em solid var(--teal);border-radius:.3em;
+  background:var(--white);padding:.4em .7em .45em}
+ul.vids li .pl{inline-size:1.55em;block-size:1.55em;border-radius:50%;background:var(--amber);color:#fff;
+  font:700 .62em/1.55em var(--sans);text-align:center}
+ul.vids li b{font-size:.84em;line-height:1.35;color:var(--navy);display:block}
+ul.vids li b a{text-decoration:none;border-bottom:1px solid var(--teal)}
+ul.vids li span{font-size:.76em;color:var(--gray);line-height:1.4}
+ul.vids li em{font-style:normal;font-family:var(--mono);font-size:.72em;color:var(--amber);font-weight:700}
+/* 11-2 단일분자 시퀀싱 — 그림 + 요점 상자 */
+img.fig{width:100%;max-height:22em;object-fit:contain;object-position:center top;border:1px solid var(--border);border-radius:.3em;background:#fff;display:block}
+img.fig.h20{max-height:20em} img.fig.h17{max-height:17em} img.fig.h14{max-height:14em} img.fig.h11{max-height:11em} img.fig.h10{max-height:10em} img.fig.h9{max-height:9em} img.fig.h8{max-height:8em} img.fig.h7{max-height:7em}
+.figcap{font-size:.68em;color:var(--gray);line-height:1.35;margin-top:.2em}
+.g2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:.6em;align-items:start}
+.stack .kb{padding:.45em .8em}
+.kb p.small{font-size:.8em;line-height:1.45;margin:0}
+.cols > svg,.stack > svg,.g2 > svg{width:100%;height:auto;max-height:24em;display:block}
+.tbl td{vertical-align:top}
+table.tbl.xs{font-size:.7em} table.tbl.xs td,table.tbl.xs th{padding:.26em .5em}
+.dcol svg{width:100%;height:auto;max-height:11em;background:#fff;border:1px solid var(--border);border-radius:.25em}
+.chk{font-size:.62em;color:var(--crim);font-weight:700;border:1px solid var(--crim);border-radius:.3em;padding:0 .35em;white-space:nowrap}
+.cols.w37{grid-template-columns:minmax(0,3fr) minmax(0,7fr)}
+.cols.w73x{grid-template-columns:minmax(0,7fr) minmax(0,3fr)}
+
+/* 표지: 오른쪽 패널을 SVG 도해로 */
+.slide.cover .art.svgart{background:#0F2740;padding:1.4em 1em;display:flex;align-items:center;justify-content:center;font:inherit;white-space:normal;opacity:1}
+.slide.cover .art.svgart svg{width:100%;height:auto;max-height:100%}
+.slide.cover p.au{font-size:.93em;font-weight:700;color:#fff;margin-top:.9em;line-height:1.5}
+.slide.ending p.au{font-size:1em;font-weight:700;color:#fff}
+
+/* 동영상 목록 (6-2 extra.css 34–43행) */
+ul.vids{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.42em}
+ul.vids li{display:grid;grid-template-columns:1.9em 1fr;gap:.6em;align-items:start;
+  border:1px solid var(--border);border-left:.22em solid var(--teal);border-radius:.3em;
+  background:var(--white);padding:.4em .7em .45em}
+ul.vids li .pl{inline-size:1.55em;block-size:1.55em;border-radius:50%;background:var(--amber);color:#fff;
+  font:700 .62em/1.55em var(--sans);text-align:center}
+ul.vids li b{font-size:.84em;line-height:1.35;color:var(--navy);display:block}
+ul.vids li b a{text-decoration:none;border-bottom:1px solid var(--teal)}
+ul.vids li span{font-size:.76em;color:var(--gray);line-height:1.4}
+ul.vids li em{font-style:normal;font-family:var(--mono);font-size:.72em;color:var(--amber);font-weight:700}
+.vh{font-size:.85em;font-weight:700;color:var(--navy);margin:.1em 0 -.1em}
+.slide.ending p.src{font-size:.62em;color:var(--sub1);max-width:48em}
+/* 11-3 — 그림 + 요점 상자 */
+img.fig{width:100%;max-height:23em;object-fit:contain;object-position:left top;border:1px solid var(--border);border-radius:.3em;background:#fff}
+img.ph{width:100%;height:13.5em;object-fit:cover;border:1px solid var(--border);border-radius:.3em;background:#fff}
+.stack .kb{padding:.45em .8em}
+.kb p.small{font-size:.8em;line-height:1.45;margin:0}
+.cols.w55 > svg,.cols.w64 > svg{align-self:start;max-height:25em}
+.tbl td{vertical-align:top}
+.calc{font:600 .82em/1.55 var(--mono);background:var(--white);border:1px solid var(--border);border-left:.24em solid var(--green);padding:.4em .8em;white-space:pre-wrap}
+.calc b{color:var(--crim)}
+.fq{font:600 .74em/1.5 var(--mono);background:#1E2630;color:#E6EDF3;border-radius:.4em;padding:.55em .9em;white-space:pre;overflow:hidden}
+.fq .h{color:#7CC4FA} .fq .s{color:#E6EDF3} .fq .p{color:#9AA5B1} .fq .q{color:#F2C14E}
+.photos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.6em}
+.photos figure{margin:0;display:flex;flex-direction:column;gap:.2em}
+.photos figcaption{font-size:.7em;color:var(--gray);line-height:1.35}
+/* 동영상 목록 */
+ul.vids{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.42em}
+ul.vids li{display:grid;grid-template-columns:1.9em 1fr;gap:.6em;align-items:start;
+  border:1px solid var(--border);border-left:.22em solid var(--teal);border-radius:.3em;
+  background:var(--white);padding:.4em .7em .45em}
+ul.vids li .pl{inline-size:1.55em;block-size:1.55em;border-radius:50%;background:var(--amber);color:#fff;
+  font:700 .62em/1.55em var(--sans);text-align:center}
+ul.vids li b{font-size:.84em;line-height:1.35;color:var(--navy);display:block}
+ul.vids li b a{text-decoration:none;border-bottom:1px solid var(--teal)}
+ul.vids li span{font-size:.76em;color:var(--gray);line-height:1.4}
+ul.vids li em{font-style:normal;font-family:var(--mono);font-size:.72em;color:var(--amber);font-weight:700}
+.fcards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.6em}
+.fcards .card p{font-size:.8em}
+.fcards .card .eq{font-size:.95em;padding:.25em .5em;white-space:normal;background:var(--white)}
+
+
+.slide .body{overflow:hidden;gap:.55em}.slide h2{font-size:1.85em}.slide .src{font-size:.56em;line-height:1.3;overflow-wrap:anywhere;margin-top:auto;color:var(--gray)}
+.lecture-bullets{font-size:1.18em;line-height:1.65;padding-left:1.2em;margin:.1em 0;display:flex;flex-direction:column;gap:.65em}
+.lecture-columns{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:1.5em;align-items:center;min-height:0;flex:0 1 auto}
+.lecture-figure{margin:0;min-width:0}.lecture-figure img{display:block;width:100%;height:auto;max-height:21em;object-fit:contain;background:white}.lecture-figure svg{width:100%;height:auto;max-height:22em;display:block}
+.lecture-figure figcaption{font-size:.6em;line-height:1.4;color:var(--gray);margin-top:.5em;overflow-wrap:anywhere}.pair-images{display:flex;gap:.6em;align-items:center}.pair-images figure{width:50%}
+.lecture-table{border-collapse:collapse;width:100%;font-size:.9em}.lecture-table th{background:var(--navy);color:white;text-align:left}.lecture-table th,.lecture-table td{border-bottom:1px solid var(--border);padding:.5em}.lecture-table tr:nth-child(even){background:#F4F6F9}
+.lecture-formula{font:600 1.2em/1.4 var(--math);text-align:center;color:var(--navy);padding:.4em;border-bottom:1px solid var(--border)}
+.lecture-formula,.question,.mechanism-steps{flex-shrink:0}.has-formula .lecture-figure img,.has-formula .lecture-figure svg{max-height:16em}.has-formula.has-quiz .lecture-figure img{max-height:14em}.has-steps .lecture-figure img,.has-steps .lecture-figure svg{max-height:15em}
+.video-layout{grid-template-columns:minmax(0,2.1fr) minmax(0,1fr)}.video-explain,.video-layout>div{min-width:0}.video-choice{display:block;box-sizing:border-box;overflow-wrap:anywhere;white-space:normal;width:100%;max-width:100%;min-width:0}
+.mechanism-steps{display:flex;gap:.8em;list-style-position:inside;padding:0;font-size:.85em;line-height:1.45}.mechanism-steps li{flex:1;border-top:3px solid var(--teal);padding-top:.35em}
+.question{color:var(--crim);font-size:.9em;margin-top:.4em}.question summary{cursor:pointer;font-weight:700}.question p{margin-top:.4em}
+.legacy .body{font-size:.87em}.legacy .body>div:empty{display:none}.legacy .body svg{max-height:24em;width:100%;height:auto}.legacy img{max-height:16em}
+.slide.cover{padding-right:4.3em}.slide.cover .s1{font-size:1.8em}.slide.cover .s2{max-width:48em}.slide.cover .en{font-size:.9em}.slide.cover .au{margin-top:1.4em;color:white;font-size:1em}
+.cover-links{display:flex;gap:1.2em;margin-top:1.3em;font-size:.8em;color:#C8D8E4}.cover-links a{color:inherit}
+.app.read .lecture-columns{min-height:0}.app.read .slide .body{overflow:visible}.app.read .lecture-figure img{max-height:520px}
+@media(max-width:780px){.app.read .lecture-columns{grid-template-columns:1fr}.app.read .mechanism-steps{display:block}.app.read .mechanism-steps li{margin-top:.6em}.app.read .lecture-bullets{font-size:1em}.app.read .slide.cover{padding:2em 1em}}
+@media print{@page{size:13.333333in 7.5in;margin:0}html,body,.app,.main,.stage,.deck{display:block!important;height:auto!important;min-height:0!important;width:1280px!important;max-width:none!important;overflow:visible!important;position:static!important;background:white!important;margin:0!important;padding:0!important}.side,.ctrl{display:none!important}.slide,.slide[hidden]{display:flex!important;width:1280px!important;height:720px!important;min-height:720px!important;max-height:720px!important;font-size:20px!important;position:relative!important;overflow:hidden!important;break-after:page;page-break-after:always;box-shadow:none!important;margin:0!important;border-radius:0!important}.slide:last-child{break-after:auto;page-break-after:auto}.slide .body{overflow:hidden!important}details.question:not([open]) p{display:none}.slide.cover{padding:1em 4.3em!important}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style></head><body><div class="app" id="app"><aside class="side" id="side" aria-label="슬라이드 목차"><div class="side-head"><span class="k">DNA DATA STORAGE 11-6</span><span class="t">라이브러리 커버리지와 FASTQ</span><span class="s">학부 강의 / 75분</span></div><nav class="side-nav" id="side-nav"></nav></aside><div class="main"><div class="stage"><main class="deck" id="deck"><section class="slide cover" data-part="p0" data-title="라이브러리 커버리지와 FASTQ"><div class="en">MOLECULAR INFORMATION ENGINEERING 11-6</div><h1>Sequencing Libraries Coverage and FASTQ</h1><p class="s1">라이브러리 커버리지와 FASTQ</p><div class="rule"></div><p class="s2">시퀀싱 라이브러리 / Read cycle과 coverage / FASTQ와 품질 점수 / 원본 파일 복원</p><p class="au">송영준 Youngjun Song / 인천대학교 / 75분</p><p class="cover-links"><a href="../index.html">강의 폴더</a><a href="https://bbl.stdbioelec.com/ko/molecular-information-engineering.html">강의 안내</a></p></section><section class="slide " data-part="p0" data-title="분자에서 디지털 read까지"><header><h2>분자에서 디지털 read까지</h2></header><div class="body"><ul class="lecture-bullets"><li>표적 DNA의 준비와 정량</li><li>Adapter가 붙은 sequencing library</li><li>Run 설정과 신호 측정</li><li>Basecalling, 시료 분류, FASTQ</li></ul><p class="src"><a href="https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf" target="_blank" rel="noopener">https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf</a></p></div></section><section class="slide legacy" data-part="p0" data-title="Sequencing library의 정의"><header><h2>Sequencing library의 정의</h2></header><div class="body"><div class="defgrid two">
+      <div class="dcol"><div class="dh">정의 <small>Definition</small></div><ul>
+        <li><b>insert</b>: 읽고 싶은 DNA 조각 (게놈 절편, 올리고 한 가닥)</li>
+        <li><b>adapter</b>: 플로셀 표면 올리고(P5 · P7)와 붙는 서열 + read primer 자리</li>
+        <li><b>index(바코드)</b>: 샘플마다 다른 6–10 nt 꼬리표 → 여러 샘플을 한 런에 섞은 뒤 다시 나눔(multiplexing)</li>
+        <li>비유: 편지(insert)를 봉투(adapter)에 넣고 주소(index)를 적어 한 우체통(플로셀)에 넣기</li>
+      </ul></div>
+      <div class="dcol ex"><div class="dh">예제 <small>Example</small></div><ul>
+        <li>직지 올리고 한 가닥 = 150 nt insert</li>
+        <li>앞 adapter 약 58 nt + 뒤 adapter 약 63 nt (우리 overhang primer 78 · 83 nt에서 주형과 겹치는 20 nt를 뺀 값)</li>
+        <li>완성 라이브러리 길이 ≈ <span class="mono">150 + 58 + 63 = 271 bp</span></li>
+        <li>샘플 8개를 서로 다른 index로 붙이면 → 한 플로셀에서 한 번에 읽고, FASTQ 단계에서 index로 8개 파일로 분리</li>
+      </ul></div>
+    </div>
+    <div class="cols w46">
+      <div class="kb teal"><b>왜 필요한가</b><p class="small">플로셀은 P5 · P7 서열만 붙잡음 · read primer 자리가 없으면 SBS가 시작되지 않음</p></div>
+      <div class="kb"><b>한 줄</b><p class="small">라이브러리 준비의 목표 = <b>모든 insert가 같은 양 끝 서열을 갖도록</b> 만들기 — 방법(절편화 · 연결 · PCR)은 insert의 종류에 따라 다름</p></div>
+    </div>
+    
+  <p class="src"><a href="https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf" target="_blank" rel="noopener">https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf</a></p></div></section><section class="slide legacy" data-part="p0" data-title="Adapter index read primer의 위치"><header><h2>Adapter index read primer의 위치</h2></header><div class="body"><svg viewBox="0 0 960 330" role="img" aria-label="P5, i5, Read 1 primer, insert, Read 2 primer, i7, P7 순서의 라이브러리 구조와 네 번의 읽기" font-family="Apple SD Gothic Neo,Helvetica Neue,sans-serif">
+      <defs><marker id="a7" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,1 L9,5 L0,9 z" fill="#16324F"></path></marker></defs>
+      <text x="20" y="96" font-size="14" font-weight="700" fill="#5B6670">5′</text><text x="925" y="96" font-size="14" font-weight="700" fill="#5B6670">3′</text>
+      <g font-size="15" font-weight="700" text-anchor="middle">
+        <rect x="45" y="70" width="110" height="40" fill="#C03B3B"></rect><text x="100" y="96" fill="#fff">P5</text>
+        <rect x="155" y="70" width="70" height="40" fill="#8A5F12"></rect><text x="190" y="96" fill="#fff">i5</text>
+        <rect x="225" y="70" width="110" height="40" fill="#529FD9"></rect><text x="280" y="96" fill="#fff">Rd1 SP</text>
+        <rect x="335" y="70" width="290" height="40" fill="#224EBD"></rect><text x="480" y="96" fill="#fff">insert (직지 올리고 150 nt)</text>
+        <rect x="625" y="70" width="110" height="40" fill="#529FD9"></rect><text x="680" y="96" fill="#fff">Rd2 SP</text>
+        <rect x="735" y="70" width="70" height="40" fill="#8A5F12"></rect><text x="770" y="96" fill="#fff">i7</text>
+        <rect x="805" y="70" width="110" height="40" fill="#2E7D54"></rect><text x="860" y="96" fill="#fff">P7</text>
+      </g>
+      <g font-size="12.5" fill="#5B6670" text-anchor="middle">
+        <text x="100" y="56">플로셀 결합</text><text x="190" y="56">index 2</text><text x="280" y="56">Read 1 시작점</text><text x="680" y="56">Read 2 시작점</text><text x="770" y="56">index 1</text><text x="860" y="56">플로셀 결합</text>
+      </g>
+      <!-- reads -->
+      <g stroke-width="3" fill="none" marker-end="url(#a7)">
+        <path d="M335,140 L600,140" stroke="#224EBD"></path><path d="M625,178 L360,178" stroke="#224EBD"></path>
+        <path d="M625,214 L730,214" stroke="#8A5F12"></path><path d="M225,248 L162,248" stroke="#8A5F12"></path>
+      </g>
+      <g font-size="14" font-weight="700">
+        <text x="345" y="134" fill="#224EBD">① Read 1 — 150 cycle</text>
+        <text x="410" y="198" fill="#224EBD">④ Read 2 — 150 cycle (반대 가닥)</text>
+        <text x="740" y="219" fill="#8A5F12">② Index 1 (i7) — 8 cycle</text>
+        <text x="240" y="253" fill="#8A5F12">③ Index 2 (i5) — 8 cycle</text>
+      </g>
+      <rect x="45" y="278" width="870" height="42" rx="6" fill="#EAF3FB" stroke="#224EBD"></rect>
+      <text x="480" y="305" text-anchor="middle" font-size="14.5" fill="#16324F">한 클러스터에서 <tspan font-weight="700">네 번</tspan> 읽음: Read 1 → Index 1 → Index 2 → Read 2 · 순서와 길이는 런 설정(Run Manager)에 입력</text>
+    </svg>
+    
+  <p class="src"><a href="https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf" target="_blank" rel="noopener">https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf</a></p></div></section><section class="slide legacy" data-part="p0" data-title="Library preparation의 단계"><header><h2>Library preparation의 단계</h2></header><div class="body"><div class="cols w55">
+      <svg viewBox="0 0 520 340" role="img" aria-label="절편화, 말단 수선, A 꼬리 달기, T 돌출 adapter 연결 네 단계" font-family="Apple SD Gothic Neo,Helvetica Neue,sans-serif">
+        <g font-size="13.5" font-weight="700" fill="#16324F"><text x="10" y="22">a. 절편화 (초음파 · 효소)</text><text x="10" y="112">b. 말단 수선 (end repair)</text><text x="10" y="192">c. A-tailing</text><text x="10" y="272">d. adapter 연결 (ligation)</text></g>
+        <!-- a -->
+        <rect x="20" y="36" width="480" height="8" fill="#224EBD"></rect><rect x="20" y="50" width="480" height="8" fill="#529FD9"></rect>
+        <g stroke="#C03B3B" stroke-width="2.5"><path d="M140,30 l-8,34"></path><path d="M270,30 l6,34"></path><path d="M390,30 l-6,34"></path></g>
+        <text x="330" y="84" font-size="12" fill="#5B6670">끝이 들쭉날쭉 (5′ · 3′ 돌출)</text>
+        <!-- b -->
+        <rect x="120" y="126" width="260" height="8" fill="#224EBD"></rect><rect x="138" y="140" width="226" height="8" fill="#529FD9"></rect>
+        <path d="M384,132 L430,132" stroke="#8A5F12" stroke-width="2" stroke-dasharray="4 3"></path><text x="436" y="136" font-size="12" fill="#8A5F12">→ 평활 말단</text>
+        <!-- c -->
+        <rect x="120" y="206" width="260" height="8" fill="#224EBD"></rect><rect x="120" y="220" width="260" height="8" fill="#529FD9"></rect>
+        <text x="384" y="215" font-size="14" font-weight="700" fill="#C03B3B" font-family="Menlo,monospace">A</text><text x="104" y="229" font-size="14" font-weight="700" fill="#C03B3B" font-family="Menlo,monospace">A</text>
+        <text x="410" y="222" font-size="12" fill="#5B6670">3′ 끝에 A 하나</text>
+        <!-- d -->
+        <rect x="60" y="286" width="60" height="8" fill="#C03B3B"></rect><rect x="60" y="300" width="52" height="8" fill="#C03B3B"></rect>
+        <text x="112" y="309" font-size="13" font-weight="700" fill="#16324F" font-family="Menlo,monospace">T</text>
+        <rect x="126" y="286" width="260" height="8" fill="#224EBD"></rect><rect x="126" y="300" width="260" height="8" fill="#529FD9"></rect>
+        <rect x="392" y="286" width="60" height="8" fill="#2E7D54"></rect><rect x="400" y="300" width="52" height="8" fill="#2E7D54"></rect>
+        <text x="386" y="295" font-size="13" font-weight="700" fill="#16324F" font-family="Menlo,monospace">T</text>
+        <text x="60" y="332" font-size="12" fill="#5B6670">A–T 한 염기 짝 → adapter끼리 · insert끼리 붙는 오류 감소</text>
+      </svg>
+      <div class="stack">
+        <div class="kb"><b>a · 절편화 또는 tagmentation</b><p class="small">초음파 · 효소로 자르기, 또는 <b>Tn5 transposome</b>이 자르면서 동시에 adapter 일부를 끼움(tagmentation) · 비드에 고정한 BLT는 insert 약 350 bp로 균일</p></div>
+        <div class="kb teal"><b>b · c · 말단 수선과 A-tailing</b><p class="small">돌출 끝을 채우거나 깎아 평활 말단 → 3′에 dA 하나 추가 (실험 기록: ERP2 30 °C 30 min · ATL 37 °C 30 min)</p></div>
+        <div class="kb green"><b>d · 연결</b><p class="small">3′-T 돌출 adapter를 ligase로 연결 (LIG 30 °C 10 min) → 이후 짧은 PCR(8 cycle)로 완전한 P5 · P7 · index 부여</p></div>
+      </div>
+    </div>
+    
+  <p class="src"><a href="https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf" target="_blank" rel="noopener">https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf</a></p></div></section><section class="slide legacy" data-part="p0" data-title="PCR 크기 선별 정량 pooling"><header><h2>PCR 크기 선별 정량 pooling</h2></header><div class="body"><div class="cols w55">
+      <svg viewBox="0 0 520 330" role="img" aria-label="비드 크기 선별과 샘플별 농도 맞춘 pooling" font-family="Apple SD Gothic Neo,Helvetica Neue,sans-serif">
+        <text x="10" y="20" font-size="13.5" font-weight="700" fill="#16324F">크기 선별 (AMPure 비드 · 겔)</text>
+        <line x1="30" y1="160" x2="500" y2="160" stroke="#5B6670"></line><line x1="30" y1="160" x2="30" y2="36" stroke="#5B6670"></line>
+        <path d="M30,158 C120,156 150,60 230,52 C300,48 330,120 420,150 L500,157" fill="#EAF3FB" stroke="#224EBD" stroke-width="2"></path>
+        <rect x="160" y="36" width="160" height="124" fill="#2E7D54" opacity="0.12"></rect>
+        <path d="M40,158 L60,110 L80,158 Z" fill="#C03B3B" opacity="0.7"></path>
+        <text x="66" y="104" font-size="11.5" fill="#C03B3B">adapter 이합체</text>
+        <text x="240" y="30" font-size="11.5" fill="#2E7D54" text-anchor="middle">남길 구간</text>
+        <text x="265" y="178" font-size="12" fill="#5B6670" text-anchor="middle">분자 길이 (bp) →</text>
+        <text x="10" y="215" font-size="13.5" font-weight="700" fill="#16324F">정량 → 같은 몰농도로 맞춰 섞기</text>
+        <g font-size="12.5" text-anchor="middle">
+          <rect x="20" y="232" width="70" height="70" rx="6" fill="#EAF3FB" stroke="#224EBD"></rect><text x="55" y="262" fill="#16324F" font-weight="700">S1</text><text x="55" y="282" fill="#5B6670">28 nM</text>
+          <rect x="100" y="232" width="70" height="70" rx="6" fill="#EAF3FB" stroke="#224EBD"></rect><text x="135" y="262" fill="#16324F" font-weight="700">S2</text><text x="135" y="282" fill="#5B6670">14 nM</text>
+          <rect x="180" y="232" width="70" height="70" rx="6" fill="#EAF3FB" stroke="#224EBD"></rect><text x="215" y="262" fill="#16324F" font-weight="700">S3</text><text x="215" y="282" fill="#5B6670">40 nM</text>
+          <path d="M260,267 L310,267" stroke="#529FD9" stroke-width="2.4"></path><text x="285" y="258" fill="#5B6670" font-size="11">모두</text><text x="285" y="290" fill="#5B6670" font-size="11">10 nM</text>
+          <path d="M330,232 L420,232 L410,312 L340,312 Z" fill="#E9F4EE" stroke="#2E7D54" stroke-width="1.6"></path><text x="375" y="266" fill="#2E7D54" font-weight="700">pool</text><text x="375" y="286" fill="#2E7D54">각 10 µL</text>
+          <text x="470" y="262" fill="#C03B3B" font-weight="700">+ PhiX</text><text x="470" y="282" fill="#5B6670">5–20 %</text>
+        </g>
+      </svg>
+      <div class="stack">
+        <div class="kb"><b>PCR (enrichment)</b><p class="small">P5 · P7이 완전한 분자만 증폭 · cycle 수는 최소로(사례: TruSeq Nano 8 cycle) — 많을수록 중복 read · GC 편향 증가</p></div>
+        <div class="kb teal"><b>크기 선별 · 정제</b><p class="small">비드 부피 비로 길이 창을 고름 · adapter 이합체(약 120 bp)는 클러스터만 차지하고 정보가 없음</p></div>
+        <div class="kb green"><b>정량 두 가지</b><p class="small"><b>Qubit</b>(형광 · 질량 ng/µL) — 모든 dsDNA를 셈<br><b>qPCR</b>(P5 · P7 primer) — <b>읽힐 수 있는</b> 분자만 셈 · 로딩 정확도 높음</p></div>
+        <div class="kb crim"><b>pooling</b><p class="small">샘플마다 몰농도를 같게(예 10 nM) 맞춰 같은 부피씩 섞기 → read가 샘플 수만큼 고르게 나뉨 (PART 3 ④)</p></div>
+      </div>
+    </div>
+    
+  <p class="src"><a href="https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf" target="_blank" rel="noopener">https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf</a></p></div></section><section class="slide legacy" data-part="p0" data-title="질량 농도와 몰농도의 환산"><header><h2>질량 농도와 몰농도의 환산</h2></header><div class="body"><div class="defgrid two">
+      <div class="dcol"><div class="dh">정의 <small>Definition</small></div><ul>
+        <li>이중가닥 DNA 1 bp의 평균 질량 ≈ <b>660 g/mol</b></li>
+        <li>길이 L bp 분자의 몰질량 = 660 × L g/mol</li>
+        <li class="eq">nM = (ng/µL) × 10⁶ ÷ (660 × L)</li>
+        <li>같은 ng이라도 <b>짧은 분자일수록 개수가 많음</b> → 크기(Bioanalyzer · 겔) 확인이 필요한 이유</li>
+      </ul></div>
+      <div class="dcol ex"><div class="dh">예제 · 손계산 <small>Example</small></div><ul>
+        <li>우리 라이브러리: L ≈ 271 bp, Qubit 5.0 ng/µL</li>
+        <li class="eq">5.0 × 10⁶ ÷ (660 × 271) = 5,000,000 ÷ 178,860 ≈ 28 nM</li>
+        <li>10 nM로 희석: C₁V₁ = C₂V₂ → 28 × V₁ = 10 × 28 µL → <b>V₁ = 10 µL + 버퍼 18 µL</b></li>
+        <li>iSeq 로딩 농도 50 pM = 10 nM의 1/200 → 1 µL + 199 µL</li>
+      </ul></div>
+    </div>
+    <div class="cols w46">
+      <div class="kb crim"><b>흔한 실수</b><p class="small">adapter 이합체가 섞이면 Qubit ng은 같아도 nM 계산이 틀어짐 → 클러스터가 짧은 분자에 낭비</p></div>
+      <div class="kb teal"><b>실험 기록</b><p class="small">라이브러리 10 nM 정규화 → PhiX 1 nM 4 µL + 라이브러리 16 µL = 20 µL (PhiX 20 %) · 최종 로딩 50 pM, PhiX 10–20 %</p></div>
+    </div>
+    
+  <p class="src"><a href="https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf" target="_blank" rel="noopener">https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf</a></p></div></section><section class="slide legacy" data-part="p0" data-title="데이터 올리고 풀의 library 준비"><header><h2>데이터 올리고 풀의 library 준비</h2></header><div class="body"><div class="cols w55">
+      <svg viewBox="0 0 520 330" role="img" aria-label="overhang primer로 adapter를 붙이는 두 단계 PCR" font-family="Apple SD Gothic Neo,Helvetica Neue,sans-serif">
+        <text x="10" y="22" font-size="13.5" font-weight="700" fill="#16324F">올리고 한 가닥 (150 nt)</text>
+        <rect x="140" y="34" width="40" height="14" fill="#8A5F12"></rect><rect x="180" y="34" width="180" height="14" fill="#224EBD"></rect><rect x="360" y="34" width="40" height="14" fill="#8A5F12"></rect>
+        <g font-size="11" fill="#5B6670" text-anchor="middle"><text x="160" y="64">F 20 nt</text><text x="270" y="64">payload · 주소</text><text x="380" y="64">R 20 nt</text></g>
+        <text x="10" y="100" font-size="13.5" font-weight="700" fill="#16324F">PCR 1 — overhang primer (78 · 83 nt), 10 cycle</text>
+        <rect x="42" y="114" width="98" height="12" fill="#C03B3B"></rect><rect x="140" y="114" width="40" height="12" fill="#8A5F12"></rect>
+        <text x="30" y="142" font-size="11" fill="#C03B3B">5′ 꼬리 = adapter 58 nt</text>
+        <rect x="140" y="152" width="260" height="10" fill="#529FD9" opacity=".5"></rect>
+        <rect x="360" y="170" width="40" height="12" fill="#8A5F12"></rect><rect x="400" y="170" width="104" height="12" fill="#2E7D54"></rect>
+        <text x="380" y="200" font-size="11" fill="#2E7D54">adapter 63 nt</text>
+        <text x="10" y="236" font-size="13.5" font-weight="700" fill="#16324F">PCR 2 — 바깥 primer, 20 cycle → 완성</text>
+        <rect x="42" y="250" width="98" height="16" fill="#C03B3B"></rect><rect x="140" y="250" width="40" height="16" fill="#8A5F12"></rect><rect x="180" y="250" width="180" height="16" fill="#224EBD"></rect><rect x="360" y="250" width="40" height="16" fill="#8A5F12"></rect><rect x="400" y="250" width="104" height="16" fill="#2E7D54"></rect>
+        <text x="273" y="292" text-anchor="middle" font-size="13" fill="#16324F" font-weight="700">58 + 150 + 63 = 271 bp — 절편화 · 수선 · A-tailing · ligation 없음</text>
+        <text x="273" y="316" text-anchor="middle" font-size="12" fill="#5B6670">겔 크기 선별 · 정제 후 바로 로딩</text>
+      </svg>
+      <div class="stack">
+        <div class="kb"><b>왜 절편화가 필요 없나</b><p class="small">올리고 150 nt ≈ Illumina read 길이(150) · 이미 짧고, 양 끝 20 nt primer 서열을 <b>모두 공유</b> → PCR primer 하나로 모든 가닥에 adapter를 붙일 수 있음</p></div>
+        <div class="kb teal"><b>primer 구조</b><p class="small">3′ 쪽 20 nt = 주형(올리고 끝)과 상보 · 5′ 쪽 꼬리 = Illumina adapter 서열 → 첫 cycle엔 꼬리가 떠 있다가 다음 cycle부터 주형이 됨</p></div>
+        <div class="kb green"><b>덤: read 방향 고정</b><p class="small">F 쪽에 어느 adapter를 달지 정해 두므로 Read 1은 항상 올리고의 앞(F)부터 시작 — PART 4에서 실제 FASTQ로 확인</p></div>
+      </div>
+    </div>
+    
+  <p class="src"><a href="https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf" target="_blank" rel="noopener">https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf</a></p></div></section><section class="slide legacy" data-part="p0" data-title="낮은 염기 다양성과 PhiX"><header><h2>낮은 염기 다양성과 PhiX</h2></header><div class="body"><div class="cols w55">
+      <svg viewBox="0 0 520 320" role="img" aria-label="2026 J6 Read 1의 cycle별 염기 조성, 1–21 cycle은 한 염기가 약 99퍼센트" font-family="Apple SD Gothic Neo,Helvetica Neue,sans-serif">
+        <text x="10" y="18" font-size="13" font-weight="700" fill="#16324F">cycle별 염기 조성 — J6 R1 첫 10,000 read (2026 런)</text>
+        <line x1="40" y1="250" x2="510" y2="250" stroke="#5B6670"></line><line x1="40" y1="30" x2="40" y2="250" stroke="#5B6670"></line>
+        <g font-size="10.5" fill="#5B6670" text-anchor="end"><text x="36" y="34">100%</text><text x="36" y="144">50%</text><text x="36" y="253">0</text></g>
+        <!-- bars: cycles 1..25 width 17 gap 1.6 -->
+                <!-- generated bars -->
+        <rect x="44.0" y="248.4" width="16" height="1.6" fill="#2E7D54"></rect>
+        <rect x="44.0" y="247.9" width="16" height="0.5" fill="#224EBD"></rect>
+        <rect x="44.0" y="247.5" width="16" height="0.4" fill="#5B6670"></rect>
+        <rect x="44.0" y="30.0" width="16" height="217.5" fill="#C03B3B"></rect>
+        <rect x="61.8" y="34.1" width="16" height="215.9" fill="#2E7D54"></rect>
+        <rect x="61.8" y="32.9" width="16" height="1.2" fill="#224EBD"></rect>
+        <rect x="61.8" y="32.1" width="16" height="0.7" fill="#5B6670"></rect>
+        <rect x="61.8" y="30.0" width="16" height="2.1" fill="#C03B3B"></rect>
+        <rect x="79.6" y="249.2" width="16" height="0.8" fill="#2E7D54"></rect>
+        <rect x="79.6" y="248.5" width="16" height="0.7" fill="#224EBD"></rect>
+        <rect x="79.6" y="31.6" width="16" height="216.9" fill="#5B6670"></rect>
+        <rect x="79.6" y="30.0" width="16" height="1.6" fill="#C03B3B"></rect>
+        <rect x="97.4" y="248.5" width="16" height="1.5" fill="#2E7D54"></rect>
+        <rect x="97.4" y="31.0" width="16" height="217.5" fill="#224EBD"></rect>
+        <rect x="97.4" y="30.3" width="16" height="0.7" fill="#5B6670"></rect>
+        <rect x="115.2" y="249.6" width="16" height="0.4" fill="#2E7D54"></rect>
+        <rect x="115.2" y="32.6" width="16" height="217.0" fill="#224EBD"></rect>
+        <rect x="115.2" y="31.1" width="16" height="1.5" fill="#5B6670"></rect>
+        <rect x="115.2" y="30.0" width="16" height="1.1" fill="#C03B3B"></rect>
+        <rect x="133.0" y="248.0" width="16" height="2.0" fill="#224EBD"></rect>
+        <rect x="133.0" y="247.6" width="16" height="0.4" fill="#5B6670"></rect>
+        <rect x="133.0" y="30.3" width="16" height="217.3" fill="#C03B3B"></rect>
+        <rect x="150.8" y="249.7" width="16" height="0.3" fill="#2E7D54"></rect>
+        <rect x="150.8" y="248.0" width="16" height="1.7" fill="#224EBD"></rect>
+        <rect x="150.8" y="247.0" width="16" height="1.0" fill="#5B6670"></rect>
+        <rect x="150.8" y="30.0" width="16" height="217.0" fill="#C03B3B"></rect>
+        <rect x="168.6" y="248.3" width="16" height="1.7" fill="#2E7D54"></rect>
+        <rect x="168.6" y="247.7" width="16" height="0.5" fill="#224EBD"></rect>
+        <rect x="168.6" y="31.3" width="16" height="216.5" fill="#5B6670"></rect>
+        <rect x="168.6" y="30.0" width="16" height="1.3" fill="#C03B3B"></rect>
+        <rect x="186.4" y="248.5" width="16" height="1.5" fill="#2E7D54"></rect>
+        <rect x="186.4" y="247.6" width="16" height="0.9" fill="#224EBD"></rect>
+        <rect x="186.4" y="246.4" width="16" height="1.2" fill="#5B6670"></rect>
+        <rect x="186.4" y="30.0" width="16" height="216.4" fill="#C03B3B"></rect>
+        <rect x="204.2" y="247.8" width="16" height="2.2" fill="#2E7D54"></rect>
+        <rect x="204.2" y="247.5" width="16" height="0.3" fill="#224EBD"></rect>
+        <rect x="204.2" y="31.1" width="16" height="216.4" fill="#5B6670"></rect>
+        <rect x="204.2" y="30.0" width="16" height="1.1" fill="#C03B3B"></rect>
+        <rect x="222.0" y="249.6" width="16" height="0.4" fill="#2E7D54"></rect>
+        <rect x="222.0" y="247.0" width="16" height="2.6" fill="#224EBD"></rect>
+        <rect x="222.0" y="246.4" width="16" height="0.6" fill="#5B6670"></rect>
+        <rect x="222.0" y="30.0" width="16" height="216.4" fill="#C03B3B"></rect>
+        <rect x="239.8" y="249.5" width="16" height="0.5" fill="#2E7D54"></rect>
+        <rect x="239.8" y="30.7" width="16" height="218.7" fill="#224EBD"></rect>
+        <rect x="239.8" y="30.2" width="16" height="0.6" fill="#C03B3B"></rect>
+        <rect x="257.6" y="247.0" width="16" height="3.0" fill="#2E7D54"></rect>
+        <rect x="257.6" y="30.6" width="16" height="216.5" fill="#224EBD"></rect>
+        <rect x="257.6" y="30.2" width="16" height="0.3" fill="#C03B3B"></rect>
+        <rect x="275.4" y="35.0" width="16" height="215.0" fill="#2E7D54"></rect>
+        <rect x="275.4" y="34.5" width="16" height="0.5" fill="#224EBD"></rect>
+        <rect x="275.4" y="30.3" width="16" height="4.2" fill="#C03B3B"></rect>
+        <rect x="293.2" y="248.2" width="16" height="1.8" fill="#2E7D54"></rect>
+        <rect x="293.2" y="245.1" width="16" height="3.0" fill="#224EBD"></rect>
+        <rect x="293.2" y="244.5" width="16" height="0.6" fill="#5B6670"></rect>
+        <rect x="293.2" y="30.0" width="16" height="214.5" fill="#C03B3B"></rect>
+        <rect x="311.0" y="245.8" width="16" height="4.2" fill="#2E7D54"></rect>
+        <rect x="311.0" y="32.0" width="16" height="213.8" fill="#224EBD"></rect>
+        <rect x="311.0" y="30.6" width="16" height="1.4" fill="#5B6670"></rect>
+        <rect x="311.0" y="30.0" width="16" height="0.6" fill="#C03B3B"></rect>
+        <rect x="328.8" y="32.9" width="16" height="217.1" fill="#2E7D54"></rect>
+        <rect x="328.8" y="31.0" width="16" height="1.9" fill="#224EBD"></rect>
+        <rect x="328.8" y="30.7" width="16" height="0.4" fill="#5B6670"></rect>
+        <rect x="328.8" y="30.0" width="16" height="0.7" fill="#C03B3B"></rect>
+        <rect x="346.6" y="39.7" width="16" height="210.3" fill="#2E7D54"></rect>
+        <rect x="346.6" y="38.6" width="16" height="1.1" fill="#224EBD"></rect>
+        <rect x="346.6" y="37.0" width="16" height="1.6" fill="#5B6670"></rect>
+        <rect x="346.6" y="30.0" width="16" height="7.0" fill="#C03B3B"></rect>
+        <rect x="364.4" y="249.5" width="16" height="0.5" fill="#2E7D54"></rect>
+        <rect x="364.4" y="239.9" width="16" height="9.6" fill="#224EBD"></rect>
+        <rect x="364.4" y="239.5" width="16" height="0.4" fill="#5B6670"></rect>
+        <rect x="364.4" y="30.0" width="16" height="209.5" fill="#C03B3B"></rect>
+        <rect x="382.2" y="248.1" width="16" height="1.9" fill="#2E7D54"></rect>
+        <rect x="382.2" y="31.5" width="16" height="216.6" fill="#224EBD"></rect>
+        <rect x="382.2" y="30.7" width="16" height="0.8" fill="#5B6670"></rect>
+        <rect x="382.2" y="30.0" width="16" height="0.7" fill="#C03B3B"></rect>
+        <rect x="400.0" y="247.2" width="16" height="2.8" fill="#2E7D54"></rect>
+        <rect x="400.0" y="36.5" width="16" height="210.7" fill="#224EBD"></rect>
+        <rect x="400.0" y="33.1" width="16" height="3.4" fill="#5B6670"></rect>
+        <rect x="400.0" y="30.0" width="16" height="3.1" fill="#C03B3B"></rect>
+        <rect x="417.8" y="190.0" width="16" height="60.0" fill="#2E7D54"></rect>
+        <rect x="417.8" y="140.6" width="16" height="49.4" fill="#224EBD"></rect>
+        <rect x="417.8" y="83.9" width="16" height="56.7" fill="#5B6670"></rect>
+        <rect x="417.8" y="30.0" width="16" height="53.9" fill="#C03B3B"></rect>
+        <rect x="435.6" y="187.1" width="16" height="62.9" fill="#2E7D54"></rect>
+        <rect x="435.6" y="137.8" width="16" height="49.2" fill="#224EBD"></rect>
+        <rect x="435.6" y="78.0" width="16" height="59.8" fill="#5B6670"></rect>
+        <rect x="435.6" y="30.0" width="16" height="48.0" fill="#C03B3B"></rect>
+        <rect x="453.4" y="182.9" width="16" height="67.1" fill="#2E7D54"></rect>
+        <rect x="453.4" y="133.4" width="16" height="49.5" fill="#224EBD"></rect>
+        <rect x="453.4" y="76.5" width="16" height="56.9" fill="#5B6670"></rect>
+        <rect x="453.4" y="30.0" width="16" height="46.5" fill="#C03B3B"></rect>
+        <rect x="471.2" y="184.7" width="16" height="65.3" fill="#2E7D54"></rect>
+        <rect x="471.2" y="134.6" width="16" height="50.0" fill="#224EBD"></rect>
+        <rect x="471.2" y="87.5" width="16" height="47.1" fill="#5B6670"></rect>
+        <rect x="471.2" y="30.0" width="16" height="57.5" fill="#C03B3B"></rect>
+        <g font-size="10.5" fill="#5B6670" text-anchor="middle"><text x="50" y="265">1</text><text x="210" y="265">10</text><text x="388" y="265">20</text><text x="477" y="265">25</text></g>
+        <text x="275" y="282" text-anchor="middle" font-size="12" fill="#5B6670">cycle →</text>
+        <g font-size="11.5"><rect x="60" y="294" width="12" height="12" fill="#2E7D54"></rect><text x="76" y="305" fill="#16324F">A</text><rect x="100" y="294" width="12" height="12" fill="#224EBD"></rect><text x="116" y="305" fill="#16324F">C</text><rect x="140" y="294" width="12" height="12" fill="#5B6670"></rect><text x="156" y="305" fill="#16324F">G</text><rect x="180" y="294" width="12" height="12" fill="#C03B3B"></rect><text x="196" y="305" fill="#16324F">T</text>
+        <text x="236" y="305" fill="#C03B3B" font-weight="700">1–21 cycle: 한 염기 ≈ 96–99 % (primer 구간)</text></g>
+      </svg>
+      <div class="stack">
+        <div class="kb"><b>무엇이 문제인가</b><p class="small">Illumina 기기는 첫 몇 cycle의 영상으로 클러스터 위치를 찾고 색(채널)을 보정 · 한 염기만 빛나면 기준을 잡지 못해 %PF · 품질 하락</p></div>
+        <div class="kb teal"><b>해결: PhiX spike-in</b><p class="small">염기가 고르게 섞인 PhiX 게놈(약 5.4 kb) 라이브러리를 일정 비율 섞어 매 cycle 네 염기를 모두 보이게 함 · 서열을 알므로 오류율 대조군 역할도 함</p></div>
+        <div class="kb green"><b>권장 비율 (Illumina)</b><p class="small">iSeq 100 · MiSeq: 저다양성 최소 5 % · NextSeq 1000/2000: 10–50 % · 사례: 10–20 %<br>대가: PhiX 20 % → <b>데이터 read의 20 %를 포기</b> (PART 3 ④)</p></div>
+      </div>
+    </div>
+    
+  <p class="src"><a href="https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf" target="_blank" rel="noopener">https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf</a></p></div></section><section class="slide legacy" data-part="p1" data-title="Cycle과 read 길이"><header><h2>Cycle과 read 길이</h2></header><div class="body"><div class="defgrid two">
+      <div class="dcol"><div class="dh">정의 <small>Definition</small></div><ul>
+        <li>1 cycle = dNTP 결합 → 영상 → 절단의 한 바퀴 = <b>클러스터마다 1 염기</b></li>
+        <li>read 길이(nt) = 그 read에 쓴 cycle 수</li>
+        <li>cycle이 쌓일수록 일부 분자가 박자를 놓침(phasing) → 뒤쪽 품질 하락 → 최대 길이 제한</li>
+        <li class="eq">제 박자 비율 ≈ (1 − p)ⁿ</li>
+      </ul></div>
+      <div class="dcol ex"><div class="dh">예제 · 손계산 <small>Example</small></div><ul>
+        <li>150 cycle → 150 nt read</li>
+        <li>박자 놓칠 확률 p = 0.5 %, n = 150:<br><span class="mono">0.995¹⁵⁰ ≈ e^(−0.75) ≈ 0.47</span> → 신호 절반만 제 박자</li>
+        <li>p = 0.1 %면 <span class="mono">0.999¹⁵⁰ ≈ 0.86</span> → 화학 개선이 read를 길게 만든 이유</li>
+        <li>우리 데이터: 2026 런 마지막 cycle(151) 평균 Q ≈ 38.6, iSeq cycle 150 ≈ 27 (PART 4 그래프)</li>
+      </ul></div>
+    </div>
+    <div class="cols w46">
+      <div class="kb teal"><b>한 줄</b><p class="small">cycle = 시간 · 시약 · 품질을 함께 소모하는 단위</p></div>
+      <div class="kb"><b>연결</b><p class="small">p 값은 설명용 예시 · 실제 값은 기기 · 화학마다 다름</p></div>
+    </div>
+    
+  <p class="src"><a href="https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf" target="_blank" rel="noopener">https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf</a></p></div></section><section class="slide legacy" data-part="p1" data-title="Paired-end run의 cycle 예산"><header><h2>Paired-end run의 cycle 예산</h2></header><div class="body"><svg viewBox="0 0 960 250" role="img" aria-label="Read 1 151, Index 1 8, Index 2 8, Read 2 151 cycle 막대" font-family="Apple SD Gothic Neo,Helvetica Neue,sans-serif">
+      <g font-size="16" font-weight="700" text-anchor="middle" fill="#fff">
+        <rect x="20" y="40" width="400" height="56" fill="#224EBD"></rect><text x="220" y="75">Read 1 — 150 (+1) cycle</text>
+        <rect x="420" y="40" width="60" height="56" fill="#8A5F12"></rect><text x="450" y="75" font-size="13">i7 8</text>
+        <rect x="480" y="40" width="60" height="56" fill="#C39A4A"></rect><text x="510" y="75" font-size="13">i5 8</text>
+        <rect x="540" y="40" width="400" height="56" fill="#529FD9"></rect><text x="740" y="75">Read 2 — 150 (+1) cycle</text>
+      </g>
+      <path d="M20,112 L420,112 M540,112 L940,112" stroke="#16324F" stroke-width="2"></path>
+      <text x="480" y="140" text-anchor="middle" font-size="15" font-weight="700" fill="#16324F">키트 이름의 300 = 150 + 150</text>
+      <path d="M420,160 L540,160" stroke="#8A5F12" stroke-width="2"></path>
+      <text x="480" y="182" text-anchor="middle" font-size="13" fill="#8A5F12">index cycle — 이름에 미포함</text>
+      <text x="480" y="228" text-anchor="middle" font-size="15" fill="#16324F">실제 런 예: 151 + 8 + 8 + 151 = <tspan font-weight="700" fill="#C03B3B">318 cycle</tspan> · 2026 런 R1 길이 151 nt = 150 + 1</text>
+    </svg>
+    <div class="cols" style="grid-template-columns:repeat(3,minmax(0,1fr))">
+      <div class="kb"><b>같은 키트, 다른 설정</b><p class="small">300 cycle → 2×150 PE · 또는 1×300 SR(장비가 허용하면) · 2×75 등 짧게 쓰는 것은 가능, 길게는 불가</p></div>
+      <div class="kb teal"><b>올리고 150 nt에 2×150</b><p class="small">Read 1이 앞에서 끝까지, Read 2가 뒤에서 끝까지 → <b>한 분자를 두 번</b> 읽음 · 겹치는 부분으로 오류 교차 확인</p></div>
+      <div class="kb green"><b>손계산 — 출력</b><p class="small">iSeq 4 M 클러스터 × 300 nt = 1.2 Gb<br>MiSeq v3 “600 cycle” = 2×300 → 25 M × 600 = 15 Gb</p></div>
+    </div>
+    
+  <p class="src"><a href="https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf" target="_blank" rel="noopener">https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf</a></p></div></section><section class="slide legacy" data-part="p1" data-title="Paired-end와 insert 길이"><header><h2>Paired-end와 insert 길이</h2></header><div class="body"><div class="cols w55">
+      <svg viewBox="0 0 520 300" role="img" aria-label="150 nt 올리고에서 R1과 R2가 전체 겹침, 350 bp 게놈 절편에서는 가운데 50 bp가 비는 그림" font-family="Apple SD Gothic Neo,Helvetica Neue,sans-serif">
+        <defs><marker id="a13" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,1 L9,5 L0,9 z" fill="#16324F"></path></marker></defs>
+        <text x="10" y="22" font-size="13.5" font-weight="700" fill="#16324F">a. 올리고 insert 150 nt</text>
+        <rect x="100" y="40" width="300" height="16" fill="#224EBD"></rect>
+        <g stroke-width="3" marker-end="url(#a13)"><path d="M100,74 L396,74" stroke="#2E7D54"></path><path d="M400,94 L104,94" stroke="#C03B3B"></path></g>
+        <text x="410" y="78" font-size="12" fill="#2E7D54">R1 150</text><text x="30" y="98" font-size="12" fill="#C03B3B">R2 150</text>
+        <text x="250" y="124" text-anchor="middle" font-size="12.5" fill="#16324F">겹침 150 nt = 100 % → 한 염기를 두 번 관찰</text>
+        <text x="10" y="170" font-size="13.5" font-weight="700" fill="#16324F">b. 게놈 절편 insert 350 bp</text>
+        <rect x="10" y="188" width="500" height="16" fill="#529FD9"></rect>
+        <g stroke-width="3" marker-end="url(#a13)"><path d="M10,222 L220,222" stroke="#2E7D54"></path><path d="M510,242 L300,242" stroke="#C03B3B"></path></g>
+        <rect x="224" y="214" width="72" height="34" fill="#FBECEC" stroke="#C03B3B" stroke-dasharray="4 3"></rect>
+        <text x="260" y="270" text-anchor="middle" font-size="12.5" fill="#C03B3B">가운데 350 − 300 = 50 bp는 읽지 않음</text>
+        <text x="260" y="292" text-anchor="middle" font-size="12.5" fill="#16324F">대신 두 read 사이 거리(≈ 350)를 알아 정렬 · 조립에 이용</text>
+      </svg>
+      <div class="stack">
+        <div class="kb"><b>DNA 저장 쪽 이득</b><p class="small">R1 · R2를 겹쳐 합치면(merge) 한 가닥을 두 번 본 합의 서열 · 두 read가 다른 염기에서는 Q 값이 높은 쪽을 택함</p></div>
+        <div class="kb teal"><b>파일은 두 개</b><p class="small">한 클러스터의 R1 → <span class="mono">*_1.fastq.gz</span>, R2 → <span class="mono">*_2.fastq.gz</span> · 같은 줄 번호 = 같은 클러스터 (PART 4)</p></div>
+        <div class="kb crim"><b>read 수 세기 주의</b><p class="small">“8 M paired-end reads” = 4 M 클러스터 × 2 · 우리 환산은 <b>R1 기준(= 클러스터 수)</b>으로 통일</p></div>
+      </div>
+    </div>
+    
+  <p class="src"><a href="https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf" target="_blank" rel="noopener">https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf</a></p></div></section><section class="slide legacy" data-part="p1" data-title="Read 수와 염기 출력"><header><h2>Read 수와 염기 출력</h2></header><div class="body"><div class="defgrid two">
+      <div class="dcol"><div class="dh">정의 <small>Definition</small></div><ul>
+        <li>N = read 수 (클러스터 수, R1 기준) · L = read 길이(nt)</li>
+        <li class="eq">출력 B = N × L × (PE면 2)</li>
+        <li>단위: 1 kb = 10³ · 1 Mb = 10⁶ · 1 Gb = 10⁹ · 1 Tb = 10¹² <b>염기</b></li>
+        <li>파일 크기(GB, 바이트)와 다름 — FASTQ는 염기 1개당 서열 1 byte + 품질 1 byte + 헤더</li>
+      </ul></div>
+      <div class="dcol ex"><div class="dh">예제 · 손계산 <small>Example</small></div><ul>
+        <li>iSeq 사양: <span class="mono">4 × 10⁶ × 150 × 2 = 1.2 × 10⁹</span> = <b>1.2 Gb</b></li>
+        <li>직지 J6 (iSeq, R1): <span class="mono">2,289,024 × 148.9 ≈ 340.8 × 10⁶</span> = <b>340.8 Mb</b></li>
+        <li>2026 런 J6 R1: <span class="mono">12,662,679 × 151 ≈ 1.91 × 10⁹</span> = <b>1.91 Gb</b> · R1 + R2 = <b>3.82 Gb</b></li>
+        <li>파일: 340.8 Mb → 815 MB (압축 없음) ≈ 염기당 2.4 byte</li>
+      </ul></div>
+    </div>
+    
+  <p class="src"><a href="https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf" target="_blank" rel="noopener">https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf</a></p></div></section><section class="slide legacy" data-part="p1" data-title="Reads Mb Gb 단위 환산"><header><h2>Reads Mb Gb 단위 환산</h2></header><div class="body"><div class="cols w55">
+      <svg viewBox="0 0 520 330" role="img" aria-label="read 수에서 염기 수, Mb, Gb로 가는 단위 사다리" font-family="Apple SD Gothic Neo,Helvetica Neue,sans-serif">
+        <defs><marker id="b3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,1 L9,5 L0,9 z" fill="#529FD9"></path></marker></defs>
+        <g text-anchor="middle">
+          <rect x="20" y="20" width="220" height="56" rx="8" fill="#EAF3FB" stroke="#224EBD"></rect><text x="130" y="44" font-size="12.5" fill="#5B6670">read 수 (R1)</text><text x="130" y="66" font-size="19" font-weight="700" fill="#16324F" font-family="Menlo,monospace">12,662,679</text>
+          <rect x="20" y="118" width="220" height="56" rx="8" fill="#EAF3FB" stroke="#224EBD"></rect><text x="130" y="142" font-size="12.5" fill="#5B6670">염기 수 (R1)</text><text x="130" y="164" font-size="19" font-weight="700" fill="#16324F" font-family="Menlo,monospace">1,912,064,529</text>
+          <rect x="20" y="216" width="220" height="56" rx="8" fill="#FAF6EC" stroke="#8A5F12"></rect><text x="130" y="240" font-size="12.5" fill="#5B6670">Gb (R1)</text><text x="130" y="262" font-size="19" font-weight="700" fill="#8A5F12" font-family="Menlo,monospace">1.91 Gb</text>
+          <rect x="290" y="216" width="210" height="56" rx="8" fill="#E9F4EE" stroke="#2E7D54"></rect><text x="395" y="240" font-size="12.5" fill="#5B6670">Gb (R1 + R2)</text><text x="395" y="262" font-size="19" font-weight="700" fill="#2E7D54" font-family="Menlo,monospace">3.82 Gb</text>
+        </g>
+        <g stroke="#529FD9" stroke-width="2.4" marker-end="url(#b3)"><path d="M130,80 L130,112"></path><path d="M130,178 L130,210"></path><path d="M244,244 L284,244"></path></g>
+        <g font-size="13" font-weight="700" fill="#C03B3B"><text x="140" y="101">× 151 nt</text><text x="140" y="199">÷ 10⁹</text><text x="250" y="232">× 2</text></g>
+        <text x="260" y="306" text-anchor="middle" font-size="13" fill="#16324F">검산: 12.66 M × 151 ≈ 12.66 × 151 M = 1,912 M = 1.91 G</text>
+      </svg>
+      <div class="stack">
+        <div class="kb"><b>연습 1</b><p class="small">MiSeq에서 15 M reads × 2×250 → ? <span class="gray">답: 15 × 10⁶ × 500 = 7.5 Gb</span></p></div>
+        <div class="kb teal"><b>연습 2</b><p class="small">“0.5 Gb가 필요하다” — 2×150 PE로 read 몇 개? <span class="gray">답: 0.5 × 10⁹ ÷ 300 ≈ 1.67 M 클러스터</span></p></div>
+        <div class="kb green"><b>연습 3</b><p class="small">iSeq J6: 2,289,024 read 평균 148.9 nt — 왜 150이 아닌가? <span class="gray">답: 기기에서 adapter · 품질 끝 자르기(trimming)로 길이가 147–150으로 달라짐</span></p></div>
+        <div class="kb crim"><b>자주 틀리는 곳</b><p class="small">M reads vs M read <b>pairs</b> · Gb(염기) vs GB(바이트)</p></div>
+      </div>
+    </div>
+    
+  <p class="src"><a href="https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf" target="_blank" rel="noopener">https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf</a></p></div></section><section class="slide legacy" data-part="p1" data-title="게놈 coverage의 정의"><header><h2>게놈 coverage의 정의</h2></header><div class="body"><div class="defgrid two">
+      <div class="dcol"><div class="dh">정의 <small>Definition</small></div><ul>
+        <li>N = read 수 · L = read 길이 · G = 게놈 크기(bp)</li>
+        <li class="eq">C = N · L / G = 총 염기 수 / 게놈 크기</li>
+        <li>read는 게놈 위 <b>무작위 위치</b>에서 시작 → 평균이 C여도 어떤 곳은 0번, 어떤 곳은 2C번</li>
+        <li>30× = 사람 전장 게놈 분석에서 널리 쓰는 기준 깊이</li>
+      </ul></div>
+      <div class="dcol ex"><div class="dh">예제 · 손계산 <small>Example</small></div><ul>
+        <li>대장균 G = 4.6 Mb, iSeq 1.2 Gb:<br><span class="mono">C = 1.2 × 10⁹ ÷ 4.6 × 10⁶ ≈ 261×</span></li>
+        <li>사람 G = 3.1 Gb, 30× 목표:<br><span class="mono">30 × 3.1 = 93 Gb</span> → iSeq 78런 · NovaSeq X 1.5B 한 장(0.5–0.7 Tb)에 5–7명</li>
+        <li>필요 클러스터: <span class="mono">93 × 10⁹ ÷ 300 = 3.1 × 10⁸</span> (310 M 쌍)</li>
+      </ul></div>
+    </div>
+    
+  <p class="src"><a href="https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf" target="_blank" rel="noopener">https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf</a></p></div></section><section class="slide legacy" data-part="p1" data-title="균일 sampling과 미관측 비율"><header><h2>균일 sampling과 미관측 비율</h2></header><div class="body"><div class="cols w55">
+      <svg viewBox="0 0 520 320" role="img" aria-label="커버리지 C에 따른 빠진 비율 e의 마이너스 C 제곱 곡선" font-family="Apple SD Gothic Neo,Helvetica Neue,sans-serif">
+        <line x1="60" y1="260" x2="500" y2="260" stroke="#5B6670"></line><line x1="60" y1="30" x2="60" y2="260" stroke="#5B6670"></line>
+        <g font-size="11" fill="#5B6670" text-anchor="end"><text x="54" y="34">100%</text><text x="54" y="149">50%</text><text x="54" y="264">0</text></g>
+        <g font-size="11" fill="#5B6670" text-anchor="middle"><text x="60" y="278">0</text><text x="148" y="278">1</text><text x="236" y="278">2</text><text x="324" y="278">3</text><text x="412" y="278">4</text><text x="500" y="278">5</text></g>
+        <text x="280" y="300" text-anchor="middle" font-size="12.5" fill="#16324F">평균 커버리지 C (×)</text>
+        <path d="M60,30 L82,79 L104,120 L126,152 L148,175 L170,194 L192,209 L214,220 L236,229 L258,237 L280,242 L302,246 L324,249 L346,251 L368,253 L390,255 L412,256 L434,257 L456,258 L478,258 L500,258.5" fill="none" stroke="#224EBD" stroke-width="3"></path>
+        <g fill="#C03B3B"><circle cx="148" cy="175.3" r="5"></circle><circle cx="236" cy="228.9" r="5"></circle><circle cx="324" cy="248.5" r="5"></circle></g>
+        <g font-size="12.5" font-weight="700" fill="#C03B3B"><text x="156" y="168">C=1 → 36.8 %</text><text x="244" y="222">C=2 → 13.5 %</text><text x="332" y="240">C=3 → 5.0 %</text></g>
+        <text x="300" y="60" font-size="16" font-weight="700" fill="#16324F">P(0번) = e<tspan baseline-shift="super" font-size="11">−C</tspan></text>
+      </svg>
+      <div class="stack">
+        <table class="tbl sm">
+          <thead><tr><th>C</th><th class="num">빠진 비율 e<sup>−C</sup></th><th class="num">3.1 Gb 게놈에서 빠진 염기</th></tr></thead>
+          <tbody>
+            <tr><td>1×</td><td class="num">36.8 %</td><td class="num">1.1 Gb</td></tr>
+            <tr><td>3×</td><td class="num">5.0 %</td><td class="num">154 Mb</td></tr>
+            <tr><td>5×</td><td class="num">0.67 %</td><td class="num">21 Mb</td></tr>
+            <tr><td>10×</td><td class="num">0.0045 %</td><td class="num">141 kb</td></tr>
+            <tr><td>30×</td><td class="num">9 × 10<sup>−14</sup></td><td class="num">≈ 0</td></tr>
+          </tbody>
+        </table>
+        <div class="kb green"><b>손계산</b><p class="small">e ≈ 2.718 → e<sup>−3</sup> = 1 ÷ 20.1 ≈ 0.050 · 3.1 × 10⁹ × 0.050 ≈ 1.5 × 10⁸</p></div>
+        <div class="kb crim"><b>실제는 더 나쁨</b><p class="small">GC 편향 · 반복 서열 · PCR 편향 → 포아송보다 넓게 퍼짐 → 30×를 쓰는 이유 (⑥ 균일도)</p></div>
+      </div>
+    </div>
+    
+  <p class="src"><a href="https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf" target="_blank" rel="noopener">https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf</a></p></div></section><section class="slide legacy" data-part="p1" data-title="올리고 풀의 read depth"><header><h2>올리고 풀의 read depth</h2></header><div class="body"><div class="defgrid two">
+      <div class="dcol"><div class="dh">정의 <small>Definition</small></div><ul>
+        <li>M = 설계한 가닥 수 · N = read 수(R1)</li>
+        <li class="eq">가닥당 평균 depth = N ÷ M</li>
+        <li>게놈 식과 같음: G = M × L(가닥 길이), 각 read 길이 = L →<br><span class="mono">C = N·L / (M·L) = N / M</span></li>
+        <li>depth = 같은 가닥을 몇 번 읽었나 → 다수결(consensus)의 표 수</li>
+      </ul></div>
+      <div class="dcol ex"><div class="dh">예제 · 손계산 (직지 J6, M = 1,018) <small>Example</small></div><ul>
+        <li>iSeq: <span class="mono">2,289,024 ÷ 1,018 = 2,248.6</span> → <b>약 2,249×</b></li>
+        <li>2026 런 R1: <span class="mono">12,662,679 ÷ 1,018 = 12,438.7</span> → <b>약 12,439×</b></li>
+        <li>검산: 2,249 × 1,018 = 2,289,482 ≈ 2,289,024 ✓</li>
+        <li>논문 J6 평균 depth ×2593.5 — 집계 기준(어느 read를 세는가)에 따라 값이 달라짐 [기준 확인필요]</li>
+      </ul></div>
+    </div>
+    <div class="cols w46">
+      <div class="kb teal"><b>게놈과 다른 점</b><p class="small">read 시작 위치가 무작위가 아님 — 모두 가닥의 처음(primer)에서 시작 · “빠진 염기”가 아니라 “빠진 가닥(dropout)”이 문제</p></div>
+      <div class="kb"><b>필요한 depth는 작다</b><p class="small">오류율 0.1 %의 read로 다수결이면 가닥당 수십 × 로 충분 — 2,249×는 크게 넉넉 (4주차 다수결 정확도)</p></div>
+    </div>
+    
+  <p class="src"><a href="https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf" target="_blank" rel="noopener">https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf</a></p></div></section><section class="slide legacy" data-part="p1" data-title="시료별 read 배분"><header><h2>시료별 read 배분</h2></header><div class="body"><div class="defgrid two">
+      <div class="dcol"><div class="dh">정의 <small>Definition</small></div><ul>
+        <li>N<sub>tot</sub> = 런 전체 PF read · φ = PhiX 비율 · f<sub>i</sub> = 샘플 i의 몰 비율</li>
+        <li class="eq">N<sub>i</sub> = N<sub>tot</sub> × (1 − φ) × f<sub>i</sub></li>
+        <li>같은 몰농도로 k개를 섞으면 f<sub>i</sub> = 1/k</li>
+        <li>depth<sub>i</sub> = N<sub>i</sub> ÷ M<sub>i</sub> (③과 연결)</li>
+      </ul></div>
+      <div class="dcol ex"><div class="dh">예제 · 손계산 <small>Example</small></div><ul>
+        <li>iSeq 4 M, PhiX 20 %, 직지 파일 8개 같은 비율:<br><span class="mono">4,000,000 × 0.8 ÷ 8 = 400,000 read/샘플</span></li>
+        <li>샘플마다 1,018 가닥이면 <span class="mono">400,000 ÷ 1,018 ≈ 393×</span></li>
+        <li>PhiX를 5 %로 줄이면 <span class="mono">4 M × 0.95 ÷ 8 = 475,000</span> → +19 %</li>
+        <li>한 샘플만 2배로 섞으면 f = 2/9 → 그 샘플 711,111 · 나머지 355,556</li>
+      </ul></div>
+    </div>
+    
+    
+  <p class="src"><a href="https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf" target="_blank" rel="noopener">https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf</a></p></div></section><section class="slide legacy" data-part="p1" data-title="필요 read 수의 역산"><header><h2>필요 read 수의 역산</h2></header><div class="body"><div class="defgrid two">
+      <div class="dcol"><div class="dh">정의 <small>Definition</small></div><ul>
+        <li>d = 원하는 평균 depth · M = 가닥 수 · η = 통과율(완전 일치 · 품질 필터를 통과한 read 비율) · φ = PhiX</li>
+        <li class="eq">N<sub>필요</sub> = d × M ÷ η ÷ (1 − φ)</li>
+        <li>최소 depth가 목표면 d = 목표 최소 ÷ (최소/평균 비) — ⑥의 균일도로 보정</li>
+      </ul></div>
+      <div class="dcol ex"><div class="dh">예제 · 손계산 <small>Example</small></div><ul>
+        <li>우리 데이터 η: iSeq 완전 일치 <span class="mono">1,592,501 ÷ 2,289,024 = 0.70</span></li>
+        <li>J6 (M = 1,018), 평균 30×: <span class="mono">30 × 1,018 ÷ 0.70 ÷ 0.8 ≈ 54,536 read</span> → iSeq 한 런(4 M)에 약 73개 샘플</li>
+        <li>큰 파일 M = 100,000, 최소 30× 원함, 최소 ≈ 평균의 0.5 → d = 60:<br><span class="mono">60 × 10⁵ ÷ 0.70 ÷ 0.8 ≈ 10.7 M</span> → iSeq(4 M) 부족 → MiSeq v3 · NextSeq P1</li>
+      </ul></div>
+    </div>
+    <div class="cols w46">
+      <div class="kb teal"><b>왜 η를 나누나</b><p class="small">오류가 있는 read · adapter read · 짧은 read는 디코딩 전에 버려짐 → 버릴 몫만큼 더 읽어야 함</p></div>
+      <div class="kb green"><b>주문 문장으로</b><p class="small">“J6 한 샘플, 2×150, 최소 5만 read” — 외주 시퀀싱은 보통 Gb 단위 주문 → 54,536 × 300 ≈ 16 Mb</p></div>
+    </div>
+    
+  <p class="src"><a href="https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf" target="_blank" rel="noopener">https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf</a></p></div></section><section class="slide " data-part="p1" data-title="평균과 분포의 차이"><header><h2>평균과 분포의 차이</h2></header><div class="body"><div class="lecture-columns"><div><figure class="lecture-figure"><img src="assets/access_fig3.png" alt="파일 복원과 커버리지"><figcaption>Organick et al., Nature Communications 11, 616 (2020), Fig. 3</figcaption></figure></div><div><ul class="lecture-bullets"><li>같은 평균 depth에서도 서열별 편차 존재</li><li>증폭·표본화·적재·필터의 공동 영향</li><li>드문 가닥의 손실이 복원에 영향</li><li>분포와 파일 복원 성공률의 동시 보고</li></ul></div></div><p class="src"><a href="https://www.nature.com/articles/s41467-020-14319-8" target="_blank" rel="noopener">https://www.nature.com/articles/s41467-020-14319-8</a></p></div></section><section class="slide " data-part="p2" data-title="FASTQ의 네 줄"><header><h2>FASTQ의 네 줄</h2></header><div class="body"><div class="lecture-columns"><div><pre class="lecture-code">@example_read_001
+ACGTTGCA
++
+IIIIIIII</pre></div><div><ul class="lecture-bullets"><li>1행: @로 시작하는 read 이름</li><li>2행: 판독 염기서열</li><li>3행: + 구분자</li><li>4행: 각 염기에 대응하는 품질 문자</li></ul></div></div><p class="src"><a href="https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf" target="_blank" rel="noopener">https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf</a></p></div></section><section class="slide legacy" data-part="p2" data-title="Illumina read header의 구성"><header><h2>Illumina read header의 구성</h2></header><div class="body"><table class="tbl sm">
+      <thead><tr><th>필드</th><th>뜻 (KJW 해설)</th><th>iSeq 100 J6 (2021)</th><th>2026 런 J6</th></tr></thead>
+      <tbody>
+        <tr><td>instrument</td><td>기기 ID — 장비마다 고유</td><td class="c">FS10001703</td><td class="c">LH00688</td></tr>
+        <tr><td>run number</td><td>그 기기의 몇 번째 런</td><td class="c">12</td><td class="c">330</td></tr>
+        <tr><td>flow cell ID</td><td>플로셀 바코드</td><td class="c">BRB11620-1609</td><td class="c">23NVTCLT4</td></tr>
+        <tr><td>lane</td><td>레인 번호</td><td class="c">1</td><td class="c">6</td></tr>
+        <tr><td>tile</td><td>타일(촬영 구역) 번호</td><td class="c">1101</td><td class="c">1101</td></tr>
+        <tr><td>x · y</td><td>타일 안 클러스터 좌표</td><td class="c">1000 · 1000</td><td class="c">48043 · 1042</td></tr>
+        <tr><td>read</td><td>1 = Read 1, 2 = Read 2 (PE의 짝)</td><td class="c">1</td><td class="c">1</td></tr>
+        <tr><td>is filtered</td><td>필터에 걸렸으면 Y, 아니면 N</td><td class="c">N</td><td class="c">N</td></tr>
+        <tr><td>control</td><td>control bit 없으면 0, 있으면 짝수</td><td class="c">0</td><td class="c">0</td></tr>
+        <tr><td>sample / index</td><td>샘플시트 번호 또는 index 서열</td><td class="c">2 (샘플 번호)</td><td class="c">CGATGTAT (8 nt index)</td></tr>
+      </tbody>
+    </table>
+    <div class="cols w46">
+      <div class="kb teal"><b>장비 ID로 기종 추정</b><p class="small">FS… = iSeq 100 (장비 화면의 FS10001703과 일치) · LH… = NovaSeq X 계열로 추정 [추정]</p></div>
+      <div class="kb"><b>쓸모</b><p class="small">좌표로 같은 클러스터의 R1 · R2를 짝지음 · 타일별 품질 문제(FastQC “per tile”) 추적 · 런 · 플로셀로 데이터 출처 기록</p></div>
+    </div>
+    
+  <p class="src"><a href="https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf" target="_blank" rel="noopener">https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf</a></p></div></section><section class="slide legacy" data-part="p2" data-title="Phred quality score"><header><h2>Phred quality score</h2></header><div class="body"><div class="defgrid two">
+      <div class="dcol"><div class="dh">정의 <small>Definition</small></div><ul>
+        <li>P = 이 염기가 틀렸을 확률</li>
+        <li class="eq">Q = −10 log₁₀ P ⇔ P = 10<sup>−Q/10</sup></li>
+        <li>Q 10 올라갈 때마다 오류 1/10 · Q20 = 1 %, Q30 = 0.1 %, Q40 = 0.01 %</li>
+        <li class="eq">문자 = ASCII(Q + 33) ⇔ Q = ASCII 코드 − 33</li>
+        <li>33을 더하는 이유: 0–32는 공백 · 제어 문자라 눈에 안 보임 → <span class="mono">!</span>(33) = Q0부터 시작</li>
+      </ul></div>
+      <div class="dcol ex"><div class="dh">예제 · 손계산 <small>Example</small></div><ul>
+        <li><span class="mono">I</span> = 73 → 73 − 33 = <b>Q40</b> → P = 10⁻⁴ = 1/10,000</li>
+        <li><span class="mono">F</span> = 70 → <b>Q37</b> → P = 10⁻³·⁷ ≈ 1/5,000</li>
+        <li><span class="mono">:</span> = 58 → <b>Q25</b> → P ≈ 1/316</li>
+        <li><span class="mono">9</span> = 57 → <b>Q24</b> → P = 10⁻²·⁴ ≈ 1/251</li>
+        <li><span class="mono">,</span> = 44 → <b>Q11</b> → P ≈ 1/12.6</li>
+        <li><span class="mono">#</span> = 35 → <b>Q2</b> → P = 10⁻⁰·² ≈ 0.63 — 거의 추측</li>
+      </ul></div>
+    </div>
+    
+  <p class="src"><a href="https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf" target="_blank" rel="noopener">https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf</a></p></div></section><section class="slide  has-formula has-quiz" data-part="p2" data-title="Q 점수의 해석"><header><h2>Q 점수의 해석</h2></header><div class="body"><ul class="lecture-bullets"><li>Q10: 예측 오류 확률 0.1</li><li>Q20: 예측 오류 확률 0.01</li><li>Q30: 예측 오류 확률 0.001</li><li>Q40: 예측 오류 확률 0.0001</li></ul><p class="lecture-formula">Q = −10 log₁₀ P(error)</p><details class="question"><summary>확인·실습 문제</summary><p>Q20과 Q30의 예측 오류 확률 비율 계산</p></details><p class="src"><a href="https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf" target="_blank" rel="noopener">https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf</a></p></div></section><section class="slide legacy" data-part="p2" data-title="품질 binning과 저장"><header><h2>품질 binning과 저장</h2></header><div class="body"><div class="cols w55">
+      <svg viewBox="0 0 520 320" role="img" aria-label="cycle별 평균 Phred 품질, iSeq와 2026 런" font-family="Apple SD Gothic Neo,Helvetica Neue,sans-serif">
+      <line x1="50" y1="260" x2="500" y2="260" stroke="#5B6670"></line><line x1="50" y1="260" x2="50" y2="40" stroke="#5B6670"></line>
+      <line x1="50" y1="260.0" x2="500" y2="260.0" stroke="#D8DEE6"></line><text x="46" y="264.0" font-size="11" fill="#5B6670" text-anchor="end">Q20</text>
+      <line x1="50" y1="150.0" x2="500" y2="150.0" stroke="#D8DEE6"></line><text x="46" y="154.0" font-size="11" fill="#5B6670" text-anchor="end">Q30</text>
+      <line x1="50" y1="40.0" x2="500" y2="40.0" stroke="#D8DEE6"></line><text x="46" y="44.0" font-size="11" fill="#5B6670" text-anchor="end">Q40</text>
+      <polyline points="50.0,167.3 53.0,107.4 56.0,82.8 59.0,86.2 62.0,92.7 65.0,79.2 68.0,75.1 71.0,84.5 74.0,80.5 77.0,81.5 80.0,76.2 83.0,76.6 86.0,127.9 89.0,102.0 92.0,78.5 95.0,83.7 98.0,83.6 101.0,78.9 104.0,131.3 107.0,82.6 110.0,86.0 113.0,86.2 116.0,86.2 119.0,86.5 122.0,86.4 125.0,87.0 128.0,87.5 131.0,87.0 134.0,87.3 137.0,87.0 140.0,86.8 143.0,87.5 146.0,88.1 149.0,87.4 152.0,88.2 155.0,87.1 158.0,87.7 161.0,86.6 164.0,86.9 167.0,87.9 170.0,86.1 173.0,87.2 176.0,87.0 179.0,87.0 182.0,87.6 185.0,87.5 188.0,87.4 191.0,87.6 194.0,87.9 197.0,87.4 200.0,88.1 203.0,87.3 206.0,87.9 209.0,87.3 212.0,89.7 215.0,87.6 218.0,87.3 221.0,88.1 224.0,87.5 227.0,87.2 230.0,87.9 233.0,88.1 236.0,88.3 239.0,89.2 242.0,88.3 245.0,88.1 248.0,87.9 251.0,87.5 254.0,87.6 257.0,87.6 260.0,89.1 263.0,88.1 266.0,88.4 269.0,87.6 272.0,87.7 275.0,88.8 278.0,87.7 281.0,89.3 284.0,88.2 287.0,87.3 290.0,87.7 293.0,88.8 296.0,88.1 299.0,89.1 302.0,88.6 305.0,88.5 308.0,89.0 311.0,89.1 314.0,88.3 317.0,88.6 320.0,88.5 323.0,89.4 326.0,88.4 329.0,88.8 332.0,88.3 335.0,89.7 338.0,88.6 341.0,89.9 344.0,89.7 347.0,90.6 350.0,90.5 353.0,90.3 356.0,89.2 359.0,89.4 362.0,91.1 365.0,90.7 368.0,89.8 371.0,91.0 374.0,89.5 377.0,91.6 380.0,91.0 383.0,91.4 386.0,89.4 389.0,89.8 392.0,90.8 395.0,91.3 398.0,90.5 401.0,90.8 404.0,91.3 407.0,91.1 410.0,91.1 413.0,91.4 416.0,91.6 419.0,91.4 422.0,91.9 425.0,90.3 428.0,92.2 431.0,91.6 434.0,91.8 437.0,91.5 440.0,86.1 443.0,87.1 446.0,89.6 449.0,87.4 452.0,86.0 455.0,87.2 458.0,91.7 461.0,88.8 464.0,86.0 467.0,89.6 470.0,88.2 473.0,86.2 476.0,86.5 479.0,87.0 482.0,87.5 485.0,89.0 488.0,85.3 491.0,89.2 494.0,90.4 497.0,178.2" fill="none" stroke="#8A5F12" stroke-width="2.4"></polyline>
+      <polyline points="50.0,44.5 53.0,65.0 56.0,52.2 59.0,48.7 62.0,52.7 65.0,46.7 68.0,47.7 71.0,51.2 74.0,47.3 77.0,49.3 80.0,45.1 83.0,45.3 86.0,45.6 89.0,48.9 92.0,46.2 95.0,42.9 98.0,46.6 101.0,47.3 104.0,43.5 107.0,43.6 110.0,44.5 113.0,45.6 116.0,47.2 119.0,46.6 122.0,46.2 125.0,45.8 128.0,47.2 131.0,46.0 134.0,47.2 137.0,47.4 140.0,47.2 143.0,47.5 146.0,46.6 149.0,47.0 152.0,47.5 155.0,46.8 158.0,46.8 161.0,46.8 164.0,46.9 167.0,47.2 170.0,47.9 173.0,47.5 176.0,46.5 179.0,47.0 182.0,46.7 185.0,47.7 188.0,46.9 191.0,47.5 194.0,46.7 197.0,47.6 200.0,47.3 203.0,47.4 206.0,46.6 209.0,47.9 212.0,46.7 215.0,47.9 218.0,47.4 221.0,47.4 224.0,47.4 227.0,47.3 230.0,47.0 233.0,48.0 236.0,47.3 239.0,46.9 242.0,47.9 245.0,47.7 248.0,47.7 251.0,47.7 254.0,48.0 257.0,47.7 260.0,47.5 263.0,47.6 266.0,47.9 269.0,47.9 272.0,48.2 275.0,47.9 278.0,48.6 281.0,47.8 284.0,47.9 287.0,48.5 290.0,48.1 293.0,47.7 296.0,48.2 299.0,47.9 302.0,48.0 305.0,47.8 308.0,48.5 311.0,48.0 314.0,48.1 317.0,48.4 320.0,48.9 323.0,47.2 326.0,47.7 329.0,49.0 332.0,47.7 335.0,48.1 338.0,48.8 341.0,47.6 344.0,47.9 347.0,48.9 350.0,49.2 353.0,48.8 356.0,48.5 359.0,48.5 362.0,48.4 365.0,48.5 368.0,49.0 371.0,49.0 374.0,49.8 377.0,49.6 380.0,49.0 383.0,49.8 386.0,49.8 389.0,50.5 392.0,49.8 395.0,50.6 398.0,50.1 401.0,51.7 404.0,51.4 407.0,51.7 410.0,52.1 413.0,52.7 416.0,53.2 419.0,54.4 422.0,54.1 425.0,54.0 428.0,52.2 431.0,53.8 434.0,53.6 437.0,54.2 440.0,53.8 443.0,49.9 446.0,52.9 449.0,53.3 452.0,51.7 455.0,51.0 458.0,49.6 461.0,50.9 464.0,49.8 467.0,52.2 470.0,49.2 473.0,48.2 476.0,48.8 479.0,49.1 482.0,52.0 485.0,51.2 488.0,48.0 491.0,47.6 494.0,50.8 497.0,51.7 500.0,55.1" fill="none" stroke="#224EBD" stroke-width="2.4"></polyline>
+      <text x="50.0" y="275" font-size="11" fill="#5B6670" text-anchor="middle">1</text>
+      <text x="197.0" y="275" font-size="11" fill="#5B6670" text-anchor="middle">50</text>
+      <text x="347.0" y="275" font-size="11" fill="#5B6670" text-anchor="middle">100</text>
+      <text x="497.0" y="275" font-size="11" fill="#5B6670" text-anchor="middle">150</text>
+      <text x="275" y="294" font-size="12" fill="#16324F" text-anchor="middle">cycle (read 안 위치) →</text>
+      <text x="200" y="40" font-size="12.5" font-weight="700" fill="#224EBD">2026 런 (I · 9 · * · #) ≈ Q39</text>
+      <text x="200" y="108" font-size="12.5" font-weight="700" fill="#8A5F12">iSeq (F · : · ,) ≈ Q35–36</text>
+      <text x="60" y="252" font-size="11.5" fill="#5B6670">첫 cycle · 마지막 cycle에서 하락</text>
+      <text x="10" y="18" font-size="13" font-weight="700" fill="#16324F">cycle별 평균 Q — 첫 10,000 read</text>
+      </svg>
+      <div class="stack">
+        <table class="tbl sm">
+          <thead><tr><th>문자</th><th class="num">Q</th><th class="num">iSeq</th><th class="num">2026 런</th></tr></thead>
+          <tbody>
+            <tr><td class="c">I</td><td class="num">40</td><td class="num">—</td><td class="num">95.9 %</td></tr>
+            <tr><td class="c">F</td><td class="num">37</td><td class="num">91.7 %</td><td class="num">—</td></tr>
+            <tr><td class="c">:</td><td class="num">25</td><td class="num">4.7 %</td><td class="num">—</td></tr>
+            <tr><td class="c">9</td><td class="num">24</td><td class="num">—</td><td class="num">3.2 %</td></tr>
+            <tr><td class="c">,</td><td class="num">11</td><td class="num">3.6 %</td><td class="num">—</td></tr>
+            <tr><td class="c">*</td><td class="num">9</td><td class="num">—</td><td class="num">0.9 %</td></tr>
+          </tbody>
+        </table>
+        <div class="kb green"><b>손계산 — read 하나의 기대 오류 수</b><p class="small">iSeq: 150 × (0.917·10⁻³·⁷ + 0.047·10⁻²·⁵ + 0.036·10⁻¹·¹) ≈ <b>0.48개</b><br>2026 런: 150 × 0.00135 ≈ <b>0.20개</b> — 가닥당 depth 수천이면 다수결로 충분</p></div>
+      </div>
+    </div>
+    
+  <p class="src"><a href="https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf" target="_blank" rel="noopener">https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf</a></p></div></section><section class="slide legacy" data-part="p2" data-title="R1 R2와 read pair 이름"><header><h2>R1 R2와 read pair 이름</h2></header><div class="body"><div class="fq"><span class="p">J6_1.fastq.gz</span>  <span class="h">@LH00688:330:23NVTCLT4:6:1101:48043:1042 <span style="color:#F28B82">1</span>:N:0:CGATGTAT</span>
+<span class="s">TNGCCTTGTGTCCATCAATCC CTAGAGGGTAATTCG … GCGCTATGGTTTGGCTAATA</span>
+<span class="p">J6_2.fastq.gz</span>  <span class="h">@LH00688:330:23NVTCLT4:6:1101:48043:1042 <span style="color:#F28B82">2</span>:N:0:CGATGTAT</span>
+<span class="s">ATTAGCCAAACCATAGCGC AGGTGAGATGGGTATCG … CTAGGGATTGATGGACACAAGGCTAA</span></div>
+    <div class="cols w55">
+      <svg viewBox="0 0 520 190" role="img" aria-label="R1은 F primer에서 앞으로, R2는 R primer 역상보에서 거꾸로 읽고 겹쳐 합침" font-family="Apple SD Gothic Neo,Helvetica Neue,sans-serif">
+        <defs><marker id="b13" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,1 L9,5 L0,9 z" fill="#16324F"></path></marker></defs>
+        <rect x="60" y="70" width="40" height="18" fill="#8A5F12"></rect><rect x="100" y="70" width="320" height="18" fill="#224EBD"></rect><rect x="420" y="70" width="40" height="18" fill="#8A5F12"></rect>
+        <text x="80" y="62" text-anchor="middle" font-size="11" fill="#8A5F12">F</text><text x="440" y="62" text-anchor="middle" font-size="11" fill="#8A5F12">R</text>
+        <g stroke-width="3" marker-end="url(#b13)"><path d="M60,30 L456,30" stroke="#2E7D54"></path><path d="M460,120 L64,120" stroke="#C03B3B"></path></g>
+        <text x="60" y="22" font-size="12.5" font-weight="700" fill="#2E7D54">R1: F primer부터 → 151 nt</text>
+        <text x="460" y="142" text-anchor="end" font-size="12.5" font-weight="700" fill="#C03B3B">R2: R primer의 역상보부터 ← 151 nt</text>
+        <text x="260" y="176" text-anchor="middle" font-size="12.5" fill="#16324F">R2를 역상보로 뒤집으면 R1과 같은 서열 → 겹쳐 합침</text>
+      </svg>
+      <div class="stack">
+        <div class="kb"><b>짝 맞추기 규칙</b><p class="small">두 파일의 n번째 레코드끼리 짝 · 헤더는 read 번호(1/2)만 다름 · 한 파일만 필터링하면 짝이 깨짐</p></div>
+        <div class="kb teal"><b>손으로 확인</b><p class="small">R1 끝 <span class="mono">…GCTAATA</span> ↔ R2 시작 <span class="mono">ATTAGC…</span> — 역상보 관계 (A↔T, G↔C, 방향 반대)</p></div>
+      </div>
+    </div>
+    
+  <p class="src"><a href="https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf" target="_blank" rel="noopener">https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf</a></p></div></section><section class="slide " data-part="p2" data-title="QC trimming과 데이터 보존"><header><h2>QC trimming과 데이터 보존</h2></header><div class="body"><ul class="lecture-bullets"><li>Adapter와 primer의 제거 기준</li><li>짧은 read·저품질 read의 필터</li><li>처리 전후 read 수와 길이 분포</li><li>원본 FASTQ와 처리 이력의 보존</li></ul><p class="src"><a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/" target="_blank" rel="noopener">https://www.bioinformatics.babraham.ac.uk/projects/fastqc/</a></p></div></section><section class="slide " data-part="p3" data-title="Read에서 원본 파일까지"><header><h2>Read에서 원본 파일까지</h2></header><div class="body"><ul class="lecture-bullets"><li>시료·파일·가닥별 분류</li><li>여러 read의 consensus</li><li>Inner·outer 오류정정</li><li>Payload 조립 후 byte·해시 검증</li></ul><p class="src"><a href="https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf" target="_blank" rel="noopener">https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf</a></p></div></section><section class="slide  has-quiz" data-part="p3" data-title="시퀀싱 설계 확인 문제"><header><h2>시퀀싱 설계 확인 문제</h2></header><div class="body"><ul class="lecture-bullets"><li>Read와 pair 단위를 구분한 출력 계산</li><li>게놈 coverage와 올리고 depth의 차이</li><li>FASTQ 네 줄과 품질 문자 길이 확인</li><li>평균 depth가 높아도 실패하는 이유</li></ul><details class="question"><summary>확인·실습 문제</summary><p>10,000개 올리고와 1,000,000개 read의 평균 depth 계산 후 균일성 가정 설명</p></details><p class="src"><a href="https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf" target="_blank" rel="noopener">https://support.illumina.com/content/dam/illumina-marketing/documents/products/techspotlights/techspotlight_sequencing.pdf</a></p></div></section></main></div><div class="ctrl"><button class="cb" id="b-side" type="button">☰ 목차</button><button class="cb" id="b-prev" type="button" aria-label="이전 슬라이드">←</button><span class="count" id="count"></span><button class="cb pri" id="b-next" type="button">다음 →</button><span class="where" id="where"></span><span class="sp"></span><button class="cb" id="b-read" type="button">읽기 모드</button><button class="cb presentonly" id="b-full" type="button">전체화면</button></div></div></div><script>(function(){'use strict';var META={"label": "DNA Data Storage 11-6", "parts": [{"id": "p0", "name": "시퀀싱 라이브러리", "min": 23}, {"id": "p1", "name": "Read cycle과 coverage", "min": 27}, {"id": "p2", "name": "FASTQ와 품질 점수", "min": 18}, {"id": "p3", "name": "원본 파일 복원", "min": 7}]};
+var $ = function(id){ return document.getElementById(id); };
+var el = function(tag, cls, txt){ var e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
+var app = $('app'), deck = $('deck');
+var slides = Array.prototype.slice.call(deck.querySelectorAll('.slide'));
+var PARTS = META.parts;
+var partOf = {}, t0 = 0;
+PARTS.forEach(function(p){ p.start = t0; t0 += p.min; partOf[p.id] = p; });
+function mmss(m){ return Math.floor(m/60) + ':' + String(m%60).padStart(2,'0'); }
+
+/* ---------- footers ---------- */
+slides.forEach(function(s, i){
+  if (s.classList.contains('cover') || s.classList.contains('ending')) return;
+  var f = el('footer'); f.appendChild(el('span', '', META.label + ' · ' + partOf[s.dataset.part].name)); f.appendChild(el('span', 'pg', String(i+1)));
+  var notes = s.querySelector('.notes'); if (notes) s.insertBefore(f, notes); else s.appendChild(f);
+});
+
+/* ---------- sidebar (Notion식 트리) ---------- */
+var nav = $('side-nav'), navBtns = [], groups = {};
+PARTS.forEach(function(p){
+  var h = el('button', 'part-h'); h.type = 'button'; h.setAttribute('aria-expanded', 'true');
+  h.appendChild(el('span', 'tw', '▶')); h.appendChild(el('span', 'nm', p.name));
+  var list = el('div', 'part-list');
+  h.addEventListener('click', function(){ var open = h.getAttribute('aria-expanded') !== 'true'; h.setAttribute('aria-expanded', String(open)); list.hidden = !open; });
+  nav.appendChild(h); nav.appendChild(list); groups[p.id] = {h:h, list:list};
+});
+slides.forEach(function(s, i){
+  var b = el('button', 'nav-b'); b.type = 'button';
+  b.appendChild(el('span', 'no', String(i+1))); b.appendChild(el('span', '', s.dataset.title || ''));
+  if (s.dataset.lab) b.appendChild(el('span', 'ml', 'MATLAB'));
+  if (s.dataset.def) b.appendChild(el('span', 'ml', 'DEF'));
+  b.addEventListener('click', function(){ go(i); if (mode === 'read') { app.classList.remove('sideopen'); syncBtns(); } });
+  groups[s.dataset.part].list.appendChild(b); navBtns.push(b);
+});
+
+/* ---------- navigation ---------- */
+var cur = 0, mode = 'present', userMode = null;
+function go(i, fromScroll){
+  cur = Math.max(0, Math.min(slides.length - 1, i));
+  slides.forEach(function(s, j){ s.hidden = (mode === 'present' && j !== cur); });
+  navBtns.forEach(function(b, j){ if (j === cur) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current'); });
+  var s = slides[cur], p = partOf[s.dataset.part], g = groups[p.id];
+  g.h.setAttribute('aria-expanded', 'true'); g.list.hidden = false;
+  if (navBtns[cur].scrollIntoView) navBtns[cur].scrollIntoView({block:'nearest'});
+  $('count').textContent = (cur+1) + ' / ' + slides.length;
+  $('where').textContent = p.name;
+  try { history.replaceState(null, '', '#' + (cur+1)); } catch(e){}
+  if (mode === 'read' && !fromScroll) s.scrollIntoView({block:'start'});
+}
+function setMode(m){
+  mode = m; app.classList.toggle('read', m === 'read');
+  if (m === 'read') app.classList.remove('sideopen');
+  go(cur); syncBtns();
+}
+function autoMode(){ if (userMode) return; var want = window.innerWidth < 900 ? 'read' : 'present'; if (want !== mode) setMode(want); }
+function sideVisible(){ return mode === 'read' ? app.classList.contains('sideopen') : !app.classList.contains('noside'); }
+function toggleSide(){ if (mode === 'read') app.classList.toggle('sideopen'); else app.classList.toggle('noside'); syncBtns(); }
+function syncBtns(){
+  $('b-side').setAttribute('aria-pressed', String(sideVisible()));
+  $('b-read').setAttribute('aria-pressed', String(mode === 'read'));
+}
+$('b-prev').addEventListener('click', function(){ go(cur-1); });
+$('b-next').addEventListener('click', function(){ go(cur+1); });
+$('b-side').addEventListener('click', toggleSide);
+$('b-read').addEventListener('click', function(){ userMode = true; setMode(mode === 'read' ? 'present' : 'read'); });
+var fsBtn = $('b-full');
+if (!document.fullscreenEnabled) fsBtn.hidden = true;
+function fullscreen(){ try { if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen(); } catch(e){} }
+fsBtn.addEventListener('click', fullscreen);
+document.addEventListener('keydown', function(ev){
+  if (ev.metaKey || ev.ctrlKey || ev.altKey) return;
+  var t = ev.target, tag = t && t.tagName;
+  if (tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA') return;
+  var k = ev.key, isBtn = (tag === 'BUTTON' || tag === 'SUMMARY' || tag === 'A');
+  if ((k === ' ' || k === 'Enter') && isBtn) return;
+  if (k === 'ArrowRight' || k === 'PageDown' || k === ' ') { go(cur+1); ev.preventDefault(); }
+  else if (k === 'ArrowLeft' || k === 'PageUp') { go(cur-1); ev.preventDefault(); }
+  else if (k === 'Home') { go(0); ev.preventDefault(); }
+  else if (k === 'End') { go(slides.length-1); ev.preventDefault(); }
+  else if (k === 's' || k === 'S') toggleSide();
+  else if (k === 'r' || k === 'R') { userMode = true; setMode(mode === 'read' ? 'present' : 'read'); }
+  else if (k === 'f' || k === 'F') fullscreen();
+});
+var tx = null;
+deck.addEventListener('touchstart', function(e){ tx = e.touches[0].clientX; }, {passive:true});
+deck.addEventListener('touchend', function(e){ if (tx == null || mode !== 'present') return; var dx = e.changedTouches[0].clientX - tx; tx = null; if (Math.abs(dx) > 70) go(cur + (dx < 0 ? 1 : -1)); }, {passive:true});
+window.addEventListener('resize', autoMode);
+window.addEventListener('hashchange', function(){ var n = parseInt(location.hash.slice(1), 10); if (n && n-1 !== cur) go(n-1); });
+if ('IntersectionObserver' in window){
+  var io = new IntersectionObserver(function(es){ if (mode !== 'read') return; es.forEach(function(e){ if (e.isIntersecting) go(slides.indexOf(e.target), true); }); }, {rootMargin:'-45% 0px -50% 0px'});
+  slides.forEach(function(s){ io.observe(s); });
+}
+
+/* ---------- code boxes: highlight + copy ---------- */
+function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+Array.prototype.forEach.call(document.querySelectorAll('.code'), function(box){
+  var pre = box.querySelector('pre'), raw = pre.textContent.replace(/\s+$/, '');
+  pre.innerHTML = raw.split('\n').map(function(line){
+    if (/^\s*%%/.test(line)) return '<span class="sec">' + esc(line) + '</span>';
+    var inStr = false, cut = -1;
+    for (var i = 0; i < line.length; i++){
+      var ch = line[i];
+      if (ch === "'" ){ var prev = line[i-1] || ' '; if (inStr) inStr = false; else if (!/[\w\)\]\}\.']/.test(prev)) inStr = true; }
+      else if (ch === '%' && !inStr){ cut = i; break; }
+    }
+    return cut < 0 ? esc(line) : esc(line.slice(0, cut)) + '<span class="cm">' + esc(line.slice(cut)) + '</span>';
+  }).join('\n');
+  var btn = box.querySelector('.copy');
+  btn.addEventListener('click', function(){
+    function done(ok){ btn.textContent = ok ? '복사됨 ✓' : '선택됨 — Ctrl/⌘+C'; btn.classList.toggle('done', ok); setTimeout(function(){ btn.textContent = '복사'; btn.classList.remove('done'); }, 1800); }
+    function fallback(){
+      var ta = el('textarea'); ta.value = raw; ta.setAttribute('readonly', ''); ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0'; document.body.appendChild(ta); ta.select();
+      var ok = false; try { ok = document.execCommand('copy'); } catch(e){}
+      document.body.removeChild(ta);
+      if (!ok){ var r = document.createRange(); r.selectNodeContents(pre); var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r); }
+      done(ok);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(raw).then(function(){ done(true); }, fallback); else fallback();
+  });
+});
+
+/* ---------- helpers for bit widgets ---------- */
+function bitRow(host, bits, opts){
+  host.innerHTML = '';
+  bits.forEach(function(v, i){
+    var cls = 'b ' + (opts.cls ? opts.cls(i, v) : '');
+    var e = opts.onClick ? el('button', cls, String(v)) : el('span', cls, String(v));
+    if (opts.onClick){ e.type = 'button'; e.setAttribute('aria-label', (i+1) + '번 칸, 값 ' + v); e.addEventListener('click', function(){ opts.onClick(i); }); }
+    host.appendChild(e);
+    if (opts.gapAfter && opts.gapAfter.indexOf(i) >= 0) host.appendChild(el('span', 'gap'));
+  });
+}
+function pct(x){ return (x*100).toFixed(2).replace(/\.?0+$/,'') + '%'; }
+
+/* Stop a lecture video when changing slides or selecting another source. */
+function lectureVideosInit(){
+  var lessons=[].slice.call(document.querySelectorAll('[data-video-lesson]'));
+  var playing=null;
+  lessons.forEach(function(lesson){
+    if(lesson.dataset.videoReady)return;
+    lesson.dataset.videoReady='1';
+    var videos=JSON.parse(lesson.querySelector('.video-data').textContent);
+    var stage=lesson.querySelector('.video-stage');
+    var preview=lesson.querySelector('.video-preview');
+    var play=lesson.querySelector('.video-play');
+    var source=lesson.querySelector('.video-source-link');
+    var credit=lesson.querySelector('.video-credit');
+    var note=lesson.querySelector('.video-observation');
+    var choices=[].slice.call(lesson.querySelectorAll('.video-choice'));
+    var selected=0;
+    function stop(){
+      var frame=stage.querySelector('iframe');
+      if(frame)frame.remove();
+      preview.hidden=false;play.hidden=false;
+      if(playing===stop)playing=null;
+    }
+    function select(i){
+      stop();selected=i;
+      var video=videos[i];
+      preview.src='assets/yt_'+video.id+'.jpg';
+      preview.alt=video.title;
+      source.href='https://www.youtube.com/watch?v='+video.id;
+      credit.textContent=video.author+' ('+video.duration+')';
+      note.textContent=video.note;
+      choices.forEach(function(button,j){button.setAttribute('aria-pressed',String(i===j));});
+      play.setAttribute('aria-label',video.label+' 재생');
+    }
+    choices.forEach(function(button,i){button.addEventListener('click',function(){select(i);});});
+    play.addEventListener('click',function(){
+      if(playing)playing();
+      var video=videos[selected];
+      var frame=document.createElement('iframe');
+      frame.title=video.title;
+      frame.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      frame.allowFullscreen=true;
+      frame.referrerPolicy='strict-origin-when-cross-origin';
+      frame.src='https://www.youtube-nocookie.com/embed/'+video.id+'?autoplay=1&rel=0&playsinline=1';
+      preview.hidden=true;play.hidden=true;stage.appendChild(frame);playing=stop;
+    });
+    new MutationObserver(function(){if(lesson.hidden)stop();}).observe(lesson,{attributes:true,attributeFilter:['hidden']});
+    select(0);
+  });
+}
+document.addEventListener('DOMContentLoaded',lectureVideosInit);
+setTimeout(lectureVideosInit,60);
+
+/* ---------- start ---------- */
+if (window.innerWidth < 1180 && window.innerWidth >= 900) app.classList.add('noside');
+var h0 = parseInt(location.hash.slice(1), 10); cur = (h0 && h0 <= slides.length) ? h0 - 1 : 0;
+mode = window.innerWidth < 900 ? 'read' : 'present'; app.classList.toggle('read', mode === 'read');
+go(cur, mode === 'read' && cur === 0); syncBtns();
+
+})();</script></body></html>
