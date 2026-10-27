@@ -375,14 +375,14 @@ export const courses = [
   { levelEn: "Undergraduate", levelKo: "학부", en: "Molecular Biology Analysis Technology", ko: "분자생물학 분석기술" },
   { levelEn: "Undergraduate", levelKo: "학부", en: "BioMEMS", ko: "BioMEMS" },
   { levelEn: "Undergraduate", levelKo: "학부", en: "Bio-AI", ko: "Bio-AI" },
-  { levelEn: "Graduate", levelKo: "대학원", en: "Large Language Models and Agent Models", ko: "Large Language Model 및 에이전트 모델", descEn: "Proposed new graduate course · planned for Spring 2027", descKo: "대학원 신설 예정 · 2027학년도 1학기 개설 추진" },
+  { levelEn: "Graduate", levelKo: "대학원", en: "Large Language Models and Agent Models", ko: "Large Language Model 및 에이전트 모델", descEn: "Planned for Spring 2027", descKo: "2027학년도 1학기 개설 추진" },
   { levelEn: "Graduate", levelKo: "대학원", en: "Bio-Semiconductor Devices and NAND Flash", ko: "바이오 반도체 소자 및 NAND Flash" },
-  { levelEn: "Graduate", levelKo: "대학원", en: "Gene Analysis Technology", ko: "유전자 분석 기술", descEn: "Proposed new graduate course", descKo: "대학원 신설 예정" },
+  { levelEn: "Graduate", levelKo: "대학원", en: "Gene Analysis Technology", ko: "유전자 분석 기술" },
   { levelEn: "Graduate", levelKo: "대학원", en: "AI-Agents", ko: "AI-Agents" },
-  { levelEn: "Graduate", levelKo: "대학원", en: "Molecular Biology Technology", ko: "분자생물학기술", descEn: "Proposed new graduate course", descKo: "대학원 신설 예정" },
-  { levelEn: "Graduate", levelKo: "대학원", en: "Information Algorithms", ko: "정보 알고리즘", descEn: "Proposed new graduate course", descKo: "대학원 신설 예정" },
-  { levelEn: "Graduate", levelKo: "대학원", en: "Medicinal Chemistry", ko: "의학화학", descEn: "Proposed new graduate course", descKo: "대학원 신설 예정" },
-  { levelEn: "Graduate", levelKo: "대학원", en: "Quantum Computing", ko: "양자컴퓨팅", descEn: "Proposed new graduate course", descKo: "대학원 신설 예정" },
+  { levelEn: "Graduate", levelKo: "대학원", en: "Molecular Biology Technology", ko: "분자생물학기술" },
+  { levelEn: "Graduate", levelKo: "대학원", en: "Information Algorithms", ko: "정보 알고리즘" },
+  { levelEn: "Graduate", levelKo: "대학원", en: "Medicinal Chemistry", ko: "의학화학" },
+  { levelEn: "Graduate", levelKo: "대학원", en: "Quantum Computing", ko: "양자컴퓨팅" },
 ];
 
 /* Course detail — Molecular Information Engineering (분자정보공학), weekly plan.
