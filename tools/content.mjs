@@ -58,7 +58,7 @@ export const ui = {
       meta: "PI Youngjun Song, Ph.D. · Incheon National University",
     },
     stats: [
-      { num: "636", label: "Citations" },
+      { num: "679", label: "Citations" },
       { num: "15", label: "h-index" },
       { num: "5", label: "Research thrusts" },
       { num: "2026", label: "Latest in Science Adv." },
@@ -105,7 +105,7 @@ export const ui = {
       title: "People",
       sub: "",
       desc: "The people of the Bioelectronics & Biooptics Lab.",
-      pi: "Principal Investigator", postdocs: "Postdoctoral Researchers", students: "Graduate Researchers", alumni: "Alumni",
+      pi: "Principal Investigator", postdocs: "Postdoctoral Researchers", students: "Graduate Researchers", undergrads: "Undergraduate Students", interns: "Interns", alumni: "Alumni",
       education: "Education", experience: "Experience",
     },
     joinPage: {
@@ -129,7 +129,7 @@ export const ui = {
       meta: "책임교수 송영준 · 인천대학교",
     },
     stats: [
-      { num: "636", label: "총 인용" },
+      { num: "679", label: "총 인용" },
       { num: "15", label: "h-index" },
       { num: "5", label: "연구 방향" },
       { num: "2026", label: "Science Adv. 최신 게재" },
@@ -176,7 +176,7 @@ export const ui = {
       title: "구성원",
       sub: "",
       desc: "유전자 진단 및 치료 연구실 구성원.",
-      pi: "책임교수", postdocs: "박사후 연구원", students: "대학원 연구원", alumni: "졸업생",
+      pi: "책임교수", postdocs: "박사후 연구원", students: "대학원 연구원", undergrads: "학부생", interns: "인턴", alumni: "졸업생",
       education: "학력", experience: "경력",
     },
     joinPage: {
@@ -295,12 +295,15 @@ export const researchAreas = [
 /* Publications — from the PI's Google Scholar; topics drive the filter.
    author: string with the PI wrapped in <b>…</b>. featured: shows a badge. */
 export const publications = [
-  { year: "2026", title: "Electric field–guided random-access DNA data storage", authors: "Doyeon Lim, Taeseok Kang, Wonjin Lee, Zeeshan Haider, Seunghwan Noh, Minsang Yu, Xiaohua Huang, Hyuk Soo Eun, <b>Youngjun Song</b>", venue: "Science Advances", topics: ["storage", "synthesis"], featured: "Featured", link: "https://stdbioelec.com/papers/electric-field-guided-dna-storage.html" },
-  { year: "2026", title: "High-Data-Density, High-Decoding-Speed, and High-Decoding-Accuracy DNA Data Ink for Digital Preservation", authors: "Taeseok Kang, Doyeon Lim, Wonjin Lee, Jungwoo Kim, Xiaohua Huang, Jinchul Kim, <b>Youngjun Song</b>", venue: "ACS Nano", topics: ["storage"], featured: "Featured", link: "https://stdbioelec.com/papers/dna-data-ink-digital-preservation.html" },
+  { year: "2026", title: "Electric field–guided random-access DNA data storage", authors: "Doyeon Lim, Taeseok Kang, Wonjin Lee, Zeeshan Haider, Seunghwan Noh, Minsang Yu, Xiaohua Huang, Hyuk Soo Eun, <b>Youngjun Song</b>", venue: "Science Advances 12(23), eaee4328", topics: ["storage", "synthesis"], featured: "Featured", link: "https://stdbioelec.com/papers/electric-field-guided-dna-storage.html" },
+  { year: "2026", title: "Machine-readable nucleic acid arrays through electrostatic surface patterning", authors: "Taeseok Kang, Wonjin Lee, Zeeshan Haider, Doyeon Lim, <b>Youngjun Song</b>", venue: "Physica Scripta 101(21), 215007", topics: ["storage", "synthesis"] },
+  { year: "2026", title: "Selective on-chip DNA synthesis using electric field-assisted PCR", authors: "Doyeon Lim, <b>Youngjun Song</b>", venue: "Lab on a Chip 26(10), 3202–3212", topics: ["synthesis"] },
+  { year: "2026", title: "Xeno nucleic acids (XNAs): advances in synthesis, diagnostics, and therapeutics", authors: "Wonjin Lee, Taeseok Kang, Minsang Yu, Zeeshan Haider, Doyeon Lim, <b>Youngjun Song</b>", venue: "Bioorganic Chemistry, 110000", topics: ["synthesis", "diagnosis"] },
+  { year: "2026", title: "High-ratio carbon nanotube–carboxymethyl cellulose composite grid for Joule heating device", authors: "Wonjin Lee, Doyeon Lim, Taeseok Kang, Changjae Lee, Seunghwan Noh, Hyuk Soo Eun, Jin Woo Lee, <b>Youngjun Song</b>", venue: "Advanced Composite Materials 35(2), 285–299", topics: ["materials"] },
+  { year: "2026", title: "High-Data-Density, High-Decoding-Speed, and High-Decoding-Accuracy DNA Data Ink for Digital Preservation", authors: "Taeseok Kang, Doyeon Lim, Wonjin Lee, Jungwoo Kim, Xiaohua Huang, Jinchul Kim, <b>Youngjun Song</b>", venue: "ACS Nano 20(4), 3444–3460", topics: ["storage"], featured: "Featured", link: "https://stdbioelec.com/papers/dna-data-ink-digital-preservation.html" },
   { year: "2025", title: "Enzyme-free chemical DNA ligation via amine-crosslinker-mediated DNA assembly for miRNA detection", authors: "Doyeon Lim, Zeeshan Haider, Hyojin Lim, Wonjin Lee, Taeseok Kang, Hyuk Soo Eun, Jinchul Kim, <b>Youngjun Song</b>", venue: "Cell Reports Physical Science", topics: ["diagnosis"], featured: "Featured", link: "https://stdbioelec.com/papers/enzyme-free-dna-ligation-mirna.html" },
   { year: "2025", title: "Polymerase elongation onto patterned DNA for random-accessed DNA data storage", authors: "Taeseok Kang, Doyeon Lim, Wonjin Lee, <b>Youngjun Song</b>", venue: "BioChip Journal 19(3), 636–648", topics: ["storage", "synthesis"] },
   { year: "2025", title: "Amine-to-amine DNA conjugation on gold surfaces for electric field-assisted hybridization", authors: "Doyeon Lim, Seunghwan Noh, Taeseok Kang, Navchtsetseg Nergui, Hyuk Soo Eun, <b>Youngjun Song</b>", venue: "Langmuir 41(10), 7008–7015", topics: ["synthesis"] },
-  { year: "2025", title: "High-ratio carbon nanotube–carboxymethyl cellulose composite grid for Joule heating device", authors: "Wonjin Lee, Doyeon Lim, Taeseok Kang, Changjae Lee, Seunghwan Noh, Hyuk Soo Eun, Jin Woo Lee, <b>Youngjun Song</b>", venue: "Advanced Composite Materials", topics: ["materials"] },
   { year: "2025", title: "Elastic conductive CNT/Ecoflex nanocomposites for tactile sensing", authors: "Wonjin Lee, Chan-Hyeok Lee, Taeseok Kang, <b>Youngjun Song</b>", venue: "Soft Materials 23(1–2), 45–54", topics: ["materials"] },
   { year: "2024", title: "The multiple fluorescent multi-bit DNA memory encoding system", authors: "Navchtsetseg Nergui, Jongdo Kim, Doyeon Lim, Wonjin Lee, Taeseok Kang, Sejung Kim, Min Suk Shim, <b>Youngjun Song</b>", venue: "Nano Communication Networks 39, 100497", topics: ["computing", "storage"] },
   { year: "2024", title: "Fabrication of directional carbon nanotube networks by dielectrophoresis with layer-by-layer deposition", authors: "Jongdo Kim, Chan-Hyeok Lee, Changjae Lee, Navchtsetseg Nergui, Seunghwan Noh, Doyeon Lim, Kwang Hoon Song, Sejung Kim, <b>Youngjun Song</b>", venue: "IEEE Access 12, 26410–26418", topics: ["materials"] },
@@ -339,12 +342,27 @@ export const members = {
     email: "yjunsong@inu.ac.kr",
   },
   postdocs: [
-    { name: "Doyoen Lim", nameKo: "임도연", initials: "DL", roleEn: "Postdoctoral Researcher", roleKo: "박사후 연구원", focusEn: "Synthetic Biology", focusKo: "합성생물학", scholar: "https://scholar.google.com/citations?user=s1V6SisAAAAJ&hl=en", linkedin: "#", x: "#" },
+    { name: "Doyeon Lim", nameKo: "임도연", initials: "DL", roleEn: "Postdoctoral Researcher", roleKo: "박사후 연구원", focusEn: "Synthetic Biology", focusKo: "합성생물학", scholar: "https://scholar.google.com/citations?user=s1V6SisAAAAJ&hl=en", linkedin: "#", x: "#" },
     { name: "Wonjin Lee", nameKo: "이원진", initials: "WL", roleEn: "Postdoctoral Researcher", roleKo: "박사후 연구원", focusEn: "Semiconductor · AI", focusKo: "반도체 · AI", scholar: "https://scholar.google.com/citations?user=yO5hGRgAAAAJ&hl=en", linkedin: "#", x: "#" },
+    { name: "Bong Sun Kim", nameKo: "김봉선", initials: "BK", roleEn: "Postdoctoral Researcher", roleKo: "박사후 연구원", focusEn: "Microbiology · Cell Biology", focusKo: "미생물 · 세포생물학" },
+    { name: "Jeonghyun Heo", nameKo: "허정현", initials: "JH", roleEn: "Postdoctoral Researcher", roleKo: "박사후 연구원" },
   ],
   students: [
     { name: "Taeseok Kang", nameKo: "강태석", initials: "TK", roleEn: "Ph.D. Candidate · Bio-Nanoengineering", roleKo: "박사과정 · 생명나노바이오공학", focusEn: "DNA Data Storage", focusKo: "DNA 데이터 스토리지", scholar: "https://scholar.google.com/citations?user=M8axdgsAAAAJ&hl=en", linkedin: "#", x: "#" },
     { name: "Byunghyun Cho", nameKo: "조병현", initials: "BC", roleEn: "M.S. Student · Intelligent Semiconductor", roleKo: "석사과정 · 지능형반도체", focusEn: "Chip · Semiconductor", focusKo: "칩 · 반도체", linkedin: "#", x: "#" },
+    { name: "Minjae Kim", nameKo: "김민재", initials: "MK", roleEn: "M.S. Student", roleKo: "석사과정" },
+  ],
+  undergrads: [
+    { name: "Youngeun Song", nameKo: "송영은", initials: "YS", roleEn: "Undergraduate Student", roleKo: "학부생" },
+    { name: "Yunjae Seon", nameKo: "선윤재", initials: "YS", roleEn: "Undergraduate Student", roleKo: "학부생" },
+    { name: "Nayeon Kim", nameKo: "김나연", initials: "NK", roleEn: "Undergraduate Student", roleKo: "학부생" },
+    { name: "Seonju Lee", nameKo: "이선주", initials: "SL", roleEn: "Undergraduate Student", roleKo: "학부생" },
+    { name: "Jaehwan Choi", nameKo: "최재환", initials: "JC", roleEn: "Undergraduate Student", roleKo: "학부생" },
+    { name: "Gwonneung Kim", nameKo: "김권능", initials: "GK", roleEn: "Undergraduate Student", roleKo: "학부생" },
+  ],
+  interns: [
+    { name: "Chanyoung Lee", nameKo: "이찬영", initials: "CL", roleEn: "Intern", roleKo: "인턴" },
+    { name: "Inseong Jeon", nameKo: "전인성", initials: "IJ", roleEn: "Intern", roleKo: "인턴" },
   ],
   alumni: [
     { name: "Seunghwan Noh", nameKo: "노승환", noteEn: "M.S. → Ph.D. student, Northeastern University", noteKo: "석사 졸업 → Northeastern 박사과정" },

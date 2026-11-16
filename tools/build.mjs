@@ -374,6 +374,8 @@ function renderMembers(lang) {
   };
   const postdocs = members.postdocs.map(card).join("");
   const students = members.students.map(card).join("");
+  const undergrads = members.undergrads.map(card).join("");
+  const interns = members.interns.map(card).join("");
   const alumni = members.alumni.map((m) => {
     const name = lang === "ko" ? m.nameKo : m.name;
     return `<li><b>${name}</b> — <span style="color:var(--ink-3)">${lang === "ko" ? m.noteKo : m.noteEn}</span></li>`;
@@ -388,6 +390,10 @@ function renderMembers(lang) {
     <div class="members">${postdocs}</div>
     <div class="section-head reveal" style="margin-top:56px;margin-bottom:28px"><span class="eyebrow">${u.membersPage.students}</span></div>
     <div class="members">${students}</div>
+    <div class="section-head reveal" style="margin-top:56px;margin-bottom:28px"><span class="eyebrow">${u.membersPage.undergrads}</span></div>
+    <div class="members">${undergrads}</div>
+    <div class="section-head reveal" style="margin-top:56px;margin-bottom:28px"><span class="eyebrow">${u.membersPage.interns}</span></div>
+    <div class="members">${interns}</div>
     <div class="section-head reveal" style="margin-top:56px;margin-bottom:20px"><span class="eyebrow">${u.membersPage.alumni}</span></div>
     <ul class="prose reveal" style="list-style:none;padding:0;max-width:720px">${alumni}</ul>
   </div>
