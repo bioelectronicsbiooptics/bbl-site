@@ -342,10 +342,10 @@ export const members = {
     email: "yjunsong@inu.ac.kr",
   },
   postdocs: [
-    { name: "Doyeon Lim", nameKo: "임도연", initials: "DL", roleEn: "Postdoctoral Researcher", roleKo: "박사후 연구원", focusEn: "Synthetic Biology", focusKo: "합성생물학", scholar: "https://scholar.google.com/citations?user=s1V6SisAAAAJ&hl=en", linkedin: "#", x: "#" },
-    { name: "Wonjin Lee", nameKo: "이원진", initials: "WL", roleEn: "Postdoctoral Researcher", roleKo: "박사후 연구원", focusEn: "Semiconductor · AI", focusKo: "반도체 · AI", scholar: "https://scholar.google.com/citations?user=yO5hGRgAAAAJ&hl=en", linkedin: "#", x: "#" },
+    { name: "Doyeon Lim", nameKo: "임도연", initials: "DL", roleEn: "Postdoctoral Researcher", roleKo: "박사후 연구원", focusEn: "Synthetic Biology · DNA Data Storage", focusKo: "합성생물학 · DNA 데이터 스토리지", scholar: "https://scholar.google.com/citations?user=s1V6SisAAAAJ&hl=en", linkedin: "#", x: "#" },
+    { name: "Wonjin Lee", nameKo: "이원진", initials: "WL", roleEn: "Postdoctoral Researcher", roleKo: "박사후 연구원", focusEn: "Physical AI", focusKo: "피지컬 AI", scholar: "https://scholar.google.com/citations?user=yO5hGRgAAAAJ&hl=en", linkedin: "#", x: "#" },
     { name: "Bong Sun Kim", nameKo: "김봉선", initials: "BK", roleEn: "Postdoctoral Researcher", roleKo: "박사후 연구원", focusEn: "Microbiology · Cell Biology", focusKo: "미생물 · 세포생물학" },
-    { name: "Jeonghyun Heo", nameKo: "허정현", initials: "JH", roleEn: "Postdoctoral Researcher", roleKo: "박사후 연구원" },
+    { name: "Jeongyeon Heo", nameKo: "허정연", initials: "JH", roleEn: "Postdoctoral Researcher", roleKo: "박사후 연구원", focusEn: "miRNA · Molecular Biology", focusKo: "miRNA · 분자생물학" },
   ],
   students: [
     { name: "Taeseok Kang", nameKo: "강태석", initials: "TK", roleEn: "Ph.D. Candidate · Bio-Nanoengineering", roleKo: "박사과정 · 생명나노바이오공학", focusEn: "DNA Data Storage", focusKo: "DNA 데이터 스토리지", scholar: "https://scholar.google.com/citations?user=M8axdgsAAAAJ&hl=en", linkedin: "#", x: "#" },
@@ -361,8 +361,8 @@ export const members = {
     { name: "Gwonneung Kim", nameKo: "김권능", initials: "GK", roleEn: "Undergraduate Student", roleKo: "학부생" },
   ],
   interns: [
-    { name: "Chanyoung Lee", nameKo: "이찬영", initials: "CL", roleEn: "Intern", roleKo: "인턴" },
-    { name: "Inseong Jeon", nameKo: "전인성", initials: "IJ", roleEn: "Intern", roleKo: "인턴" },
+    { name: "Chanyoung Lee", nameKo: "이찬영", initials: "CL", roleEn: "Intern", roleKo: "인턴", focusEn: "Physical AI", focusKo: "피지컬 AI" },
+    { name: "Inseong Jeon", nameKo: "전인성", initials: "IJ", roleEn: "Intern", roleKo: "인턴", focusEn: "AI Semiconductor Process", focusKo: "AI 반도체 공정" },
   ],
   alumni: [
     { name: "Seunghwan Noh", nameKo: "노승환", noteEn: "M.S. → Ph.D. student, Northeastern University", noteKo: "석사 졸업 → Northeastern 박사과정" },
